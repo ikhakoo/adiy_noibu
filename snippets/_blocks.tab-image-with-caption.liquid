@@ -1,0 +1,88 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.tab-image-with-caption"
+  assign label = block.settings.label
+  assign image = block.settings.image
+  assign width_height_aspect_object_fit = block.settings.width_height_aspect_object_fit
+  assign border_width_radius = block.settings.border_width_radius
+  assign border_color = block.settings.border_color
+  assign background_gradient = block.settings.background_gradient
+  assign url = block.settings.url
+  assign title = block.settings.title
+  assign content_class = block.settings.content_class
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign text_over_image = block.settings.text_over_image
+  assign text_over_image_class = block.settings.text_over_image_class
+  assign flex_row_wrap_align_x_align_y_gap = block.settings.flex_row_wrap_align_x_align_y_gap
+  assign margin_top_bottom_left_right_align = block.settings.margin_top_bottom_left_right_align
+  assign padding_top_bottom_left_right_min_height = block.settings.padding_top_bottom_left_right_min_height
+  assign border_width_radius_shadow_gap_text_align = block.settings.border_width_radius_shadow_gap_text_align
+  assign background_color = block.settings.background_color
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign color_override = block.settings.color_override
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if request.design_mode != true
+    if image == blank
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+%}
+
+{% liquid
+  if color_override != blank and color_override.alpha != 0
+    assign color = color_override | default: "inherit"
+  endif
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,flex_direction_align_x_align_y_gap_wrap, max_w_flex_col_row_order_align, margin_top_bottom_left_right,padding_top_bottom_left_right_min_height,border_width_radius_shadow_gap_text_align, border_color, background_color" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-image]",
+    keys: "width_height_aspect_object_fit, border_width_radius, border_color, background_gradient" %}
+
+<figure
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    style="color: {{ color }}"
+    {% if url != blank %}
+      title="{{ url }}"
+      role="button"
+      tabindex="0"
+      @click.prevent.stop="barba.go('{{ url }}'); $modal.setId('')"
+    {% endif %}
+    data-tab-id="{{ label }}"
+  {% if first_tab != true %}x-cloak{% endif %}
+    x-show="$data.current_tab === '{{ label }}'"
+    class="">
+  <picture data-style-image class="relative block shrink-0 overflow-hidden">
+    {% render '_object.image', image: image, class: "w-full h-full object-[inherit]" %}
+  </picture>
+  <figcaption>
+    {% render '_input.richtext', content: title, class: content_class, block: block, forloop: forloop %}
+  </figcaption>
+</figure>

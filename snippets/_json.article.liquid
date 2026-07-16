@@ -1,0 +1,53 @@
+{% liquid
+
+  unless article
+    break
+  endunless
+
+  assign article_namespaces = settings.data__article__metafield | prepend: 'smart,' | split: ',' | uniq
+
+  assign blog_handle = article.handle | split: "/" | first
+%}
+
+{% comment %}{{ article | json }}{% endcomment %}
+{% comment %}{% break %}{% endcomment %}
+{% capture json %}
+  {
+  "author": {{ article.author | json }},
+  "blog_id": {{ blogs[blog_handle].id }},
+  "blog_handle": "{{ blog_handle }}",
+  "comments_count": {{ article.comments_count }},
+  "created_at": "{{ article.created_at | date: "%Y-%m-%dT%H:%M:%S%z" }}",
+  "excerpt": {{ article.excerpt | json }},
+  "handle": "{{ article.handle }}",
+  "id": "{{ article.id }}",
+  "image": {
+  "alt": "{{ article.image.alt }}",
+  "id": "{{ article.image.id }}",
+  "aspect_ratio": {{ article.image.aspect_ratio }},
+  "height": {{ article.image.height }},
+  "media_type": "image",
+  "src": "{{ article.image.src | image_url }}",
+  "width": {{ article.image.width }}
+  },
+  "moderated": {{ article.moderated? }},
+  "published_at": "{{ article.published_at | date: "%Y-%m-%dT%H:%M:%S%z" }}",
+  "tags": {{ article.tags | join: ", " | json }},
+  "updated_at": "{{ article.updated_at | date: "%Y-%m-%dT%H:%M:%S%z" }}",
+  "url": "{{ article.url }}",
+  "title": {{ article.title | json }},
+  "user": {
+  "name": {{ article.user.name | json }},
+  "first_name": {{ article.user.first_name | json }},
+  "last_name": {{ article.user.last_name | json }},
+  "image": {{ article.user.image | json }},
+  "email": {{ article.user.email | json }}
+  },
+  "metafields": {
+  {%- for namespace in article_namespaces -%}
+    "{{- namespace -}}": {%- render '_json.metafield', namespace: article.metafields[namespace], with_product_data: settings.data__article__load_product_data -%}{%- unless forloop.last -%},{%- endunless -%}
+  {%- endfor -%}
+  }
+  }
+{% endcapture %}
+{{- json | trim | strip_newlines -}}

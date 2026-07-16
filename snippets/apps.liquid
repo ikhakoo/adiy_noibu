@@ -1,0 +1,19 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "apps"
+  assign section_id = section.settings.section_id
+  assign color_scheme = section.settings.color_scheme
+  assign container_spacing = section.settings.container_spacing
+  assign border_divider = section.settings.border_divider
+  assign top_bottom_min_height = section.settings.top_bottom_min_height
+  assign responsive_visibility = section.settings.responsive_visibility
+  assign responsive_breakpoint = section.settings.responsive_breakpoint
+  assign target_visibility = section.settings.target_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render "_section.universal-settings", section_type: section_type, insert: "before" %}
+{% for block in section.blocks %}
+  {% render block %}
+{% endfor %}
+{% render "_section.universal-settings", insert: "after" %}

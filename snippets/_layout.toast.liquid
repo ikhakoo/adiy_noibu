@@ -1,0 +1,54 @@
+<div x-data="{ startTime: Date.now(), hover: false }"
+     class="pointer-events-none fixed inset-0 z-[2147483647] flex items-end justify-end p-5">
+  <div class="pointer-events-auto relative mx-auto justify-center flex w-full flex-1 flex-col gap-2 md:max-w-sm"
+       @pointerleave="hover = false; $toast.continueRemoval()">
+    <template x-for="(value, index) in $toast.toasts">
+      <section x-data="{ show: false }"
+               x-init="$nextTick(() => { show = true })"
+               @pointerover="hover = true; $toast.pauseRemoval()"
+               class="pointer-events-auto bottom-0 right-0 h-full max-h-full w-full scale-100 rounded-md bg-white transition-all duration-500 ease-in-out md:max-w-sm"
+               :class="($toast.toasts.length - 1) === index ? 'relative' : 'absolute'"
+               :style="`bottom: ${Math.min(($toast.toasts.length - 1) - index, 2) * 12}px; --tw-scale-x: ${1 - Math.min(($toast.toasts.length - 1) - index, $data.hover ? 0 : 2) * 0.09};`"
+               x-effect="$el.classList.toggle('absolute', !$data.hover)"
+               :data-index="index"
+               :aria-live="['error','warning'].includes(value.type) ? 'assertive' : 'polite'"
+               aria-atomic="true"
+               role="status"
+               tabIndex="0"
+               x-show="show && !value.hide"
+               x-cloak
+               x-transition:enter-start="opacity-0 translate-y-full"
+               x-transition:enter-end="opacity-100 translate-y-0"
+               x-transition:leave-start="opacity-100 translate-y-0"
+               x-transition:leave-end="opacity-0 translate-y-full">
+        <div class="flex gap-2 overflow-hidden rounded-md border p-3 text-sm shadow-lg drop-shadow-sm"
+             :class="{
+                 plain: `border-gray-300 bg-white text-gray-900`,
+                 warning: `border-warning/70 bg-warning/5 text-[--color-warning-text--hex]`,
+                 error: `border-error/70 bg-error/5 text-[--color-error-text--hex]`,
+                 info: `border-info/70 bg-info/5 text-[--color-info-text--hex]`,
+                 success: `border-success/70 bg-success/5 text-[--color-success-text--hex]`
+               }[value.type]">
+          <div class="text-warning shrink-0">
+            <svg x-data="{ icon: utils.handlelize(value.icon) }"
+                 :data-icon-handle="icon"
+                 class="h-5 w-5 bg-current"
+                 :class="{
+                     plain: 'text-gray-700',
+                     warning: 'text-warning',
+                     error: 'text-error',
+                     info: 'text-info',
+                     success: 'text-success'
+                   }[value.type]"
+                 :style="`mask: var(--icon-${icon}); -webkit-mask: var(--icon-${icon}); aspect-ratio: var(--icon-${icon}-aspect-ratio, 1);`"></svg>
+          </div>
+          <div class="">
+            <header class="text-13 font-semibold" x-html="value.title" x-show="value.title"></header>
+            <main class="text-13 font-medium opacity-80" x-html="value.content" x-show="value.content"></main>
+          </div>
+        </div>
+      </section>
+    </template>
+  </div>
+</div>
+

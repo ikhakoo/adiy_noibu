@@ -1,0 +1,114 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "header_progress-bar"
+  assign incentive_type = section.settings.incentive_type
+  assign success_bg_color = section.settings.success_bg_color
+  assign success_border_color = section.settings.success_border_color
+  assign base_bg_color = section.settings.base_bg_color
+  assign base_border_color = section.settings.base_border_color
+  assign bar_height_border_width_radius = section.settings.bar_height_border_width_radius
+  assign section_height = section.settings.section_height
+  assign container_spacing = section.settings.container_spacing
+  assign responsive_visibility_cart = section.settings.responsive_visibility_cart
+  assign color_scheme = section.settings.color_scheme
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign section_height = section_height | strip_newlines | replace: ' ', "" | split: '/'
+
+  assign bar_height_border_width_radius = bar_height_border_width_radius | strip_newlines | replace: ' ', "" | split: '|'
+  assign bar_height = bar_height_border_width_radius[0] | split: '/'
+  assign border = bar_height_border_width_radius[1] | split: '/'
+  assign radius = bar_height_border_width_radius[2] | split: '/'
+  assign gap = bar_height_border_width_radius[3] | split: '/'
+
+  assign desktop_height = section_height.first
+  assign mobile_height = section_height.last
+
+  if responsive_visibility_cart == 'mobile-only'
+    assign desktop_height = '0px'
+  endif
+  if responsive_visibility_cart == 'cart-only'
+    assign mobile_height = '0px'
+    assign desktop_height = '0px'
+  endif
+  if responsive_visibility_cart == 'desktop-tablet-only'
+    assign mobile_height = '0px'
+  endif
+
+  assign targets = section.blocks | map: "settings" | map: "target"
+%}
+
+<style>
+  :root {
+    --progress-bar-height: {{ mobile_height }};
+  }
+
+  @media screen and (min-width: 768px) {
+    :root {
+      --progress-bar-height: {{ desktop_height }};
+    }
+  }
+</style>
+
+<div class="@container">
+  <section x-data="{ settings: utils.JSONParse($el.getAttribute('data-settings')), current: 0, targets: utils.JSONParse($el.getAttribute('data-targets')), percentages: [], currentIndex: 0 }"
+           x-effect="() => {
+             current = $cart.state?.[settings.incentive_type] ?? 0;
+             percentages = targets.map((target, i, arr)=> [Math.max(0, Math.min(1, (current - (arr[i - 1] ?? 0)) / (target - (arr[i - 1] ?? 0)))) * 100, i, target])?.sort((a,b)=> a[2] - b[2]);
+             currentIndex = percentages.find(([percent])=> percent > 0 && percent < 100)?.[1] ?? percentages.find(([percent,i,target]) => percent === 0)?.[1] ?? percentages.findLast(([percent,i,target]) => percent === 100)?.[1]
+           }"
+           data-settings="{{ section.settings | json | escape }}"
+           data-targets="{{ targets | json | escape }}"
+           data-progress-bar
+           class="@max-md:[&.cart-only]:flex relative flex h-[--height] flex-col gap-dynamic items-center justify-center overflow-hidden md:h-[--height-md] @max-md:px-[--layout-container-gutter] {{ color_scheme }} {{ responsive_visibility_cart }} {{ container_spacing }}"
+           style="--height-md: {{ section_height | first }};--height: {{ section_height | last }};
+               --bar-height-md: {{ bar_height | first }};--bar-height: {{ bar_height | last }};
+               --border-md: {{ border | first }};--border: {{ border | last }};
+               --radius-md: {{ radius | first }};--radius: {{ radius | last }};
+               --gap-md: {{ gap | first }};--gap: {{ gap | last }};
+               --success-bg-color: {{ success_bg_color }};--success-border-color: {{ success_border_color }};
+               --base-bg-color: {{ base_bg_color }};--base-border-color: {{ base_border_color }};">
+    <footer class="flex items-center justify-center">
+      {% for block in section.blocks %}
+        {% liquid
+          assign success_message = block.settings.success_message
+          assign incentive_message = block.settings.incentive_message
+          assign content_class = block.settings.content_class
+        %}
+        <div x-data="{ index: +`{{ forloop.index0 }}` }"
+             class="flex" data-target="{{ block.settings.target }}">
+          <div x-cloak
+               x-show="index === (targets.length - 1) && percentages[percentages.length - 1][0] === 100">{% render '_input.richtext', content: success_message, class: content_class, block: block, forloop: forloop %}
+          </div>
+          <div x-cloak
+               x-show="index === currentIndex && percentages[percentages.length - 1][0] !== 100"
+               x-html="$el.getAttribute('data-content')?.replace('[difference]',
+                 settings.incentive_type === 'total_price'
+                   ? utils.formatMoney(targets[currentIndex] - current)
+                   : `${targets[currentIndex] - current}`
+               )"
+               data-content="{% render '_input.richtext', content: incentive_message, class: content_class, escape: true, block: block, forloop: forloop %}"></div>
+        </div>
+      {% endfor %}
+    </footer>
+    <main class="flex w-full items-center gap-2">
+      {% for block in section.blocks %}
+        <div x-data="{ percent: percentages.find(([percent, i, target])=> i === +`{{ forloop.index0 }}`)[0], order: percentages.findIndex(([percent, i, target])=> i === +`{{ forloop.index0 }}`) }"
+             x-effect="()=> {
+               order = percentages.findIndex(([percent, i, target])=> i === +`{{ forloop.index0 }}`)
+               percent = percentages[order][0];
+             }"
+             class="flex w-full rounded-[--radius] bg-[--base-bg-color] p-[--border] transition-all duration-150 ease-linear @md:p-[--border] @md:rounded-[--radius-md]"
+             :style="`background: linear-gradient(90deg, var(--success-border-color), var(--success-border-color) ${percent}%, var(--base-border-color) ${percent}%, var(--base-border-color)); order: ${order};`"
+             data-target="{{ block.settings.target }}">
+          <div class="relative h-[--bar-height] flex-1 overflow-hidden rounded-[--radius] bg-[--base-bg-color] @md:h-[--bar-height-md] @md:rounded-[--radius-md]">
+            <div class="relative h-full bg-[--success-bg-color] transition-all duration-150 ease-linear"
+                 :style="`width: ${percent}%`"></div>
+          </div>
+        </div>
+      {% endfor %}
+    </main>
+  </section>
+</div>

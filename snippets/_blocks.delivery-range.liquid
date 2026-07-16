@@ -1,0 +1,46 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.delivery-range"
+  assign min_days = block.settings.min_days
+  assign max_days = block.settings.max_days
+  assign delivery_text = block.settings.delivery_text
+  assign delivery_class = block.settings.delivery_class
+  assign days_text = block.settings.days_text
+  assign days_class = block.settings.days_class
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign today_timestamp = 'now' | date: "%s" 
+
+  assign min_days_in_seconds = min_days | times: 86400 
+  assign max_days_in_seconds = max_days | times: 86400
+
+  assign min_timestamp = today_timestamp | plus: min_days_in_seconds
+  assign max_timestamp = today_timestamp | plus: max_days_in_seconds 
+
+  assign month = min_timestamp | date: "%B" 
+  assign min_delivery_date = min_timestamp | date: "%d" 
+  assign max_delivery_date = max_timestamp | date: "%d" 
+
+  assign delivery_text = delivery_text | replace: "[month]", month | replace: "[min_date]", min_delivery_date | replace: "[max_date]", max_delivery_date
+  assign days_text = days_text | replace: "[min_days]", min_days | replace: "[max_days]", max_days
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,margin_top_bottom_left_right, max_w_flex_col_row_order_align" %}
+
+<div data-style-id="{{ section.id }}--{{ block.id }}"
+     {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+     class="">
+  {% render '_input.richtext', content: delivery_text, class: delivery_class, block: block, forloop: forloop %}
+  {% render '_input.richtext', content: days_text, class: days_class, block: block, forloop: forloop %}
+</div>
+

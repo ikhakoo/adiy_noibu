@@ -1,0 +1,102 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "bundle"
+  assign restrict_bundle_quantity = section.settings.restrict_bundle_quantity
+  assign bundle_target_type = section.settings.bundle_target_type
+  assign incentive_target_type = section.settings.incentive_target_type
+  assign desktop_sidebar_width_gap = section.settings.desktop_sidebar_width_gap
+  assign product_scroll = section.settings.product_scroll
+  assign section_id = section.settings.section_id
+  assign color_scheme = section.settings.color_scheme
+  assign container_spacing = section.settings.container_spacing
+  assign border_divider = section.settings.border_divider
+  assign top_bottom_min_height = section.settings.top_bottom_min_height
+  assign responsive_visibility = section.settings.responsive_visibility
+  assign responsive_breakpoint = section.settings.responsive_breakpoint
+  assign target_visibility = section.settings.target_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture section_content %}
+  {% liquid
+    assign desktop_sidebar_width_gap = desktop_sidebar_width_gap | strip_newlines | replace: ' ', "" | split: '|'
+    assign desktop_sidebar_width = desktop_sidebar_width_gap[0] | split: '/'
+    assign desktop_sidebar_gap = desktop_sidebar_width_gap[1] | split: '/'
+
+    assign bundle_target_blocks = section.blocks | where: 'type', 'bundle_target'
+    assign bundle_filter_settings = section.blocks | where: 'type', 'product_filter' | map: "settings"
+    assign incentive_target_blocks = section.blocks | where: 'type', 'incentive_target'
+    assign bundle_selector = section.blocks | where: 'type', 'bundle_selector' | map: "settings" | first
+    assign subscription_selector = section.blocks | where: 'type', 'subscription_selector' | map: "settings" | first
+    assign discounted_auto_addon = section.blocks | where: 'type', 'discounted_auto_addon' | map: "settings" | first
+
+  %}
+
+  {% capture bundle_target_settings %}
+    [{% for _block in bundle_target_blocks %}{ "id": {{ _block.id | json }}, "settings": {{ _block.settings | json }}, "label": "{% render '_input.inline_richtext', content: _block.settings.select_label, escape: true, block: block, forloop: forloop %}" }{% unless forloop.last %},{% endunless %}{% endfor %}]
+  {% endcapture %}
+
+  {% capture incentive_target_settings %}
+    [{% for _block in incentive_target_blocks %}{ "id": {{ _block.id | json }}, "settings": {{ _block.settings | json }} }{% unless forloop.last %},{% endunless %}{% endfor %}]
+  {% endcapture %}
+
+  {% render '_utils.dynamic-css', keys: "top_bottom_min_height", css_variables: true %}
+  {% render '_utils.dynamic-css', keys: "responsive_visibility" %}
+  <section {% if section_id != blank %}id="{{ section_id }}"{% endif %}
+           data-style-id="{{ section.id }}"
+           data-section-type="bundle"
+           data-section-location="{{ section.location }}"
+           data-section-index="{{ section.index0 }}"
+           data-section-block-size="{{ section.blocks | size }}"
+           class="section--{{ section_type }} h-full relative bg-theme-bg text-theme-text {{ color_scheme }} {{ border_divider }}">
+    <main x-ref="container"
+          x-data="{ ..._sections.initBundle($el, $refs), open: false, inViewport: false }"
+          x-intersect.margin.-40%.0px="() => { inViewport = true}"
+          x-intersect:leave.margin.-40%.0px="() => { inViewport = false}"
+          @scroll.window.passive="$data.handleStickyScroll"
+          data-section-settings="{{ section.settings | json | escape }}"
+          data-select-settings="{{ bundle_selector | json | escape }}"
+        {% if discounted_auto_addon.product != blank %}
+          data-discounted-auto-addon="{{ discounted_auto_addon.product.handle }}"
+        {% endif %}
+          data-bundle-target="{{ bundle_target_settings | strip_newlines | escape }}"
+          data-bundle-filters="{{ bundle_filter_settings | json | escape }}"
+          data-incentive-target="{{ incentive_target_settings | escape }}"
+          class="flex max-lg:flex-col max-lg:py-dynamic h-full {{ container_spacing }}"
+          data-default-subscription="{{ subscription_selector.default_selection }}">
+      <section x-ref="main_content" class="lg:sticky-product-section shrink-0 h-min mb-auto flex-1 lg:py-dynamic">
+        {% liquid
+          for block in section.blocks
+            if block.type == 'layout__main_content'
+              render 'bundle.layout__main_content', block: block, forloop: forloop, section_type: section_type, columnIndex: forloop.index0
+              break
+            endif
+          endfor
+        %}
+      </section>
+      <section x-ref="sidebar"
+               class="lg:sticky-product-section max-lg:order-first max-lg:mt-[--gap] xl:pl-[--gap-xl] lg:pl-[--gap] xl:min-w-[--min-width-xl] xl:max-w-[--min-width-xl] lg:min-w-[--min-width] lg:max-w-[--min-width]
+                      lg:py-dynamic flex flex-wrap"
+               style="--min-width-xl: {{ desktop_sidebar_width | first }}; --min-width: {{ desktop_sidebar_width | last }};--gap-xl: {{ desktop_sidebar_gap | first }};--gap: {{ desktop_sidebar_gap | last }}">
+        {% liquid
+          for block in section.blocks
+            if block.type == 'layout__header'
+              assign allow_no_cols = false
+              render 'bundle.layout__header', block: block, forloop: forloop, section_type: section_type, columnIndex: forloop.index0
+            endif
+
+            if block.type == 'layout__details_card'
+              assign allow_no_cols = false
+              render 'bundle.layout__details_card', block: block, forloop: forloop, section_type: section_type, columnIndex: forloop.index0
+            endif
+          endfor
+        %}
+      </section>
+    </main>
+  </section>
+{% endcapture %}
+
+{% if section_content contains '/break"></script>' %}
+  {% break %}
+{% endif %}
+{{ section_content }}

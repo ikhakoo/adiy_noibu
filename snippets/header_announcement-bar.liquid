@@ -1,0 +1,65 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "header_announcement-bar"
+  assign display_duration = section.settings.display_duration
+  assign section_height = section.settings.section_height
+  assign responsive_visibility_cart = section.settings.responsive_visibility_cart
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign section_height = section_height | strip_newlines | replace: ' ', "" | split: '/'
+  assign height = section_height | first
+  assign desktop_height = section_height.first
+  assign mobile_height = section_height.last
+  assign visible_block = section.blocks | map: "settings" | map: "responsive_visibility_cart"
+
+  unless visible_block contains "" or visible_block contains "desktop-tablet-only"
+    assign desktop_height = '0px'
+  endunless
+
+  unless visible_block contains "" or visible_block contains "mobile-only"
+    assign mobile_height = '0px'
+  endunless
+
+  if responsive_visibility_cart == 'mobile-only'
+    assign desktop_height = '0px'
+  endif
+  if responsive_visibility_cart == 'cart-only'
+    assign mobile_height = '0px'
+    assign desktop_height = '0px'
+  endif
+  if responsive_visibility_cart == 'desktop-tablet-only'
+    assign mobile_height = '0px'
+  endif
+
+%}
+
+<style>
+  :root {
+    --announcement-bar-height: {{ mobile_height }};
+  }
+
+  @media screen and (min-width: 768px) {
+    :root {
+      --announcement-bar-height: {{ desktop_height }};
+    }
+  }
+
+</style>
+
+<section x-data="{ ..._sections.initAnnouncementBar($el, $refs)}"
+         data-announcement-bar
+         data-settings="{{ section.settings | json | escape }}"
+         class="relative w-full grid h-[--height] auto-cols-[100%] grid-flow-col overflow-x-auto overflow-y-hidden scrollbar-none snap-x snap-mandatory md:h-[--height-md] {{ responsive_visibility_cart }}"
+         style="--height-md: {{ section_height | first }}; --height: {{ section_height | last }};"
+         @scroll="$data.handleScroll()"
+         x-effect="() => $data.handleEditorBlockSelect($editor?.select_block_id)">
+  {% liquid
+    for block in section.blocks
+      if block.type == 'announcement'
+        render 'header_announcement-bar.announcement', block: block, forloop: forloop, section_type: section_type, form: form, height: height
+      endif
+    endfor %}
+</section>
+

@@ -1,0 +1,120 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "modal_cart-drawer"
+  assign icon_size = section.settings.icon_size
+  assign drawer_max_width = section.settings.drawer_max_width
+  assign display_duration = section.settings.display_duration
+  assign color_scheme = section.settings.color_scheme
+  assign background_blur = section.settings.background_blur
+  assign top_bottom_min_height = section.settings.top_bottom_min_height
+  assign responsive_visibility = section.settings.responsive_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture section_content %}
+
+  {% assign hide_section = section.blocks | where: "type", "hide-section" | first %}
+  {% capture hide_condition %}{% render '_blocks.hide-section', block: hide_section %}{% endcapture %}
+  {% if hide_condition contains 'section/break' %}{% break %}{% endif %}
+
+  {% liquid
+    assign icon_size = icon_size | strip_newlines | replace: ' ', "" | split: '|'
+    assign icon = icon_size[0] | split: '/'
+    assign icon_size = icon_size[1] | split: '/'
+
+    assign drawer_max_width = drawer_max_width | strip_newlines | replace: ' ', "" | split: '|'
+    assign max_width = drawer_max_width[0] | split: '/'
+
+    if settings.layout__style == 'solid'
+      assign container_classes = 'border-r border-r-theme-border inset-0'
+    endif
+
+    if settings.layout__style == 'floating'
+      assign container_classes = 'inset-1.5 rounded-md'
+    endif
+  %}
+
+  {% capture styles %}
+    --size-md: {{ icon_size.first }};--size: {{ icon_size.last }};
+    --max-w-md: {{ max_width.first }};--max-w: {{ max_width.last }};
+  {% endcapture %}
+
+  <div x-data="{ open:  $modal.id === 'cart-drawer' }"
+       x-effect="open = $editor?.select_section_id === '{{ section.id }}' || $modal.id === 'cart-drawer'"
+       x-cloak>
+    <div class="fixed inset-0 transition duration-150 ease-in-out bg-[--color-modal-background] {{ background_blur }}"
+         :class="clsx(open ? 'z-[2147483646]' : 'z-40')"
+         x-show="open"
+         @click="$modal.setId('')"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"></div>
+    <section class="fixed inset-y-0 right-0 w-full max-w-dynamic transition-all duration-150 ease-in-out isolate"
+             :class="clsx(open ? 'z-[2147483647]' : 'z-50')"
+             style="{{ styles | strip_newlines }}"
+             x-show="open"
+             x-trap.noautofocus="open"
+             x-transition:enter-start="translate-x-full"
+             x-transition:enter-end="translate-x-0"
+             x-transition:leave-start="translate-x-0"
+             x-transition:leave-end="translate-x-full">
+      <main class="absolute overflow-hidden {{ color_scheme }} {{ container_classes }}">
+        <form @scroll="$refs?.header?.classList?.toggle('shadow', $el.scrollTop)"
+              data-cart-drawer-checkout-form
+              action="{{ routes.cart_url }}"
+              method="post"
+              class="max-h-full w-full overflow-y-auto overflow-x-hidden scrollbar-none min-h-full flex flex-col">
+          {% liquid
+            assign allow_no_cols = true
+            for block in section.blocks
+              if allow_no_cols
+                render 'modal_cart-drawer.block', block: block, forloop: forloop, section_type: section_type, form: form, height: section.settings.height, columnIndex: forloop.index0
+
+                if block.type == 'layout_child__flex_card'
+                  assign allow_no_cols = false
+                  render 'modal_cart-drawer.layout_child__flex_card', block: block, forloop: forloop, section_type: section_type, form: form, height: section.settings.height, columnIndex: forloop.index0
+                endif
+              endif
+
+              if block.type == 'layout__end'
+                assign allow_no_cols = true
+              endif
+
+              if block.type == 'layout__sticky-header'
+                assign allow_no_cols = false
+                render 'modal_cart-drawer.layout__sticky-header', block: block, forloop: forloop, section_type: section_type, form: form, height: section.settings.height, columnIndex: forloop.index0
+              endif
+
+              if block.type == 'layout__flex'
+                assign allow_no_cols = false
+                render 'modal_cart-drawer.layout__flex', block: block, forloop: forloop, section_type: section_type, form: form, height: section.settings.height, columnIndex: forloop.index0
+              endif
+
+              if block.type == 'layout__grid'
+                assign allow_no_cols = false
+                render 'modal_cart-drawer.layout__grid', block: block, forloop: forloop, section_type: section_type, form: form, height: section.settings.height, columnIndex: forloop.index0
+              endif
+
+              if block.type == 'layout__sticky-footer'
+                assign allow_no_cols = false
+                render 'modal_cart-drawer.layout__sticky-footer', block: block, forloop: forloop, section_type: section_type, form: form, height: section.settings.height, columnIndex: forloop.index0
+              endif
+
+              if block.type == 'layout__grid_slider'
+                assign allow_no_cols = false
+                render 'modal_cart-drawer.layout__grid_slider', block: block, forloop: forloop, section_type: section_type, form: form, height: section.settings.height, columnIndex: forloop.index0
+              endif
+
+            endfor
+          %}
+        </form>
+      </main>
+    </section>
+  </div>
+{% endcapture %}
+
+{% if section_content contains '/break"></script>' %}
+  {% break %}
+{% endif %}
+{{ section_content }}

@@ -1,0 +1,29 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "cart-navigation"
+  assign section_type = "modal_cart-drawer"
+  assign label = block.settings.label
+  assign label_class = block.settings.label_class
+  assign close_button = block.settings.close_button
+  assign close_button_class = block.settings.close_button_class
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign show_conditionally = block.settings.show_conditionally
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css', block: block %}
+
+<div data-style-id="{{ section.id }}--{{ block.id }}"
+    {{ block.shopify_attributes }}
+     class="flex justify-between gap-4 items-center w-full"
+     x-show="_cart.showConditionally(`{{ show_conditionally }}`) || $editor?.select_block_id === `{{ block.id }}`">
+  <p data-content="{% render '_input.inline_richtext', content: label, block: block, forloop: forloop %}"
+      class="{{ label_class }}"
+      x-html="$el.getAttribute('data-content').replace('[quantity]',$cart.state.item_count)"></p>
+  {% if close_button != blank %}      
+    <button type="button" @click="$modal.setId('')" class="{{ close_button_class }}">
+      {% render '_input.inline_richtext', content: close_button, block: block, forloop: forloop %}
+    </button>
+  {% endif %}
+
+</div>

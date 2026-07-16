@@ -1,0 +1,27 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "richtext"
+  assign section_type = "media-with-text"
+  assign stars = block.settings.stars
+  assign text = block.settings.text
+  assign richtext_class = block.settings.richtext_class
+  assign text_color = block.settings.text_color
+  assign margin_bottom_desktop = block.settings.margin_bottom_desktop
+  assign margin_bottom_mobile = block.settings.margin_bottom_mobile
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "margin_top_bottom_left_right" %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {{ block.shopify_attributes }}
+    class="flex gap-3 {{ margin_bottom_desktop }} {{ margin_bottom_mobile }}"
+    style="color: {{ text_color }};">
+  {% if stars %}
+    {% render '_components.icon', icon: "5-stars", class: "h-4" %}
+  {% endif %}
+  {% render '_input.richtext', content: text, class: richtext_class, block: block, forloop: forloop %}
+</div>

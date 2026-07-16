@@ -1,0 +1,315 @@
+{%- render "features" -%}
+{% schema %}
+{
+  "name": "Features",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "title_class",
+      "label": "Title class",
+      "default": "richtext-md"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "subtitle_class",
+      "label": "Subtitle class",
+      "default": "richtext-md"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "background color"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "text color"
+    },
+    {
+      "type": "header",
+      "content": "Section Globals"
+    },
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section Id"
+    },
+    {
+      "type": "text",
+      "id": "vertical_padding_section",
+      "label": "Top padding | Bottom Padding",
+      "default": "0 | 0 "
+    },
+    {
+      "type": "select",
+      "id": "container_spacing",
+      "default": "px-container-md",
+      "options": [
+        {
+          "value": "px-container-xs",
+          "label": "xs"
+        },
+        {
+          "value": "px-container-sm",
+          "label": "sm"
+        },
+        {
+          "value": "px-container-md",
+          "label": "md"
+        },
+        {
+          "value": "px-container-lg",
+          "label": "lg"
+        },
+        {
+          "value": "px-container-fullwidth",
+          "label": "fullwidth"
+        },
+        {
+          "value": "px-container-gutter",
+          "label": "magazine"
+        }
+      ],
+      "label": "Container Spacing"
+    },
+    {
+      "type": "select",
+      "id": "responsive_visibility",
+      "label": "Responsive Visibility",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile"
+        },
+        {
+          "value": "desktop-tablet-only",
+          "label": "Desktop"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Feature",
+      "type": "feature",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Features"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "richtext",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "title_class",
+          "label": "Title class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "richtext",
+          "id": "paragraph",
+          "label": "Paragraph"
+        },
+        {
+          "type": "text",
+          "id": "paragraph_class",
+          "label": "Paragraph class",
+          "default": "richtext-md h4"
+        },
+        {
+          "type": "header",
+          "content": "Button"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button url"
+        },
+        {
+          "type": "text",
+          "id": "button_class",
+          "label": "Button class",
+          "default": "button-primary"
+        },
+        {
+          "type": "header",
+          "content": "Card"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color"
+        }
+      ]
+    },
+    {
+      "name": "Pagination",
+      "type": "pagination",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Slider Buttons"
+        },
+        {
+          "type": "text",
+          "id": "width_height_border_width_radius",
+          "label": "width | height | border | radius",
+          "default": "12px | 12px | 0 | 999px"
+        },
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color",
+          "default": "#CCCCCC"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        },
+        {
+          "type": "color",
+          "id": "hover_border_color",
+          "label": "border color"
+        },
+        {
+          "type": "color",
+          "id": "hover_background_color",
+          "label": "background color",
+          "default": "#000000"
+        }
+      ],
+      "limit": 1
+    }
+  ],
+  "presets": [
+    {
+      "name": "Features",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/Image_Ratios_5dc0d845-435e-41f2-8d25-046cd7f2fb1d.png",
+            "title": "<h4><strong>Affordable Pricing</strong></h4>",
+            "title_class": "richtext-md",
+            "paragraph": "<p>Our kits are up to 40% cheaper than hiring a contractor, without compromising quality.</p>",
+            "paragraph_class": "richtext-md",
+            "button_text": "",
+            "button_url": "",
+            "button_class": "button-primary",
+            "background_color": ""
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/Image_Ratios_1_6abafc5d-be26-4724-855e-a1333f35cf08.png",
+            "title": "<h4><strong>Quick & Simple to Build</strong></h4>",
+            "title_class": "richtext-md",
+            "paragraph": "<p>Easy instructions and pre-cut materials make deck-building fast & simple. No special tools required.</p>",
+            "paragraph_class": "richtext-md",
+            "button_text": "",
+            "button_url": "",
+            "button_class": "button-primary",
+            "background_color": ""
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/Image_Ratios_5dc0d845-435e-41f2-8d25-046cd7f2fb1d.png",
+            "title": "<h4><strong>Built to Last</strong></h4>",
+            "title_class": "richtext-md",
+            "paragraph": "<p>Crafted to stand up to the elements and stand the test of time. Durable, weather-resistant, and built with care.</p>",
+            "paragraph_class": "richtext-md",
+            "button_text": "",
+            "button_url": "",
+            "button_class": "button-primary",
+            "background_color": ""
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/Image_Ratios_5dc0d845-435e-41f2-8d25-046cd7f2fb1d.png",
+            "title": "<h4><strong>High-End Materials</strong></h4>",
+            "title_class": "richtext-md",
+            "paragraph": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel rhoncus est. Integer iaculis sapien.</p>",
+            "paragraph_class": "richtext-md",
+            "button_text": "",
+            "button_url": "",
+            "button_class": "button-primary",
+            "background_color": ""
+          }
+        },
+        {
+          "type": "pagination",
+          "settings": {
+            "width_height_border_width_radius": "12px | 12px | 0 | 999px",
+            "background_color": "#cccccc",
+            "border_color": "",
+            "hover_border_color": "",
+            "hover_background_color": "#ffffff"
+          }
+        }
+      ],
+      "settings": {
+        "title": "<h2><strong>Your Vision, Our Expertise </strong></h2>",
+        "title_class": "richtext-md",
+        "subtitle": "<h4>At A-DIY, We’re Redefining Quality, Pricing, and Longevity Standards</h4>",
+        "subtitle_class": "richtext-md",
+        "background_color": "#4077ad",
+        "text_color": "#ffffff",
+        "section_id": "",
+        "vertical_padding_section": "64px/48px | 64px/48px",
+        "container_spacing": "px-container-md",
+        "responsive_visibility": ""
+      }
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "custom.globals",
+      "custom.header",
+      "custom.modal",
+      "custom.card"
+    ]
+  }
+}
+{% endschema %}

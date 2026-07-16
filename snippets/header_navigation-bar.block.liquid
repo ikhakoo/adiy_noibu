@@ -1,0 +1,30 @@
+{% liquid
+  case block.type
+    when "account-icon"
+      render "header_navigation-bar.account-icon", block: block, forloop: forloop, section_type: section_type, form: form, class: class
+    when "block"
+      render "header_navigation-bar.block", block: block, forloop: forloop, section_type: section_type, form: form, class: class
+    when "cart-icon"
+      render "header_navigation-bar.cart-icon", block: block, forloop: forloop, section_type: section_type, form: form, class: class
+    when "country-selector"
+      render "header_navigation-bar.country-selector", block: block, forloop: forloop, section_type: section_type, form: form, class: class
+    when "desktop-menu"
+      render "header_navigation-bar.desktop-menu", block: block, forloop: forloop, section_type: section_type, form: form, class: class
+    when "horizontal-divider"
+      render "header_navigation-bar.horizontal-divider", block: block, forloop: forloop, section_type: section_type, form: form, class: class
+    when "layout-spacer"
+      render "header_navigation-bar.layout-spacer", block: block, forloop: forloop, section_type: section_type, form: form, class: class
+    when "logo"
+      render "header_navigation-bar.logo", block: block, forloop: forloop, section_type: section_type, form: form, class: class
+    when "menu-icon"
+      render "header_navigation-bar.menu-icon", block: block, forloop: forloop, section_type: section_type, form: form, class: class
+    when "search-icon"
+      render "header_navigation-bar.search-icon", block: block, forloop: forloop, section_type: section_type, form: form, class: class
+    when "search-input"
+      render "header_navigation-bar.search-input", block: block, forloop: forloop, section_type: section_type, form: form, class: class
+    when "secondary-menu"
+      render "header_navigation-bar.desktop-menu", block: block, forloop: forloop, section_type: section_type, form: form, class: class
+    when "button"
+      render "header_navigation-bar.button", block: block, forloop: forloop, section_type: section_type, form: form, class: class
+  endcase
+%}

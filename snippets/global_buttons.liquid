@@ -1,0 +1,10 @@
+{% liquid
+  for block in section.blocks
+    case block.type
+      when 'button'
+        render "global_buttons.button", block: block
+      when 'label'
+        render "global_buttons.label", block: block
+    endcase
+  endfor
+%}

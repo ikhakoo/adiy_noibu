@@ -1,0 +1,74 @@
+@layer utilities {
+
+  .sticky-product-section {
+    @apply lg:sticky h-min lg:max-h-[calc(100vh-var(--header-height-offset))] top-[--header-height-offset] mb-auto overflow-y-auto overflow-x-visible scrollbar-none;
+  }
+  .quick-view-product-section {
+    @apply !h-min !mb-auto overflow-y-auto overflow-x-visible scrollbar-none;
+  }
+  .quick-view-product-section [x-ref="scrollContainer"] {
+    @apply overflow-y-hidden;
+  }
+
+  .quick-view-product-section[x-ref="gallery"] {
+    @apply grid grid-rows-[1fr_auto] min-h-full;
+  }
+
+ .quick-view-product-section picture[data-media-id], .quick-view-product-section picture[data-media-id] img {
+    @apply w-auto;
+  }
+
+  .dynamic-buy-button-out-of-stock:after {
+    @apply absolute inset-1 rounded-[inherit] flex items-center justify-center text-center;
+    background: inherit;
+    content: var(--out-of-stock);
+  }
+
+  .dynamic-buy-button-out-of-stock {
+    @apply !opacity-60 pointer-events-none;
+  }
+
+  .product-gallery--hero-grid {
+    @apply lg:grid lg:grid-cols-1 xl:grid-cols-2 xl:[&_:not(.hidden,.\!hidden)]:col-span-2 xl:[&>:not(.hidden,.\!hidden)~:not(.hidden,.\!hidden)]:col-span-1;
+  }
+
+  .product-gallery--grid {
+    @apply lg:grid lg:grid-cols-1 xl:grid-cols-2
+  }
+
+  .product-gallery--column {
+    @apply lg:grid
+  }
+
+  .product-block {
+    margin: var(--m, 0px);
+    margin-top: var(--mt);
+    margin-bottom: var(--mb);
+    margin-left: var(--ml);
+    margin-right: var(--mr);
+    min-width: var(--min-w);
+    flex: var(--flex);
+    text-align: var(--text-align);
+    border-radius: var(--rounded);
+    border-style: solid;
+    border-width: var(--border-w, 0px);
+    overflow: hidden;
+  }
+
+  @media screen and (min-width: 768px) {
+    .product-block {
+      margin: var(--m-md, 0px);
+      margin-top: var(--mt-md);
+      margin-bottom: var(--mb-md);
+      margin-left: var(--ml-md);
+      margin-right: var(--mr-md);
+      min-width: var(--min-w-md);
+      flex: var(--flex-md);
+      text-align: var(--text-align-md);
+      border-radius: var(--rounded-md);
+      border-style: solid;
+      border-width: var(--border-w-md, 0px);
+      overflow: hidden;
+    }
+  }
+}

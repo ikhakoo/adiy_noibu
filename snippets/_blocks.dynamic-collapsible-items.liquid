@@ -1,0 +1,81 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.dynamic-collapsible-items"
+  assign metaobject_namespace_key = block.settings.metaobject_namespace_key
+  assign title_key = block.settings.title_key
+  assign content_key = block.settings.content_key
+  assign accordion_class = block.settings.accordion_class
+  assign default_state = block.settings.default_state
+  assign grid_cols_align_x_align_y_gap = block.settings.grid_cols_align_x_align_y_gap
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign color_override = block.settings.color_override
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign namespace = metaobject_namespace_key | split: "." | first
+  assign key = metaobject_namespace_key | split: "." | last
+
+  assign resource = product | default: collection | default: article | default: page | default: blog | default: shop
+  assign items = resource.metafields[namespace][key].value
+  assign first_item = items | first
+
+  if request.design_mode != true
+    if items == blank or items.count <= 0 or first_item[title_key] == blank or first_item[content_key] == blank
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+  case default_state
+    when 'first_open'
+      assign open = true
+    when 'all_open'
+      assign open = true
+  endcase
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,margin_top_bottom_left_right, max_w_flex_col_row_order_align, grid_cols_align_x_align_y_gap" %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    style="color: {{ color }}"
+    class="">
+  {% for item in items %}
+    {% if forloop.index0 >= 1 and default_state != 'all_open' %}{% assign open = false %}{% endif %}
+
+    {% capture accordion_content %}
+      {% assign richtextStr = "" %}
+      {% assign richtext = item[content_key] | metafield_tag | replace: '<div class="metafield-rich_text_field">', "" | split: "</div>" %}
+      {% for htmlBlock in richtext %}
+        {% if forloop.last %}
+          {% assign richtextStr = richtextStr | append: htmlBlock %}
+          {% break %}
+        {% endif %}
+        {% assign richtextStr = richtextStr | append: htmlBlock | append: "</div>" %}
+      {% endfor %}
+      {% render '_input.richtext', content: richtextStr, block: block, forloop: forloop %}
+    {% endcapture %}
+
+    {% render '_components.accordion', label: item[title_key], content: accordion_content, default_open: open, class: accordion_class %}
+  {% endfor %}
+</div>

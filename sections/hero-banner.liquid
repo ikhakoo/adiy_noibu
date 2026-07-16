@@ -1,0 +1,577 @@
+{%- render "hero-banner" -%}
+{% schema %}
+{
+  "name": "Hero Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "top_bottom_min_height",
+      "label": "padding: top | bottom | min-h",
+      "default": "0 | 0 | 0"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_screen",
+      "label": "Full screen",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Section Globals"
+    },
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section Id"
+    },
+    {
+      "type": "select",
+      "id": "container_spacing",
+      "default": "px-container-md",
+      "options": [
+        {
+          "value": "px-container-xs",
+          "label": "xs"
+        },
+        {
+          "value": "px-container-sm",
+          "label": "sm"
+        },
+        {
+          "value": "px-container-md",
+          "label": "md"
+        },
+        {
+          "value": "px-container-lg",
+          "label": "lg"
+        },
+        {
+          "value": "px-container-fullwidth",
+          "label": "fullwidth"
+        },
+        {
+          "value": "px-container-gutter",
+          "label": "magazine"
+        }
+      ],
+      "label": "Container Spacing"
+    },
+    {
+      "type": "select",
+      "id": "responsive_visibility",
+      "label": "Responsive Visibility",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile"
+        },
+        {
+          "value": "desktop-tablet-only",
+          "label": "Desktop"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Slide",
+      "type": "slide",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "desktop_image",
+          "label": "Desktop image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile image"
+        },
+        {
+          "type": "color_background",
+          "id": "background_gradient",
+          "label": "background gradient",
+          "default": "rgba(0,0,0,0)"
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "richtext",
+          "id": "preheading",
+          "label": "Preheading"
+        },
+        {
+          "type": "text",
+          "id": "preheading_class",
+          "label": "Preheading class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "richtext",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "heading_class",
+          "label": "Heading class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "richtext",
+          "id": "subheading",
+          "label": "Subheading"
+        },
+        {
+          "type": "text",
+          "id": "subheading_class",
+          "label": "Subheading class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "header",
+          "content": "Buttons"
+        },
+        {
+          "type": "text",
+          "id": "button_primary_text",
+          "label": "Button primary text"
+        },
+        {
+          "type": "url",
+          "id": "button_primary_url",
+          "label": "Button primary Url"
+        },
+        {
+          "type": "text",
+          "id": "button_primary_class",
+          "label": "Button primary class",
+          "default": "button-primary"
+        },
+        {
+          "type": "text",
+          "id": "button_secondary_text",
+          "label": "Button secondary text"
+        },
+        {
+          "type": "url",
+          "id": "button_secondary_url",
+          "label": "Button secondary Url"
+        },
+        {
+          "type": "text",
+          "id": "button_secondary_class",
+          "label": "Button secondary class",
+          "default": "button-secondary"
+        },
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "text color"
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Text Alignment",
+          "default": "text-left",
+          "options": [
+            {
+              "value": "text-left",
+              "label": "Left"
+            },
+            {
+              "value": "text-center",
+              "label": "Center"
+            },
+            {
+              "value": "text-right",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "vertical_align_desktop",
+          "label": "Vertical Alignment Desktop",
+          "default": "md:justify-start",
+          "options": [
+            {
+              "value": "md:justify-start",
+              "label": "Top"
+            },
+            {
+              "value": "md:justify-center",
+              "label": "Center"
+            },
+            {
+              "value": "md:justify-end",
+              "label": "Bottom"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "vertical_align",
+          "label": "Vertical Alignment Mobile",
+          "default": "justify-start",
+          "options": [
+            {
+              "value": "justify-start",
+              "label": "Top"
+            },
+            {
+              "value": "justify-center",
+              "label": "Center"
+            },
+            {
+              "value": "justify-end",
+              "label": "Bottom"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "horizontal_align",
+          "label": "Horizontal Alignment",
+          "default": "items-start mr-auto",
+          "options": [
+            {
+              "value": "items-start mr-auto",
+              "label": "Left"
+            },
+            {
+              "value": "items-center mx-auto",
+              "label": "Center"
+            },
+            {
+              "value": "items-end ml-auto",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "vertical_padding",
+          "label": "Top padding | Bottom Padding",
+          "default": "0 | 0 "
+        }
+      ]
+    },
+    {
+      "name": "Video Slide",
+      "type": "slide_video",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Video"
+        },
+        {
+          "type": "video",
+          "id": "desktop_video",
+          "label": "Desktop video"
+        },
+        {
+          "type": "video",
+          "id": "mobile_video",
+          "label": "Mobile video",
+          "info": "optional"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Overlay"
+        },
+        {
+          "type": "color_background",
+          "id": "background_gradient",
+          "label": "background gradient",
+          "default": "rgba(0,0,0,0)"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "richtext",
+          "id": "preheading",
+          "label": "Preheading"
+        },
+        {
+          "type": "text",
+          "id": "preheading_class",
+          "label": "Preheading class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "richtext",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "heading_class",
+          "label": "Heading class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "richtext",
+          "id": "subheading",
+          "label": "Subheading"
+        },
+        {
+          "type": "text",
+          "id": "subheading_class",
+          "label": "Subheading class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "header",
+          "content": "Buttons"
+        },
+        {
+          "type": "text",
+          "id": "button_primary_text",
+          "label": "Button primary text"
+        },
+        {
+          "type": "url",
+          "id": "button_primary_url",
+          "label": "Button primary Url"
+        },
+        {
+          "type": "text",
+          "id": "button_primary_class",
+          "label": "Button primary class",
+          "default": "button-primary"
+        },
+        {
+          "type": "text",
+          "id": "button_secondary_text",
+          "label": "Button secondary text"
+        },
+        {
+          "type": "url",
+          "id": "button_secondary_url",
+          "label": "Button secondary Url"
+        },
+        {
+          "type": "text",
+          "id": "button_secondary_class",
+          "label": "Button secondary class",
+          "default": "button-secondary"
+        },
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "text color"
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Text Alignment",
+          "default": "text-left",
+          "options": [
+            {
+              "value": "text-left",
+              "label": "Left"
+            },
+            {
+              "value": "text-center",
+              "label": "Center"
+            },
+            {
+              "value": "text-right",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "vertical_align_desktop",
+          "label": "Vertical Alignment Desktop",
+          "default": "md:justify-start",
+          "options": [
+            {
+              "value": "md:justify-start",
+              "label": "Top"
+            },
+            {
+              "value": "md:justify-center",
+              "label": "Center"
+            },
+            {
+              "value": "md:justify-end",
+              "label": "Bottom"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "vertical_align",
+          "label": "Vertical Alignment Mobile",
+          "default": "justify-start",
+          "options": [
+            {
+              "value": "justify-start",
+              "label": "Top"
+            },
+            {
+              "value": "justify-center",
+              "label": "Center"
+            },
+            {
+              "value": "justify-end",
+              "label": "Bottom"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "horizontal_align",
+          "label": "Horizontal Alignment",
+          "default": "items-start mr-auto",
+          "options": [
+            {
+              "value": "items-start mr-auto",
+              "label": "Left"
+            },
+            {
+              "value": "items-center mx-auto",
+              "label": "Center"
+            },
+            {
+              "value": "items-end ml-auto",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "vertical_padding",
+          "label": "Top padding | Bottom Padding",
+          "default": "0 | 0 "
+        }
+      ]
+    },
+    {
+      "name": "Slider pagination",
+      "type": "pagination",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Slider Buttons"
+        },
+        {
+          "type": "text",
+          "id": "width_height_border_width_radius",
+          "label": "width | height | border | radius",
+          "default": "12px | 12px | 0 | 999px"
+        },
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color",
+          "default": "#CCCCCC"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        },
+        {
+          "type": "color",
+          "id": "hover_border_color",
+          "label": "border color"
+        },
+        {
+          "type": "color",
+          "id": "hover_background_color",
+          "label": "background color",
+          "default": "#000000"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        }
+      ],
+      "limit": 1
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Banner",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "desktop_image": "shopify://shop_images/image_with_text.png",
+            "background_gradient": "rgba(0,0,0,0)",
+            "preheading": "<p>[icon.5-stars] OVER 50,000 HAPPY CUSTOMERS</p>",
+            "preheading_class": "richtext-md",
+            "heading": "<h1>Customized For<br/>Your Backyard</h1>",
+            "heading_class": "richtext-md",
+            "subheading": "<p>At A-DIY, we believe in providing our customers with the best value and service when<br/>it comes to decking solutions. Our team of professional designers stands ready to <br/>help you achieve your vision.</p>",
+            "subheading_class": "richtext-md",
+            "button_primary_text": "",
+            "button_primary_url": "",
+            "button_primary_class": "button-secondary",
+            "button_secondary_text": "",
+            "button_secondary_url": "",
+            "button_secondary_class": "button-secondary-outline",
+            "text_color": "#20221d",
+            "text_align": "text-left",
+            "vertical_align_desktop": "md:justify-center",
+            "vertical_align": "justify-start",
+            "horizontal_align": "items-start mr-auto",
+            "vertical_padding": "0/96px | 0"
+          }
+        }
+      ],
+      "settings": {
+        "top_bottom_min_height": "0 | 0 | 740px/478px",
+        "full_screen": false,
+        "section_id": "",
+        "container_spacing": "px-container-fullwidth",
+        "responsive_visibility": ""
+      }
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "*"
+    ]
+  }
+}
+{% endschema %}

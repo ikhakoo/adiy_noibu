@@ -1,0 +1,102 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.products-image-caption"
+  assign products = block.settings.products
+  assign width_height_aspect_object_fit = block.settings.width_height_aspect_object_fit
+  assign border_width_radius = block.settings.border_width_radius
+  assign border_color = block.settings.border_color
+  assign background_gradient = block.settings.background_gradient
+  assign content = block.settings.content
+  assign content_class = block.settings.content_class
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign grid_cols_align_x_align_y_gap = block.settings.grid_cols_align_x_align_y_gap
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign color_override = block.settings.color_override
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if request.design_mode != true
+    if products == blank or products.size <= 0
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+%}
+{% liquid
+  if color_override != blank and color_override.alpha != 0
+    assign color = color_override | default: "inherit"
+  endif
+%}
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,max_w_flex_col_row_order_align, margin_top_bottom_left_right, grid_cols_align_x_align_y_gap" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-figure]",
+    keys: "flex_direction_align_x_align_y_gap_wrap" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-image]",
+    keys: "width_height_aspect_object_fit, border_width_radius, border_color, background_gradient" %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    style="color: {{ color }}"
+    class="grid">
+  {% for product in products %}
+    {% assign _content = content %}
+    {% liquid
+      for i in (1..15)
+        if _content contains '[product.'
+          assign split = _content | replace_first: '[product.', '|~|split|~|' | split: '|~|split|~|'
+          assign split_2 = split[1] | replace_first: ']', '|~|split|~|' | split: '|~|split|~|'
+          assign content_before = split[0]
+          assign variables = split_2[0] | trim | split: '.'
+          assign content_after = split_2[1]
+          assign content_dynamic = product
+          for var in variables
+            assign content_dynamic = content_dynamic[var]
+          endfor
+          assign _content = content_before | append: content_dynamic | append: content_after
+          continue
+        endif
+        break
+      endfor
+    %}
+    <figure
+        title="{{ product.url }}"
+        role="button"
+        tabindex="0"
+        @click.prevent.stop="barba.go('{{ product.url }}'); $modal.setId('')"
+        data-style-figure>
+      <picture data-style-image class="relative shrink-0 overflow-hidden">
+        {% render '_object.image', image: product.featured_image, class: "w-full h-full object-[inherit]" %}
+      </picture>
+      <figcaption>
+        {% render '_input.richtext', content: _content, class: content_class, block: block, forloop: forloop %}
+      </figcaption>
+    </figure>
+  {% endfor %}
+</div>
+

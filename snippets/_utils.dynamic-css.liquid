@@ -1,0 +1,2559 @@
+{%- comment -%}
+    Generate CSS variables for dynamic Breakpoint CSS
+
+    Accepts:
+    - variable: {string} CSS Variable
+    - input: {array} Array of [first,last] for Desktop | Mobile styles
+    - no_pixel_default: {boolean} Defaults to false - Disables numbers to fallback to 'px' by default
+    - force_pixel: {boolean} Defaults to false - Disables numbers to fallback to 'px' by default
+
+    Usage:
+    {%- render '_utils.css-variables', variable: "--pt", input: top -%}
+
+{%- endcomment -%}
+
+{% liquid
+  assign _settings = block.settings | default: section.settings
+  assign __keys = _settings | join: "," | prepend: ","
+  if css_variables
+    assign css_var = "--"
+  endif
+  assign default_selector = '[data-style-id="' | append: section.id | append: '"]'
+  assign desktop_styles = ""
+  assign mobile_styles = ""
+  assign hover_mobile_styles = ""
+  assign desktop_styles_only = ""
+  assign mobile_styles_only = ""
+
+  if block.id
+    assign default_selector = '[data-style-id="' | append: section.id | append: "--" | append: block.id | append: '"]'
+  endif
+
+  assign selector = selector | default: default_selector
+  assign where_selector = ':where(' | append: default_selector | append: ')'
+  assign selector = selector | replace: "&", where_selector | replace: '\/', '/' | replace: '/', '\/'
+
+  if keys
+    assign keys = keys | prepend: ',' | strip_newlines | replace: ' ', "" | append: ","
+  endif
+
+  comment
+  -------------- COLORS --------------
+  endcomment
+  if __keys contains ',text_color' or __keys contains ',background_color' or __keys contains ',background_gradient' or __keys contains ',border_color' or __keys contains ',divider_background_color' or __keys contains ',hover_outline_color'
+
+    assign text_color = _settings['text_color']
+    if _settings['text_color'] == blank or _settings['text_color'].alpha == 0
+      assign text_color = 'inherit'
+    endif
+
+    assign mobile_text_color = _settings['mobile_text_color']
+    if mobile_text_color == blank or mobile_text_color.alpha == 0
+      assign mobile_text_color = text_color
+    endif
+
+    assign background_color = _settings['background_color']
+    assign mobile_background_color = _settings['mobile_background_color']
+    if mobile_background_color == blank or mobile_background_color.alpha == 0
+      assign mobile_background_color = background_color
+    endif
+
+    assign divider_background_color = _settings['divider_background_color']
+    assign mobile_divider_background_color = _settings['mobile_divider_background_color']
+    if mobile_divider_background_color == blank or mobile_divider_background_color.alpha == 0
+      assign mobile_divider_background_color = divider_background_color
+    endif
+
+    assign background_gradient = _settings['background_gradient'] | default: _settings['background_color']
+    assign mobile_background_gradient = _settings['mobile_background_gradient']
+    if mobile_background_gradient == blank or mobile_background_gradient.alpha == 0
+      assign mobile_background_gradient = background_gradient
+    endif
+    assign border_color = _settings['border_color']
+    assign mobile_border_color = _settings['mobile_border_color']
+    if mobile_border_color == blank or mobile_border_color.alpha == 0
+      assign mobile_border_color = border_color
+    endif
+
+    if text_color and text_color.alpha != 0 and keys contains ',text_color,' or keys == null
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "color:" | append: mobile_text_color
+      assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "color:" | append: text_color
+    endif
+
+    if background_color and background_color.alpha != 0 and keys contains ',background_color,' or keys == null
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "background-color:" | append: mobile_background_color
+      assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "background-color:" | append: background_color
+    endif
+
+    if divider_background_color and divider_background_color.alpha != 0 and keys contains ',divider_background_color,' or keys == null
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "background-color:" | append: mobile_divider_background_color
+      assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "background-color:" | append: divider_background_color
+    endif
+
+    if background_gradient and background_gradient.alpha != 0 and keys contains ',background_gradient,' or keys == null
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "background:" | append: mobile_background_gradient
+      assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "background:" | append: background_gradient
+    endif
+
+    if border_color and border_color.alpha != 0 and keys contains ',border_color,' or keys == null
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "border-color:" | append: mobile_border_color
+      assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "border-color:" | append: border_color
+    endif
+
+    if keys contains ',hover_outline_color,' or keys == null
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "outline-color:" | append: _settings['hover_outline_color']
+    endif
+  endif
+
+  comment
+  -------------- Hover COLORS --------------
+  endcomment
+  if __keys contains ',hover_text_color' or __keys contains ',hover_background_color' or __keys contains ',hover_background_gradient' or __keys contains ',hover_border_color'
+
+    assign hover_text_color = _settings['hover_text_color']
+    if _settings['hover_text_color'] == blank or _settings['hover_text_color'].alpha == 0
+      assign hover_text_color = 'inherit'
+    endif
+
+    assign hover_background_color = _settings['hover_background_color']
+
+    assign hover_background_gradient = _settings['hover_background_gradient'] | default: _settings['hover_background_color']
+
+    assign hover_border_color = _settings['hover_border_color']
+
+    if hover_text_color and hover_text_color.alpha != 0 and keys contains ',hover_text_color,' or keys == null
+      assign hover_mobile_styles = hover_mobile_styles | append: ";" | append: css_var | append: "color:" | append: hover_text_color
+    endif
+
+    if hover_background_color and hover_background_color.alpha != 0 and keys contains ',hover_background_color,' or keys == null
+      assign hover_mobile_styles = hover_mobile_styles | append: ";" | append: css_var | append: "background-color:" | append: hover_background_color
+    endif
+
+    if hover_background_gradient and hover_background_gradient.alpha != 0 and keys contains ',hover_background_gradient,' or keys == null
+      assign hover_mobile_styles = hover_mobile_styles | append: ";" | append: css_var | append: "background:" | append: hover_background_gradient
+    endif
+
+    if hover_border_color and hover_border_color.alpha != 0 and keys contains ',hover_border_color,' or keys == null
+      assign hover_mobile_styles = hover_mobile_styles | append: ";" | append: css_var | append: "border-color:" | append: hover_border_color
+    endif
+  endif
+
+  comment
+  -------------- PAGINATION COLORS --------------
+  endcomment
+  if __keys contains ',pagination_background_color' or __keys contains ',pagination_border_color'
+
+    assign pagination_background_color = _settings['pagination_background_color']
+    assign mobile_pagination_background_color = _settings['mobile_pagination_background_color']
+    if mobile_pagination_background_color == blank or mobile_pagination_background_color.alpha == 0
+      assign mobile_pagination_background_color = pagination_background_color
+    endif
+
+    assign pagination_border_color = _settings['pagination_border_color']
+    assign mobile_pagination_border_color = _settings['mobile_pagination_border_color']
+    if mobile_pagination_border_color == blank or mobile_pagination_border_color.alpha == 0
+      assign mobile_pagination_border_color = pagination_border_color
+    endif
+
+    if pagination_background_color and pagination_background_color.alpha != 0 and keys contains ',pagination_background_color,' or keys == null
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "background-color:" | append: mobile_pagination_background_color
+      assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "background-color:" | append: pagination_background_color
+    endif
+
+    if pagination_border_color and pagination_border_color.alpha != 0 and keys contains ',pagination_border_color,' or keys == null
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "border-color:" | append: mobile_pagination_border_color
+      assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "border-color:" | append: pagination_border_color
+    endif
+  endif
+
+  comment
+-------------- TYPOGRAPHY --------------
+  endcomment
+  if __keys contains ',font_family' or __keys contains ',size_weight_height_opacity' or __keys contains ',spacing_transform_style_whitespace'
+    assign setting_keys = ",__body,__p,__h1,__h2,__h3,__h4,__h5,__h6" | split: ','
+    for _setting_key in setting_keys
+      comment
+        ------ font_family ------
+      endcomment
+      assign _settings_key = 'font_family' | append: _setting_key
+      assign _settings_key_check = ',font_family' | append: _setting_key | append: ','
+      if _settings[_settings_key] and keys contains _settings_key_check or keys == null
+        assign font_family = _settings[_settings_key] | strip_newlines | split: '/'
+
+        assign v = font_family.first
+        assign fonts = section.blocks | where: 'type', 'font' | map: '_settings'
+        for font in fonts
+          assign font_name = font.name | downcase | replace: ' ', ''
+          assign font_compare_name = v | downcase | replace: ' ', ''
+          if font_name == font_compare_name
+            if font.family.system? == true
+              assign fallback_fonts = font.fallback_families | default: font.family.fallback_families
+            endif
+            if font.family.system? != true
+              assign fallback_fonts = font.family.fallback_families | default: font.fallback_families
+            endif
+            break
+          endif
+        endfor
+
+        if v contains " "
+          assign v = v | replace: "'", '' | replace: '"', '' | prepend: "'" | append: "'"
+        endif
+        if fallback_fonts != blank
+          assign v = v | append: ', ' | append: fallback_fonts
+        endif
+        if font_family.last == font_family.first
+          assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "font-family:" | append: v
+        else
+          assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "font-family:" | append: v
+
+          assign v = font_family.last
+          assign fonts = section.blocks | where: 'type', 'font' | map: '_settings'
+          for font in fonts
+            assign font_name = font.name | downcase | replace: ' ', ''
+            assign font_compare_name = v | downcase | replace: ' ', ''
+            if font_name == font_compare_name
+              if font.family.system? == true
+                assign fallback_fonts = font.fallback_families | default: font.family.fallback_families
+              endif
+              if font.family.system? != true
+                assign fallback_fonts = font.family.fallback_families | default: font.fallback_families
+              endif
+              break
+            endif
+          endfor
+
+          if v contains " "
+            assign v = v | replace: "'", '' | replace: '"', '' | prepend: "'" | append: "'"
+          endif
+          if fallback_fonts != blank
+            assign v = v | append: ', ' | append: fallback_fonts
+          endif
+          assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "font-family:" | append: v
+        endif
+      endif
+
+      comment
+        ------ size_weight_height_opacity ------
+      endcomment
+      assign _settings_key = 'size_weight_height_opacity' | append: _setting_key
+      assign _settings_key_check = ',size_weight_height_opacity' | append: _setting_key | append: ','
+      if _settings[_settings_key] and keys contains _settings_key_check or keys == null
+        assign size_weight_height_opacity = _settings[_settings_key] | strip_newlines | split: '|'
+        assign font_size = size_weight_height_opacity[0] | split: '/'
+        assign font_weight = size_weight_height_opacity[1] | split: '/'
+        assign line_height = size_weight_height_opacity[2] | split: '/'
+        assign opacity = size_weight_height_opacity[3] | split: '/'
+
+        if font_size
+          assign v = font_size.first
+          assign v_num = v | times: 1
+          unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+            assign v = v_num | append: "px"
+          endunless
+          assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "font-size:" | append: v
+
+          assign v = font_size.last
+          assign v_num = v | times: 1
+          unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+            assign v = v_num | append: "px"
+          endunless
+          assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "font-size:" | append: v
+        endif
+
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "line-height:" | append: line_height.first
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "line-height:" | append: line_height.last
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "font-weight:" | append: font_weight.first
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "font-weight:" | append: font_weight.last
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "opacity:" | append: opacity.first
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "opacity:" | append: opacity.last
+      endif
+
+      comment
+        ------ spacing_transform_style_whitespace ------
+      endcomment
+      assign _settings_key = 'spacing_transform_style_whitespace' | append: _setting_key
+      assign _settings_key_check = ',spacing_transform_style_whitespace' | append: _setting_key | append: ','
+      if _settings[_settings_key] and keys contains _settings_key_check or keys == null
+        assign spacing_transform_style_whitespace = _settings[_settings_key] | strip_newlines | split: '|'
+        assign letter_spacing = spacing_transform_style_whitespace[0] | split: '/'
+        assign text_transform = spacing_transform_style_whitespace[1] | split: '/'
+        assign font_style = spacing_transform_style_whitespace[2] | split: '/'
+        assign white_space = spacing_transform_style_whitespace[3] | split: '/'
+
+        if letter_spacing
+          assign v = letter_spacing.first
+          assign v_num = v | times: 1
+          unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+            assign v = v_num | append: "px"
+          endunless
+          assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "letter-spacing:" | append: v
+
+          assign v = letter_spacing.last
+          assign v_num = v | times: 1
+          unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+            assign v = v_num | append: "px"
+          endunless
+          assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "letter-spacing:" | append: v
+        endif
+
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "text-transform:" | append: text_transform.first
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "text-transform:" | append: text_transform.last
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "font-style:" | append: font_style.first
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "font-style:" | append: font_style.last
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "white-space:" | append: white_space.first
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "white-space:" | append: white_space.last
+      endif
+    endfor
+  endif
+
+  comment
+-------------- DESIGN ELEMENTS --------------
+  endcomment
+  if __keys contains ',padding_top_bottom_left_right_min_height' or __keys contains ',border_width_radius_shadow_gap_text_align'
+    comment
+      ------ padding_top_bottom_left_right_min_height ------
+    endcomment
+    if _settings['padding_top_bottom_left_right_min_height'] and keys contains ',padding_top_bottom_left_right_min_height,' or keys == null
+      assign padding_top_bottom_left_right_min_height = _settings['padding_top_bottom_left_right_min_height'] | strip_newlines | split: '|'
+      assign padding_top = padding_top_bottom_left_right_min_height[0] | split: '/'
+      assign padding_bottom = padding_top_bottom_left_right_min_height[1] | split: '/'
+      assign padding_left = padding_top_bottom_left_right_min_height[2] | split: '/'
+      assign padding_right = padding_top_bottom_left_right_min_height[3] | split: '/'
+      assign min_height = padding_top_bottom_left_right_min_height[4] | split: '/'
+
+      if padding_top
+        assign v = padding_top.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "padding-top:" | append: v
+
+        assign v = padding_top.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "padding-top:" | append: v
+      endif
+
+      if padding_bottom
+        assign v = padding_bottom.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "padding-bottom:" | append: v
+
+        assign v = padding_bottom.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "padding-bottom:" | append: v
+      endif
+
+      if padding_left
+        assign v = padding_left.first
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains 'gutter'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "padding-left:" | append: v
+
+        assign v = padding_left.last
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains 'gutter'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "padding-left:" | append: v
+      endif
+
+      if padding_right
+        assign v = padding_right.first
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains 'gutter'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "padding-right:" | append: v
+
+        assign v = padding_right.last
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains 'gutter'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "padding-right:" | append: v
+      endif
+
+      if min_height
+        assign v = min_height.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "min-height:" | append: v
+
+        assign v = min_height.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "min-height:" | append: v
+      endif
+    endif
+
+    comment
+      ------ border_width_radius_shadow_gap_text_align ------
+    endcomment
+    if _settings['border_width_radius_shadow_gap_text_align'] and keys contains ',border_width_radius_shadow_gap_text_align,' or keys == null
+      assign border_width_radius_shadow_gap_text_align = _settings['border_width_radius_shadow_gap_text_align'] | strip_newlines | split: '|'
+      assign border_width = border_width_radius_shadow_gap_text_align[0] | split: '/'
+      assign border_radius = border_width_radius_shadow_gap_text_align[1] | split: '/'
+      assign shadow = border_width_radius_shadow_gap_text_align[2] | split: '/'
+      assign gap = border_width_radius_shadow_gap_text_align[3] | split: '/'
+      assign text_align = border_width_radius_shadow_gap_text_align[4] | split: '/'
+
+      if border_width
+        assign v = border_width.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "border-width:" | append: v
+
+        assign v = border_width.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "border-width:" | append: v
+      endif
+
+      if border_radius
+        assign v = border_radius.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "border-radius:" | append: v
+
+        assign v = border_radius.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "border-radius:" | append: v
+      endif
+
+      if gap
+        assign v = gap.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "gap:" | append: v
+
+        assign v = gap.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "gap:" | append: v
+      endif
+
+      if shadow
+        assign shadow_desktop = shadow.first | trim
+        assign shadow_desktop = shadow.last | trim
+        case shadow_desktop
+          when "1"
+            assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05)"
+          when "2"
+            assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "box-shadow: 0 4px 6px 1px rgb(0 0 0 / 0.1), 0 2px 4px 2px rgb(0 0 0 / 0.1)"
+          when "3"
+            assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "box-shadow: 0 10px 15px 3px rgb(0 0 0 / 0.1), 0 4px 6px 4px rgb(0 0 0 / 0.1)"
+          when "4"
+            assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "box-shadow: 0 20px 25px 5px rgb(0 0 0 / 0.1), 0 8px 10px 6px rgb(0 0 0 / 0.1)"
+          when "5"
+            assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "box-shadow: 0 25px 50px 12px rgb(0 0 0 / 0.25)"
+          else
+            assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "box-shadow: none"
+        endcase
+        case shadow_desktop
+          when "1"
+            assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05)"
+          when "2"
+            assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "box-shadow: 0 4px 6px 1px rgb(0 0 0 / 0.1), 0 2px 4px 2px rgb(0 0 0 / 0.1)"
+          when "3"
+            assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "box-shadow: 0 10px 15px 3px rgb(0 0 0 / 0.1), 0 4px 6px 4px rgb(0 0 0 / 0.1)"
+          when "4"
+            assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "box-shadow: 0 20px 25px 5px rgb(0 0 0 / 0.1), 0 8px 10px 6px rgb(0 0 0 / 0.1)"
+          when "5"
+            assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "box-shadow: 0 25px 50px 12px rgb(0 0 0 / 0.25)"
+          else
+            assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "box-shadow: none"
+        endcase
+      endif
+
+      if text_align
+        assign v = text_align.first | replace: "inherit", "center" | replace: "left", "start" | replace: "right", "end" | default: "center"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "justify-content:" | append: v
+
+        assign v = text_align.last | replace: "inherit", "center" | replace: "left", "start" | replace: "right", "end" | default: "center"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "justify-content:" | append: v
+
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "text-align:" | append: text_align.first
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "text-align:" | append: text_align.last
+      endif
+
+
+    endif
+
+  endif
+
+  comment
+  -------------- BLOCKS --------------
+  endcomment
+  if __keys contains ',max_w_flex_col_row_order_align' or __keys contains ',margin_top_bottom_left_right' or __keys contains ',margin_top_bottom_left_right_align'
+    comment
+        ------ max_w_flex_col_row_order_align ------
+    endcomment
+    if _settings['max_w_flex_col_row_order_align'] and keys contains ',max_w_flex_col_row_order_align,' or keys == null
+      assign max_w_flex_col_row_order_align = _settings['max_w_flex_col_row_order_align'] | strip_newlines | split: '|'
+      assign max_width = max_w_flex_col_row_order_align[0] | split: '/'
+      assign flex = max_w_flex_col_row_order_align[1] | split: '/'
+      assign col_span = max_w_flex_col_row_order_align[2] | split: '/'
+      assign row_span = max_w_flex_col_row_order_align[3] | split: '/'
+      assign order = max_w_flex_col_row_order_align[4] | split: '/'
+      assign text_align = max_w_flex_col_row_order_align[5] | split: '/'
+
+      if max_width
+        assign v = max_width.first | replace: "fit", "fit-content" | replace: "min", "min-content" | replace: "max", "max-content"
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "max-width:" | append: v
+
+        if v contains '100vw'
+          assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "width:" | append: v
+        else
+          assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "width:" | append: '100%'
+        endif
+
+        assign v = max_width.last | replace: "fit", "fit-content" | replace: "min", "min-content" | replace: "max", "max-content"
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "max-width:" | append: v
+
+        if v contains '100vw'
+          assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "width:" | append: v
+        else
+          assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "width:" | append: '100%'
+        endif
+
+      endif
+
+      if col_span
+        if col_span.first contains "!"
+          assign v = 'span ' | append: col_span.first | replace: "!", ''
+          assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "grid-column:" | append: v
+        else
+          assign v = 'span min(' | append: col_span.first | append: ', var(--grid-cols, ' | append: col_span.first | append: '))'
+          assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "grid-column:" | append: v
+        endif
+        if col_span.last contains "!"
+          assign v = 'span ' | append: col_span.last | replace: "!", ''
+          assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "grid-column:" | append: v
+        else
+          assign v = 'span min(' | append: col_span.last | append: ', var(--grid-cols, ' | append: col_span.last | append: '))'
+          assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "grid-column:" | append: v
+        endif
+      endif
+
+
+      assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "grid-row: span" | append: row_span.first
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "grid-row: span " | append: row_span.last
+      assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "flex:" | append: flex.first
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "flex:" | append: flex.last
+      assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "order:" | append: order.first
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "order:" | append: order.last
+      assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "text-align:" | append: text_align.first
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "text-align:" | append: text_align.last
+    endif
+
+    comment
+      ------ margin_top_bottom_left_right ------
+    endcomment
+
+    if _settings['margin_top_bottom_left_right'] and keys contains ',margin_top_bottom_left_right,' or keys == null
+      assign margin_top_bottom_left_right = _settings['margin_top_bottom_left_right'] | strip_newlines | split: '|'
+      assign margin_top = margin_top_bottom_left_right[0] | split: '/'
+      assign margin_bottom = margin_top_bottom_left_right[1] | split: '/'
+      assign margin_left = margin_top_bottom_left_right[2] | split: '/'
+      assign margin_right = margin_top_bottom_left_right[3] | split: '/'
+
+
+      if margin_top
+        assign v = margin_top.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "margin-top:" | append: v
+
+        assign v = margin_top.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "margin-top:" | append: v
+      endif
+
+
+      if margin_bottom
+        assign v = margin_bottom.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "margin-bottom:" | append: v
+
+        assign v = margin_bottom.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "margin-bottom:" | append: v
+      endif
+
+      if margin_left
+        assign v = margin_left.first
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains '- gutter' or v contains '-gutter'
+          assign v = 'calc(-1 * var(--layout-container-gutter))'
+        endif
+        if v contains 'gutter' and v != 'calc(-1 * var(--layout-container-gutter))'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "margin-left:" | append: v
+
+        assign v = margin_left.last
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains '- gutter' or v contains '-gutter'
+          assign v = 'calc(-1 * var(--layout-container-gutter))'
+        endif
+        if v contains 'gutter' and v != 'calc(-1 * var(--layout-container-gutter))'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "margin-left:" | append: v
+      endif
+
+      if margin_right
+        assign v = margin_right.first
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains '- gutter' or v contains '-gutter'
+          assign v = 'calc(-1 * var(--layout-container-gutter))'
+        endif
+        if v contains 'gutter' and v != 'calc(-1 * var(--layout-container-gutter))'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "margin-right:" | append: v
+
+        assign v = margin_right.last
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains '- gutter' or v contains '-gutter'
+          assign v = 'calc(-1 * var(--layout-container-gutter))'
+        endif
+        if v contains 'gutter' and v != 'calc(-1 * var(--layout-container-gutter))'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "margin-right:" | append: v
+      endif
+
+    endif
+
+    comment
+      ------ margin_top_bottom_left_right ------
+    endcomment
+
+    if _settings['margin_top_bottom_left_right_align'] and keys contains ',margin_top_bottom_left_right_align,' or keys == null
+      assign margin_top_bottom_left_right_align = _settings['margin_top_bottom_left_right_align'] | strip_newlines | split: '|'
+      assign margin_top = margin_top_bottom_left_right_align[0] | split: '/'
+      assign margin_bottom = margin_top_bottom_left_right_align[1] | split: '/'
+      assign margin_left = margin_top_bottom_left_right_align[2] | split: '/'
+      assign margin_right = margin_top_bottom_left_right_align[3] | split: '/'
+      assign text_align = margin_top_bottom_left_right_align[4] | split: '/'
+
+
+      if margin_top
+        assign v = margin_top.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "margin-top:" | append: v
+
+        assign v = margin_top.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "margin-top:" | append: v
+      endif
+
+
+      if margin_bottom
+        assign v = margin_bottom.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "margin-bottom:" | append: v
+
+        assign v = margin_bottom.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "margin-bottom:" | append: v
+      endif
+
+      if margin_left
+        assign v = margin_left.first
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains '- gutter' or v contains '-gutter'
+          assign v = 'calc(-1 * var(--layout-container-gutter))'
+        endif
+        if v contains 'gutter' and v != 'calc(-1 * var(--layout-container-gutter))'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "margin-left:" | append: v
+
+        assign v = margin_left.last
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains '- gutter' or v contains '-gutter'
+          assign v = 'calc(-1 * var(--layout-container-gutter))'
+        endif
+        if v contains 'gutter' and v != 'calc(-1 * var(--layout-container-gutter))'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "margin-left:" | append: v
+      endif
+
+      if margin_right
+        assign v = margin_right.first
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains '- gutter' or v contains '-gutter'
+          assign v = 'calc(-1 * var(--layout-container-gutter))'
+        endif
+        if v contains 'gutter' and v != 'calc(-1 * var(--layout-container-gutter))'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "margin-right:" | append: v
+
+        assign v = margin_right.last
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains '- gutter' or v contains '-gutter'
+          assign v = 'calc(-1 * var(--layout-container-gutter))'
+        endif
+        if v contains 'gutter' and v != 'calc(-1 * var(--layout-container-gutter))'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "margin-right:" | append: v
+      endif
+
+      assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "text-align:" | append: text_align.first
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "text-align:" | append: text_align.last
+
+    endif
+
+    comment
+      ------ margin_top_bottom_left_right - Via `padding_top_bottom_left_right` and padding_as_margin == true ------
+    endcomment
+    if _settings['padding_top_bottom_left_right'] and padding_as_margin == true and keys contains ',padding_top_bottom_left_right,' or keys == null
+      assign padding_top_bottom_left_right = _settings['padding_top_bottom_left_right'] | strip_newlines | split: '|'
+      assign margin_top = padding_top_bottom_left_right[0] | split: '/'
+      assign margin_bottom = padding_top_bottom_left_right[1] | split: '/'
+      assign margin_left = padding_top_bottom_left_right[2] | split: '/'
+      assign margin_right = padding_top_bottom_left_right[3] | split: '/'
+
+
+      if margin_top
+        assign v = margin_top.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "margin-top:" | append: v
+
+        assign v = margin_top.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "margin-top:" | append: v
+      endif
+
+
+      if margin_bottom
+        assign v = margin_bottom.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "margin-bottom:" | append: v
+
+        assign v = margin_bottom.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "margin-bottom:" | append: v
+      endif
+
+      if margin_left
+        assign v = margin_left.first
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains '- gutter' or v contains '-gutter'
+          assign v = 'calc(-1 * var(--layout-container-gutter))'
+        endif
+        if v contains 'gutter' and v != 'calc(-1 * var(--layout-container-gutter))'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "margin-left:" | append: v
+
+        assign v = margin_left.last
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains '- gutter' or v contains '-gutter'
+          assign v = 'calc(-1 * var(--layout-container-gutter))'
+        endif
+        if v contains 'gutter' and v != 'calc(-1 * var(--layout-container-gutter))'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "margin-left:" | append: v
+      endif
+
+      if margin_right
+        assign v = margin_right.first
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains '- gutter' or v contains '-gutter'
+          assign v = 'calc(-1 * var(--layout-container-gutter))'
+        endif
+        if v contains 'gutter' and v != 'calc(-1 * var(--layout-container-gutter))'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "margin-right:" | append: v
+
+        assign v = margin_right.last
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains '- gutter' or v contains '-gutter'
+          assign v = 'calc(-1 * var(--layout-container-gutter))'
+        endif
+        if v contains 'gutter' and v != 'calc(-1 * var(--layout-container-gutter))'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "margin-right:" | append: v
+      endif
+
+    endif
+  endif
+
+  comment
+    -------------- BLOCK LAYOUT - Padding - Borders --------------
+  endcomment
+  if __keys contains ',padding_top_bottom_left_right' or __keys contains ',padding_top_bottom_left_right_box' or __keys contains ',border_width_radius'
+    comment
+      ------ padding_top_bottom_left_right ------
+    endcomment
+    if _settings['padding_top_bottom_left_right'] and padding_as_margin != true and keys contains ',padding_top_bottom_left_right,' or keys == null
+      assign padding_top_bottom_left_right = _settings['padding_top_bottom_left_right'] | strip_newlines | split: '|'
+      assign padding_top = padding_top_bottom_left_right[0] | split: '/'
+      assign padding_bottom = padding_top_bottom_left_right[1] | split: '/'
+      assign padding_left = padding_top_bottom_left_right[2] | split: '/'
+      assign padding_right = padding_top_bottom_left_right[3] | split: '/'
+      assign min_height = padding_top_bottom_left_right[4] | split: '/'
+
+      if padding_top
+        assign v = padding_top.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "padding-top:" | append: v
+
+        assign v = padding_top.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "padding-top:" | append: v
+      endif
+
+      if padding_bottom
+        assign v = padding_bottom.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "padding-bottom:" | append: v
+
+        assign v = padding_bottom.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "padding-bottom:" | append: v
+      endif
+
+      if padding_left
+        assign v = padding_left.first
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains 'gutter'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "padding-left:" | append: v
+
+        assign v = padding_left.last
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains 'gutter'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "padding-left:" | append: v
+      endif
+
+      if padding_right
+        assign v = padding_right.first
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains 'gutter'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "padding-right:" | append: v
+
+        assign v = padding_right.last
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains 'gutter'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "padding-right:" | append: v
+      endif
+
+
+    endif
+    comment
+        ------ padding_top_bottom_left_right_box ------
+      endcomment
+    if _settings['padding_top_bottom_left_right_box'] and keys contains ',padding_top_bottom_left_right_box,' or keys == null
+      assign padding_top_bottom_left_right = _settings['padding_top_bottom_left_right_box'] | strip_newlines | split: '|'
+      assign padding_top = padding_top_bottom_left_right[0] | split: '/'
+      assign padding_bottom = padding_top_bottom_left_right[1] | split: '/'
+      assign padding_left = padding_top_bottom_left_right[2] | split: '/'
+      assign padding_right = padding_top_bottom_left_right[3] | split: '/'
+      assign min_height = padding_top_bottom_left_right[4] | split: '/'
+
+      if padding_top
+        assign v = padding_top.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "padding-top:" | append: v
+
+        assign v = padding_top.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "padding-top:" | append: v
+      endif
+
+      if padding_bottom
+        assign v = padding_bottom.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "padding-bottom:" | append: v
+
+        assign v = padding_bottom.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "padding-bottom:" | append: v
+      endif
+
+      if padding_left
+        assign v = padding_left.first
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains 'gutter'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "padding-left:" | append: v
+
+        assign v = padding_left.last
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains 'gutter'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "padding-left:" | append: v
+      endif
+
+      if padding_right
+        assign v = padding_right.first
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains 'gutter'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "padding-right:" | append: v
+
+        assign v = padding_right.last
+        if v contains 'container-'
+          assign v = v | replace: 'container-', '' | trim | replace: " ", ''
+          assign v = 'var(--layout-container-padding-' | append: v | append: ')'
+        endif
+        if v contains 'gutter'
+          assign v = v | replace: "gutter", 'var(--layout-container-gutter)'
+        endif
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "padding-right:" | append: v
+      endif
+
+
+    endif
+
+    comment
+    ------ border_width_radius ------
+    endcomment
+    if _settings['border_width_radius'] and keys contains ',border_width_radius,' or keys == null
+      assign border_width_radius = _settings['border_width_radius'] | strip_newlines | split: '|'
+      assign border_width = border_width_radius[0] | split: '/'
+      assign radius = border_width_radius[1] | split: '/'
+      assign max_height = border_width_radius[2] | split: '/'
+      assign max_width = border_width_radius[3] | split: '/'
+      assign overflow = border_width_radius[4] | split: '/'
+
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "border-style:solid"
+
+      if border_width
+        assign v = border_width.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "border-width:" | append: v
+
+        assign v = border_width.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "border-width:" | append: v
+      endif
+
+
+      if radius
+        assign v = radius.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "border-radius:" | append: v
+
+        assign v = radius.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "border-radius:" | append: v
+      endif
+
+      if max_height
+        assign v = max_height.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "max-height:" | append: v
+
+        assign v = max_height.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "max-height:" | append: v
+
+
+      endif
+
+      if max_width
+        assign v = max_width.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "max-width:" | append: v
+
+        assign v = max_width.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "max-width:" | append: v
+
+      endif
+
+      assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "overflow:" | append: overflow.first
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "overflow:" | append: overflow.last
+
+    endif
+  endif
+
+  comment
+    -------------- BLOCK LAYOUT - Grid --------------
+  endcomment
+  if __keys contains ',grid_cols_align_x_align_y_gap' or __keys contains ',grid_auto_cols_width_height_gap'
+    comment
+      ------ grid_cols_align_x_align_y_gap ------
+    endcomment
+    if _settings['grid_cols_align_x_align_y_gap'] and keys contains ',grid_cols_align_x_align_y_gap,' or keys == null
+      assign grid_cols_align_x_align_y_gap = _settings['grid_cols_align_x_align_y_gap'] | strip_newlines | split: '|'
+      assign grid_cols = grid_cols_align_x_align_y_gap[0] | split: '/'
+      assign align_x = grid_cols_align_x_align_y_gap[1] | split: '/'
+      assign align_y = grid_cols_align_x_align_y_gap[2] | split: '/'
+      assign gap = grid_cols_align_x_align_y_gap[3] | split: '/'
+
+      if grid_cols
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "--grid-cols:" | append: grid_cols.first
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "--grid-cols:" | append: grid_cols.last
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "grid-template-columns: repeat(var(--grid-cols,1), minmax(0, 1fr))"
+      endif
+
+      if align_x
+        assign v = align_x.first | replace: "around", "space-around" | replace: "between", "space-between" | replace: "evenly", "space-evenly"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "justify-content:" | append: v
+        assign v = align_x.last | replace: "around", "space-around" | replace: "between", "space-between" | replace: "evenly", "space-evenly"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "justify-content:" | append: v
+
+        assign v = align_x.first | replace: "around", "center" | replace: "between", "center" | replace: "evenly", "center"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "place-items:" | append: v
+        assign v = v | replace: "start", "left" | replace: "end", "right"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "text-align:" | append: v
+        assign v = align_x.last | replace: "around", "center" | replace: "between", "center" | replace: "evenly", "center"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "place-items:" | append: v
+        assign v = v | replace: "start", "left" | replace: "end", "right"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "text-align:" | append: v
+      endif
+
+      if align_y
+        assign v = align_y.first | replace: "around", "center" | replace: "between", "center" | replace: "evenly", "center"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "align-items:" | append: v
+        assign v = align_y.last | replace: "around", "center" | replace: "between", "center" | replace: "evenly", "center"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "align-items:" | append: v
+
+        assign v = align_y.first | replace: "around", "space-around" | replace: "between", "space-between" | replace: "evenly", "space-evenly"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "align-content:" | append: v
+        assign v = align_y.last | replace: "around", "space-around" | replace: "between", "space-between" | replace: "evenly", "space-evenly"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "align-content:" | append: v
+      endif
+
+      if gap
+        assign v = gap.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "gap:" | append: v
+
+        assign v = gap.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "gap:" | append: v
+
+      endif
+
+    endif
+
+    comment
+    ------ grid_auto_cols_width_height_gap ------
+    endcomment
+    if _settings['grid_auto_cols_width_height_gap'] and keys contains ',grid_auto_cols_width_height_gap,' or keys == null
+      assign grid_auto_cols_width_height_gap = _settings['grid_auto_cols_width_height_gap'] | strip_newlines | split: '|'
+      assign col_width = grid_auto_cols_width_height_gap[0] | split: '/'
+      assign col_height = grid_auto_cols_width_height_gap[1] | split: '/'
+      assign gap = grid_auto_cols_width_height_gap[2] | split: '/'
+
+      assign grid_flow = "grid-auto-flow: column dense"
+      assign grid_columns = "grid-auto-columns:"
+      assign grid_rows = "grid-template-rows:"
+
+      if _settings['grid_orientation'] == 'vertical'
+        assign grid_flow = "grid-auto-flow: row dense"
+        assign grid_columns = "grid-template-columns:"
+        assign grid_rows = "grid-auto-rows:"
+      endif
+
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: grid_flow
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "display: grid"
+
+      if col_width
+        assign v = col_width.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: grid_columns | append: v
+
+        assign v = col_width.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: grid_columns | append: v
+      endif
+
+      if col_height
+        assign v = col_height.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: grid_rows | append: v
+
+        assign v = col_height.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: grid_rows | append: v
+      endif
+
+      if gap
+        assign v = gap.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "gap:" | append: v
+
+        assign v = gap.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "gap:" | append: v
+      endif
+
+    endif
+  endif
+
+  comment
+    -------------- BLOCK LAYOUT - Flex --------------
+  endcomment
+  if __keys contains ',flex_row_wrap_align_x_align_y_gap' or __keys contains ',flex_direction_align_x_align_y_gap_wrap' or __keys contains ',flex_dividers_height_width_align'
+    comment
+      ------ flex_row_wrap_align_x_align_y_gap ------
+    endcomment
+    if _settings['flex_row_wrap_align_x_align_y_gap'] and keys contains ',flex_row_wrap_align_x_align_y_gap,' or keys == null
+      assign flex_row_wrap_align_x_align_y_gap = _settings['flex_row_wrap_align_x_align_y_gap'] | strip_newlines | split: '|'
+      assign align_x = flex_row_wrap_align_x_align_y_gap[0] | split: '/'
+      assign align_y = flex_row_wrap_align_x_align_y_gap[1] | split: '/'
+      assign gap = flex_row_wrap_align_x_align_y_gap[2] | split: '/'
+      assign wrap = flex_row_wrap_align_x_align_y_gap[3] | split: '/'
+      assign flex_direction = flex_row_wrap_align_x_align_y_gap[4] | split: '/'
+
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "display: flex"
+      assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "flex-direction:" | append: flex_direction.first
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "flex-direction:" | append: flex_direction.last
+
+      if wrap != blank
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "flex-wrap:" | append: wrap.first
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "flex-wrap:" | append: wrap.last
+      else
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "flex-wrap: wrap"
+      endif
+
+      if align_x
+        assign v = align_x.first | replace: "around", "space-around" | replace: "between", "space-between" | replace: "evenly", "space-evenly"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "justify-content:" | append: v
+        assign v = align_x.last | replace: "around", "space-around" | replace: "between", "space-between" | replace: "evenly", "space-evenly"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "justify-content:" | append: v
+
+        assign v = align_x.first | replace: "around", "center" | replace: "between", "center" | replace: "evenly", "center"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "place-items:" | append: v
+        assign v = v | replace: "start", "left" | replace: "end", "right"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "text-align:" | append: v
+        assign v = align_x.last | replace: "around", "center" | replace: "between", "center" | replace: "evenly", "center"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "place-items:" | append: v
+        assign v = v | replace: "start", "left" | replace: "end", "right"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "text-align:" | append: v
+      endif
+
+      if align_y
+        assign v = align_y.first | replace: "around", "center" | replace: "between", "center" | replace: "evenly", "center"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "align-items:" | append: v
+        assign v = align_y.last | replace: "around", "center" | replace: "between", "center" | replace: "evenly", "center"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "align-items:" | append: v
+
+        assign v = align_y.first | replace: "around", "space-around" | replace: "between", "space-between" | replace: "evenly", "space-evenly"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "align-content:" | append: v
+        assign v = align_y.last | replace: "around", "space-around" | replace: "between", "space-between" | replace: "evenly", "space-evenly"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "align-content:" | append: v
+      endif
+
+      if gap
+        assign v = gap.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "gap:" | append: v
+
+        assign v = gap.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "gap:" | append: v
+
+      endif
+
+    endif
+
+    comment
+      ------ flex_direction_align_x_align_y_gap_wrap ------
+    endcomment
+    if _settings['flex_direction_align_x_align_y_gap_wrap'] and keys contains ',flex_direction_align_x_align_y_gap_wrap,' or keys == null
+      assign flex_direction_align_x_align_y_gap_wrap = _settings['flex_direction_align_x_align_y_gap_wrap'] | strip_newlines | split: '|'
+      assign flex_direction = flex_direction_align_x_align_y_gap_wrap[0] | split: '/'
+      assign justify = flex_direction_align_x_align_y_gap_wrap[1] | split: '/'
+      assign align_items = flex_direction_align_x_align_y_gap_wrap[2] | split: '/'
+      assign gap = flex_direction_align_x_align_y_gap_wrap[3] | split: '/'
+      assign wrap = flex_direction_align_x_align_y_gap_wrap[4] | split: '/'
+      assign min_height = flex_direction_align_x_align_y_gap_wrap[5] | split: '/'
+
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "display: flex"
+      assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "flex-direction:" | append: flex_direction.first
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "flex-direction:" | append: flex_direction.last
+      assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "flex-wrap:" | append: wrap.first
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "flex-wrap:" | append: wrap.last
+
+      if justify
+        assign v = justify.first | replace: "around", "space-around" | replace: "between", "space-between" | replace: "evenly", "space-evenly"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "justify-content:" | append: v
+        assign v = justify.last | replace: "around", "space-around" | replace: "between", "space-between" | replace: "evenly", "space-evenly"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "justify-content:" | append: v
+
+        assign v = justify.first | replace: "around", "center" | replace: "between", "center" | replace: "evenly", "center"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "place-items:" | append: v
+        assign v = v | replace: "start", "left" | replace: "end", "right"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "text-align:" | append: v
+        assign v = justify.last | replace: "around", "center" | replace: "between", "center" | replace: "evenly", "center"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "place-items:" | append: v
+        assign v = v | replace: "start", "left" | replace: "end", "right"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "text-align:" | append: v
+      endif
+
+      if align_items
+        assign v = align_items.first | replace: "around", "center" | replace: "between", "center" | replace: "evenly", "center"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "align-items:" | append: v
+        assign v = align_items.last | replace: "around", "center" | replace: "between", "center" | replace: "evenly", "center"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "align-items:" | append: v
+
+        assign v = align_items.first | replace: "around", "space-around" | replace: "between", "space-between" | replace: "evenly", "space-evenly"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "align-content:" | append: v
+        assign v = align_items.last | replace: "around", "space-around" | replace: "between", "space-between" | replace: "evenly", "space-evenly"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "align-content:" | append: v
+      endif
+
+      if gap
+        assign v = gap.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        if _settings['flex_dividers_height_width_align']
+          assign v = 'calc(' | append: v | append: "* 0.5)"
+        endif
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "gap:" | append: v
+
+        assign v = gap.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        if _settings['flex_dividers_height_width_align']
+          assign v = 'calc(' | append: v | append: "* 0.5)"
+        endif
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "gap:" | append: v
+
+      endif
+
+      if min_height
+        assign v = min_height.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "min-height:" | append: v
+
+        assign v = min_height.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "min-height:" | append: v
+      endif
+
+    endif
+
+    comment
+      ------ flex_dividers_height_width_align ------
+    endcomment
+    if _settings['flex_dividers_height_width_align'] and keys contains ',flex_dividers_height_width_align,' or keys == null
+      assign flex_dividers_height_width_align = _settings['flex_dividers_height_width_align'] | strip_newlines | split: '|'
+      assign height = flex_dividers_height_width_align[0] | split: '/'
+      assign width = flex_dividers_height_width_align[1] | split: '/'
+      assign align = flex_dividers_height_width_align[2] | split: '/'
+
+      if width
+        assign v = width.first
+        assign v_num = v | times: 1
+        assign w_num_desktop = v_num
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "width:" | append: v
+
+        assign v = width.last
+        assign v_num = v | times: 1
+        assign w_num_mobile = v_num
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "width:" | append: v
+
+      endif
+
+      if height
+        assign v = height.first
+        assign v_num = v | times: 1
+        assign h_num_desktop = v_num
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "height:" | append: v
+
+        assign v = height.last
+        assign v_num = v | times: 1
+        assign h_num_mobile = v_num
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "height:" | append: v
+      endif
+
+      if align.first and v_num_desktop != 0 and h_num_desktop != 0
+        assign v = align.first | trim | replace: ' ', ''
+        case v
+          when 'start'
+            assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "margin: 0 auto auto 0"
+          when 'center'
+            assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "margin: auto"
+          when 'end'
+            assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "margin: auto 0 0 auto"
+        endcase
+      else
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "margin: 0"
+      endif
+
+      if align.last and v_num_mobile != 0 and h_num_mobile != 0
+        assign v = align.last | trim | replace: ' ', ''
+        case v
+          when 'start'
+            assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "margin: 0 auto auto 0"
+          when 'center'
+            assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "margin: auto"
+          when 'end'
+            assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "margin: auto 0 0 auto"
+        endcase
+      else
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "margin: 0"
+      endif
+
+    endif
+  endif
+
+  comment
+    -------------- BLOCK LAYOUT - Slideshow --------------
+  endcomment
+  if __keys contains ',slider_cols_rows_align_x_align_y_gap'
+    comment
+      ------ grid_cols_align_x_align_y_gap ------
+    endcomment
+    if _settings['slider_cols_rows_align_x_align_y_gap'] and keys contains ',slider_cols_rows_align_x_align_y_gap,' or keys == null
+      assign slider_cols_rows_align_x_align_y_gap = _settings['slider_cols_rows_align_x_align_y_gap'] | strip_newlines | split: '|'
+      assign grid_cols = slider_cols_rows_align_x_align_y_gap[0] | split: '/'
+      assign grid_rows = slider_cols_rows_align_x_align_y_gap[1] | split: '/'
+      assign justify = slider_cols_rows_align_x_align_y_gap[2] | split: '/'
+      assign align_items = slider_cols_rows_align_x_align_y_gap[3] | split: '/'
+      assign gap = slider_cols_rows_align_x_align_y_gap[4] | split: '/'
+
+      if gap
+        assign v = gap.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign gap_desktop = v | default: '0' | replace: "px", "" | append: "px"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "gap:" | append: v
+
+        assign v = gap.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign gap_mobile = v | default: '0' | replace: "px", "" | append: "px"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "gap:" | append: v
+      endif
+
+      if grid_cols
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "--grid-cols:" | append: grid_cols.first
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "--grid-cols:" | append: grid_cols.last
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "grid-template-columns: unset"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "grid-template-columns: unset"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "grid-auto-flow: column dense"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "grid-auto-flow: column dense"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "grid-auto-columns: calc((100% - (" | append: gap_mobile | append: " * (var(--grid-cols) - 1))) / var(--grid-cols))"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "grid-auto-columns: calc((100% - (" | append: gap_desktop | append: " * (var(--grid-cols) - 1))) / var(--grid-cols))"
+      endif
+
+      if grid_rows
+        if grid_rows.first contains 'auto'
+          assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "grid-auto-flow: initial"
+          assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "grid-auto-columns: initial"
+          assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "grid-template-columns: repeat(var(--grid-cols), 1fr)"
+          assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "grid-template-rows: unset"
+        else
+          assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "grid-template-rows: repeat(" | append: grid_rows.first | append: ", auto)"
+        endif
+
+        if grid_rows.last contains 'auto'
+          assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "grid-auto-flow: initial"
+          assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "grid-auto-columns: initial"
+          assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "grid-template-columns: repeat(var(--grid-cols), 1fr)"
+          assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "grid-template-rows: unset"
+        else
+          assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "grid-template-rows: repeat(" | append: grid_rows.last | append: ", auto)"
+        endif
+      endif
+
+      if justify
+        assign v = justify.first | replace: "around", "space-around" | replace: "between", "space-between" | replace: "evenly", "space-evenly"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "justify-content:" | append: v
+        assign v = justify.last | replace: "around", "space-around" | replace: "between", "space-between" | replace: "evenly", "space-evenly"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "justify-content:" | append: v
+
+        assign v = justify.first | replace: "around", "center" | replace: "between", "center" | replace: "evenly", "center"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "place-items:" | append: v
+        assign v = v | replace: "start", "left" | replace: "end", "right"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "text-align:" | append: v
+        assign v = justify.last | replace: "around", "center" | replace: "between", "center" | replace: "evenly", "center"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "place-items:" | append: v
+        assign v = v | replace: "start", "left" | replace: "end", "right"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "text-align:" | append: v
+      endif
+
+      if align_items
+        assign v = align_items.first | replace: "around", "center" | replace: "between", "center" | replace: "evenly", "center"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "align-items:" | append: v
+        assign v = align_items.last | replace: "around", "center" | replace: "between", "center" | replace: "evenly", "center"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "align-items:" | append: v
+
+        assign v = align_items.first | replace: "around", "space-around" | replace: "between", "space-between" | replace: "evenly", "space-evenly"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "align-content:" | append: v
+        assign v = align_items.last | replace: "around", "space-around" | replace: "between", "space-between" | replace: "evenly", "space-evenly"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "align-content:" | append: v
+      endif
+
+    endif
+
+  endif
+
+  comment
+    -------------- BLOCK LAYOUT - Table --------------
+  endcomment
+  if __keys contains ',cols_min_width_gap_border_radius'
+    comment
+      ------ grid_cols_align_x_align_y_gap ------
+    endcomment
+    if _settings['cols_min_width_gap_border_radius'] and keys contains ',cols_min_width_gap_border_radius,' or keys == null
+      assign cols_min_width_gap_border_radius = _settings['cols_min_width_gap_border_radius'] | strip_newlines | split: '|'
+      assign grid_template_cols = cols_min_width_gap_border_radius[0] | split: '/'
+      assign col_min_width = cols_min_width_gap_border_radius[1] | split: '/'
+      assign gap = cols_min_width_gap_border_radius[2] | split: '/'
+      assign border_width = cols_min_width_gap_border_radius[3] | split: '/'
+      assign radius = cols_min_width_gap_border_radius[4] | split: '/'
+
+      if grid_template_cols and col_min_width
+        assign v = col_min_width.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "grid-template-columns: repeat(" | append: grid_template_cols.first | append: ", minmax(" | append: v | append: ", 1fr))"
+
+        assign v = col_min_width.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "grid-template-columns: repeat(" | append: grid_template_cols.last | append: ", minmax(" | append: v | append: ", 1fr))"
+      endif
+
+      if gap
+        assign v = gap.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign gap_desktop = v | default: '0' | replace: "px", "" | append: "px"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "gap:" | append: v
+
+        assign v = gap.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign gap_mobile = v | default: '0' | replace: "px", "" | append: "px"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "gap:" | append: v
+      endif
+
+      if border_width
+        assign v = border_width.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "border-width:" | append: v
+
+        assign v = border_width.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "border-width:" | append: v
+      endif
+
+      if radius
+        assign v = radius.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "border-radius:" | append: v
+
+        assign v = radius.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "border-radius:" | append: v
+      endif
+
+    endif
+
+  endif
+
+  comment
+    -------------- SECTION LAYOUT --------------
+  endcomment
+  if __keys contains ",top_bottom_min_height"
+    comment
+      ------ top_bottom_min_height ------
+    endcomment
+    if _settings['top_bottom_min_height'] and keys contains ',top_bottom_min_height,' or keys == null
+      assign top_bottom_min_height = _settings['top_bottom_min_height'] | strip_newlines | split: '|'
+      assign padding_top = top_bottom_min_height[0] | split: '/'
+      assign padding_bottom = top_bottom_min_height[1] | split: '/'
+      assign min_height = top_bottom_min_height[2] | split: '/'
+
+      if padding_top
+        assign v = padding_top.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "padding-top:" | append: v
+
+        assign v = padding_top.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "padding-top:" | append: v
+      endif
+
+      if padding_bottom
+        assign v = padding_bottom.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "padding-bottom:" | append: v
+
+        assign v = padding_bottom.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "padding-bottom:" | append: v
+      endif
+
+      if min_height
+        assign v = min_height.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "min-height:" | append: v
+
+        assign v = min_height.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "min-height:" | append: v
+      endif
+
+    endif
+
+  endif
+
+  comment
+    -------------- PRODUCT SWATCHES --------------
+  endcomment
+  if __keys contains ",size_border_width_radius" or __keys contains ",outline_width_offset"
+    comment
+      ------ size_border_width_radius ------
+    endcomment
+    if _settings['size_border_width_radius'] and keys contains ',size_border_width_radius,' or keys == null
+      assign size_border_width_radius = _settings['size_border_width_radius'] | strip_newlines | split: '|'
+      assign size = size_border_width_radius[0] | split: '/'
+      assign border_width = size_border_width_radius[1] | split: '/'
+      assign radius = size_border_width_radius[2] | split: '/'
+
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "border-style:solid"
+
+      if size
+        assign v = size.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "width:" | append: v
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "height:" | append: v
+
+        assign v = size.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "width:" | append: v
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "height:" | append: v
+      endif
+
+      if border_width
+        assign v = border_width.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "border-width:" | append: v
+
+        assign v = border_width.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "border-width:" | append: v
+
+      endif
+
+      if radius
+        assign v = radius.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "border-radius:" | append: v
+
+        assign v = radius.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "border-radius:" | append: v
+      endif
+    endif
+    comment
+      ------ outline_width_offset ------
+    endcomment
+    if _settings['outline_width_offset'] and keys contains ',outline_width_offset,' or keys == null
+      assign outline_width_offset = _settings['outline_width_offset'] | strip_newlines | split: '|'
+      assign outline_width = outline_width_offset[0] | split: '/'
+      assign outline_offset = outline_width_offset[1] | split: '/'
+
+      if outline_width
+        assign v = outline_width.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "outline-width:" | append: v
+
+        assign v = outline_width.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "outline-width:" | append: v
+      endif
+
+      if outline_offset
+        assign v = outline_offset.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "outline-offset:" | append: v
+
+        assign v = outline_offset.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "outline-offset:" | append: v
+      endif
+
+    endif
+
+  endif
+
+  comment
+    -------------- DESIGN ELEMENTS  --------------
+  endcomment
+  if __keys contains ",width_height_border_width_radius"
+    comment
+      ------ width_height_border_width_radius ------
+    endcomment
+    if _settings['width_height_border_width_radius'] and keys contains ',width_height_border_width_radius,' or keys == null
+      assign width_height_border_width_radius = _settings['width_height_border_width_radius'] | strip_newlines | split: '|'
+      assign width = width_height_border_width_radius[0] | split: '/'
+      assign height = width_height_border_width_radius[1] | split: '/'
+      assign border_width = width_height_border_width_radius[2] | split: '/'
+      assign radius = width_height_border_width_radius[3] | split: '/'
+
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "border-style:solid"
+
+      if width
+        assign v = width.first | replace: "fit", "fit-content" | replace: "min", "min-content" | replace: "max", "max-content"
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "width:" | append: v
+
+        assign v = width.last | replace: "fit", "fit-content" | replace: "min", "min-content" | replace: "max", "max-content"
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "width:" | append: v
+      endif
+
+      if height
+        assign v = height.first | replace: "fit", "fit-content" | replace: "min", "min-content" | replace: "max", "max-content"
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "height:" | append: v
+
+        assign v = height.last | replace: "fit", "fit-content" | replace: "min", "min-content" | replace: "max", "max-content"
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "height:" | append: v
+      endif
+
+      if border_width
+        assign v = border_width.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "border-width:" | append: v
+
+        assign v = border_width.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "border-width:" | append: v
+
+      endif
+
+      if radius
+        assign v = radius.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "border-radius:" | append: v
+
+        assign v = radius.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "border-radius:" | append: v
+      endif
+    endif
+
+  endif
+
+  comment
+    -------------- IMAGES --------------
+  endcomment
+  if __keys contains ",width_height_aspect_object_fit" or __keys contains ",width_height_max_w_max_h_aspect_object_fit"
+    comment
+      ------ width_height_aspect_object_fit ------
+    endcomment
+    if _settings['width_height_aspect_object_fit'] and keys contains ',width_height_aspect_object_fit,' or keys == null
+      assign width_height_aspect_object_fit = _settings['width_height_aspect_object_fit'] | strip_newlines | split: '|'
+      assign width = width_height_aspect_object_fit[0] | split: '/'
+      assign height = width_height_aspect_object_fit[1] | split: '/'
+      assign aspect = width_height_aspect_object_fit[2] | split: '/'
+      assign default_object_first = 'cover' | split: "|"
+      assign object_fit = width_height_aspect_object_fit[3] | split: '/' | default: default_object_first
+      assign radius = width_height_aspect_object_fit[4] | split: '/'
+
+      if width
+        assign v = width.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "width:" | append: v
+
+        assign v = width.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "width:" | append: v
+      endif
+
+      if height
+        assign v = height.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "height:" | append: v
+
+        assign v = height.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "height:" | append: v
+      endif
+
+      assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "aspect-ratio:" | append: aspect.first
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "aspect-ratio:" | append: aspect.last
+      assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "object-fit:" | append: object_fit.first
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "object-fit:" | append: object_fit.last
+
+      if radius
+        assign v = radius.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "border-radius:" | append: v
+
+        assign v = radius.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "border-radius:" | append: v
+      endif
+    endif
+    comment
+      ------ width_height_max_w_max_h_aspect_object_fit ------
+    endcomment
+    if _settings['width_height_max_w_max_h_aspect_object_fit'] and keys contains ',width_height_max_w_max_h_aspect_object_fit,' or keys == null
+      assign width_height_max_w_max_h_aspect_object_fit = _settings['width_height_max_w_max_h_aspect_object_fit'] | strip_newlines | replace: ' ', "" | split: '|'
+      assign width = width_height_max_w_max_h_aspect_object_fit[0] | split: '/'
+      assign height = width_height_max_w_max_h_aspect_object_fit[1] | split: '/'
+      assign max_width = width_height_max_w_max_h_aspect_object_fit[2] | split: '/'
+      assign max_height = width_height_max_w_max_h_aspect_object_fit[3] | split: '/'
+      assign aspect = width_height_max_w_max_h_aspect_object_fit[4] | split: '/'
+      assign default_object_first = 'cover' | split: "|"
+      assign object_fit = width_height_max_w_max_h_aspect_object_fit[5] | split: '/' | default: default_object_first
+
+      if width
+        assign v = width.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "width:" | append: v
+
+        assign v = width.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "width:" | append: v
+      endif
+
+      if height
+        assign v = height.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "height:" | append: v
+
+        assign v = height.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "height:" | append: v
+      endif
+
+      assign v = max_width.first
+      assign v_num = v | times: 1
+      unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+        assign v = v_num | append: "px"
+      endunless
+      assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "max-width:" | append: v
+
+      assign v = max_width.last
+      assign v_num = v | times: 1
+      unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+        assign v = v_num | append: "px"
+      endunless
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "max-width:" | append: v
+
+      assign v = max_height.first
+      assign v_num = v | times: 1
+      unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+        assign v = v_num | append: "px"
+      endunless
+      assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "max-height:" | append: v
+
+      assign v = max_height.last
+      assign v_num = v | times: 1
+      unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+        assign v = v_num | append: "px"
+      endunless
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "max-height:" | append: v
+
+      assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "aspect-ratio:" | append: aspect.first
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "aspect-ratio:" | append: aspect.last
+      assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "object-fit:" | append: object_fit.first
+      assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "object-fit:" | append: object_fit.last
+    endif
+
+  endif
+
+  comment
+    -------------- ICONS --------------
+  endcomment
+  if __keys contains ",width_height" or __keys contains ",width_height_gap"
+    comment
+      ------ width_height ------
+    endcomment
+    if _settings['width_height'] and keys contains ',width_height,' or keys == null
+      assign width_height = _settings['width_height'] | strip_newlines | replace: ' ', "" | split: '|'
+      assign width = width_height[0] | split: '/'
+      assign height = width_height[1] | split: '/'
+
+      if width
+        assign v = width.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "width:" | append: v
+
+        assign v = width.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "width:" | append: v
+      endif
+
+      if height
+        assign v = height.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "height:" | append: v
+
+        assign v = height.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "height:" | append: v
+      endif
+    endif
+
+    comment
+      ------ width_height_gap ------
+    endcomment
+    if _settings['width_height_gap'] and keys contains ',width_height_gap,' or keys == null
+      assign width_height_gap = _settings['width_height_gap'] | strip_newlines | replace: ' ', "" | split: '|'
+      assign width = width_height_gap[0] | split: '/'
+      assign height = width_height_gap[1] | split: '/'
+      assign gap = width_height_gap[2] | split: '/'
+
+      if width
+        assign v = width.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "width:" | append: v
+
+        assign v = width.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "width:" | append: v
+      endif
+
+      if height
+        assign v = height.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "height:" | append: v
+
+        assign v = height.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "height:" | append: v
+      endif
+
+      if gap
+        assign v = gap.first
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign gap_desktop = v | default: '0' | replace: "px", "" | append: "px"
+        assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "gap:" | append: v
+
+        assign v = gap.last
+        assign v_num = v | times: 1
+        unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+          assign v = v_num | append: "px"
+        endunless
+        assign gap_mobile = v | default: '0' | replace: "px", "" | append: "px"
+        assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "gap:" | append: v
+      endif
+    endif
+
+  endif
+
+  comment
+    -------------- RESPONSIVE VISIBILITY --------------
+  endcomment
+  if __keys contains ",responsive_visibility"
+    comment
+      ------ width_height ------
+    endcomment
+    if _settings['responsive_visibility'] and keys contains ',responsive_visibility,' or keys == null
+      if _settings['responsive_visibility'] == 'mobile-only'
+        assign desktop_styles_only = desktop_styles_only | append: ";" | append: css_var | append: "display: none !important"
+      endif
+      if _settings['responsive_visibility'] == 'desktop-tablet-only'
+        assign mobile_styles_only = mobile_styles_only | append: ";" | append: css_var | append: "display: none !important"
+      endif
+    endif
+  endif
+
+  if _settings['width_flex_text_align'] and keys contains ',width_flex_text_align,' or keys == null
+    assign width_flex_text_align = _settings['width_flex_text_align'] | strip_newlines | replace: ' ', "" | split: '|'
+    assign width = width_flex_text_align[0] | split: '/'
+    assign flex = width_flex_text_align[1] | split: '/'
+    assign text_align = width_flex_text_align[2] | split: '/'
+
+    assign v = width.first
+    assign v_num = v | times: 1
+    unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+      assign v = v_num | append: "px"
+    endunless
+    assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "min-width:" | append: v
+
+    assign v = width.last
+    assign v_num = v | times: 1
+    unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+      assign v = v_num | append: "px"
+    endunless
+    assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "width:" | append: v
+
+    assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "flex:" | append: flex.first
+    assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "flex:" | append: flex.last
+    assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "text-align:" | append: text_align.first
+    assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "text-align:" | append: text_align.last
+  endif
+
+  if _settings['width_height_aspect'] and keys contains ',width_height_aspect,' or keys == null
+    assign width_height_aspect = _settings['width_height_aspect'] | strip_newlines | replace: ' ', "" | split: '|'
+    assign width = width_height_aspect[0] | split: '/'
+    assign height = width_height_aspect[1] | split: '/'
+    assign aspect = width_height_aspect[2] | split: '/'
+
+    assign v = width.first
+    assign v_num = v | times: 1
+    unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+      assign v = v_num | append: "px"
+    endunless
+    assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "width:" | append: v
+
+    assign v = width.last
+    assign v_num = v | times: 1
+    unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+      assign v = v_num | append: "px"
+    endunless
+    assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "width:" | append: v
+
+    assign v = height.first
+    assign v_num = v | times: 1
+    unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+      assign v = v_num | append: "px"
+    endunless
+    assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "height:" | append: v
+
+    assign v = height.last
+    assign v_num = v | times: 1
+    unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+      assign v = v_num | append: "px"
+    endunless
+    assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "height:" | append: v
+
+    assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "aspect-ratio:" | append: aspect.first
+    assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "aspect-ratio:" | append: aspect.last
+  endif
+
+  if _settings['margin_top_gap'] and keys contains ',margin_top_gap,' or keys == null
+    assign margin_top_gap = _settings['margin_top_gap'] | strip_newlines | replace: ' ', "" | split: '|'
+    assign top = margin_top_gap[0] | split: '/'
+    assign gap = margin_top_gap[1] | split: '/'
+
+    assign v = top.first
+    assign v_num = v | times: 1
+    unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+      assign v = v_num | append: "px"
+    endunless
+    assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "margin-top:" | append: v
+
+    assign v = top.last
+    assign v_num = v | times: 1
+    unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+      assign v = v_num | append: "px"
+    endunless
+    assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "margin-top:" | append: v
+
+    assign v = gap.first
+    assign v_num = v | times: 1
+    unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+      assign v = v_num | append: "px"
+    endunless
+    assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "gap:" | append: v
+
+    assign v = gap.last
+    assign v_num = v | times: 1
+    unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+      assign v = v_num | append: "px"
+    endunless
+    assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "gap:" | append: v
+  endif
+
+  if _settings['max_width_max_height_aspect'] and keys contains ',max_width_max_height_aspect,' or keys == null
+    assign max_width_max_height_aspect = _settings['max_width_max_height_aspect'] | strip_newlines | replace: ' ', "" | split: '|'
+    assign max_width = max_width_max_height_aspect[0] | split: '/'
+    assign max_height = max_width_max_height_aspect[1] | split: '/'
+    assign aspect = max_width_max_height_aspect[2] | split: '/'
+
+    assign v = max_width.first
+    assign v_num = v | times: 1
+    unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+      assign v = v_num | append: "px"
+    endunless
+    assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "max-width:" | append: v
+
+    assign v = max_width.last
+    assign v_num = v | times: 1
+    unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+      assign v = v_num | append: "px"
+    endunless
+    assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "max-width:" | append: v
+
+    assign v = max_height.first
+    assign v_num = v | times: 1
+    unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+      assign v = v_num | append: "px"
+    endunless
+    assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "max-height:" | append: v
+
+    assign v = max_height.last
+    assign v_num = v | times: 1
+    unless v contains 'p' or v contains 'm' or v contains 'v' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+      assign v = v_num | append: "px"
+    endunless
+    assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "max-height:" | append: v
+
+    assign desktop_styles = desktop_styles | append: ";" | append: css_var | append: "aspect-ratio:" | append: aspect.first
+    assign mobile_styles = mobile_styles | append: ";" | append: css_var | append: "aspect-ratio:" | append: aspect.last
+  endif
+%}
+{% capture styles %}
+  {{ selector }} {
+  {{ mobile_styles | append: ";" }}
+  }
+  @media screen and (min-width: {{ _settings.responsive_breakpoint | default: "768px" | replace: "px", "" | append: "px" }} ) {
+  {{ selector }} {
+  {{ desktop_styles | append: ";" }}
+  }
+  }
+  {% if desktop_styles_only != blank %}
+    @media screen and (min-width: {{ _settings.responsive_breakpoint | default: "768px" | replace: "px", "" | append: "px" }} ) {
+    {{ selector | append: ':has(:not(.\@container *))' }} {
+    {{ desktop_styles_only | append: ";" }}
+    }
+    }
+  {% endif %}
+  {% if mobile_styles_only != blank %}
+    @media screen and (max-width: {{ _settings.responsive_breakpoint | default: "768px" | replace: "px", "" | append: "px" }} ) {
+    {{ selector }} {
+    {{ mobile_styles_only | append: ";" }}
+    }
+    }
+    @container (max-width: {{ _settings.responsive_breakpoint | default: "768px" | replace: "px", "" | append: "px" }}) {
+    {{ selector }} {
+    {{ mobile_styles_only | append: ";" }}
+    }
+    }
+  {% endif %}
+  {% comment %}{% if _settings['apply_container_queries'] %}{% endcomment %}
+  @container (max-width: {{ _settings.responsive_breakpoint | default: "768px" | replace: "px", "" | append: "px" }}) {
+  {{ selector }} {
+  {{ mobile_styles | append: ";" }}
+  }
+  }
+  {{ selector }}:where(:hover,:focus-visible,:active,.active):not(.button-loading) {
+  {{ hover_mobile_styles | append: ";" }}
+  }
+  {% comment %}{% endif %}{% endcomment %}
+  {% liquid
+    if __keys contains ',custom_css'
+      assign setting_keys = ",__body,__p,__h1,__h2,__h3,__h4,__h5,__h6" | split: ','
+      for _setting_key in setting_keys
+        assign _settings_key = 'custom_css' | append: _setting_key
+        assign _settings_key_check = ',custom_css' | append: _setting_key | append: ','
+        if _settings[_settings_key] and keys contains _settings_key_check or keys == null
+          assign where_selector = ':where(' | append: selector | append: ')'
+          assign output = _settings[_settings_key] | replace: "&", where_selector
+          echo output
+        endif
+      endfor
+    endif
+  %}
+{% endcapture %}
+
+<style{% comment %} x-init="requestIdleCallback(()=>document.head.appendChild($el), {timeout: 1234})"{% endcomment %}>{{ styles | strip_newlines }}</style>

@@ -1,0 +1,27 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "content-accounts-grid"
+  assign grid_cols_align_x_align_y_gap = section.settings.grid_cols_align_x_align_y_gap
+  assign section_id = section.settings.section_id
+  assign color_scheme = section.settings.color_scheme
+  assign container_spacing = section.settings.container_spacing
+  assign border_divider = section.settings.border_divider
+  assign top_bottom_min_height = section.settings.top_bottom_min_height
+  assign responsive_visibility = section.settings.responsive_visibility
+  assign responsive_breakpoint = section.settings.responsive_breakpoint
+  assign target_visibility = section.settings.target_visibility
+  assign render_tabs_async = section.settings.render_tabs_async
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+<select class="hidden"
+        x-data="{ countries: [], provinces: {} }"
+        x-init="window._provinces = {};
+          window._countries = [...$el.querySelectorAll('option')].map(option=> {
+          window._provinces[option.value] = utils.JSONParse(option.getAttribute('data-provinces')) ?? []
+          return option.value
+        }); $el.remove()">
+  {{ all_country_option_tags }}
+</select>
+
+{% render 'content-grid' %}

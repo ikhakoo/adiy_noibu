@@ -1,0 +1,23 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "item"
+  assign section_type = "content-marquee"
+  assign image = block.settings.image
+  assign url = block.settings.url
+  assign title = block.settings.title
+  assign content_class = block.settings.content_class
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+<li class=""
+    {{ block.shopify_attributes }}
+    {% if url != blank %}
+      title="{{ url }}"
+      role="button"
+      tabindex="0"
+      @click.prevent.stop="barba.go('{{ url }}'); $modal.setId('')"
+    {% endif %}
+    data-style-marquee-item>
+  {% render '_object.image', image: image, class: "" %}
+  {% render '_input.richtext', content: title, class: content_class, block: block, forloop: forloop %}
+</li>

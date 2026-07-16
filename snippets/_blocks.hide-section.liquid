@@ -1,0 +1,138 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.hide-section"
+  assign always_show_in_editor = block.settings.always_show_in_editor
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign match_paths = block.settings.match_paths
+  assign required_paths = block.settings.required_paths
+  assign hide_if_set_paths = block.settings.hide_if_set_paths
+  assign match_templates = block.settings.match_templates
+  assign required_templates = block.settings.required_templates
+  assign hide_if_set_templates = block.settings.hide_if_set_templates
+  assign content_1 = block.settings.content_1
+  assign required_1 = block.settings.required_1
+  assign hide_if_set_1 = block.settings.hide_if_set_1
+  assign content_2 = block.settings.content_2
+  assign required_2 = block.settings.required_2
+  assign hide_if_set_2 = block.settings.hide_if_set_2
+  assign content_3 = block.settings.content_3
+  assign required_3 = block.settings.required_3
+  assign hide_if_set_3 = block.settings.hide_if_set_3
+  assign content_4 = block.settings.content_4
+  assign required_4 = block.settings.required_4
+  assign hide_if_set_4 = block.settings.hide_if_set_4
+  assign content_5 = block.settings.content_5
+  assign required_5 = block.settings.required_5
+  assign hide_if_set_5 = block.settings.hide_if_set_5
+  assign content_6 = block.settings.content_6
+  assign required_6 = block.settings.required_6
+  assign hide_if_set_6 = block.settings.hide_if_set_6
+  assign content_7 = block.settings.content_7
+  assign required_7 = block.settings.required_7
+  assign hide_if_set_7 = block.settings.hide_if_set_7
+  assign content_8 = block.settings.content_8
+  assign required_8 = block.settings.required_8
+  assign hide_if_set_8 = block.settings.hide_if_set_8
+  assign content_9 = block.settings.content_9
+  assign required_9 = block.settings.required_9
+  assign hide_if_set_9 = block.settings.hide_if_set_9
+  assign content_10 = block.settings.content_10
+  assign required_10 = block.settings.required_10
+  assign hide_if_set_10 = block.settings.hide_if_set_10
+  assign content_11 = block.settings.content_11
+  assign required_11 = block.settings.required_11
+  assign hide_if_set_11 = block.settings.hide_if_set_11
+  assign content_12 = block.settings.content_12
+  assign required_12 = block.settings.required_12
+  assign hide_if_set_12 = block.settings.hide_if_set_12
+  assign content_13 = block.settings.content_13
+  assign required_13 = block.settings.required_13
+  assign hide_if_set_13 = block.settings.hide_if_set_13
+  assign content_14 = block.settings.content_14
+  assign required_14 = block.settings.required_14
+  assign hide_if_set_14 = block.settings.hide_if_set_14
+  assign content_15 = block.settings.content_15
+  assign required_15 = block.settings.required_15
+  assign hide_if_set_15 = block.settings.hide_if_set_15
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if always_show_in_editor and request.design_mode
+    break
+  endif
+  if hide_if_empty == 'container'
+    assign break_tag = '<script type="container/break"></script>'
+  endif
+
+  if hide_if_empty == 'section'
+    assign break_tag = '<script type="section/break"></script>'
+  endif
+
+  if match_paths != blank
+    assign match_paths_array = match_paths | trim | replace: " ", "" | split: ","
+
+    assign match = false
+    for match_path in match_paths_array
+      assign path = request.path
+
+      if match_path == path
+        assign match = true
+      endif
+    endfor
+
+    if required_paths and match
+      echo break_tag
+      break
+    endif
+    if hide_if_set_paths and match
+      echo break_tag
+      break
+    endif
+  endif
+
+  if match_templates != blank
+    assign match_templates_array = match_templates | trim | replace: " ", "" | split: ","
+
+    assign match = false
+    for match_template in match_templates_array
+      assign match_template_prefix = match_template | split: "." | first
+      assign template_prefix = template | split: "." | first
+      assign match_template_suffix = match_template | split: "." | last
+      assign template_suffix = template | split: "." | last
+
+      if match_template_prefix != template_prefix
+        continue
+      endif
+      if match_template.size == 1 or match_template_suffix == template_suffix
+        assign match = true
+        break
+      endif
+    endfor
+
+    if required_templates and match
+      echo break_tag
+      break
+    endif
+    if hide_if_set_templates and match
+      echo break_tag
+      break
+    endif
+  endif
+  
+  for i in (1..15)
+    assign required = 'required_' | append: i
+    assign hide_if_set = 'hide_if_set_' | append: i
+    assign content = 'content_' | append: i
+
+    if block.settings[required] and block.settings[content] == blank
+      echo break_tag
+      break
+    endif
+
+    if block.settings[hide_if_set] and block.settings[content] != blank
+      echo break_tag
+      break
+    endif
+  endfor
+%}

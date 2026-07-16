@@ -1,0 +1,84 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "features"
+  assign title = section.settings.title
+  assign title_class = section.settings.title_class
+  assign subtitle = section.settings.subtitle
+  assign subtitle_class = section.settings.subtitle_class
+  assign background_color = section.settings.background_color
+  assign text_color = section.settings.text_color
+  assign section_id = section.settings.section_id
+  assign vertical_padding_section = section.settings.vertical_padding_section
+  assign container_spacing = section.settings.container_spacing
+  assign responsive_visibility = section.settings.responsive_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign background_color = "background-color: " | append: background_color | append: ";"
+  assign slider_overflow = container_spacing | replace: 'px', 'max-md:-mx' | append: " max-md:scroll-" | append: container_spacing | append: " max-md:" | append: container_spacing
+  assign slider_gap = "gap-3 md:gap-12"
+  assign section_gap = "gap-9 md:gap-12"
+  assign grid_cols = "max-md:auto-cols-[calc((100%_-_(8px_*_(1.05_-_1)))_/_1.05)] md:auto-cols-[calc((100%_-_(48px_*_(4_-_1)))_/_4)]"
+
+  assign vertical_padding_section = vertical_padding_section | strip_newlines | replace: ' ', "" | split: '|'
+  assign pt = vertical_padding_section[0] | split: '/'
+  assign pb = vertical_padding_section[1] | split: '/'
+%}
+
+<style>
+  #{{ section.id }} {
+    padding-top: {{ pt.first }};
+    padding-bottom: {{ pb.first }};
+  }
+  @media (max-width: 768px) {
+    #{{ section.id }} {
+      padding-top: {{ pt.last }};
+      padding-bottom: {{ pb.last }};
+    }
+  }
+</style>
+
+{% render '_utils.dynamic-css',
+  block: block,
+  selector: '[data-section-type="features"]',
+  keys: 'background_color'
+%}
+
+
+{% render "_section.universal-settings", section_type: section_type, styles: background_color, section_id: section.id, insert: "before" %}
+
+<section class="flex flex-col {{ section_gap }}" style="color: {{ text_color }};">
+  <div class="flex flex-col gap-4 md:gap-3 justify-center text-center w-full max-w-[960px] place-self-center">
+    {% render '_input.richtext', content: title, class: title_class, block: block, forloop: forloop %}
+    {% render '_input.richtext', content: subtitle, class: subtitle_class, block: block, forloop: forloop %}
+  </div>
+  <div class="flex flex-col relative"
+        x-data="{ ..._sections.initContentSlider($refs.container, undefined, true) }"
+        x-defer="intersect">
+    <div class="relative grid grid-flow-col-dense {{ grid_cols }} {{ slider_gap }} overflow-x-auto scrollbar-none overflow-y-hidden snap-x snap-mandatory scrollbar-none {{ slider_overflow }}"
+          x-ref="container"
+          @resize.window="content_slider.handleResize"
+          x-init="$nextTick(() => content_slider.handleResize())"
+          @scroll="content_slider.handleScroll"
+          @scrollend="content_slider.handleInfiniteScroll"
+          data-style-content-slider>
+      {% liquid
+        for block in section.blocks
+          if block.type == 'feature'
+            render 'features.feature', block: block, forloop: forloop, section_type: section_type
+          endif
+        endfor
+      %}
+    </div>
+    {% liquid
+      for block in section.blocks
+        if block.type == 'pagination'
+          render 'features.pagination', block: block, forloop: forloop, section_type: section_type
+        endif
+      endfor
+    %}
+  </div>
+</section>
+
+{% render "_section.universal-settings", insert: "after" %}

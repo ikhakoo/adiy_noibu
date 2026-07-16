@@ -1,0 +1,63 @@
+{%- render "custom-code" -%}
+{% schema %}
+{
+  "name": "Custom code",
+  "blocks": [
+    {
+      "name": "CSS",
+      "type": "css",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "css",
+          "label": "CSS"
+        }
+      ]
+    },
+    {
+      "name": "Liquid",
+      "type": "liquid",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "custom_liquid",
+          "label": "Liquid code"
+        }
+      ]
+    },
+    {
+      "name": "JavaScript",
+      "type": "javascript",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "javascript",
+          "label": "JavaScript"
+        }
+      ]
+    },
+    {
+      "name": "JSON",
+      "type": "json",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "json",
+          "label": "JSON"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom code"
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "custom.globals",
+      "custom.card"
+    ]
+  }
+}
+{% endschema %}

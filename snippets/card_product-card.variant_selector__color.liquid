@@ -1,0 +1,127 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "variant_selector__color"
+  assign section_type = "card_product-card"
+  assign legend_label = block.settings.legend_label
+  assign legend = block.settings.legend
+  assign legend_class = block.settings.legend_class
+  assign primary_source = block.settings.primary_source
+  assign fallback_source = block.settings.fallback_source
+  assign size_border_width_radius = block.settings.size_border_width_radius
+  assign hover_border_color = block.settings.hover_border_color
+  assign outline_width_offset = block.settings.outline_width_offset
+  assign hover_outline_color = block.settings.hover_outline_color
+  assign show_tooltip = block.settings.show_tooltip
+  assign margin_top_gap = block.settings.margin_top_gap
+  assign content_flow = block.settings.content_flow
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign show_conditionally = block.settings.show_conditionally
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign content_legend = legend | replace: "[heading]", legend_label
+  case content_flow
+    when "show_all"
+      assign container_classes = 'flex-wrap overflow-hidden'
+    when "truncate"
+      assign container_classes = 'overflow-hidden'
+    when "overflow"
+      assign container_classes = 'overflow-x-auto'
+  endcase
+
+  assign outline_classes = "!outline-none border-none ac:border-solid"
+  assign outline_width = outline_width_offset | strip_newlines | split: '|' | first
+  assign outline_width_desktop = outline_width | split: '/' | first
+  assign outline_width_mobile = outline_width | split: '/' | last
+%}
+
+  <style>
+    [data-style-id="{{ section.id }}--{{ block.id }}"] [data-style-label].active {
+      border-color: {{ hover_border_color }};
+    }
+    [data-style-id="{{ section.id }}--{{ block.id }}"] [data-style-label].active:after {
+      inset: 0;
+      border-width: {{ outline_width_desktop | rstrip | replace: 'px', '' | append: 'px' }};
+      border-color: {{ hover_outline_color }};
+      border-radius: inherit;
+      position: absolute;
+      content: '';
+    }
+    @media screen and (max-width: {{ responsive_breakpoint | default: "768px" }}) {
+      [data-style-id="{{ section.id }}--{{ block.id }}"] [data-style-label].active:after {
+        border-width: {{ outline_width_mobile | rstrip | replace: 'px', '' | append: 'px' }};
+      }
+    }
+  </style>
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-container]",
+    keys: "margin_top_gap" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-label]",
+    keys: "size_border_width_radius, hover_outline_color" %}
+
+{% render '_utils.dynamic-css', block: block, keys: "margin_top_bottom_left_right,max_w_flex_col_row_order_align,responsive_visibility" %}
+
+
+<fieldset
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    x-data="{ hoverValue: '', offset: card?.product?.variants?.length, primary_source: `{{ primary_source }}`, fallback_source: `{{ fallback_source }}`}"
+    x-show="card?.hydrated && card?.product?.variants?.length && card?.product?.variants?.[0]?.title !== 'Default Title' && card?.selected_variant?.id && $data.showConditionally('{{ show_conditionally }}')"
+    x-cloak
+    class="overflow-hidden">
+  <legend class="flex w-full max-w-full truncate {{ legend_class }}"
+          data-legend="{% render '_input.inline_richtext', content: content_legend, escape: true, block: block, forloop: forloop %}"
+          x-effect="$el.innerHTML = $el.getAttribute('data-legend').replace('[value]', hoverValue || card?.selected_variant?.title)">
+  </legend>
+  <div class="relative w-full flex scrollbar-none {{ container_classes }}"
+       data-style-container>
+    <template x-for="(variant, i) in card?.product?.variants.slice(0, offset)">
+      <label data-loop-item
+             data-style-label
+             class="flex shrink-0 cursor-pointer border-gray-300 relative {{ outline_classes }}"
+             x-effect="$el.classList.toggle('active', card?.selected_variant?.id === variant?.id)"
+          {% if show_tooltip %}
+            @mouseenter="$tooltip.addTooltip($el, variant?.title)"
+            @mouseleave="$tooltip.removeTooltip($el)"
+          {% endif %}
+             @pointerenter="hoverValue = variant?.title"
+             @pointerleave="hoverValue = ''"
+             :aria-label="variant?.title"
+             :style="getVariantSwatches(primary_source, fallback_source, variant)">
+        <input type="radio"
+               class="sr-only"
+               :name="`${card?.random_id}-${card?.product?.id}-variant_selector__color`"
+            {% if show_tooltip %}
+              @focus="$tooltip.addTooltip($el?.parentElement, variant?.title)"
+              @blur="$tooltip.removeTooltip($el.parentElement)"
+            {% endif %}
+               @change="$data.setSelectedVariant(variant?.id)"
+               :checked="card?.selected_variant?.id === variant?.id"
+               :value="variant?.id">
+      </label>
+    </template>
+    {% if content_flow == 'truncate' %}
+      <div class="flex shrink-0 items-center text-sm font-medium"
+           :class="offset < card?.product?.variants?.length ? '':'opacity-0 pointer-events-none'"
+           x-init="$nextTick(async ()=> { if (window.design_mode) { await utils.delay(20) } offset = truncateChildren($el, $el.parentElement)})"
+           @resize.window.debounce.200ms="offset = card?.product?.variants?.length; await utils.delay(1); offset = truncateChildren($el, $el.parentElement)"
+           x-html="`+ ${card?.product?.variants?.length - offset} {{ legend_label }}`">
+        +10 {{ legend_label }}
+      </div>
+    {% endif %}
+  </div>
+</fieldset>
+
+

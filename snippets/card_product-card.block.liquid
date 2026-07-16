@@ -1,0 +1,52 @@
+{% liquid
+  case block.type
+    when "dynamic-text"
+      render 'card_product-card.dynamic-text', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+    when "delivery_range"
+      render 'card_product-card.delivery_range', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+    when "dynamic-button"
+      render 'card_product-card.dynamic-button', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+    when "product-drawer-button"
+      render 'card_product-card.product-drawer-button', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+    when "price"
+      render 'card_product-card.price', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+    when "price_sqft"
+      render 'card_product-card.price_sqft', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+    when "price_scale"
+      render 'card_product-card.price_scale', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+    when "rating"
+      render 'card_product-card.rating', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+    when "labels"
+      render 'card_product-card.labels', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+    when "variant_selector__select"
+      render 'card_product-card.variant_selector__select', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+    when "variant_selector__radio"
+      render 'card_product-card.variant_selector__radio', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+    when "variant_selector__color"
+      render 'card_product-card.variant_selector__color', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+    when "option__color"
+      render 'card_product-card.option__color', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+    when "option__radio"
+      render 'card_product-card.option__radio', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+    when "option__radio_custom"
+      render 'card_product-card.option__radio_custom', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+    when "option__select"
+      render 'card_product-card.option__select', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+    when "option__color_w_caption"
+      render 'card_product-card.option__color_w_caption', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+    when "quick_view_button"
+      render 'card_product-card.quick_view_button', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+    when "bundle_button"
+      render 'card_product-card.bundle_button', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+    when "accent_line"
+      render 'card_product-card.accent_line', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+    when "image"
+      render 'card_product-card.image', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+    when "dynamic_call_to_action"
+      render 'card_product-card.dynamic_call_to_action', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+    when "custom_liquid"
+      render '_blocks.custom-liquid', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+    when "affirm-block"
+      render 'card_product-card.affirm-block', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+  endcase
+%}

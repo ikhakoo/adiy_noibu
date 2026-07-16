@@ -1,0 +1,354 @@
+{%- render "drawer-menu" -%}
+{% schema %}
+{
+  "name": "Drawer menu",
+  "settings": [
+    {
+      "type": "text",
+      "id": "handle",
+      "label": "Trigger handle",
+      "info": "Triggered by any link to `href=\"#megamenu--{handle}\"",
+      "default": "drawer-menu"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "header",
+      "content": "Settings"
+    },
+    {
+      "type": "text",
+      "id": "close_icon",
+      "label": "Close icon",
+      "default": "x-mark"
+    },
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "1",
+      "label": "Color scheme"
+    },
+    {
+      "type": "select",
+      "id": "background_blur",
+      "label": "Background Blur",
+      "default": "backdrop-blur-md",
+      "options": [
+        {
+          "value": "",
+          "label": "none"
+        },
+        {
+          "value": "backdrop-blur-sm",
+          "label": "sm"
+        },
+        {
+          "value": "backdrop-blur-md",
+          "label": "md"
+        },
+        {
+          "value": "backdrop-blur-lg",
+          "label": "lg"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "responsive_visibility",
+      "label": "Responsive Visibility",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile"
+        },
+        {
+          "value": "desktop-tablet-only",
+          "label": "Desktop"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Menu",
+      "type": "menu_drawer",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        },
+        {
+          "type": "text",
+          "id": "link_class",
+          "label": "Link class",
+          "default": "nav-item"
+        },
+        {
+          "type": "text",
+          "id": "gap_content",
+          "label": "Gap",
+          "default": "8px"
+        },
+        {
+          "type": "checkbox",
+          "id": "divider",
+          "label": "Enable Divider",
+          "default": false
+        }
+      ]
+    },
+    {
+      "name": "Image With Content",
+      "type": "image-with-content-drawer",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "richtext",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "title_class",
+          "label": "Title class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Url"
+        }
+      ]
+    },
+    {
+      "name": "Sticky Footer",
+      "type": "sticky-footer",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Links"
+        },
+        {
+          "type": "text",
+          "id": "icon_first",
+          "label": "Icon handle"
+        },
+        {
+          "type": "richtext",
+          "id": "first_link_text",
+          "label": "Text Link"
+        },
+        {
+          "type": "url",
+          "id": "url_first",
+          "label": "Url"
+        },
+        {
+          "type": "text",
+          "id": "first_link_class",
+          "label": "Link class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "text",
+          "id": "icon_second",
+          "label": "Icon handle"
+        },
+        {
+          "type": "richtext",
+          "id": "second_link_text",
+          "label": "Text Link"
+        },
+        {
+          "type": "url",
+          "id": "url_second",
+          "label": "Url"
+        },
+        {
+          "type": "text",
+          "id": "second_link_class",
+          "label": "Link class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "header",
+          "content": "Button"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button Url"
+        },
+        {
+          "type": "text",
+          "id": "button_class",
+          "label": "Button class",
+          "default": "button-primary"
+        },
+        {
+          "type": "checkbox",
+          "id": "divider",
+          "label": "Enable Divider",
+          "default": false
+        }
+      ]
+    },
+    {
+      "name": "Announcements",
+      "type": "announcements",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Header announcement settings are applied automatically based on the mobile styling."
+        }
+      ]
+    },
+    {
+      "name": "Cart icon",
+      "type": "cart-icon",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon",
+          "default": "cart"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Url",
+          "info": "Defaults to `/#modal--cart-drawer` to activate the Cart Drawer"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "text",
+          "id": "width_height",
+          "label": "Icon: width | height",
+          "default": "auto | 20"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_cart_quantity",
+          "label": "Show quantity",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-tablet-only",
+              "label": "Mobile & Tablet"
+            },
+            {
+              "value": "desktop-only",
+              "label": "Desktop"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Search icon",
+      "type": "search-icon",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon",
+          "default": "search"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Url",
+          "info": "Defaults to `/#modal--search` to activate the Search modal"
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-tablet-only",
+              "label": "Mobile & Tablet"
+            },
+            {
+              "value": "desktop-only",
+              "label": "Desktop"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "limit": 1,
+  "presets": [
+    {
+      "name": "Drawer menu"
+    }
+  ],
+  "enabled_on": {
+    "groups": [
+      "custom.modal"
+    ]
+  }
+}
+{% endschema %}

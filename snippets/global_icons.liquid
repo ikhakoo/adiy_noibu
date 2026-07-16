@@ -1,0 +1,50 @@
+{% capture icons %}
+  {% for block in section.blocks %}
+    {% assign handle = block.settings.title | handleize %}
+    {% if block.settings.url != blank %}
+      --icon-{{ handle }}--url: {{ block.settings.url }};
+    {% endif %}
+    {% if block.settings.icon != blank %}
+      --icon-{{ handle }}: url('{{ block.settings.icon | image_url }}') no-repeat 50% 50% / contain;
+      --icon-{{ handle }}-aspect-ratio: {{ block.settings.icon.aspect_ratio }};
+      {% continue %}
+    {% endif %}
+    {% if block.settings.svg_code != blank %}
+      {% assign svg_image = "data:image/svg+xml;utf8," | append: block.settings.svg_code | strip_newlines | replace: '<', '%3c' | replace: ">", "%3e" %}
+      {% assign viewbox = block.settings.svg_code | split: "viewbox=" | last | replace_first: "'", "|~|split|~|" | replace_first: '"', "|~|split|~|" | split: "|~|split|~|" | last | replace_first: "'", "|~|split|~|" | replace_first: '"', "|~|split|~|" | split: "|~|split|~|" | first %}
+      {% assign split = ' ' %}
+      {% if viewbox contains ',' %}
+        {% assign split = ',' %}
+      {% endif %}
+      {% assign viewbox_array = viewbox | split: split %}
+      {% assign width = viewbox_array[2] | strip | times: 1.00 %}
+      {% assign height = viewbox_array[3] | strip | times: 1.00 %}
+      {% assign aspect_ratio = width | divided_by: height | round: 3 | json %}
+      --icon-{{ handle }}: url('{{ svg_image }}') no-repeat 50% 50% / contain;
+      --icon-{{ handle }}-aspect-ratio: {{ aspect_ratio }};
+    {% endif %}
+  {% endfor %}
+{% endcapture %}
+<style>
+  :root {
+  {{ icons }}
+  }
+</style>
+
+
+{% if request.design_mode %}
+  <div class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 overflow-y-auto bg-gray-100 py-16 text-black px-container-sm md:pb-52"
+       x-data="{}"
+       x-show="$editor?.select_section_id === `{{ section.id }}`"
+       x-cloak>
+    <div class="grid grid-cols-3 gap-2 gap-x-5">
+      {% for block in section.blocks %}
+        <div class="flex items-center gap-3" {{ block.shopify_attributes }}>
+          {% render '_components.icon', icon: block.settings.title, class: "h-5 text-black shrink-0", no_mask: true %}
+          <div class="text-lg font-bold text-gray-600">{{ block.settings.title | handleize }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+

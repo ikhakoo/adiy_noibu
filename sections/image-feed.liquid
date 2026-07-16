@@ -1,0 +1,205 @@
+{%- render "image-feed" -%}
+{% schema %}
+{
+  "name": "Image Feed",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "columns",
+      "label": "Columns Desktop | Mobile",
+      "default": "4/1.2"
+    },
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "title_class",
+      "label": "Title class",
+      "default": "richtext-md"
+    },
+    {
+      "type": "text",
+      "id": "scrollbar_class",
+      "label": "Scrollbar Class",
+      "default": "scrollbar"
+    },
+    {
+      "type": "header",
+      "content": "Section Globals"
+    },
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section Id"
+    },
+    {
+      "type": "text",
+      "id": "top_bottom_min_height",
+      "label": "padding: top | bottom | min-h",
+      "default": "0 | 0 | 0"
+    },
+    {
+      "type": "select",
+      "id": "container_spacing",
+      "default": "px-container-md",
+      "options": [
+        {
+          "value": "px-container-xs",
+          "label": "xs"
+        },
+        {
+          "value": "px-container-sm",
+          "label": "sm"
+        },
+        {
+          "value": "px-container-md",
+          "label": "md"
+        },
+        {
+          "value": "px-container-lg",
+          "label": "lg"
+        },
+        {
+          "value": "px-container-fullwidth",
+          "label": "fullwidth"
+        },
+        {
+          "value": "px-container-gutter",
+          "label": "magazine"
+        }
+      ],
+      "label": "Container Spacing"
+    },
+    {
+      "type": "select",
+      "id": "responsive_visibility",
+      "label": "Responsive Visibility",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile"
+        },
+        {
+          "value": "desktop-tablet-only",
+          "label": "Desktop"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Image",
+      "type": "image",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Feed",
+      "blocks": [
+        {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Image_Ratios_10.png"
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Image_Ratios_8.png"
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Image_Ratios_10.png"
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Image_Ratios_11.png"
+          }
+        }
+      ],
+      "settings": {
+        "title": "<h3><strong>Let’s stay in touch @A-DIY</strong></h3>",
+        "title_class": "richtext-md",
+        "section_id": "",
+        "top_bottom_min_height": "64/48 | 64/48 | 0",
+        "container_spacing": "px-container-md",
+        "responsive_visibility": ""
+      }
+    },
+    {
+      "name": "Image Feed Slider",
+      "blocks": [
+        {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Image_Ratios_10.png"
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Image_Ratios_8.png"
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Image_Ratios_10.png"
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Image_Ratios_11.png"
+          }
+        }
+      ],
+      "settings": {
+        "columns": "2.85/1.2",
+        "title": "<h3><strong>Let’s stay in touch @A-DIY</strong></h3>",
+        "title_class": "richtext-md",
+        "scrollbar_class": "scrollbar-buttons-right",
+        "section_id": "",
+        "top_bottom_min_height": "64/48 | 64/48 | 0",
+        "container_spacing": "px-container-md",
+        "responsive_visibility": ""
+      }
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "custom.globals",
+      "custom.header",
+      "custom.modal",
+      "custom.card"
+    ]
+  }
+}
+{% endschema %}

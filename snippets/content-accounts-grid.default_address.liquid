@@ -1,0 +1,30 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "default_address"
+  assign section_type = "content-accounts-grid"
+  assign content_class = block.settings.content_class
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css', block: block %}
+
+{% assign address = customer.default_address %}
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}>
+  <div class="{{ content_class }}">
+    {{ address | format_address }}
+  </div>
+  <button class="mt-2 text-13 font-semibold uppercase hf:opacity-60"
+          type="button"
+          @click="$modal.setId('address--{{ address.id }}')">Edit
+  </button>
+</div>
+{% render 'content-accounts-grid.address-modal', address: address %}

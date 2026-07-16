@@ -1,0 +1,11 @@
+{% assign contentParts = content | split: '<div id="shopify-section-' %}
+{% for part in contentParts %}
+  {% if contentParts.size > 1 and forloop.index0 == 0 %}
+    {% continue %}
+  {% endif %}
+  {% assign sectionContent = part | replace_first: ">", "|~|SPLIT|~|" %}
+  {% assign htmlAttributes = sectionContent | split: "|~|SPLIT|~|" | first | prepend: ' id="shopify-section-' | append: ">" %}
+  {% assign htmlContent = sectionContent | split: "|~|SPLIT|~|" | last | trim | append: "|~|SPLIT|~|" | replace: "</div>|~|SPLIT|~|", "" | replace: "</div>
+|~|SPLIT|~|", "" | trim | replace_first: ">", htmlAttributes %}
+  {{ htmlContent }}
+{% endfor %}

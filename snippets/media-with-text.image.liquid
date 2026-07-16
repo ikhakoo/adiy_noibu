@@ -1,0 +1,27 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "image"
+  assign section_type = "media-with-text"
+  assign desktop_image = block.settings.desktop_image
+  assign mobile_image = block.settings.mobile_image
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign desktop_image = desktop_image
+  assign mobile_image = mobile_image | default: desktop_image
+
+  assign media_classes_sm = "w-full h-full max-md:hidden object-[inherit] max-md:max-h-[500px] md:max-h-[540px]"
+  assign media_classes_md = "w-full h-full md:hidden object-[inherit] max-md:max-h-[500px] md:max-h-[540px]"
+%}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {{ block.shopify_attributes }}>
+  <figure
+    class="group relative overflow-hidden rounded-[20px] md:rounded-[30px]"
+    data-style-image>
+    {% render '_object.image', image: desktop_image, sizes: "100vw", class: media_classes_sm, preload: false %}
+    {% render '_object.image', image: mobile_image, sizes: "100vw", class: media_classes_md, preload: false %}
+  </figure>
+</div>

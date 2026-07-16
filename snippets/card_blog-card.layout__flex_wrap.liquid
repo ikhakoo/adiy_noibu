@@ -1,0 +1,59 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "layout__flex_wrap"
+  assign section_type = "card_blog-card"
+  assign _location = block.settings.location
+  assign flex_row_wrap_align_x_align_y_gap = block.settings.flex_row_wrap_align_x_align_y_gap
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign border_width_radius = block.settings.border_width_radius
+  assign background_color = block.settings.background_color
+  assign background_gradient = block.settings.background_gradient
+  assign border_color = block.settings.border_color
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign columnIndex = forloop.index0
+%}
+
+{% render '_utils.dynamic-css', block: block %}
+
+<div class="flex h-auto flex-wrap overflow-hidden min-w-0"
+    {{ block.shopify_attributes }}
+     data-style-id="{{ section.id }}--{{ block.id }}">
+  {% for block in section.blocks %}
+    {% liquid
+      if forloop.index0 <= columnIndex
+        continue
+      endif
+      if block.type == 'layout__flex_wrap'
+        break
+      endif
+      if block.type == 'image'
+        continue
+      endif
+    %}
+
+    {% render '_utils.dynamic-css',
+        block: block,
+        selector: '&[data-style-column]',
+        keys: "max_w_flex_col_row_order_align, margin_top_bottom_left_right" %}
+
+    <div class="{{ block.settings.responsive_visibility }}" {{ block.shopify_attributes }}
+         data-style-id="{{ section.id }}--{{ block.id }}"
+         data-style-column>
+      {% case block.type %}
+        {% when "dynamic-text" %}
+          <div x-html="renderDynamicText($el.getAttribute('data-content'))"
+               data-content="{% render '_input.richtext', content: block.settings.title, class: block.settings.css_class, escape: true, block: block, forloop: forloop %}"></div>
+        {% when "dynamic-button" %}
+          <a :href="renderDynamicText(`{{ block.settings.url }}`)"
+             x-html="renderDynamicText($el.getAttribute('data-content'))"
+             class="w-full {{ block.settings.button_class }}"
+             data-content="{% render '_input.inline_richtext', content: block.settings.label, escape: true, block: block, forloop: forloop %}"></a>
+      {% endcase %}
+    </div>
+  {% endfor %}
+</div>

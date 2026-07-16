@@ -1,0 +1,85 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "variant_selector__select"
+  assign section_type = "product"
+  assign legend_label = block.settings.legend_label
+  assign legend = block.settings.legend
+  assign legend_class = block.settings.legend_class
+  assign select_class = block.settings.select_class
+  assign margin_top_gap = block.settings.margin_top_gap
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign show_conditionally = block.settings.show_conditionally
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign current_value = product.selected_or_first_available_variant.id
+  assign current_title = product.selected_or_first_available_variant.title
+  assign content_legend = legend | replace: "[heading]", legend_label
+  assign current_legend = content_legend | replace: "[value]", current_title | default: legend_label
+
+  assign variant_ids = product.variants | map: "id"
+  assign variant_titles = product.variants | map: "title"
+
+  if request.design_mode != true
+    if product.variants.first.title == "Default Title" and product.variants.size == 1
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+
+  if is_empty
+    break
+  endif
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-select]",
+    keys: "margin_top_gap" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,max_w_flex_col_row_order_align,padding_top_bottom_left_right,margin_top_bottom_left_right,border_width_radius,background_color,background_gradient,border_color" %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    x-show="$data.showConditionally('{{ show_conditionally }}')"
+    data-block-type="{{ block.type }}">
+  <fieldset>
+    <legend class="flex w-full max-w-full truncate {{ legend_class }}"
+            data-legend="{% render '_input.inline_richtext', content: content_legend, escape: true, block: block, forloop: forloop %}"
+            x-effect="$el.innerHTML = $el.getAttribute('data-legend').replace('[value]', $data.state.selected_variant.title)">
+      {% render '_input.inline_richtext', content: current_legend, block: block, forloop: forloop %}
+    </legend>
+    {% render "_components.select",
+        values: variant_ids,
+        titles: variant_titles,
+        select_class: select_class,
+        label: legend_label,
+        setState: "$data.setSelectedVariant(value);",
+        state: "$data.state.selected_variant.id",
+        current_value: current_value,
+        current_title: current_title,
+        html_attributes: "data-style-select"
+    %}
+  </fieldset>
+</div>

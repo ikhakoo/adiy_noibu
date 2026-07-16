@@ -1,0 +1,21 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "button"
+  assign section_type = "image-banner"
+  assign button_primary_text = block.settings.button_primary_text
+  assign button_primary_url = block.settings.button_primary_url
+  assign button_primary_class = block.settings.button_primary_class
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {{ block.shopify_attributes }}
+    class="flex">
+  {% if button_primary_text != blank %}
+    <a href="{{ button_primary_url }}"
+        class="max-md:w-full {{ button_primary_class }}">
+        {% render '_input.inline_richtext', content: button_primary_text, block: block, forloop: forloop %}
+    </a>
+  {% endif %}
+</div>

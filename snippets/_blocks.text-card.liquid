@@ -1,0 +1,70 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.text-card"
+  assign title = block.settings.title
+  assign content_class = block.settings.content_class
+  assign url = block.settings.url
+  assign image = block.settings.image
+  assign width_height_aspect = block.settings.width_height_aspect
+  assign flex_row_wrap_align_x_align_y_gap = block.settings.flex_row_wrap_align_x_align_y_gap
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign border_width_radius = block.settings.border_width_radius
+  assign text_color = block.settings.text_color
+  assign background_gradient = block.settings.background_gradient
+  assign border_color = block.settings.border_color
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if request.design_mode != true
+    if image == blank
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "width_height_aspect, border_width_radius,background_gradient,text_color,max_w_flex_col_row_order_align, border_color, margin_top_bottom_left_right" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& figcaption",
+    keys: "padding_top_bottom_left_right, flex_row_wrap_align_x_align_y_gap" %}
+
+<figure
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    {% if url != blank %}
+      title="{{ url }}"
+      role="button"
+      tabindex="0"
+      @click.prevent.stop="barba.go('{{ url }}'); $modal.setId('')"
+    {% endif %}
+    class="group relative">
+    {% if image != blank %}
+      {% render '_object.image', image: image, class: "absolute inset-0 w-full h-full object-cover transition-all scale-100 group-hf:scale-105" %}
+    {% endif %}
+  <figcaption class="relative flex flex-wrap h-full">
+    {% render '_input.richtext', content: title, class: content_class, block: block, forloop: forloop %}
+  </figcaption>
+</figure>

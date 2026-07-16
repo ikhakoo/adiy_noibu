@@ -1,0 +1,398 @@
+{%- render "text-cards" -%}
+{% schema %}
+{
+  "name": "Text Cards",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columns",
+      "default": 3,
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "info": "Only for desktop"
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Mobile Layout",
+      "default": "stacked",
+      "options": [
+        {
+          "value": "stacked",
+          "label": "Stacked"
+        },
+        {
+          "value": "slider",
+          "label": "Slider"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "gap_content",
+      "label": "Gap Desktop | Gap Mobile",
+      "default": "0 | 0 "
+    },
+    {
+      "type": "header",
+      "content": "Section Globals"
+    },
+    {
+      "type": "text",
+      "id": "vertical_padding_section",
+      "label": "Top padding | Bottom Padding",
+      "default": "0 | 0 "
+    },
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section Id"
+    },
+    {
+      "type": "select",
+      "id": "container_spacing",
+      "default": "px-container-md",
+      "options": [
+        {
+          "value": "px-container-xs",
+          "label": "xs"
+        },
+        {
+          "value": "px-container-sm",
+          "label": "sm"
+        },
+        {
+          "value": "px-container-md",
+          "label": "md"
+        },
+        {
+          "value": "px-container-lg",
+          "label": "lg"
+        },
+        {
+          "value": "px-container-fullwidth",
+          "label": "fullwidth"
+        },
+        {
+          "value": "px-container-gutter",
+          "label": "magazine"
+        }
+      ],
+      "label": "Container Spacing"
+    },
+    {
+      "type": "select",
+      "id": "responsive_visibility",
+      "label": "Responsive Visibility",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile"
+        },
+        {
+          "value": "desktop-tablet-only",
+          "label": "Desktop"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Card",
+      "type": "card",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_heading",
+          "label": "Icon Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "heading_class",
+          "label": "Heading class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "richtext",
+          "id": "first_text",
+          "label": "Text"
+        },
+        {
+          "type": "text",
+          "id": "first_text_class",
+          "label": "First Text class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "checkbox",
+          "id": "trigger_chatbox",
+          "label": "Trigger chatbot on link",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Content Settings"
+        },
+        {
+          "type": "text",
+          "id": "padding",
+          "label": "Padding Desktop | Padding Mobile",
+          "default": "24px | 16px "
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Text Alignment",
+          "default": "text-left",
+          "options": [
+            {
+              "value": "text-left",
+              "label": "Left"
+            },
+            {
+              "value": "text-center",
+              "label": "Center"
+            },
+            {
+              "value": "text-right",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "horizontal_align",
+          "label": "Horizontal Alignment",
+          "default": "justify-start",
+          "options": [
+            {
+              "value": "justify-start",
+              "label": "Top"
+            },
+            {
+              "value": "justify-center",
+              "label": "Center"
+            },
+            {
+              "value": "justify-end",
+              "label": "Bottom"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Pagination",
+      "type": "pagination",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Slider Buttons"
+        },
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color",
+          "default": "#CCCCCC"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        },
+        {
+          "type": "color",
+          "id": "hover_border_color",
+          "label": "border color"
+        },
+        {
+          "type": "color",
+          "id": "hover_background_color",
+          "label": "background color",
+          "default": "#000000"
+        }
+      ],
+      "limit": 1
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text Cards",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "heading": "<h4><strong>Struggling with Contractors?</strong></h4>",
+            "heading_class": "richtext-md",
+            "first_text": "<p><strong>Endless Quotes</strong><br/>Spending weeks getting multiple quotes from contractors who may charge more than expected?</p><p></p><p><strong>High Costs</strong></p><p>Facing quotes that are often sky-high and not within your budget?<br/><br/><strong>Uncertain Timelines</strong></p><p>Frustrated with delays and the uncertainty of whether your deck will be completed on time?</p>",
+            "first_text_class": "richtext-md",
+            "padding": "24px | 24px",
+            "text_align": "text-left",
+            "horizontal_align": "justify-start"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "heading": "<h4><strong>Considering DIY?</strong></h4>",
+            "heading_class": "richtext-md",
+            "first_text": "<p><strong>Time-Consuming</strong></p><p>Planning a deck requires time off work and away from family.</p><p></p><p><strong>Complexity</strong></p><p>Endless hours watching how-to videos, renting or buying tools, and making multiple store trips.</p><p></p><p><strong>Hidden Costs</strong></p><p>What seems like a cost-effective option can quickly become stressful and more expensive with mistakes and added expenses.</p>",
+            "first_text_class": "richtext-md",
+            "padding": "24px | 24px",
+            "text_align": "text-left",
+            "horizontal_align": "justify-start"
+          }
+        }
+      ],
+      "settings": {
+        "columns": 2,
+        "gap_content": "24px | 24px",
+        "vertical_padding_section": "48px/36px | 48px/36px",
+        "section_id": "",
+        "container_spacing": "px-container-md",
+        "responsive_visibility": ""
+      }
+    },
+    {
+      "name": "Text Cards - 1",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "icon_heading": "shopify://shop_images/mail-02.svg",
+            "heading": "<h4><strong>Email</strong></h4>",
+            "heading_class": "richtext-md",
+            "first_text": "<p>Monday-Friday, 9AM - 5 PM EST excluding holidays. Send us an email at [span.underline||<a href=\"mailto:support@a-diy.com\" title=\"mailto:support@a-diy.com\">support@a-diy.com]</a>.</p>",
+            "first_text_class": "richtext-md",
+            "text_align": "text-center",
+            "horizontal_align": "justify-center"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon_heading": "shopify://shop_images/phone-outgoing-01.svg",
+            "heading": "<h4><strong>Phone</strong></h4>",
+            "heading_class": "richtext-md",
+            "first_text": "<p>Monday-Friday, 9AM - 5 PM EST excluding holidays. Give us a call [span.underline||<a href=\"tel:1 (786) 358-2872\" title=\"tel:1 (786) 358-2872\">1 (786) 358-2872</a>].</p>",
+            "first_text_class": "richtext-md",
+            "text_align": "text-center",
+            "horizontal_align": "justify-center"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon_heading": "shopify://shop_images/message-smile-square.svg",
+            "heading": "<h4><strong>Chat</strong></h4>",
+            "heading_class": "richtext-md",
+            "first_text": "<p>Is it after hours? </p><p>[span.underline||<a href=\"#\" title=\"#\">Launch our chat</a>] to talk with a specialist now.</p>",
+            "first_text_class": "richtext-md",
+            "text_align": "text-center",
+            "horizontal_align": "justify-center"
+          }
+        }
+      ],
+      "settings": {
+        "columns": 3,
+        "gap_content": "24px | 12px",
+        "vertical_padding_section": "64px/48px | 64px/48px",
+        "section_id": "",
+        "container_spacing": "px-container-md",
+        "responsive_visibility": ""
+      }
+    },
+    {
+      "name": "Text Cards With Slider",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "icon_heading": "shopify://shop_images/grid-dots-outer.svg",
+            "heading": "<h4><strong>Unmatched Simplicity</strong></h4>",
+            "heading_class": "richtext-md",
+            "first_text": "<p>Our kits require only a household drill. We’ve done the hard work so you can focus on the fun and satisfaction of building your own deck.</p>",
+            "first_text_class": "richtext-md",
+            "padding": "24px | 16px",
+            "text_align": "text-center",
+            "horizontal_align": "justify-center"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon_heading": "shopify://shop_images/pencil-line.svg",
+            "heading": "<h4><strong>Premium Quality, Every Time</strong></h4>",
+            "heading_class": "richtext-md",
+            "first_text": "<p>Each deck kit uses sustainably sourced, high-quality materials giving you a beautiful outdoor space that stands the test of time.</p>",
+            "first_text_class": "richtext-md",
+            "padding": "24px | 16px",
+            "text_align": "text-center",
+            "horizontal_align": "justify-center"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon_heading": "shopify://shop_images/layers-three-01_1.svg",
+            "heading": "<h4><strong>Your Deck, Your Way</strong></h4>",
+            "heading_class": "richtext-md",
+            "first_text": "<p>Start with one kit and add on as you go, creating a unique space that adapts to your needs. Your outdoor living should be as flexible as your lifestyle.</p>",
+            "first_text_class": "richtext-md",
+            "padding": "24px | 16px",
+            "text_align": "text-center",
+            "horizontal_align": "justify-center"
+          }
+        },
+        {
+          "type": "pagination",
+          "settings": {
+            "background_color": "#cccccc",
+            "border_color": "",
+            "hover_border_color": "",
+            "hover_background_color": "#000000"
+          }
+        }
+      ],
+      "settings": {
+        "columns": 3,
+        "mobile_layout": "slider",
+        "gap_content": "24px | 12px",
+        "vertical_padding_section": "64px/48px | 64px/48px",
+        "section_id": "",
+        "container_spacing": "px-container-md",
+        "responsive_visibility": ""
+      }
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "*"
+    ]
+  }
+}
+{% endschema %}

@@ -1,0 +1,21 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "richtext"
+  assign section_type = "sale-banner"
+  assign preheading = block.settings.preheading
+  assign preheading_class = block.settings.preheading_class
+  assign heading = block.settings.heading
+  assign heading_class = block.settings.heading_class
+  assign subheading = block.settings.subheading
+  assign subheading_class = block.settings.subheading_class
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {{ block.shopify_attributes }}
+    class="flex flex-col gap-3 text-white max-md:py-3">
+    {% render '_input.richtext', content: preheading, class: preheading_class, block: block, forloop: forloop %}
+    {% render '_input.richtext', content: heading, class: heading_class, block: block, forloop: forloop %}
+    {% render '_input.richtext', content: subheading, class: subheading_class, block: block, forloop: forloop %}
+</div>

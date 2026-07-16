@@ -1,0 +1,84 @@
+{% comment %}
+    Pagination element
+
+    Accepts:
+    - class: {string}
+    - pagination_container_ref: {string} 
+
+    Usage:
+    {% render "_components.pagination",
+        class: pagination_class,
+        pagination_container_ref: '$refs.container'
+    %}
+{% endcomment %}
+{% if paginate.pages > 1 %}
+  <nav x-data="{ ..._pagination.init($refs.pagination, {{ pagination_container_ref }}) }"
+     data-pagination
+     role="navigation"
+     x-ref="pagination"
+     class="{{ class | default: 'pagination' }}"
+    {{ html_attributes }}>
+    <ol class="{{ class | default: 'pagination' }}">
+      {% if paginate.previous %}
+        <li data-pagination-button>
+          <a class="w-full h-full flex items-center justify-center" href="{{ paginate.previous.url }}" @click.prevent.stop="goToPage('{{ paginate.previous.url }}')">
+            <svg class="absolute left-1/2 top-1/2 w-[--icon-width-md] md:w-[--icon-width] h-[--icon-height-md] md:h-[--icon-height] -translate-x-1/2 -translate-y-1/2 bg-current"
+              style="mask: var(--pagination-button-prev); -webkit-mask: var(--pagination-button-prev); aspect-ratio: var(--pagination-button-prev-aspect-ratio, 1);" aria-hidden="true">
+            </svg>
+            <span class="hidden">Previous page</span>
+          </a>
+        </li>
+      {% else %}
+        <li data-pagination-button class="disabled">
+          <svg class="absolute left-1/2 top-1/2 w-[--icon-width-md] md:w-[--icon-width] h-[--icon-height-md] md:h-[--icon-height] -translate-x-1/2 -translate-y-1/2 bg-current"
+            style="mask: var(--pagination-button-prev); -webkit-mask: var(--pagination-button-prev); aspect-ratio: var(--pagination-button-prev-aspect-ratio, 1);" aria-hidden="true">
+          </svg>
+          <span class="hidden">Previous page</span>
+        </li>
+      {% endif %}
+ 
+      {% for part in paginate.parts %}
+        {% if part.is_link or paginate.current_page == part.title %}
+          <li data-pagination-button class="{% if paginate.current_page == part.title %}active{% endif %}">
+              <a class="w-full h-full flex items-center justify-center" href="{{ part.url }}" 
+                @click.prevent.stop="goToPage('{{ part.url }}')"
+                x-intersect.once="async () => {
+                  if (barba.timeout === 1) {
+                    await utils.delay(350);
+                  }
+                  barba.prefetch(`${window.location.origin}/{{ part.url }}}`);
+                }"
+              >
+                <span class="hidden">page</span> {{ part.title }}
+              </a>
+          </li>
+        {% else %}
+          <li data-pagination-indicator class="">
+            <span class="w-full h-full flex items-center justify-center" aria-current="page">
+              <span class="hidden">page</span> {{ part.title }}
+            </span>
+          </li>
+        {% endif %}
+      {% endfor %}
+
+      {% if paginate.next %}
+        <li data-pagination-button>
+          <a class="w-full h-full flex items-center justify-center" href="{{ paginate.next.url }}" @click.prevent.stop="goToPage('{{ paginate.next.url }}')">
+            <svg class="absolute left-1/2 top-1/2 w-[--icon-width-md] md:w-[--icon-width] h-[--icon-height-md] md:h-[--icon-height] -translate-x-1/2 -translate-y-1/2 bg-current"
+              style="mask: var(--pagination-button-next); -webkit-mask: var(--pagination-button-next); aspect-ratio: var(--pagination-button-next-aspect-ratio, 1);" aria-hidden="true">
+            </svg>
+            <span class="hidden">Next page</span>
+          </a>
+        </li>
+      {% else %}
+        <li data-pagination-button class="disabled">
+          <svg class="absolute left-1/2 top-1/2 w-[--icon-width-md] md:w-[--icon-width] h-[--icon-height-md] md:h-[--icon-height] -translate-x-1/2 -translate-y-1/2 bg-current"
+            style="mask: var(--pagination-button-next); -webkit-mask: var(--pagination-button-next); aspect-ratio: var(--pagination-button-next-aspect-ratio, 1);" aria-hidden="true">
+          </svg>
+          <span class="hidden">Next page</span>
+        </li>
+      {% endif %}
+    </ol>
+  </nav>
+{% endif %}
+

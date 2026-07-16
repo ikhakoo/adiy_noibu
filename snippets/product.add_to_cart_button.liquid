@@ -1,0 +1,67 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "add_to_cart_button"
+  assign section_type = "product"
+  assign add_to_cart_content = block.settings.add_to_cart_content
+  assign add_to_cart_class = block.settings.add_to_cart_class
+  assign out_of_stock_content = block.settings.out_of_stock_content
+  assign out_of_stock_class = block.settings.out_of_stock_class
+  assign enable_back_in_stock_notifications = block.settings.enable_back_in_stock_notifications
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign show_conditionally = block.settings.show_conditionally
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign selected_variant = product.selected_or_first_available_variant | default: product.variants.first
+  assign available_classes = "!hidden"
+
+  if selected_variant.available
+    assign available_classes = ""
+    assign sold_out_classes = "!hidden"
+  endif
+
+  assign formatted_price = selected_variant.price | money
+  assign formatted_compare_at_price = selected_variant.compare_at_price | money | prepend: '<span style="text-decoration: line-through; opacity: 0.5;">' | append: '</span>'
+  assign _add_to_cart_content = add_to_cart_content | replace: '[price]', formatted_price | replace: '[compare_at_price]', formatted_compare_at_price
+  assign _out_of_stock_content = out_of_stock_content | replace: '[price]', formatted_price | replace: '[compare_at_price]', formatted_compare_at_price
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,max_w_flex_col_row_order_align,padding_top_bottom_left_right,margin_top_bottom_left_right,border_width_radius,background_color,background_gradient,border_color" %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    x-show="$data.showConditionally('{{ show_conditionally }}')"
+    data-block-type="{{ block.type }}">
+  <button type="submit"
+          class="w-full disabled:opacity-70 disabled:pointer-events-none {{ add_to_cart_class }} {{ available_classes }}"
+          :class="$data.state.isAdding ? 'button-loading':''"
+          :disabled="$data.state.isAdding || $data.state.disable_add_to_cart.size > 0 || $data.state?.required_combine_items?.length < $data.state?.required_combine_quantity"
+          x-effect="$el.classList.toggle('!hidden', !$data.state.selected_variant?.available)"
+          x-html="$el.getAttribute('data-content').replace('[price]', utils.formatMoney($data.state.selected_price)).replace('[compare_at_price]', $data.state.selected_compare_at_price > $data.state.selected_price ? `<span style='text-decoration: line-through; opacity: 0.5;'>${utils.formatMoney($data.state.selected_compare_at_price)}</span>` : '')"
+          @click="$data.handleAddToCart($event);"
+          data-content="{% render '_input.inline_richtext', content: add_to_cart_content, escape: true, block: block, forloop: forloop %}">
+    {% render '_input.inline_richtext', content: _add_to_cart_content, block: block, forloop: forloop %}
+  </button>
+
+  <button type="button"
+      {% if enable_back_in_stock_notifications %}
+        @click="$data.handleBackInStockNotification($event)"
+      {% else %}
+        disabled="disabled"
+      {% endif %}
+          class="w-full {{ out_of_stock_class }} {{ sold_out_classes }}"
+          x-effect="$el.classList.toggle('!hidden', $data.state.selected_variant?.available)"
+          x-html="$el.getAttribute('data-content').replace('[price]', utils.formatMoney($data.state.selected_variant?.price)).replace('[compare_at_price]', `<span style='text-decoration: line-through; opacity: 0.5;'>${utils.formatMoney($data.state.selected_variant?.compare_at_price)}</span>`)"
+          data-content="{% render '_input.inline_richtext', content: out_of_stock_content, escape: true, block: block, forloop: forloop %}">
+    {% render '_input.inline_richtext', content: _out_of_stock_content, block: block, forloop: forloop %}
+  </button>
+</div>

@@ -1,0 +1,90 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.list-items"
+  assign content = block.settings.content
+  assign content_list = block.settings.content_list
+  assign content_class = block.settings.content_class
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign color_override = block.settings.color_override
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+
+  assign content = content | default: ""
+
+  if use_page_content and page.content != blank
+    assign content = page.content
+  endif
+
+  if request.design_mode != true
+    if content == blank
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+%}
+
+{% liquid
+  if color_override != blank and color_override.alpha != 0
+    assign color = color_override | default: "inherit"
+  endif
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,margin_top_bottom_left_right, max_w_flex_col_row_order_align" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: '& [data-style-list-layout]',
+    keys: "flex_direction_align_x_align_y_gap_wrap" %}
+
+{%- if content_list != blank -%}
+  {%- assign items = content_list | split: ',' -%}
+  {%- capture content_items -%}
+    <ul data-style-list-layout>
+      {%- for item in items -%}
+        <li>{{ item }}</li>
+      {%- endfor -%}
+    </ul>
+  {%- endcapture -%}
+{%- endif -%}
+
+{% assign li_replacer = '<li class="' | append: content_class | append: '">' %}
+{% assign ol_replacer = '<ol data-style-list-layout>' %}
+{% assign ul_replacer = '<ul data-style-list-layout>' %}
+{% assign _content = content |
+    append: content_items |
+    replace: ' class="metafield-single_line_text_field-array"', '' |
+    replace: ' class="metafield-single_line_text_field"', '' |
+    replace: ' class="metafield-multi_line_text_field-array"', '' |
+    replace: ' class="metafield-multi_line_text_field"', '' |
+    replace: "<li>", li_replacer |
+    replace: "<ol>", ol_replacer |
+    replace: "<ul>", ul_replacer %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    style="color: {{ color }}">
+  {% render '_input.inline_richtext', content: _content, block: block, forloop: forloop %}
+</div>

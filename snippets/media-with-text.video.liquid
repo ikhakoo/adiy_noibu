@@ -1,0 +1,24 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "video"
+  assign section_type = "media-with-text"
+  assign desktop_video = block.settings.desktop_video
+  assign mobile_video = block.settings.mobile_video
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign desktop_video = desktop_video
+  assign mobile_video = mobile_video | default: desktop_video
+
+  assign media_classes_sm = "w-full h-full max-md:hidden object-[inherit] max-h-[540px]"
+  assign media_classes_md = "w-full h-full md:hidden object-[inherit] max-h-[500px]"
+%}
+
+<figure
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {{ block.shopify_attributes }}
+    class="group relative overflow-hidden rounded-[20px] md:rounded-[30px]">
+  {% render '_object.media', media: desktop_video, class: media_classes_sm %}
+  {% render '_object.media', media: mobile_video, class: media_classes_md %}
+</figure>

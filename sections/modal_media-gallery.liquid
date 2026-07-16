@@ -1,0 +1,43 @@
+{%- render "modal_media-gallery" -%}
+{% schema %}
+{
+  "name": "Media gallery",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_alt_tag_description",
+      "label": "Show alt tag description",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "background_blur",
+      "label": "Background Blur",
+      "default": "backdrop-blur-md",
+      "options": [
+        {
+          "value": "",
+          "label": "none"
+        },
+        {
+          "value": "backdrop-blur-sm",
+          "label": "sm"
+        },
+        {
+          "value": "backdrop-blur-md",
+          "label": "md"
+        },
+        {
+          "value": "backdrop-blur-lg",
+          "label": "lg"
+        }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "groups": [
+      "custom.modal"
+    ]
+  }
+}
+{% endschema %}

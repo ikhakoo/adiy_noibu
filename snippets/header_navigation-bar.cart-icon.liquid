@@ -1,0 +1,43 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "cart-icon"
+  assign section_type = "header_navigation-bar"
+  assign icon = block.settings.icon
+  assign url = block.settings.url
+  assign width_height = block.settings.width_height
+  assign show_cart_quantity = block.settings.show_cart_quantity
+  assign responsive_visibility = block.settings.responsive_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign url = url | default: '/#modal--cart-drawer'
+
+  assign item_count = 0
+  for item in cart.items
+    assign _item = item
+    if item.properties._p_id_link == blank
+      assign item_count = item_count | plus: item.quantity
+    endif
+  endfor
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-cart-icon]",
+    keys: "width_height",
+    padding_as_margin: true %}
+
+  <a
+    href="{{ url }}"
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {{ block.shopify_attributes }}
+    title="Open Cart Drawer"
+    class="relative flex items-center justify-center p-1 {{ responsive_visibility }} {{ class }}">
+  {% render '_components.icon', icon: icon, class: "shrink-0", html_attributes: 'data-style-cart-icon' %}
+  {% if show_cart_quantity %}
+    <div x-data
+         class="absolute right-0 top-0 z-10 flex h-4 w-4 items-center justify-center rounded-full bg-theme-text text-[12px] leading-4 text-theme-bg"
+         x-text="$cart.state.item_count">{{ item_count }}</div>
+  {% endif %}
+</a>

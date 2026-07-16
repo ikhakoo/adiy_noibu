@@ -1,0 +1,102 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.video-product-card"
+  assign video = block.settings.video
+  assign aspect_ratio = block.settings.aspect_ratio
+  assign background_gradient = block.settings.background_gradient
+  assign autoplay = block.settings.autoplay
+  assign controls = block.settings.controls
+  assign loop = block.settings.loop
+  assign muted = block.settings.muted
+  assign image = block.settings.image
+  assign width_height_aspect_object_fit = block.settings.width_height_aspect_object_fit
+  assign label = block.settings.label
+  assign label_class = block.settings.label_class
+  assign url = block.settings.url
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign border_width_radius = block.settings.border_width_radius
+  assign background_color = block.settings.background_color
+  assign border_color = block.settings.border_color
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if request.design_mode != true
+    if video == blank and video_url == blank
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,margin_top_bottom_left_right, max_w_flex_col_row_order_align, background_color,border_color,border_width_radius" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: '& [data-style-figcaption]',
+    keys: "padding_top_bottom_left_right" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: '& [data-style-video-image]',
+    keys: "width_height_aspect_object_fit" %}
+
+{% liquid
+  assign media_object = video | json
+
+  assign aspect_ratio = aspect_ratio | strip_newlines | replace: ' ', "" | split: '|'
+  assign aspect_desktop = aspect_ratio[0]
+  assign aspect_mobile = aspect_ratio[1] | default: aspect_ratio[0]
+
+  assign video_class = "w-full object-cover aspect-[var(--aspect-ratio-mobile)] md:aspect-[var(--aspect-ratio-desktop)]"
+%}
+{% assign media = video | default: video_url %}
+
+<figure
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    class="flex flex-col overflow-hidden shadow-md"
+    style="--aspect-ratio-desktop: {{ aspect_desktop }};--aspect-ratio-mobile: {{ aspect_mobile }};">
+  {% render '_object.media', media: media, preload: preload, autoplay: autoplay, controls: controls, loop: loop, muted: muted, class: video_class %}
+  <figcaption
+      class="flex gap-3 items-center"
+      {% if url != blank %}
+        title="{{ url }}"
+        role="button"
+        tabindex="0"
+        @click.prevent.stop="barba.go('{{ url }}'); $modal.setId('')"
+      {% endif %}
+      data-style-figcaption
+  >
+    {% if image != blank %}
+      <picture class="relative pointer-events-none shrink-0 overflow-hidden" data-style-video-image>
+        {% render '_object.image', image: image, class: 'w-full h-full object-[inherit]' %}
+      </picture>
+    {% endif %}
+    {% if label != blank and label_class != blank %}
+      <div data-style-video-caption class="flex-1">
+        {% render '_input.richtext', content: label, class: label_class %}
+      </div>
+    {% endif %}
+  </figcaption>
+</figure>

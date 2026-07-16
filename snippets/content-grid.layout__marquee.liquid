@@ -1,0 +1,128 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "layout__marquee"
+  assign section_type = "content-grid"
+  assign auto_rotate = block.settings.auto_rotate
+  assign duration = block.settings.duration
+  assign auto_pause = block.settings.auto_pause
+  assign animation_direction = block.settings.animation_direction
+  assign grid_auto_cols_width_height_gap = block.settings.grid_auto_cols_width_height_gap
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture container_content %}
+  {% liquid
+    if auto_pause
+      assign pause_class = "group-hfw:animation-pause"
+    endif
+
+    assign scrollable_class = "overflow-hidden"
+    if auto_rotate == false
+      assign scrollable_class = "overflow-x-auto"
+      assign section_gap = "gap-[--gap]"
+    else
+      assign list_padding = "pr-[--gap]"
+    endif
+  %}
+
+  {% render '_utils.dynamic-css',
+      block: block,
+      keys: "responsive_visibility,margin_top_bottom_left_right, max_w_flex_col_row_order_align" %}
+
+
+  {% render '_utils.dynamic-css',
+      block: block,
+      keys: "grid_auto_cols_width_height_gap",
+      css_variables: true
+  %}
+
+  {% render '_utils.dynamic-css',
+      block: block,
+      selector: "& [data-style-marquee-slider]",
+      keys: "grid_auto_cols_width_height_gap"
+  %}
+
+ 
+
+  <div class="group relative grid auto-cols-max grid-flow-col-dense {{ section_gap }} scrollbar-none {{ scrollable_class }}"
+       data-style-marquee
+       data-style-id="{{ section.id }}--{{ block.id }}"
+      {% if auto_rotate %}
+        style="--animate-duration: {{ duration }}"
+        x-data="{ ..._sections.initMarqueeBar($el, +`{{ section.blocks.size }}`, +`{{ duration }}`) }"
+        x-defer="intersect"
+        @resize.window="handleMarqueeResize"
+        x-init="$nextTick(()=> {handleMarqueeResize(); setTimeout(()=> {handleMarqueeResize() }, 350)})"
+      {% endif %}
+  >
+    <ul class="logo-slider relative overflow-hidden w-max animate-marquee1 {{ pause_class }} {{ list_padding }}"
+        data-style-marquee-slider
+        style="animation-duration: calc(var(--animate-duration, 0) * 1s); animation-direction: {{ animation_direction }}">
+      {% capture block_content %}
+        {% liquid
+          assign count = 0
+          assign allow_no_cols = true
+          for block in section.blocks
+            if forloop.index0 <= columnIndex
+              continue
+            endif
+            if block.type contains "layout__"
+              break
+            endif
+
+            if allow_no_cols
+              render 'content-grid.render-blocks', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+
+              assign count = count | plus: 1
+            endif
+
+            if block.type == 'layout_child__end'
+              assign allow_no_cols = true
+            endif
+
+            if block.type == 'layout_child__tab_content'
+              render 'content-grid.layout_child__tab_content', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+              assign allow_no_cols = false
+            endif
+            if block.type == 'layout_child__flex_card'
+              render 'content-grid.layout_child__flex_card', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+              assign allow_no_cols = false
+            endif
+            if block.type == 'layout_child__grid_card'
+              render 'content-grid.layout_child__grid_card', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+              assign allow_no_cols = false
+            endif
+            if block.type == 'layout_child__collapsible'
+              render 'content-grid.layout_child__collapsible', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+              assign allow_no_cols = false
+            endif
+          endfor
+
+          if count == 0
+            assign no_dynamic_content = true
+          endif
+        %}
+      {% endcapture %}
+      {{ block_content }}
+    </ul>
+    {% if auto_rotate %}
+      <ul class="logo-slider relative overflow-hidden w-max animate-marquee1 {{ pause_class }} {{ list_padding }}"
+          data-style-marquee-slider
+          aria-hidden="true"
+          style="animation-duration: calc(var(--animate-duration) * 1s); animation-direction: {{ animation_direction }}">
+        {{ block_content }}
+      </ul>
+    {% endif %}
+  </div>
+
+{% endcapture %}
+
+{% if container_content contains '<script type="container/break"></script>' %}
+  {% break %}
+{% endif %}
+{{ container_content }}

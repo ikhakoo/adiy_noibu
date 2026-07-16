@@ -1,0 +1,404 @@
+{%- render "comparison-table" -%}
+{% schema %}
+{
+  "name": "Comparison Table",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "first_column",
+      "label": "Image First Column"
+    },
+    {
+      "type": "richtext",
+      "id": "second_column",
+      "label": "Title Second Column"
+    },
+    {
+      "type": "text",
+      "id": "second_column_class",
+      "label": "Title Second Column Class",
+      "default": "richtext-md"
+    },
+    {
+      "type": "richtext",
+      "id": "third_column",
+      "label": "Title Third Column"
+    },
+    {
+      "type": "text",
+      "id": "third_column_class",
+      "label": "Title Third Column Class",
+      "default": "richtext-md"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_primary_text",
+      "label": "Button redirect"
+    },
+    {
+      "type": "url",
+      "id": "button_primary_url",
+      "label": "Button Url"
+    },
+    {
+      "type": "text",
+      "id": "button_primary_class",
+      "label": "Button redirect class",
+      "default": "button-primary"
+    },
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "text",
+      "id": "category_class",
+      "label": "Category Class",
+      "default": "richtext-md"
+    },
+    {
+      "type": "text",
+      "id": "scrollbar_class",
+      "label": "Scrollbar class",
+      "default": "scrollbar-no-buttons"
+    },
+    {
+      "type": "header",
+      "content": "Section Globals"
+    },
+    {
+      "type": "text",
+      "id": "vertical_padding_section",
+      "label": "Top padding | Bottom Padding",
+      "default": "0 | 0 "
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "header",
+      "content": "Section Globals"
+    },
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section Id"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "1",
+      "label": "Color scheme"
+    },
+    {
+      "type": "select",
+      "id": "container_spacing",
+      "default": "px-container-md",
+      "options": [
+        {
+          "value": "px-container-xs",
+          "label": "xs"
+        },
+        {
+          "value": "px-container-sm",
+          "label": "sm"
+        },
+        {
+          "value": "px-container-md",
+          "label": "md"
+        },
+        {
+          "value": "px-container-lg",
+          "label": "lg"
+        },
+        {
+          "value": "px-container-fullwidth",
+          "label": "fullwidth"
+        },
+        {
+          "value": "px-container-gutter",
+          "label": "magazine"
+        }
+      ],
+      "label": "Container Spacing"
+    },
+    {
+      "type": "select",
+      "id": "border_divider",
+      "label": "Border Divider",
+      "default": "border-y-none",
+      "options": [
+        {
+          "value": "border-y-none",
+          "label": "None"
+        },
+        {
+          "value": "border-t border-t-theme-border",
+          "label": "Top"
+        },
+        {
+          "value": "border-b border-b-theme-border",
+          "label": "Bottom"
+        },
+        {
+          "value": "border-y border-y-theme-border",
+          "label": "Both"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "top_bottom_min_height",
+      "label": "padding: top | bottom | min-h",
+      "default": "0 | 0 | 0"
+    },
+    {
+      "type": "select",
+      "id": "responsive_visibility",
+      "label": "Responsive Visibility",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile"
+        },
+        {
+          "value": "desktop-tablet-only",
+          "label": "Desktop"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "responsive_breakpoint",
+      "label": "Responsive breakpoint",
+      "default": "768px",
+      "info": "Only adjust this for rare instances on large screen designs"
+    },
+    {
+      "type": "select",
+      "id": "target_visibility",
+      "label": "Target visibility",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "Always"
+        },
+        {
+          "value": "targeted",
+          "label": "Targeted"
+        },
+        {
+          "value": "no_target",
+          "label": "No target"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Row",
+      "type": "row",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "richtext",
+          "id": "category",
+          "label": "Category"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_first_column",
+          "label": "Icon First Column"
+        },
+        {
+          "type": "richtext",
+          "id": "first_column",
+          "label": "Text First Column"
+        },
+        {
+          "type": "text",
+          "id": "first_column_class",
+          "label": "Text First Column Class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "richtext",
+          "id": "second_column",
+          "label": "Text Second Column"
+        },
+        {
+          "type": "text",
+          "id": "second_column_class",
+          "label": "Text Second Column Class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "richtext",
+          "id": "third_column",
+          "label": "Text Third Column"
+        },
+        {
+          "type": "text",
+          "id": "third_column_class",
+          "label": "Text Third Column Class",
+          "default": "richtext-md"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comparison Table",
+      "blocks": [
+        {
+          "type": "row",
+          "settings": {
+            "category": "<h6><strong>Price</strong></h6>",
+            "icon_first_column": "shopify://shop_images/credit-card-check_1.svg",
+            "first_column": "<h6>30-50% less</h6>",
+            "first_column_class": "richtext-md",
+            "second_column": "<h6>Paying premium for time and labor</h6>",
+            "second_column_class": "richtext-md",
+            "third_column": "<h6>Costs vary, often higher than expected</h6>",
+            "third_column_class": "richtext-md"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "category": "<h6><strong>Time to Build</strong></h6>",
+            "icon_first_column": "shopify://shop_images/clock-stopwatch_1.svg",
+            "first_column": "<h6>Under 1 hour</h6>",
+            "first_column_class": "richtext-md",
+            "second_column": "<h6>Weeks of waiting and delays</h6>",
+            "second_column_class": "richtext-md",
+            "third_column": "<h6>Endless weekends, losing precious time</h6>",
+            "third_column_class": "richtext-md"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "category": "<h6><strong>Family Time</strong></h6>",
+            "icon_first_column": "shopify://shop_images/camera-plus.svg",
+            "first_column": "<h6>More time to create memories</h6>",
+            "first_column_class": "richtext-md",
+            "second_column": "<h6>Time spent coordinating and stressing</h6>",
+            "second_column_class": "richtext-md",
+            "third_column": "<h6>Missed moments with loved ones</h6>",
+            "third_column_class": "richtext-md"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "category": "<h6><strong>Ease & Convenience</strong></h6>",
+            "icon_first_column": "shopify://shop_images/layers-three-01.svg",
+            "first_column": "<h6>Like LEGO for adults!</h6>",
+            "first_column_class": "richtext-md",
+            "second_column": "<h6>Stressful scheduling and oversight</h6>",
+            "second_column_class": "richtext-md",
+            "third_column": "<h6>Frustrating and overwhelming</h6>",
+            "third_column_class": "richtext-md"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "category": "<h6><strong>Fulfillment</strong></h6>",
+            "icon_first_column": "shopify://shop_images/check-heart.svg",
+            "first_column": "<h6>Instant gratification</h6>",
+            "first_column_class": "richtext-md",
+            "second_column": "<h6>Watching someone else do it</h6>",
+            "second_column_class": "richtext-md",
+            "third_column": "<h6>Frustrating trial and error</h6>",
+            "third_column_class": "richtext-md"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "category": "<h6><strong>Customization</strong></h6>",
+            "icon_first_column": "shopify://shop_images/grid-dots-horizontal-center.svg",
+            "first_column": "<h6>Tailored to your dreams</h6>",
+            "first_column_class": "richtext-md",
+            "second_column": "<h6>Limited by budget and contractor</h6>",
+            "second_column_class": "richtext-md",
+            "third_column": "<h6>Depends on skill and time</h6>",
+            "third_column_class": "richtext-md"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "category": "<h6><strong>Stress Level</strong></h6>",
+            "icon_first_column": "shopify://shop_images/hearts.svg",
+            "first_column": "<h6>Low—focus on what matters</h6>",
+            "first_column_class": "richtext-md",
+            "second_column": "<h6>High—unforeseen challenges</h6>",
+            "second_column_class": "richtext-md",
+            "third_column": "<h6>High—unexpected complications</h6>",
+            "third_column_class": "richtext-md"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "category": "<h6><strong>Memories</strong></h6>",
+            "icon_first_column": "shopify://shop_images/cloud-off.svg",
+            "first_column": "<h6>Building together, bonding</h6>",
+            "first_column_class": "richtext-md",
+            "second_column": "<h6>Waiting, watching, worrying</h6>",
+            "second_column_class": "richtext-md",
+            "third_column": "<h6>Struggling, less time to enjoy</h6>",
+            "third_column_class": "richtext-md"
+          }
+        }
+      ],
+      "settings": {
+        "first_column": "shopify://shop_images/logotype.png",
+        "second_column": "<h5><strong>Contractor</strong></h5>",
+        "second_column_class": "richtext-md",
+        "third_column": "<h5><strong>DIYer</strong></h5>",
+        "third_column_class": "richtext-md",
+        "button_primary_text": "Shop now",
+        "button_primary_url": "",
+        "button_primary_class": "button-primary",
+        "category_class": "richtext-md",
+        "scrollbar_class": "scrollbar-no-buttons",
+        "vertical_padding_section": "60px | 60px",
+        "section_id": "",
+        "container_spacing": "px-container-md",
+        "responsive_visibility": ""
+      }
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "*"
+    ]
+  }
+}
+{% endschema %}

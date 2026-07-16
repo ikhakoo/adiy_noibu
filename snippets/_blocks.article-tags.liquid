@@ -1,0 +1,118 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.article-tags"
+  assign custom_tags = block.settings.custom_tags
+  assign button_class = block.settings.button_class
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign slider_overflow_container = block.settings.slider_overflow_container
+  assign scrollbar_class = block.settings.scrollbar_class
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign tab_blocks = section.blocks | where: "type", "layout__tab_content" | map: "settings" | map: "label"
+  assign inline_tab_blocks = section.blocks | where: "type", "layout_child__tab_content" | map: "settings" | map: "label"
+  assign tab_blocks = tab_blocks | concat: inline_tab_blocks | uniq 
+  assign tags = blog.all_tags
+  if custom_tags != blank
+    assign tags = custom_tags | split: ',' | uniq
+  endif
+
+%}
+
+{% liquid
+  if request.design_mode != true
+    if tags.size <= 0
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+%}
+
+{% liquid
+
+  assign container_spacing = section.settings.container_spacing
+  case slider_overflow_container
+    when 'all'
+      assign slider_overflow = container_spacing | replace: 'px', '-mx' | append: " scroll-" | append: container_spacing | append: " " | append: container_spacing
+    when 'mobile'
+      assign slider_overflow = container_spacing | replace: 'px', 'max-md:-mx' | append: " max-md:scroll-" | append: container_spacing | append: " max-md:" | append: container_spacing
+    when 'desktop'
+      assign slider_overflow = container_spacing | replace: 'px', 'md:-mx' | append: " md:scroll-" | append: container_spacing | append: " md:" | append: container_spacing
+  endcase
+
+  assign flex_direction_align_x_align_y_gap_wrap = flex_direction_align_x_align_y_gap_wrap | replace: " ", '' | strip_newlines | split: '|'
+  assign flex_direction = flex_direction_align_x_align_y_gap_wrap[0] | split: '/'
+  assign align_x = flex_direction_align_x_align_y_gap_wrap[1] | split: '/'
+  assign align_y = flex_direction_align_x_align_y_gap_wrap[2] | split: '/'
+
+  assign grid_center_class = ''
+
+  if flex_direction.first == 'row' and align_x.first == 'center'
+    assign grid_center_class = 'md:scroll-justify-center-x'
+  endif
+  if flex_direction.first == 'column' and align_y.first == 'center'
+    assign grid_center_class = 'md:scroll-justify-center-y'
+  endif
+
+  if flex_direction.last == 'row' and align_x.last == 'center'
+    assign grid_center_class = grid_center_class | append: 'max-md:scroll-justify-center-x'
+  endif
+  if flex_direction.last == 'column' and align_y.last == 'center'
+    assign grid_center_class = grid_center_class | append: 'max-md:scroll-justify-center-y'
+  endif
+
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,margin_top_bottom_left_right, max_w_flex_col_row_order_align" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-container]",
+    keys: "flex_direction_align_x_align_y_gap_wrap" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-scrollbar]",
+    keys: "padding_top_bottom_left_right",
+    padding_as_margin: true %}
+
+<div class="relative" {{ block.shopify_attributes }} data-style-id="{{ section.id }}--{{ block.id }}">
+  <div data-style-container
+       x-ref="tab_scrollbar"
+       class="overflow-y-auto scrollbar-none {{ grid_center_class }} {{ slider_overflow }}">
+    {% for tag in tags %}
+      {% assign _tag = tag | strip  %}
+      <a type="button"
+          href="/blogs/{{ blog.handle }}/tagged/{{ tag | handle }}"
+          class="shrink-0 {{ button_class }} {% if current_tags contains _tag %}active{% endif %}"
+          >{{ tag }}</a>
+    {% endfor %}
+  </div>
+  {% if scrollbar_class != blank %}
+    {% render "_components.scrollbar",
+        class: scrollbar_class,
+        scroll_container_ref: '$refs.tab_scrollbar',
+        html_attributes: 'data-style-scrollbar' %}
+  {% endif %}
+</div>

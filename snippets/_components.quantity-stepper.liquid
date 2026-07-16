@@ -1,0 +1,55 @@
+{% comment %}
+    Select Element
+
+    Accepts:
+    - class: {string}
+    - label: {string}
+    - setState: {function} i.e. `$data.quantity(value)`
+    - state: {string | number} i.e. `$data.state.quantity`
+    - default_value: {string | number} default_state
+    - max: {number} i.e. `$data.state.selected_variant.inventory_policy === 'deny' ? $data.state.selected_variant.inventory_quantity : 999`
+
+    Usage:
+    {% render "_components.quantity-stepper",
+        class: quantity_class,
+        label: label,
+        setState: "$data.setQuantity(value)",
+        state: "$data.state.quantity",
+        max: "$data.state.selected_variant.inventory_policy === 'deny' ? $data.state.selected_variant.inventory_quantity : 999",
+        default_value: 1
+    %}
+{% endcomment %}
+
+<div class="{{ class }} flex items-center justify-between pointer-events-none"
+     @click.prevent.stop="()=>{}"
+     x-data="{ value: {{ default_value | default: 1 }} }"
+     x-effect="{{ setState }}">
+  <span class="flex-1" data-quantity-label>{{ label }}</span>
+
+  <span class="flex items-center">
+    <button type="button"
+            class="p-0.5 pointer-events-auto"
+            aria-label="Decrease quantity"
+            :disabled="{{ disabled | default: 'false' }}"
+            @click="value = Math.max({{ min | default: 1 }}, value - 1)">
+      {% render '_components.icon', icon: "minus", class: "size-[0.9em]" %}
+    </button>
+    <label aria-label="{{ label | default: 'Quantity' }}" class="flex items-center justify-center">
+      <input type="number"
+             value="{{ default_value | default: 1 }}"
+             min="{{ min | default: 1 }}"
+             name="value"
+             class="w-8 min-w-0 appearance-none bg-inherit text-center outline-none disabled:pointer-events-none disabled:select-none pointer-events-auto"
+             @change="value = Math.max({{ min | default: 1 }}, Math.min({{ max | default: 999 }}, $event.target.value))"
+             :disabled="{{ disabled | default: disabled_manual_input | default: 'false' }}"
+             :value="{{ state }}">
+    </label>
+    <button type="button"
+            class="p-0.5 pointer-events-auto"
+            aria-label="Increase quantity"
+            :disabled="{{ disabled | default: 'false' }}"
+            @click="value = Math.min({{ max | default: 999 }}, value + 1)">
+      {% render '_components.icon', icon: "plus", class: "size-[0.9em]" %}
+    </button>
+  </span>
+</div>

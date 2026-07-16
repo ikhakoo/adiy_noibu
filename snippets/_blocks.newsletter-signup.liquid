@@ -1,0 +1,108 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.newsletter-signup"
+  assign placeholder = block.settings.placeholder
+  assign label = block.settings.label
+  assign tag = block.settings.tag
+  assign style = block.settings.style
+  assign button_content = block.settings.button_content
+  assign input_class = block.settings.input_class
+  assign button_class = block.settings.button_class
+  assign double_toast_check = block.settings.double_toast_check
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if request.design_mode != true
+    if label == blank and placeholder == blank and button_content == blank
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+%}
+
+{% liquid
+  case style
+    when 'inline_button'
+      assign inline_button = true
+    when 'input_and_button'
+      assign inline_button = false
+  endcase
+%}
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,margin_top_bottom_left_right, max_w_flex_col_row_order_align" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: '& [data-style-form]',
+    keys: "flex_direction_align_x_align_y_gap_wrap" %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    class="overflow-hidden"
+    {{ block.shopify_attributes }}>
+  {%- form 'customer', id: section.id, class: '', data-style-form: 'true' -%}
+    {% render "_components.input",
+        name: 'contact[email]',
+        type: 'text',
+        label: label,
+        placeholder: placeholder,
+        autocomplete: 'email',
+        required: true,
+        form: form,
+        inline_button: inline_button,
+        button_content: button_content,
+        class: input_class,
+        default_value: form.email
+    %}
+
+    {% if inline_button == false %}
+      <button type="submit" class="!h-full w-[unset] {{ button_class }}">
+        {% render '_input.inline_richtext', content: button_content, block: block, forloop: forloop %}
+      </button>
+    {% endif %}
+    {%- if form.errors -%}
+      {%- if double_toast_check == false -%}
+        <div
+          class="!hidden"
+          data-error-content="{{ form.errors.translated_fields['email'] | capitalize | append: " " | append: form.errors.messages['email'] | escape }}"
+          x-init="() => _stores.toast.addToast({type: 'error',target: 'cart',title: 'We\'ve encountered a problem.',content: $el.getAttribute('data-error-content'), timestamp: Date.now() + 1000 * 15})">
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+    {%- if form.posted_successfully? -%}
+      {%- if double_toast_check == false -%}
+        <div
+          class="!hidden"
+          x-init="() => _stores.toast.addToast({type: 'success',target: 'cart',title: 'Successfully subscribed',content: 'Thank you for Signing Up', timestamp: Date.now() + 1000 * 15})">
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+    {% if tag and tag != blank %}
+      <input type="hidden"
+             name="customer[tags]"
+             value="{{ tag }}">
+    {% endif %}
+  {%- endform -%}
+
+</div>

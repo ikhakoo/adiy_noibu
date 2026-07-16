@@ -1,0 +1,226 @@
+<section class="steps-section" style="background-color: {{ section.settings.background_color }};">
+  <div class="steps-container">
+
+    <!-- TOP HEADING -->
+    <div class="steps-heading-wrap">
+
+      <!-- HEADING 1 -->
+      <div class="steps-heading-part steps-heading-part--1 {{ section.settings.heading_part_1_class }}">
+        {{ section.settings.heading_part_1 }}
+      </div>
+
+      <!-- HEADING 2 -->
+      <div class="steps-heading-part steps-heading-part--2 {{ section.settings.heading_part_2_class }}">
+        {{ section.settings.heading_part_2 }}
+      </div>
+
+    </div>
+
+    <!-- STEPS -->
+    <div class="steps-grid">
+
+      {% for block in section.blocks %}
+        <div class="step-item">
+          <div class="step-number">{{ forloop.index }}</div>
+          <div class="step-content">
+            {{ block.settings.content }}
+          </div>
+        </div>
+      {% endfor %}
+
+      <div class="steps-line"></div>
+
+    </div>
+
+  </div>
+</section>
+
+<style>
+.steps-section {
+  padding: 48px 0;
+}
+
+.steps-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+}
+
+/* HEADING WRAP */
+.steps-heading-wrap {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* DEFAULT HEADING STYLES */
+.steps-heading-part--1 {
+  font-size: 16px;
+  font-weight: 600;
+  color:#4077AD;
+}
+
+.steps-heading-part--2 {
+  font-size: 28px;
+  font-weight: 500;
+}
+
+/* GRID */
+.steps-grid {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  align-items: flex-start;
+}
+
+/* LINE */
+.steps-line {
+  position: absolute;
+  top: 75px;
+  left: calc(100% / 8);
+  right: calc(100% / 8);
+  height: 2px;
+  background-color: #4077ad;
+  z-index: 0;
+}
+
+/* STEP */
+.step-item {
+  text-align: center;
+  position: relative;
+  flex: 1;
+  z-index: 1;
+}
+
+/* NUMBER */
+.step-number {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 2px solid #4077ad;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 70px;
+  color: #4077ad;
+  margin: 0 auto 20px;
+  background-color: #fff;
+}
+
+/* CONTENT */
+.step-content {
+  font-size: 16px;
+  line-height: 1.7;
+  text-align: center;
+  font-weight: 200;
+}
+
+.step-content h3 {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 10px;
+
+}
+
+/* MOBILE */
+@media screen and (max-width: 767px) {
+  .steps-grid {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .steps-line {
+    display: none;
+  }
+
+  .step-number {
+    width: 100px;
+    height: 100px;
+    font-size: 50px;
+  }
+  
+}
+@media(min-width:768px)
+{
+    .steps-heading-part--2 {
+        font-size: 40px;
+        padding-left:100px;
+        padding-right:100px;
+    }
+    .step-content h3,.step-content p {
+    padding-left:10px;
+    padding-right:10px;
+    }
+}
+@media(min-width:1200px)
+{
+    .steps-heading-part--2 {
+        padding-left:170px;
+        padding-right:170px;
+    }
+    .step-content h3,.step-content p {
+    padding-left:25px;
+    padding-right:25px;
+    }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Dynamic Steps Section",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading_part_1",
+      "label": "Heading Part 1"
+    },
+    {
+      "type": "text",
+      "id": "heading_part_1_class",
+      "label": "Heading Part 1 CSS Class"
+    },
+    {
+      "type": "richtext",
+      "id": "heading_part_2",
+      "label": "Heading Part 2"
+    },
+    {
+      "type": "text",
+      "id": "heading_part_2_class",
+      "label": "Heading Part 2 CSS Class"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Step Content"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "Dynamic Steps Section",
+      "blocks": [
+        { "type": "step" },
+        { "type": "step" },
+        { "type": "step" },
+        { "type": "step" }
+      ]
+    }
+  ]
+}
+{% endschema %}

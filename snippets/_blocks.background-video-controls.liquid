@@ -1,0 +1,68 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.background-video-controls"
+  assign target_id = block.settings.target_id
+  assign paused_label = block.settings.paused_label
+  assign paused_button_class = block.settings.paused_button_class
+  assign playing_label = block.settings.playing_label
+  assign playing_button_class = block.settings.playing_button_class
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if request.design_mode != true
+    if paused_label == blank or playing_label == blank
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+
+  assign form_block = section.blocks | where: "type", "shopify_form" | first
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,margin_top_bottom_left_right, max_w_flex_col_row_order_align" %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    x-data="{ videoRef: document.getElementById('{{ target_id }}') ?? $el.closest('.shopify-section')?.querySelector('video'), playing: false }"
+    x-init="() => {
+       playing = videoRef?.playing;
+       videoRef?.addEventListener('playing', () => { playing = true })
+       videoRef?.addEventListener('pause', () => { playing = false })
+     }"
+    x-show="!!videoRef"
+    class="">
+  <button type="button"
+          x-show="!playing"
+          @click="videoRef?.play()"
+          class="w-full {{ paused_button_class }} {{ class }}">
+    {% render '_input.inline_richtext', content: paused_label, block: block, forloop: forloop %}
+  </button>
+  <button type="button"
+          x-show="playing"
+          @click="videoRef?.pause()"
+          class="w-full {{ playing_button_class }} {{ class }}">
+    {% render '_input.inline_richtext', content: playing_label, block: block, forloop: forloop %}
+  </button>
+</div>

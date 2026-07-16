@@ -1,0 +1,71 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "layout__sticky-footer"
+  assign section_type = "modal_cart-drawer"
+  assign show_conditionally = block.settings.show_conditionally
+  assign border_divider = block.settings.border_divider
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture container_content %}
+  {% liquid
+    assign first_announcement = section.blocks | where: "type", 'announcement' | first
+  %}
+
+  {% render '_utils.dynamic-css',
+      block: block,
+      keys: "padding_top_bottom_left_right"
+  %}
+
+  <div data-style-id="{{ section.id }}--{{ block.id }}"
+       x-show="_cart.showConditionally(`{{ show_conditionally }}`) || $editor?.select_block_id === `{{ block.id }}`"
+      {{ block.shopify_attributes }}
+       x-effect="() => {
+       const show = _cart.showConditionally(`{{ show_conditionally }}`)
+       if (open) {
+          $nextTick(() => {
+          $el.parentElement.style.paddingBottom = (show ? $el.offsetHeight : 0) + 12 + 'px'
+          })
+        }
+       }"
+       class="absolute bottom-0 inset-x-0 shadow-invert flex flex-wrap {{ section.settings.color_scheme }} {{ border_divider }}">
+    {% liquid
+      assign count = 0
+      assign allow_no_cols = true
+
+      for block in section.blocks
+        if forloop.index0 <= columnIndex
+          continue
+        endif
+        if block.type contains "layout__"
+          break
+        endif
+        assign count = count | plus: 1
+
+        if allow_no_cols
+          render 'modal_cart-drawer.block', block: block, forloop: forloop, section_type: section_type, form: form, height: section.settings.height, columnIndex: forloop.index0
+        endif
+
+        if block.type == 'layout_child__end'
+          assign allow_no_cols = true
+        endif
+
+        if block.type == 'layout_child__flex_card'
+          assign allow_no_cols = false
+          render 'modal_cart-drawer.layout_child__flex_card', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+        endif
+
+      endfor
+
+      if count == 0
+        assign no_dynamic_content = true
+      endif
+    %}
+  </div>
+{% endcapture %}
+
+{% if container_content contains '<script type="container/break"></script>' %}
+  {% break %}
+{% endif %}
+{{ container_content }}

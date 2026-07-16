@@ -1,0 +1,202 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "richtext"
+  assign section_type = "global_typography"
+  assign title = block.settings.title
+  assign font_family__p = block.settings.font_family__p
+  assign size_weight_height_opacity__p = block.settings.size_weight_height_opacity__p
+  assign spacing_transform_style_whitespace__p = block.settings.spacing_transform_style_whitespace__p
+  assign custom_css__p = block.settings.custom_css__p
+  assign font_family__h1 = block.settings.font_family__h1
+  assign size_weight_height_opacity__h1 = block.settings.size_weight_height_opacity__h1
+  assign spacing_transform_style_whitespace__h1 = block.settings.spacing_transform_style_whitespace__h1
+  assign custom_css__h1 = block.settings.custom_css__h1
+  assign font_family__h2 = block.settings.font_family__h2
+  assign size_weight_height_opacity__h2 = block.settings.size_weight_height_opacity__h2
+  assign spacing_transform_style_whitespace__h2 = block.settings.spacing_transform_style_whitespace__h2
+  assign custom_css__h2 = block.settings.custom_css__h2
+  assign font_family__h3 = block.settings.font_family__h3
+  assign size_weight_height_opacity__h3 = block.settings.size_weight_height_opacity__h3
+  assign spacing_transform_style_whitespace__h3 = block.settings.spacing_transform_style_whitespace__h3
+  assign custom_css__h3 = block.settings.custom_css__h3
+  assign font_family__h4 = block.settings.font_family__h4
+  assign size_weight_height_opacity__h4 = block.settings.size_weight_height_opacity__h4
+  assign spacing_transform_style_whitespace__h4 = block.settings.spacing_transform_style_whitespace__h4
+  assign custom_css__h4 = block.settings.custom_css__h4
+  assign font_family__h5 = block.settings.font_family__h5
+  assign size_weight_height_opacity__h5 = block.settings.size_weight_height_opacity__h5
+  assign spacing_transform_style_whitespace__h5 = block.settings.spacing_transform_style_whitespace__h5
+  assign custom_css__h5 = block.settings.custom_css__h5
+  assign font_family__h6 = block.settings.font_family__h6
+  assign size_weight_height_opacity__h6 = block.settings.size_weight_height_opacity__h6
+  assign spacing_transform_style_whitespace__h6 = block.settings.spacing_transform_style_whitespace__h6
+  assign custom_css__h6 = block.settings.custom_css__h6
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign apply_container_queries = block.settings.apply_container_queries
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign setting_keys = "p,ul,ol,h1,h2,h3,h4,h5,h6" | split: ','
+
+  for key in setting_keys
+    assign selector = "." | append: title | append: " " | append: key | append: ", ." | append: title | append: "." | append: key
+    assign _key = key
+    if key == "ul" or key == "ol"
+      assign _key = "p"
+    endif
+    if generate_richtext
+      assign selector = selector | append: ", .richtext" | append: " " | append: key
+    endif
+    assign check_items = "font_family__" | append: _key | append: ",size_weight_height_opacity__" | append: _key | append: ",spacing_transform_style_whitespace__" | append: _key | append: ",custom_css__" | append: _key
+    
+    render '_utils.dynamic-css', selector: selector, block: block, apply_container_queries: true, keys: check_items
+  endfor
+%}
+
+{% if request.design_mode %}
+  <section class="fixed inset-0 z-50 flex flex-col gap-16 overflow-y-auto text-balance bg-white py-16 text-black px-container-sm"
+           x-data="{tab: 'p'}"
+           x-show="$editor?.select_block_id === '{{ block.id }}'"
+           x-cloak {{ block.shopify_attributes }}>
+
+    <header class="flex gap-3 font-mono">
+      <button @click="tab='p'"
+              type="button"
+              :class="tab === 'p' ? 'bg-gray-600 text-gray-50 border-gray-900 hf:bg-gray-700':'border-gray-200/70 bg-gray-100 text-gray-700 hf:text-gray-900 hf:border-gray-300/80 hf:bg-gray-200/90'"
+              class="rounded-sm border px-3 text-sm font-medium py-1.5">Paragraph
+      </button>
+      <button @click="tab='h1'"
+              type="button"
+              :class="tab === 'h1' ? 'bg-gray-600 text-gray-50 border-gray-900 hf:bg-gray-700':'border-gray-200/70 bg-gray-100 text-gray-700 hf:text-gray-900 hf:border-gray-300/80 hf:bg-gray-200/90'"
+              class="rounded-sm border px-3 text-sm font-medium py-1.5">Heading 1
+      </button>
+      <button @click="tab='h2'"
+              type="button"
+              :class="tab === 'h2' ? 'bg-gray-600 text-gray-50 border-gray-900 hf:bg-gray-700':'border-gray-200/70 bg-gray-100 text-gray-700 hf:text-gray-900 hf:border-gray-300/80 hf:bg-gray-200/90'"
+              class="rounded-sm border px-3 text-sm font-medium py-1.5">Heading 2
+      </button>
+      <button @click="tab='h3'"
+              type="button"
+              :class="tab === 'h3' ? 'bg-gray-600 text-gray-50 border-gray-900 hf:bg-gray-700':'border-gray-200/70 bg-gray-100 text-gray-700 hf:text-gray-900 hf:border-gray-300/80 hf:bg-gray-200/90'"
+              class="rounded-sm border px-3 text-sm font-medium py-1.5">Heading 3
+      </button>
+      <button @click="tab='h4'"
+              type="button"
+              :class="tab === 'h4' ? 'bg-gray-600 text-gray-50 border-gray-900 hf:bg-gray-700':'border-gray-200/70 bg-gray-100 text-gray-700 hf:text-gray-900 hf:border-gray-300/80 hf:bg-gray-200/90'"
+              class="rounded-sm border px-3 text-sm font-medium py-1.5">Heading 4
+      </button>
+      <button @click="tab='h5'"
+              type="button"
+              :class="tab === 'h5' ? 'bg-gray-600 text-gray-50 border-gray-900 hf:bg-gray-700':'border-gray-200/70 bg-gray-100 text-gray-700 hf:text-gray-900 hf:border-gray-300/80 hf:bg-gray-200/90'"
+              class="rounded-sm border px-3 text-sm font-medium py-1.5">Heading 5
+      </button>
+      <button @click="tab='h6'"
+              type="button"
+              :class="tab === 'h6' ? 'bg-gray-600 text-gray-50 border-gray-900 hf:bg-gray-700':'border-gray-200/70 bg-gray-100 text-gray-700 hf:text-gray-900 hf:border-gray-300/80 hf:bg-gray-200/90'"
+              class="rounded-sm border px-3 text-sm font-medium py-1.5">Heading 6
+      </button>
+    </header>
+    <div class="mt-12 grid gap-8 lg:grid-cols-[1fr_320px]">
+      <div class="text-lg font-bold text-gray-600">Desktop</div>
+      <div class="text-lg font-bold text-gray-600">mobile</div>
+    </div>
+    <main class="mt-8">
+      <section x-show="tab === 'p'" class="grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="{{ title }}">
+          <p contenteditable="true">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab animi atque consectetur
+            <strong>dolor earum eius fuga harum</strong>, itaque odio porro praesentium quasi
+            <em>quibusdam ratione repellat tempore,</em> temporibus ullam, vel voluptatem. Architecto cum delectus dolores ea expedita obcaecati praesentium quia quod? Blanditiis commodi delectus deserunt eligendi facilis illum, inventore iusto libero, mollitia nobis perspiciatis quia quisquam reprehenderit tempora temporibus unde voluptatum. A accusantium ad doloremque eos et illum labore perspiciatis possimus?
+          </p>
+        </div>
+        <div class="{{ title }} @container max-w-lg">
+          <p contenteditable="true">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab animi atque consectetur
+            <strong>dolor earum eius fuga harum</strong>, itaque odio porro praesentium quasi
+            <em>quibusdam ratione repellat tempore,</em> temporibus ullam, vel voluptatem. Mollitia nobis perspiciatis quia quisquam reprehenderit tempora temporibus unde voluptatum. A accusantium ad doloremque eos et illum labore perspiciatis possimus?
+          </p>
+        </div>
+      </section>
+      <section x-show="tab === 'h1'" class="grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="{{ title }}">
+          <h1 contenteditable="true">
+            Lorem ipsum dolor <strong>sit amet</strong>, <em>consectetur</em>.
+          </h1>
+        </div>
+        <div class="{{ title }} @container max-w-lg">
+          <h1 contenteditable="true">
+            Lorem ipsum dolor <strong>sit amet</strong>, <em>consectetur</em>.
+          </h1>
+        </div>
+      </section>
+      <section x-show="tab === 'h2'" class="grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="{{ title }}">
+          <h2 contenteditable="true">
+            Lorem ipsum dolor <strong>sit amet</strong>, <em>consectetur</em>.
+          </h2>
+        </div>
+        <div class="{{ title }} @container max-w-lg">
+          <h2 contenteditable="true">
+            Lorem ipsum dolor <strong>sit amet</strong>, <em>consectetur</em>.
+          </h2>
+        </div>
+      </section>
+      <section x-show="tab === 'h3'" class="grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="{{ title }}">
+          <h3 contenteditable="true">
+            Lorem ipsum dolor sit amet, <strong>consectetur adipisicing</strong> elit. <em>Deleniti, dicta</em>!
+          </h3>
+        </div>
+        <div class="{{ title }} @container max-w-lg">
+          <h3 contenteditable="true">
+            Lorem ipsum dolor sit amet, <strong>consectetur adipisicing</strong> elit. <em>Deleniti, dicta</em>!
+          </h3>
+        </div>
+      </section>
+      <section x-show="tab === 'h4'" class="grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="{{ title }}">
+          <h4 contenteditable="true">
+            Lorem ipsum dolor sit amet, <strong>consectetur adipisicing</strong> elit. Dicta illo
+            <em>laborum maxime saepe</em> voluptates!
+          </h4>
+        </div>
+        <div class="{{ title }} @container max-w-lg">
+          <h4 contenteditable="true">
+            Lorem ipsum dolor sit amet, <strong>consectetur adipisicing</strong> elit. Dicta illo
+            <em>laborum maxime saepe</em> voluptates!
+          </h4>
+        </div>
+      </section>
+      <section x-show="tab === 'h5'" class="grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="{{ title }}">
+          <h5 contenteditable="true">
+            Lorem ipsum dolor sit amet, <strong>consectetur adipisicing</strong> elit. Aspernatur cum
+            <em>delectus dolor fuga</em> laudantium officiis recusandae ut. Minima.
+          </h5>
+        </div>
+        <div class="{{ title }} @container max-w-lg">
+          <h5 contenteditable="true">
+            Lorem ipsum dolor sit amet, <strong>consectetur adipisicing</strong> elit. Aspernatur cum
+            <em>delectus dolor fuga</em> laudantium officiis recusandae ut. Minima.
+          </h5>
+        </div>
+      </section>
+      <section x-show="tab === 'h6'" class="grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="{{ title }}">
+          <h6 contenteditable="true">
+            Lorem ipsum dolor sit amet, <strong>consectetur adipisicing elit.</strong> Amet aperiam commodi
+            <em>dolor earum, excepturi explicabo</em> impedit inventore ipsum itaque magni odio optio reprehenderit! Aperiam dignissimos molestias nemo nobis non praesentium. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae consectetur earum id numquam voluptate?
+          </h6>
+        </div>
+        <div class="{{ title }} @container max-w-lg">
+          <h6 contenteditable="true">
+            Lorem ipsum dolor sit amet, <strong>consectetur adipisicing elit.</strong> Amet aperiam commodi
+            <em>dolor earum, excepturi explicabo</em> impedit inventore ipsum itaque magni odio optio reprehenderit! Aperiam dignissimos molestias nemo nobis non praesentium.
+          </h6>
+        </div>
+      </section>
+    </main>
+  </section>
+{% endif %}
+

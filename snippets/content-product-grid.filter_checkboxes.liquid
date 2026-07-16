@@ -1,0 +1,34 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "filter_checkboxes"
+  assign section_type = "content-product-grid"
+  assign title = block.settings.title
+  assign filters_show_count = block.settings.filters_show_count
+  assign checkbox_class = block.settings.checkbox_class
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture selector %}[data-style-checkbox="{{ section.id }}--{{ block.id }}"]{% endcapture %}
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: selector,
+    keys: "flex_direction_align_x_align_y_gap_wrap"
+%}
+
+<fieldset data-filter-param="{{ filter.param_name }}" class="flex"
+          data-style-checkbox="{{ section.id }}--{{ block.id }}">
+  {% for value in filter.values %}
+    {% assign label = value.label %}
+    {% if filters_show_count %}
+      {% assign label = value.label | append: ' (' | append: value.count | append: ')' %}
+    {% endif %}
+    {% render "_components.checkbox",
+        class: checkbox_class,
+        label: label,
+        value: value.value,
+        name: value.param_name,
+        default_checked: value.active
+    %}
+  {%- endfor -%}
+</fieldset>

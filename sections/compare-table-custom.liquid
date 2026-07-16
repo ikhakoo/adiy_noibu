@@ -1,0 +1,206 @@
+<section class="comparison-section" style="background-color: {{ section.settings.background_color }};">
+  <div class="comparison-container">
+
+    {% if section.settings.heading != blank %}
+      <h2 class="comparison-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    <div class="comparison-grid">
+
+      <!-- LEFT COLUMN -->
+      <div class="comparison-column comparison-column--left">
+        {{ section.settings.left_content }}
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="comparison-column comparison-column--right">
+        {{ section.settings.right_content }}
+      </div>
+
+    </div>
+
+    <!-- BOTTOM CENTERED RICH TEXT -->
+    {% if section.settings.bottom_content != blank and section.settings.bottom_content %}
+      <div class="comparison-bottom-content">
+        {{ section.settings.bottom_content }}
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+<style>
+.comparison-section {
+  padding: 48px 0;
+}
+
+.comparison-container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+}
+
+.comparison-heading {
+  text-align: center;
+  font-size: 28px;
+  letter-spacing: -1.2px;
+  line-height: 1.2;
+  margin-bottom: 48px;
+  font-weight:500;
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.comparison-column {
+  padding: 20px 0;
+}
+
+.comparison-column h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  line-height: 1.2;
+  font-weight:500;
+}
+
+.comparison-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.comparison-column li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+  line-height: 1.6;
+  font-size: 16px;
+  font-weight:200;
+}
+
+.comparison-column--left li::before {
+  content: "✖";
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color:#D32F2F;
+}
+
+.comparison-column--right li::before {
+  content: "✔";
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color:#2E7D32;
+}
+
+/* BOTTOM CENTERED RICH TEXT */
+.comparison-bottom-content {
+  text-align: center;
+  max-width: 900px;
+  margin: 07px auto 0;
+  font-size: 16px;
+  line-height: 1.7;
+  font-weight:200;
+}
+
+.comparison-bottom-content p {
+  margin: 0;
+}
+
+/* TABLET + DESKTOP */
+@media screen and (min-width: 768px) {
+  .comparison-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+
+  .comparison-column--left {
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
+    padding-right: 48px;
+  }
+
+  .comparison-column--right {
+    padding-left: 48px;
+  }
+
+  .comparison-column h3 {
+    font-size: 26px;
+    line-height: 1.2;
+  }
+}
+
+/* LARGE DESKTOP */
+@media screen and (min-width: 1200px) {
+  .comparison-heading {
+    font-size: 40px;
+  }
+}
+
+/* MOBILE */
+@media screen and (max-width: 767px) {
+  .comparison-section {
+    padding: 40px 0;
+  }
+
+  .comparison-heading {
+    font-size: 28px;
+    margin-bottom: 32px;
+  }
+
+  .comparison-container {
+    padding: 0 20px;
+  }
+
+  .comparison-bottom-content {
+    margin-top: 0px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Comparison Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why Choose A-DIY"
+    },
+    {
+      "type": "richtext",
+      "id": "left_content",
+      "label": "Left Column Content",
+      "default": "<h3>Others</h3><ul><li>High contractor costs</li><li>Long installation time</li><li>Complex process</li></ul>"
+    },
+    {
+      "type": "richtext",
+      "id": "right_content",
+      "label": "Right Column Content",
+      "default": "<h3>A-DIY</h3><ul><li>Affordable solution</li><li>Quick installation</li><li>Simple DIY process</li></ul>"
+    },
+    {
+      "type": "richtext",
+      "id": "bottom_content",
+      "label": "Bottom Centered Rich Text",
+      "default": "<p>Choose the smarter, faster, and more affordable way to transform your space with A-DIY.</p>"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section Background Color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comparison Section"
+    }
+  ]
+}
+{% endschema %}

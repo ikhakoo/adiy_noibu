@@ -1,0 +1,27 @@
+.shopify-challenge__container {
+  margin: auto;
+  padding: 120px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+}
+
+.shopify-challenge__container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.shopify-challenge__button {
+  margin-top: 36px !important;
+}
+
+.shopify-challenge__message {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.rc-container-wrapper, .rc_container_wrapper {
+  display: none !important;
+}

@@ -1,0 +1,230 @@
+{%- render "sale-banner" -%}
+{% schema %}
+{
+  "name": "Sale Banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "text",
+      "id": "vertical_padding_content",
+      "label": "Top padding | Bottom Padding",
+      "default": "0 | 0 "
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "background color"
+    },
+    {
+      "type": "header",
+      "content": "Section Globals"
+    },
+    {
+      "type": "text",
+      "id": "vertical_padding_section",
+      "label": "Top padding | Bottom Padding",
+      "default": "0 | 0 "
+    },
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section Id"
+    },
+    {
+      "type": "select",
+      "id": "container_spacing",
+      "default": "px-container-md",
+      "options": [
+        {
+          "value": "px-container-xs",
+          "label": "xs"
+        },
+        {
+          "value": "px-container-sm",
+          "label": "sm"
+        },
+        {
+          "value": "px-container-md",
+          "label": "md"
+        },
+        {
+          "value": "px-container-lg",
+          "label": "lg"
+        },
+        {
+          "value": "px-container-fullwidth",
+          "label": "fullwidth"
+        },
+        {
+          "value": "px-container-gutter",
+          "label": "magazine"
+        }
+      ],
+      "label": "Container Spacing"
+    },
+    {
+      "type": "select",
+      "id": "responsive_visibility",
+      "label": "Responsive Visibility",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile"
+        },
+        {
+          "value": "desktop-tablet-only",
+          "label": "Desktop"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Richtext",
+      "type": "richtext",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "richtext",
+          "id": "preheading",
+          "label": "Preheading"
+        },
+        {
+          "type": "text",
+          "id": "preheading_class",
+          "label": "Preheading class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "richtext",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "heading_class",
+          "label": "Heading class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "richtext",
+          "id": "subheading",
+          "label": "Subheading"
+        },
+        {
+          "type": "text",
+          "id": "subheading_class",
+          "label": "Subheading class",
+          "default": "richtext-md"
+        }
+      ]
+    },
+    {
+      "name": "Banner",
+      "type": "banner",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "richtext",
+          "id": "preheading",
+          "label": "Preheading"
+        },
+        {
+          "type": "text",
+          "id": "preheading_class",
+          "label": "Preheading class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "richtext",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "heading_class",
+          "label": "Heading class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "richtext",
+          "id": "subheading",
+          "label": "Subheading"
+        },
+        {
+          "type": "text",
+          "id": "subheading_class",
+          "label": "Subheading class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "header",
+          "content": "Content Settings"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background Color"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sale Banner",
+      "blocks": [
+        {
+          "type": "banner",
+          "settings": {
+            "preheading": "<p><strong>BLACK FRIDAY SALE</strong></p>",
+            "preheading_class": "richtext-md",
+            "heading": "<p>60% OFF</p>",
+            "heading_class": "text-80/60-700",
+            "subheading": "<p>Until Inventory Lasts</p>",
+            "subheading_class": "richtext-md",
+            "background_color": "#4d7868"
+          }
+        },
+        {
+          "type": "richtext",
+          "settings": {
+            "preheading": "<p><strong>$0 Down + 0% Interest</strong></p>",
+            "preheading_class": "richtext-md",
+            "heading": "<h2><strong>NOW offering financing up to 24 months</strong></h2>",
+            "heading_class": "richtext-md",
+            "subheading": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel rhoncus est. Integer iaculis sapien .Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>",
+            "subheading_class": "richtext-md"
+          }
+        }
+      ],
+      "settings": {
+        "vertical_padding_content": "36px/16px | 36px/16px",
+        "background_color": "#3a6958",
+        "vertical_padding_section": "48px/36px | 48px/36",
+        "section_id": "",
+        "container_spacing": "px-container-md",
+        "responsive_visibility": ""
+      }
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "*"
+    ]
+  }
+}
+{% endschema %}

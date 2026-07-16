@@ -1,0 +1,82 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "slide"
+  assign section_type = "hero-banner"
+  assign desktop_image = block.settings.desktop_image
+  assign mobile_image = block.settings.mobile_image
+  assign background_gradient = block.settings.background_gradient
+  assign preheading = block.settings.preheading
+  assign preheading_class = block.settings.preheading_class
+  assign heading = block.settings.heading
+  assign heading_class = block.settings.heading_class
+  assign subheading = block.settings.subheading
+  assign subheading_class = block.settings.subheading_class
+  assign button_primary_text = block.settings.button_primary_text
+  assign button_primary_url = block.settings.button_primary_url
+  assign button_primary_class = block.settings.button_primary_class
+  assign button_secondary_text = block.settings.button_secondary_text
+  assign button_secondary_url = block.settings.button_secondary_url
+  assign button_secondary_class = block.settings.button_secondary_class
+  assign text_color = block.settings.text_color
+  assign text_align = block.settings.text_align
+  assign vertical_align_desktop = block.settings.vertical_align_desktop
+  assign vertical_align = block.settings.vertical_align
+  assign horizontal_align = block.settings.horizontal_align
+  assign vertical_padding = block.settings.vertical_padding
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign desktop_image = desktop_image
+  assign mobile_image = mobile_image | default: desktop_image
+  assign preload = false
+
+  if section.index0 < 1
+    assign preload = true
+  endif
+  
+  assign media_classes_sm = "w-full h-full max-md:hidden object-cover"
+  assign media_classes_md = "w-full h-full md:hidden object-cover"
+
+  assign vertical_padding = vertical_padding | strip_newlines | replace: ' ', "" | split: '|'
+  assign pt = vertical_padding[0] | split: '/'
+  assign pb = vertical_padding[1] | split: '/'
+  assign padding_styles_content = "--pt:" | append: pt.last | append: "; --pt-md:" | append: pt.first | append: ";--pb:" | append: pb.last | append: "; --pb-md:" | append: pb.first | append: ";"
+
+  assign preheading_class =  preheading_class | append: " " | append: "mb-1 md:mb-2"
+%}
+
+<div data-style-id="{{ section.id }}--{{ block.id }}"
+     {{ block.shopify_attributes }} 
+     class="w-full snap-start shrink-0 relative h-full px-container-md pt-[--pt] md:pt-[--pt-md] pb-[--pb] md:pb-[--pb-md]"
+     style="{{ padding_styles_content }};">
+  <picture class="absolute inset-0 pointer-events-none block {{ block.shopify_attributes }}"
+           style="z-index: -10;">
+    {% render '_object.image', image: desktop_image, sizes: "100vw", class: media_classes_sm, preload: preload %}
+    {% render '_object.image', image: mobile_image, sizes: "100vw", class: media_classes_md, preload: preload %}
+    <div class="absolute inset-0" style="background: {{ background_gradient }}"></div>
+  </picture>
+  <div
+      class="flex flex-col w-full gap-3 md:gap-4 h-full max-w-[740px] {{ horizontal_align }} {{ vertical_align }} {{ vertical_align_desktop }} {{ text_align }}"
+      style="color: {{ text_color }}">
+    {% render '_input.richtext', content: preheading, class: preheading_class, block: block, forloop: forloop %}
+    {% render '_input.richtext', content: heading, class: heading_class, block: block, forloop: forloop %}
+    {% render '_input.richtext', content: subheading, class: subheading_class, block: block, forloop: forloop %}
+    {% if button_primary_text != blank or button_secondary_text != blank %}
+      <div class="flex gap-4 md:gap-6 mt-6 max-md:flex-col max-md:w-full {{ horizontal_align }}">
+        {% if button_primary_text != blank %}
+          <a href="{{ button_primary_url }}"
+              class="max-md:w-full {{ button_primary_class }}">
+              {% render '_input.inline_richtext', content: button_primary_text, block: block, forloop: forloop %}
+          </a>
+        {% endif %}
+        {% if button_secondary_text != blank %}
+          <a href="{{ button_secondary_url }}"
+              class="max-md:w-full {{ button_secondary_class }}">
+            {% render '_input.inline_richtext', content: button_secondary_text, block: block, forloop: forloop %}
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>

@@ -1,0 +1,485 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Smart",
+    "theme_author": "Platter",
+    "theme_version": "3.0.31",
+    "theme_documentation_url": "http://docs.smarttheme.com/",
+    "theme_support_url": "http://smarttheme.com/"
+  },
+  {
+    "name": "Colors Schemes",
+    "settings": [
+      {
+        "type": "color_scheme_group",
+        "id": "color_schemes",
+        "definition": [
+          {
+            "type": "header",
+            "content": "Background"
+          },
+          {
+            "type": "color",
+            "id": "background",
+            "label": "Background",
+            "default": "#ffffff"
+          },
+          {
+            "type": "color_background",
+            "id": "background_gradient",
+            "label": "Gradient override"
+          },
+          {
+            "type": "header",
+            "content": "Text"
+          },
+          {
+            "type": "color",
+            "id": "text",
+            "label": "Text",
+            "default": "#000000"
+          },
+          {
+            "type": "color",
+            "id": "overlay_text",
+            "label": "Overlay Text",
+            "default": "#ffffff"
+          },
+          {
+            "type": "header",
+            "content": "Accent Colors"
+          },
+          {
+            "type": "color",
+            "id": "accent",
+            "label": "Accent",
+            "default": "#000000",
+            "info": "Used for links in text."
+          },
+          {
+            "type": "header",
+            "content": "Border Accents"
+          },
+          {
+            "type": "color",
+            "id": "border",
+            "label": "Border",
+            "default": "#cccccc",
+            "info": "Used for section dividers and accent borders."
+          }
+        ],
+        "role": {
+          "text": "text",
+          "background": {
+            "solid": "background",
+            "gradient": "background_gradient"
+          },
+          "primary_button": {
+            "solid": "text"
+          },
+          "primary_button_border": "text",
+          "secondary_button": {
+            "solid": "accent"
+          },
+          "secondary_button_border": "accent",
+          "links": "accent",
+          "icons": "accent",
+          "on_primary_button": "text",
+          "on_secondary_button": "text"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color_scheme",
+        "id": "color__color_scheme",
+        "default": "1",
+        "label": "Global Color scheme"
+      },
+      {
+        "type": "header",
+        "content": "Utility Colors"
+      },
+      {
+        "type": "color",
+        "id": "color__error",
+        "label": "Error",
+        "default": "#fc0000"
+      },
+      {
+        "type": "color",
+        "id": "color__warning",
+        "label": "Warning",
+        "default": "#f59e0b"
+      },
+      {
+        "type": "color",
+        "id": "color__success",
+        "label": "Success",
+        "default": "#22c55e"
+      },
+      {
+        "type": "color",
+        "id": "color__info",
+        "label": "Info",
+        "default": "#38bdf8"
+      },
+      {
+        "type": "color",
+        "id": "color__review_stars",
+        "label": "Review Stars",
+        "default": "#f3e008"
+      },
+      {
+        "type": "color_background",
+        "id": "color__modal_background",
+        "label": "Modal Background",
+        "default": "rgba(17,24,39, 0.1)"
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Header"
+      },
+      {
+        "type": "header",
+        "content": "Style"
+      },
+      {
+        "type": "select",
+        "id": "layout__style",
+        "label": "Layout style",
+        "default": "solid",
+        "options": [
+          {
+            "value": "solid",
+            "label": "Solid"
+          },
+          {
+            "value": "floating",
+            "label": "Floating"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "layout__page_transitions",
+        "label": "Enable page transitions",
+        "default": true
+      },
+      {
+        "type": "paragraph",
+        "content": "t:all.empty_char"
+      },
+      {
+        "type": "header",
+        "content": "Section Container spacing"
+      },
+      {
+        "type": "range",
+        "id": "layout__page_width_xs",
+        "min": 400,
+        "max": 1400,
+        "step": 10,
+        "default": 640,
+        "unit": "px",
+        "label": "Page width xs"
+      },
+      {
+        "type": "range",
+        "id": "layout__page_width_sm",
+        "min": 640,
+        "max": 1440,
+        "step": 20,
+        "default": 960,
+        "unit": "px",
+        "label": "Page width sm"
+      },
+      {
+        "type": "range",
+        "id": "layout__page_width_md",
+        "min": 960,
+        "max": 1920,
+        "step": 20,
+        "default": 1440,
+        "unit": "px",
+        "label": "Page width md"
+      },
+      {
+        "type": "range",
+        "id": "layout__page_width_lg",
+        "min": 1200,
+        "max": 2400,
+        "step": 20,
+        "default": 1600,
+        "unit": "px",
+        "label": "Page width lg"
+      },
+      {
+        "type": "paragraph",
+        "content": "t:all.empty_char"
+      },
+      {
+        "type": "header",
+        "content": "Container Margin Spacing"
+      },
+      {
+        "type": "range",
+        "id": "layout__page_gutter_desktop",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 36,
+        "unit": "px",
+        "label": "Desktop"
+      },
+      {
+        "type": "range",
+        "id": "layout__page_gutter_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 20,
+        "unit": "px",
+        "label": "Mobile"
+      }
+    ]
+  },
+  {
+    "name": "Branding",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "branding__favicon",
+        "label": "Favicon"
+      }
+    ]
+  },
+  {
+    "name": "Data Models",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Products"
+      },
+      {
+        "type": "paragraph",
+        "content": "t:all.empty_char"
+      },
+      {
+        "type": "header",
+        "content": "Reviews Configuration"
+      },
+      {
+        "type": "text",
+        "id": "data__product__reviews_rating",
+        "label": "Reviews Average Rating",
+        "default": "smart.rating",
+        "info": "Metafield 'namespace.key'. The metafield needs to be of type 'text', 'decimal' or type 'rating'."
+      },
+      {
+        "type": "text",
+        "id": "data__product__reviews_count",
+        "label": "Reviews count",
+        "default": "smart.review_count",
+        "info": "Metafield 'namespace.key'. The metafield needs to be of type 'text' or 'integer'"
+      },
+      {
+        "type": "header",
+        "content": "Additional Metafield"
+      },
+      {
+        "type": "checkbox",
+        "id": "data__product__load_metafields",
+        "label": "Enable Metafield Data",
+        "default": true
+      },
+      {
+        "type": "textarea",
+        "id": "data__product__product_metafield",
+        "label": "Product metafield namespaces",
+        "info": "Comma separated list of namespaces."
+      },
+      {
+        "type": "textarea",
+        "id": "data__product__variant_metafield",
+        "label": "Variant metafield namespaces",
+        "info": "Comma separated list of namespaces."
+      },
+      {
+        "type": "checkbox",
+        "id": "data__product__product__load_product_data",
+        "label": "Load metafield product data",
+        "default": false,
+        "info": "Enable this setting to access dynamic product data of metafields attached to products. This can have a negative impact on initial load performance."
+      },
+      {
+        "type": "checkbox",
+        "id": "data__product__variant__load_product_data",
+        "label": "Load metafield data for Variants",
+        "default": false,
+        "info": "Enable this setting to access dynamic product data of metafields attached to variants. This can have a negative impact on initial load performance."
+      },
+      {
+        "type": "paragraph",
+        "content": "t:all.empty_char"
+      },
+      {
+        "type": "paragraph",
+        "content": "t:all.empty_char"
+      },
+      {
+        "type": "header",
+        "content": "Collections"
+      },
+      {
+        "type": "textarea",
+        "id": "data__collection__metafield",
+        "label": "Collection metafield namespaces",
+        "info": "Comma separated list of namespaces."
+      },
+      {
+        "type": "checkbox",
+        "id": "data__collection__load_product_data",
+        "label": "Load metafield product data",
+        "default": false,
+        "info": "Enable this setting to access dynamic product data of metafields attached to collections. This can have a negative impact on initial load performance."
+      },
+      {
+        "type": "paragraph",
+        "content": "t:all.empty_char"
+      },
+      {
+        "type": "paragraph",
+        "content": "t:all.empty_char"
+      },
+      {
+        "type": "header",
+        "content": "Articles"
+      },
+      {
+        "type": "textarea",
+        "id": "data__article__metafield",
+        "label": "Article metafield namespaces",
+        "info": "Comma separated list of namespaces."
+      },
+      {
+        "type": "checkbox",
+        "id": "data__article__load_product_data",
+        "label": "Load metafield product data",
+        "default": false,
+        "info": "Enable this setting to access dynamic product data of metafields attached to articles. This can have a negative impact on initial load performance."
+      },
+      {
+        "type": "paragraph",
+        "content": "t:all.empty_char"
+      },
+      {
+        "type": "paragraph",
+        "content": "t:all.empty_char"
+      },
+      {
+        "type": "header",
+        "content": "Blog Categories"
+      },
+      {
+        "type": "textarea",
+        "id": "data__blog__metafield",
+        "label": "Blog metafield namespaces",
+        "info": "Comma separated list of namespaces."
+      },
+      {
+        "type": "checkbox",
+        "id": "data__blog__load_product_data",
+        "label": "Load metafield product data",
+        "default": false,
+        "info": "Enable this setting to access dynamic product data of metafields attached to blogs. This can have a negative impact on initial load performance."
+      },
+      {
+        "type": "paragraph",
+        "content": "t:all.empty_char"
+      },
+      {
+        "type": "paragraph",
+        "content": "t:all.empty_char"
+      },
+      {
+        "type": "header",
+        "content": "Pages"
+      },
+      {
+        "type": "textarea",
+        "id": "data__page__metafield",
+        "label": "Page metafield namespaces",
+        "info": "Comma separated list of namespaces."
+      },
+      {
+        "type": "checkbox",
+        "id": "data__page__load_product_data",
+        "label": "Load metafield product data",
+        "default": false,
+        "info": "Enable this setting to access dynamic product data of metafields attached to pages. This can have a negative impact on initial load performance."
+      }
+    ]
+  },
+  {
+    "name": "Development",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "development__block_app_scripts",
+        "label": "Block App Scripts",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "development__block_content_for_header",
+        "label": "Block 'content_for_header'",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "development__block_modals",
+        "label": "Disable Modals in Theme Editor",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "development__product_cards",
+        "label": "Disable Product Cards in Theme Editor",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "development__block_footer_sections",
+        "label": "Disable Footer Sections in Theme Editor",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "development__block_main_content",
+        "label": "Disable Main Content in Theme Editor",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "development__enable_marker_io",
+        "label": "Enable Marker.io on preview",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "development__marker_io_id",
+        "label": "Development marker io id",
+        "default": "66705cd622d1aa1623233fa1"
+      }
+    ]
+  },
+]

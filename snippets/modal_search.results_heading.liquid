@@ -1,0 +1,35 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "results_heading"
+  assign section_type = "modal_search"
+  assign content = block.settings.content
+  assign content_class = block.settings.content_class
+  assign button_label = block.settings.button_label
+  assign button_label_class = block.settings.button_label_class
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign border_width_radius = block.settings.border_width_radius
+  assign background_color = block.settings.background_color
+  assign border_color = block.settings.border_color
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css',
+  block: block,
+  keys: "responsive_visibility,flex_direction_align_x_align_y_gap_wrap,margin_top_bottom_left_right, max_w_flex_col_row_order_align,background_color,border_color,border_width_radius,padding_top_bottom_left_right" %}
+
+<div data-style-id="{{ section.id }}--{{ block.id }}" {{ block.shopify_attributes }} {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}>
+  {% render '_input.richtext', content: content, class: content_class, block: block, forloop: forloop %}
+  <a
+    class="cursor-pointer {{ button_label_class }}"
+    x-data
+    @click="window.location.href = `/search?${new URLSearchParams(window.location.search).toString()}`"
+  >
+    {{ button_label }}
+  </a>
+</div>

@@ -1,0 +1,63 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "product"
+  assign section_type = "product-add-to-cart-floating"
+  assign _product = block.settings.product
+  assign title_class = block.settings.title_class
+  assign variant_title_class = block.settings.variant_title_class
+  assign button_class = block.settings.button_class
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% assign add_to_cart_content = "Add To Cart" %}
+
+<div x-data="{ product: utils.JSONParse($el.getAttribute('data-add-to-cart-product')) ?? _stores?.main_product?.state?.product,
+               selected_variant: utils.JSONParse($el.getAttribute('data-add-to-cart-product'))?.variants?.find(v => v.available) ?? utils.JSONParse($el.getAttribute('data-add-to-cart-product'))?.variants?.[0] ??  _stores?.main_product?.state?.selected_variant,
+               primary_image: null,
+               srcSet: '',
+               loading: false }"
+    {% if _product.id == product.id %}
+      x-effect="() => { if (_stores.main_product?.state?.product && _stores?.main_product?.state?.selected_variant ) {
+        product = _stores.main_product?.state?.product; selected_variant = _stores?.main_product?.state?.selected_variant
+      } }"
+    {% else %}
+      {% capture product_data %}
+        {% render '_json.product', product: _product %}
+      {% endcapture %}
+      data-add-to-cart-product="{{ product_data | escape }}"
+    {% endif %}
+     class="flex w-full md:w-auto h-full items-center gap-4 max-sm:mx-auto max-md:flex-col max-md:gap-2.5 justify-between">
+  <div class="flex md:hidden gap-4 items-center max-md:self-start atc-floating">
+    <div class="gap md:gap-1.5">
+      <h2 class="{{ title_class }}"
+          x-html="product?.title">{{ _product.title }}</h2>
+      {% if product.has_only_default_variant != true %}
+        <div class="{{ variant_title_class }}"
+             x-html="selected_variant?.title">{{ _product.selected_or_first_available_variant.title }}</div>
+      {% endif %}
+    </div>
+  </div>
+
+  <button type="button"
+          class="{{ button_class }} max-md:w-full"
+  {% if _product.id == product.id %}
+    :disabled="_stores?.main_product?.state?.isAdding"
+    :class="_stores?.main_product?.state?.isAdding ? 'button-loading' : ''"
+    @click="_stores?.main_product?.handleAddToCart"
+  {% else %}
+    :disabled="loading"
+    :class="loading ? 'button-loading' : ''"
+    @click.prevent.stop="async (e) => {
+      loading = true
+      const data = await _cart.add({ items: [{ id: selected_variant.id, quantity: 1 }] });
+      if (!data.cart_error) {
+        _stores.modal.setId('cart-drawer');
+        _stores.quickView.open = false;
+      }
+      loading = false
+    }"{% endif %}
+    x-html="$el.getAttribute('data-content').replace('[price]', utils.formatMoney(_stores?.main_product?.state?.selected_price)).replace('[compare_at_price]', _stores?.main_product?.state?.selected_compare_at_price > _stores?.main_product?.state?.selected_price ? `<span style='text-decoration: line-through; opacity: 0.5;'>${utils.formatMoney(_stores?.main_product?.state?.selected_compare_at_price)}</span>` : '')"
+    data-content="{% render '_input.inline_richtext', content: add_to_cart_content, escape: true, block: block, forloop: forloop %}">
+    Add to Cart {% if _product.selected_or_first_available_variant.price %} • {{ _product.selected_or_first_available_variant.price | money }} {% endif %}
+  </button>
+</div>

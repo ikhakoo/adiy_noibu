@@ -1,0 +1,28 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "payment_terms"
+  assign section_type = "product"
+  assign content_class = block.settings.content_class
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign show_conditionally = block.settings.show_conditionally
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,max_w_flex_col_row_order_align,padding_top_bottom_left_right,margin_top_bottom_left_right,border_width_radius,background_color,background_gradient,border_color" %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    x-show="$data.showConditionally('{{ show_conditionally }}')"
+    data-block-type="{{ block.type }}">
+  <div class="{{ content_class }}">
+    {{ form | payment_terms }}
+  </div>
+</div>

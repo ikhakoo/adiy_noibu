@@ -1,0 +1,89 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "subtotal"
+  assign section_type = "bundle"
+  assign show_conditionally = block.settings.show_conditionally
+  assign show_based_on_bundle_state = block.settings.show_based_on_bundle_state
+  assign label = block.settings.label
+  assign label_class = block.settings.label_class
+  assign savings_highlight_class = block.settings.savings_highlight_class
+  assign savings_target = block.settings.savings_target
+  assign price_class = block.settings.price_class
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign color_override = block.settings.color_override
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+
+  assign content = title | default: "" | append: page_content.content
+
+  if use_page_content and page.content != blank
+    assign content = page.content
+  endif
+
+  if request.design_mode != true
+    if title == blank
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+%}
+
+{% liquid
+  if color_override != blank and color_override.alpha != 0
+    assign color = color_override | default: "inherit"
+  endif
+%}
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,margin_top_bottom_left_right, max_w_flex_col_row_order_align" %}
+
+<div data-style-id="{{ section.id }}--{{ block.id }}" {{ block.shopify_attributes }}
+     x-show="($data.windowWidth >= 1024 || $data.showConditionally(`{{ show_conditionally }}`)) && $data.showBasedOnBundleState(`{{ show_based_on_bundle_state }}`)"
+     class="flex items-center gap-2"
+     style="color: {{ color }}">
+  <span class="{{ label_class }}">
+    {% render '_input.inline_richtext', content: label, class: label_class, block: block, forloop: forloop %}
+  </span>
+  {% if savings_highlight_class != blank %}
+    {% if savings_target == 'current_savings' %}
+      <span x-cloak
+            x-show="!!$data.bundle?.active_discount_wording"
+            x-html="$data.bundle?.active_discount_wording"
+            class="{{ savings_highlight_class }}"></span>
+    {% endif %}
+    {% if savings_target == 'target_savings' %}
+      <span x-cloak
+            x-show="!!$data.bundle?.active_target_discount_wording"
+            x-html="$data.bundle?.active_target_discount_wording"
+            class="{{ savings_highlight_class }}"></span>
+    {% endif %}
+  {% endif %}
+  {% if price_class %}
+    <span class="justify-self-end {{ price_class }}">
+      <span x-cloak
+            class="line-through opacity-50"
+            x-show="$data.bundle?.total_price > $data.bundle?.final_price"
+            x-html="utils.formatMoney($data.bundle?.total_price)"></span>
+      <span x-cloak
+            x-html="utils.formatMoney($data.bundle?.final_price)"></span>
+    </span>
+  {% endif %}
+</div>

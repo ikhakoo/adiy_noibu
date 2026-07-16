@@ -1,0 +1,41 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "order_summary"
+  assign section_type = "bundle"
+  assign show_conditionally = block.settings.show_conditionally
+  assign show_based_on_bundle_state = block.settings.show_based_on_bundle_state
+  assign title_class = block.settings.title_class
+  assign price_class = block.settings.price_class
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,max_w_flex_col_row_order_align,margin_top_bottom_left_right, flex_direction_align_x_align_y_gap_wrap" %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    x-show="$data?.bundle?.items_added?.length && ($data.windowWidth >= 1024 || $data.showConditionally(`{{ show_conditionally }}`))">
+  <template x-for="item in $data?.bundle?.item_added_summary">
+    <div class="flex gap-2 w-full flex-1">
+      <div class="flex-1 grid gap-1 {{ title_class }}">
+        <div x-html="`[${item.quantity}] ${item.product.title}${item.variant.title !== 'Default Title' ? ` ${item.variant.title}`: ''}`"></div>
+        <small x-show="item.subscription" class="opacity-50" x-html="item.subscription"></small>
+      </div>
+      <div class="grid gap-1 text-right {{ price_class }}">
+        <div x-html="item?.price_override === 0 ? 'FREE' : utils.formatMoney(item?.price_override ?? item.price)"></div>
+        <small x-show="item.price !== item.compare_at_price && item?.price_override !== 0"
+               class="line-through opacity-50"
+               x-html="utils.formatMoney(item.compare_at_price)"></small>
+      </div>
+    </div>
+  </template>
+</div>

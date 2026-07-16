@@ -1,0 +1,42 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "menu"
+  assign section_type = "drawer-menu"
+  assign menu = block.settings.menu
+  assign link_class = block.settings.link_class
+  assign background_color = block.settings.background_color
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if request.design_mode != true
+    if menu == blank
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+%}
+
+<nav
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    class="overflow-hidden">
+  {% for link in menu.links %}
+    <a href="{{ link.url }}" class="shrink-0 {{ link_class }}">{{ link.title }}</a>
+    {% unless forloop.last %}
+      <hr class="border-none" role="separator" data-style-divider>
+    {% endunless %}
+  {% endfor %}
+</nav>

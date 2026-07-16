@@ -1,0 +1,76 @@
+.tooltip {
+  @apply pointer-events-none fixed z-50 rounded px-3 py-1 text-white opacity-0 duration-75 ease-in-out bg-gray-800 shadow-md text-xs transition-[opacity_transform];
+}
+
+.tooltip--top {
+  @apply -translate-x-1/2 translate-y-[calc(-100%-4px)]
+}
+.tooltip--top.active {
+  @apply opacity-100 duration-150 translate-y-[calc(-100%-10px)]
+}
+
+.tooltip--top::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #1f2937 transparent transparent transparent;
+}
+
+.tooltip--bottom {
+  @apply -translate-x-1/2 translate-y-[4px]
+}
+.tooltip--bottom.active {
+  @apply opacity-100 duration-150 translate-y-[10px]
+}
+
+.tooltip--bottom::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color:  transparent transparent #1f2937 transparent;
+}
+
+.tooltip--left {
+  @apply -translate-y-1/2 translate-x-[calc(-100%-4px)]
+}
+.tooltip--left.active {
+  @apply opacity-100 duration-150 translate-x-[calc(-100%-10px)]
+}
+
+.tooltip--left::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent #1f2937;
+}
+
+
+.tooltip--right {
+  @apply -translate-y-1/2 translate-x-[4px]
+}
+.tooltip--right.active {
+  @apply opacity-100 duration-150 translate-x-[10px]
+}
+
+.tooltip--right::before {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color:  transparent #1f2937 transparent transparent;
+}

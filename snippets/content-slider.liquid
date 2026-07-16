@@ -1,0 +1,145 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "content-slider"
+  assign slider_cols_rows_align_x_align_y_gap = section.settings.slider_cols_rows_align_x_align_y_gap
+  assign slider_scroll_snap = section.settings.slider_scroll_snap
+  assign slider_overflow_container = section.settings.slider_overflow_container
+  assign infinite_scroll = section.settings.infinite_scroll
+  assign auto_scroll = section.settings.auto_scroll
+  assign section_id = section.settings.section_id
+  assign color_scheme = section.settings.color_scheme
+  assign container_spacing = section.settings.container_spacing
+  assign border_divider = section.settings.border_divider
+  assign top_bottom_min_height = section.settings.top_bottom_min_height
+  assign responsive_visibility = section.settings.responsive_visibility
+  assign responsive_breakpoint = section.settings.responsive_breakpoint
+  assign target_visibility = section.settings.target_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture section_content %}
+  {% render '_utils.dynamic-css',
+      block: block,
+      selector: "& [data-style-content-slider]",
+      keys: "slider_cols_rows_align_x_align_y_gap"
+  %}
+
+  {% liquid
+
+    assign slider_cols_rows_align_x_align_y_gap = slider_cols_rows_align_x_align_y_gap | strip_newlines | split: '|'
+    assign grid_cols = slider_cols_rows_align_x_align_y_gap[0] | split: '/'
+
+    assign container_spacing = section.settings.container_spacing
+    case slider_overflow_container
+      when 'all'
+        assign slider_overflow = container_spacing | replace: 'px', '-mx' | append: " scroll-" | append: container_spacing | append: " " | append: container_spacing
+      when 'mobile'
+        assign slider_overflow = container_spacing | replace: 'px', 'max-md:-mx' | append: " max-md:scroll-" | append: container_spacing | append: " max-md:" | append: container_spacing
+      when 'desktop'
+        assign slider_overflow = container_spacing | replace: 'px', 'md:-mx' | append: " md:scroll-" | append: container_spacing | append: " md:" | append: container_spacing
+    endcase
+  %}
+
+  {% render "_section.universal-settings", section_type: section_type, insert: "before" %}
+
+  <style>
+    @media screen and (max-width: {{ responsive_breakpoint | default: "768px" }}) {
+      [data-style-id="{{ section.id }}"] [data-style-content-slider] > :where(*):nth-of-type({{ grid_cols | last | replace: " ", "" | trim }}n+1) {
+        scroll-snap-align: start;
+      }
+    }
+
+    @media screen and (min-width: {{ responsive_breakpoint | default: "768px" }}) {
+      [data-style-id="{{ section.id }}"] [data-style-content-slider] > :where(*):nth-of-type({{ grid_cols | first | replace: " ", "" | trim }}n+1) {
+        scroll-snap-align: start;
+      }
+    }
+  </style>
+
+  <div class="flex flex-col"
+       data-grid-slider
+       x-data="{ ..._sections.initContentSlider($refs.container, undefined,`{{ infinite_scroll }}` === 'true') }"
+      {% if auto_scroll > 0 %}
+        x-init="() => {
+          interval = setInterval(() => {
+            content_slider.scrollToIndex(content_slider.state.slide_index + 1 >= content_slider.state.slide_count ? 0 : content_slider.state.slide_index + 1, 400)
+          }, +`{{ auto_scroll }}` * 1000)
+        }"
+      {% endif %}
+       x-defer="intersect">
+    <div class="relative grid overflow-x-auto scrollbar-none overflow-y-hidden snap-x {{ slider_scroll_snap }} {{ slider_overflow }}"
+         x-ref="container"
+         @resize.window="content_slider.handleResize"
+         x-init="$nextTick(() => content_slider.handleResize())"
+         @scroll="content_slider.handleScroll"
+         @scrollend="content_slider.handleInfiniteScroll"
+         data-style-content-slider>
+      {% liquid
+        assign allow_no_cols = true
+        for block in section.blocks
+          if allow_no_cols
+            render 'content-grid.render-blocks', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+
+            if block.type == 'layout_child__tab_content'
+              render 'content-grid.layout_child__tab_content', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+              assign allow_no_cols = false
+              assign child_layout = true
+            endif
+            if block.type == 'layout_child__flex_card'
+              render 'content-grid.layout_child__flex_card', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+              assign allow_no_cols = false
+              assign child_layout = true
+            endif
+            if block.type == 'layout_child__grid_card'
+              render 'content-grid.layout_child__grid_card', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+              assign allow_no_cols = false
+              assign child_layout = true
+            endif
+            if block.type == 'layout_child__collapsible'
+              render 'content-grid.layout_child__collapsible', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+              assign allow_no_cols = false
+              assign child_layout = true
+            endif
+          endif
+
+          if block.type == 'layout__end'
+            assign allow_no_cols = true
+          endif
+
+          if block.type == 'layout__grid'
+            assign allow_no_cols = false
+            render 'content-grid.layout__grid', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+          endif
+
+          if block.type == 'layout__flex'
+            assign allow_no_cols = false
+            render 'content-grid.layout__flex', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+          endif
+
+          if block.type == 'layout__flex_wrap'
+            assign allow_no_cols = false
+            render 'content-grid.layout__flex_wrap', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+          endif
+        endfor
+      %}
+    </div>
+    {% liquid
+      for block in section.blocks
+        if block.type == 'pagination'
+          render 'content-slider.pagination', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+        endif
+        if block.type == 'scrollbar'
+          render 'content-slider.scrollbar', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+        endif
+      endfor
+    %}
+  </div>
+
+
+  {% render "_section.universal-settings", insert: "after" %}
+{% endcapture %}
+
+{% if section_content contains '/break"></script>' %}
+  {% break %}
+{% endif %}
+{{ section_content }}

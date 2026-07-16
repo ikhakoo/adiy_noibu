@@ -1,0 +1,264 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "checkbox"
+  assign section_type = "global_design-elements"
+  assign title = block.settings.title
+  assign background_color = block.settings.background_color
+  assign border_color = block.settings.border_color
+  assign text_color = block.settings.text_color
+  assign active_background_color = block.settings.active_background_color
+  assign active_color_icon = block.settings.active_color_icon
+  assign active_border_color = block.settings.active_border_color
+  assign icon = block.settings.icon
+  assign size_border_width_radius_gap = block.settings.size_border_width_radius_gap
+  assign font_family = block.settings.font_family
+  assign size_weight_height_opacity = block.settings.size_weight_height_opacity
+  assign spacing_transform_style_whitespace = block.settings.spacing_transform_style_whitespace
+  assign custom_css = block.settings.custom_css
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign apply_container_queries = block.settings.apply_container_queries
+  assign mobile_background_color = block.settings.mobile_background_color
+  assign mobile_text_color = block.settings.mobile_text_color
+  assign mobile_border_color = block.settings.mobile_border_color
+  assign mobile_active_background_color = block.settings.mobile_active_background_color
+  assign mobile_active_color_icon = block.settings.mobile_active_color_icon
+  assign mobile_active_border_color = block.settings.mobile_active_border_color
+  assign override_preview_background = block.settings.override_preview_background
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{%- liquid
+  assign selector = '.' | append: title
+
+  render '_utils.dynamic-css', selector: selector, block: block
+
+  if mobile_active_background_color == blank or mobile_active_background_color.alpha == 0
+    assign mobile_active_background_color = active_background_color | default: background_color
+  endif
+  if mobile_active_color_icon == blank or mobile_active_color_icon.alpha == 0
+    assign mobile_active_color_icon = active_icon
+  endif
+  if mobile_border_color == blank or mobile_border_color.alpha == 0
+    assign mobile_border_color = border_color
+  endif
+  if mobile_active_border_color == blank or mobile_active_border_color.alpha == 0
+    assign mobile_active_border_color = active_border_color
+  endif
+
+  assign size_border_width_radius_gap = size_border_width_radius_gap | strip_newlines | replace: ' ', "" | split: '|'
+  assign size = size_border_width_radius_gap[0] | split: '/'
+  assign border_width = size_border_width_radius_gap[1] | split: '/'
+  assign radius = size_border_width_radius_gap[2] | split: '/'
+  assign gap = size_border_width_radius_gap[3] | split: '/'
+
+  if size
+    assign v = size.first
+    assign v_num = v | abs
+    unless v contains 'p' or v contains 'm' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+      assign v = v_num | append: "px"
+    endunless
+    assign size_desktop = v
+
+    assign v = size.last
+    assign v_num = v | abs
+    unless v contains 'p' or v contains 'm' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+      assign v = v_num | append: "px"
+    endunless
+    assign size_mobile = v
+  endif
+
+  if border_width
+    assign v = border_width.first
+    assign v_num = v | abs
+    unless v contains 'p' or v contains 'm' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+      assign v = v_num | append: "px"
+    endunless
+    assign border_width_desktop = v
+
+    assign v = border_width.last
+    assign v_num = v | abs
+    unless v contains 'p' or v contains 'm' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+      assign v = v_num | append: "px"
+    endunless
+    assign border_width_mobile = v
+  endif
+
+  if radius
+    assign v = radius.first
+    assign v_num = v | abs
+    unless v contains 'p' or v contains 'm' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+      assign v = v_num | append: "px"
+    endunless
+    assign radius_desktop = v
+
+    assign v = radius.last
+    assign v_num = v | abs
+    unless v contains 'p' or v contains 'm' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+      assign v = v_num | append: "px"
+    endunless
+    assign radius_mobile = v
+  endif
+
+  if gap
+    assign v = gap.first
+    assign v_num = v | abs
+    unless v contains 'p' or v contains 'm' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+      assign v = v_num | append: "px"
+    endunless
+    assign gap_desktop = v
+
+    assign v = gap.last
+    assign v_num = v | abs
+    unless v contains 'p' or v contains 'm' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+      assign v = v_num | append: "px"
+    endunless
+    assign gap_mobile = v
+  endif
+%}
+
+{%- capture css_desktop -%}
+  .{{ title }} {
+  display: flex;
+  align-items: center;
+  user-select: none;
+  cursor: pointer;
+  gap: {{ gap_desktop }};
+  --tw-scale-x: var(--font-{{- selector -}}-hover-scale);
+  --tw-scale-y: var(--font-{{- selector -}}-hover-scale);
+  }
+  .{{ title }} > span:first-of-type {
+  width: {{ size_desktop }};
+  height: {{ size_desktop }};
+  }
+  .{{ title }} input {
+  appearance: none;
+  width: {{ size_desktop }};
+  height: {{ size_desktop }};
+  border: {{ border_width_desktop }} solid {{ border_color }};
+  background: {{ background_color }};
+  border-radius: {{ radius_desktop }};
+  }
+  {% if icon != blank %}
+    .{{ title }} input ~ span svg {
+    background: {{ active_color_icon }};
+    width: 1em;
+    height: 1em;
+    mask: var(--icon-{{ icon | handleize }});
+    -webkit-mask: var(--icon-{{ icon | handleize }});
+    aspect-ratio: var(--icon-{{ icon | handleize }}-aspect-ratio, 1);
+    opacity: 0;
+    }
+    .{{ title }} input:checked~span svg {
+    opacity: 1;
+    }
+  {% endif %}
+
+  .{{ title }} input:checked {
+  background: {{ active_background_color }};
+  border-color: {{ active_border_color }};
+  }
+
+
+{%- endcapture -%}
+{%- capture css_mobile -%}
+  .{{ title }} {
+  gap: {{ gap_mobile }};
+  }
+  .{{ title }} > span:first-of-type {
+  width: {{ size_mobile }};
+  height: {{ size_mobile }};
+  }
+  .{{ title }} input {
+  width: {{ size_mobile }};
+  height: {{ size_mobile }};
+  border: {{ border_width_mobile }} solid {{ mobile_border_color }};
+  background: {{ mobile_background_color }};
+  border-radius: {{ radius_mobile }};
+  }
+  {% if icon != blank %}
+    .{{ title }} input ~ span svg {
+    background: {{ mobile_active_color_icon }};
+    }
+  {% endif %}
+
+  .{{ title }} input:checked {
+  background: {{ mobile_active_background_color }};
+  border-color: {{ mobile_active_border_color }};
+  }
+
+{%- endcapture -%}
+
+<style>
+  {{- css_desktop | strip_newlines  -}}
+
+  @media screen and (max-width: 767px) {
+  {{- css_mobile | strip_newlines  -}}
+  }
+
+  @container (max-width: 767px) {
+  {{- css_mobile | strip_newlines  -}}
+  }
+</style>
+
+{% if request.design_mode %}
+  {% if override_preview_background == blank or override_preview_background.alpha == 0 %}
+    {% assign override_preview_background = '#ffffff' %}
+  {% endif %}
+  <section class="fixed inset-0 z-50 flex flex-col gap-16 overflow-y-auto text-balance bg-white py-16 text-black px-container-sm"
+           x-data="{tab: 'single-type'}"
+           style="background: {{ override_preview_background }};"
+           x-show="$editor?.select_block_id === '{{ block.id }}'"
+           x-cloak {{ block.shopify_attributes }}>
+
+    <header class="flex gap-3 font-mono">
+      <button @click="tab='single-type'"
+              type="button"
+              :class="tab === 'single-type' ? 'bg-gray-600 text-gray-50 border-gray-900 hf:bg-gray-700':'border-gray-200/70 bg-gray-100 text-gray-700 hf:text-gray-900 hf:border-gray-300/80 hf:bg-gray-200/90'"
+              class="rounded-sm border px-3 text-sm font-medium py-1.5">{{ selector }}
+      </button>
+    </header>
+
+    <main class="mt-8">
+      <header class="mt-12 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="text-lg font-bold text-gray-600">Desktop</div>
+        <div class="text-lg font-bold text-gray-600">Mobile</div>
+      </header>
+      <section x-show="tab === 'single-type'" class="mt-6 grid gap-8 lg:grid-cols-[1fr_320px]">
+        {% render "_components.checkbox",
+            class: title,
+            label: "Label",
+            name: "name",
+            default_value: false,
+            html_attribtues: ""
+        %}
+        <div class=" @container max-w-lg">
+          {% render "_components.checkbox",
+              class: title,
+              label: "Label",
+              name: "name",
+              default_value: false,
+              html_attribtues: ""
+          %}
+        </div>
+      </section>
+      <section x-show="tab === 'single-type'" class="mt-6 grid gap-8 lg:grid-cols-[1fr_320px]">
+        {% render "_components.checkbox",
+            class: title,
+            label: "Long Label that eventually breaks over multiple lines. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut, quae!",
+            name: "name",
+            default_value: false,
+            html_attribtues: ""
+        %}
+        <div class=" @container max-w-lg">
+          {% render "_components.checkbox",
+              class: title,
+              label: "Long Label that eventually breaks over multiple lines. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut, quae!",
+              name: "name",
+              default_value: false,
+              html_attribtues: ""
+          %}
+        </div>
+      </section>
+    </main>
+  </section>
+{% endif %}

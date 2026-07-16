@@ -1,0 +1,1108 @@
+{%- render "card_collection-card" -%}
+{% schema %}
+{
+  "name": "Collection Card",
+  "blocks": [
+    {
+      "name": "Image",
+      "type": "image",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Image selection"
+        },
+        {
+          "type": "text",
+          "id": "primary_image",
+          "label": "Primary image",
+          "default": "[collection.image]",
+          "info": "Use bracket notation for data access: i.e.[collection.image] or [collection.metafields.smart.image]"
+        },
+        {
+          "type": "header",
+          "content": "Hover Effect"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_secondary_image",
+          "label": "Show secondary image",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "secondary_image",
+          "label": "Secondary image",
+          "default": "[collection.metafields.smart.secondary_image]",
+          "info": "Use bracket notation for data access: i.e.[collection.image] or [collection.metafields.smart.image]"
+        },
+        {
+          "type": "paragraph",
+          "content": "[Available keys](https://shopify.dev/docs/api/liquid/objects/collection)"
+        },
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "width_height_aspect_object_fit",
+          "label": "width | height | aspect | fit | radius",
+          "default": "100% | auto | auto | cover | 0",
+          "info": "Aspect ratio only applies if width or height are set to 'auto'"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius",
+          "label": "border | radius | max-h | max-w | overflow",
+          "default": "0 | 0 |  |  | ",
+          "info": "Border can be set via the border-shorthand for. I.e '0 0 1px 0' sets only the bottom border."
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color_background",
+          "id": "background_gradient",
+          "label": "background gradient"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ],
+      "limit": 1
+    },
+    {
+      "name": "Dynamic Text",
+      "type": "dynamic-text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "title",
+          "label": "Content",
+          "default": "<h3>[collection.title]</h3>",
+          "info": "Use bracket notation for data access: i.e.[collection.title] or [collection.metafields.smart.short_description]"
+        },
+        {
+          "type": "text",
+          "id": "css_class",
+          "label": "Type CSS class",
+          "default": "richtext-sm"
+        },
+        {
+          "type": "paragraph",
+          "content": "[Available keys](https://shopify.dev/docs/api/liquid/objects/collection)"
+        },
+        {
+          "type": "checkbox",
+          "id": "link_to_collection",
+          "label": "Link to collection",
+          "default": false
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "color",
+          "id": "color_override",
+          "label": "Color override"
+        }
+      ]
+    },
+    {
+      "name": "Dynamic Button",
+      "type": "dynamic-button",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "label",
+          "label": "Label",
+          "default": "Read More",
+          "info": "Use bracket notation for data access: i.e.[collection.title] or [collection.metafields.smart.short_description]"
+        },
+        {
+          "type": "text",
+          "id": "url",
+          "label": "Dynamic URL",
+          "info": "Use bracket notation for data access.",
+          "default": "[collection.url]"
+        },
+        {
+          "type": "text",
+          "id": "button_class",
+          "label": "Button class",
+          "default": "button-primary"
+        },
+        {
+          "type": "paragraph",
+          "content": "[Available keys](https://shopify.dev/docs/api/liquid/objects/collection)"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "Labels",
+      "type": "labels",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Theme Editor Settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "preview",
+          "label": "Preview",
+          "default": false
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Collection Content"
+        },
+        {
+          "type": "text",
+          "id": "content_source",
+          "label": "Content source",
+          "default": "collection.metafields.smart.labels",
+          "info": "Accepts `single_line_text_field` or `list.single_line_text_field` matching data. (i.e. product.tags, product.metafields.smart.labels) [Learn more](https://shopify.dev/docs/apps/custom-data/metafields/types)"
+        },
+        {
+          "type": "text",
+          "id": "label_class__content",
+          "label": "Label class",
+          "default": "label-primary"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "text",
+          "id": "flex_row_wrap_align_x_align_y_gap",
+          "label": "justify | align | gap | wrap | dir",
+          "default": "stretch | stretch | 0 | wrap | row",
+          "info": "Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "Accent line",
+      "type": "accent_line",
+      "settings": [
+        {
+          "type": "range",
+          "id": "height",
+          "label": "Height",
+          "default": 1,
+          "min": 1,
+          "max": 6,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Border Color",
+          "default": "#000000"
+        },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Style",
+          "default": "solid",
+          "options": [
+            {
+              "value": "solid",
+              "label": "solid"
+            },
+            {
+              "value": "dashed",
+              "label": "dashed"
+            },
+            {
+              "value": "dotted",
+              "label": "dotted"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "with_subscriptions",
+              "label": "Subscription"
+            },
+            {
+              "value": "no_subscriptions",
+              "label": "One-time"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "______ Grid ______",
+      "type": "layout__grid",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "header",
+          "content": "Block Layout Settings"
+        },
+        {
+          "type": "text",
+          "id": "grid_cols_align_x_align_y_gap",
+          "label": "grid-cols | justify | align | gap",
+          "default": "1 | stretch | stretch | 0",
+          "info": "Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius",
+          "label": "border | radius | max-h | max-w | overflow",
+          "default": "0 | 0 |  |  | ",
+          "info": "Border can be set via the border-shorthand for. I.e '0 0 1px 0' sets only the bottom border."
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "______ Flex ______",
+      "type": "layout__flex",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Block Layout Settings"
+        },
+        {
+          "type": "text",
+          "id": "flex_direction_align_x_align_y_gap_wrap",
+          "label": "dir | justify | align | gap | wrap | min-h",
+          "default": "column | stretch | stretch | 16",
+          "info": "Direction accepts: 'row','column'. Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius",
+          "label": "border | radius | max-h | max-w | overflow",
+          "default": "0 | 0 |  |  | ",
+          "info": "Border can be set via the border-shorthand for. I.e '0 0 1px 0' sets only the bottom border."
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "______ Flex wrap ______",
+      "type": "layout__flex_wrap",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Block Layout Settings"
+        },
+        {
+          "type": "text",
+          "id": "flex_row_wrap_align_x_align_y_gap",
+          "label": "justify | align | gap | wrap | dir",
+          "default": "stretch | stretch | 0 | wrap | row",
+          "info": "Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius",
+          "label": "border | radius | max-h | max-w | overflow",
+          "default": "0 | 0 |  |  | ",
+          "info": "Border can be set via the border-shorthand for. I.e '0 0 1px 0' sets only the bottom border."
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "______ Layout End ______",
+      "type": "layout__end",
+      "settings": []
+    },
+    {
+      "name": "t:sections.collection_card.blocks.flex_overlay.name",
+      "type": "layout_child__overlay",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Block Layout Settings"
+        },
+        {
+          "type": "text",
+          "id": "flex_direction_align_x_align_y_gap_wrap",
+          "label": "dir | justify | align | gap | wrap | min-h",
+          "default": "column | stretch | stretch | 16",
+          "info": "Direction accepts: 'row','column'. Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius",
+          "label": "border | radius | max-h | max-w | overflow",
+          "default": "0 | 0 |  |  | ",
+          "info": "Border can be set via the border-shorthand for. I.e '0 0 1px 0' sets only the bottom border."
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_on_hover",
+          "label": "Only show on hover",
+          "default": false
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "handle",
+      "label": "Handle",
+      "default": "collection-card",
+      "info": "hyphens / lowercase / no-spaces [kebab-case](https://developer.mozilla.org/en-US/docs/Glossary/Kebab_case)"
+    },
+    {
+      "type": "collection",
+      "id": "preview_collection",
+      "label": "Preview Collection",
+      "info": "Fallbacks to the first available collection"
+    },
+    {
+      "type": "checkbox",
+      "id": "link_to_collection",
+      "label": "Link to collection",
+      "default": false
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "header",
+      "content": "Container Layout"
+    },
+    {
+      "type": "select",
+      "id": "orientation",
+      "label": "Orientation",
+      "default": "vertical",
+      "options": [
+        {
+          "value": "vertical",
+          "label": "Vertical"
+        },
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "flex_row_wrap_align_x_align_y_gap",
+      "label": "justify | align | gap | wrap | dir",
+      "default": "stretch | stretch | 0 | wrap | row",
+      "info": "Alignment accepts: 'start, center, end, evenly, between'"
+    },
+    {
+      "type": "text",
+      "id": "padding_top_bottom_left_right",
+      "label": "padding: top | bottom | left | right",
+      "default": "0 | 0 | 0 | 0"
+    },
+    {
+      "type": "text",
+      "id": "max_width_max_height_border_width_radius",
+      "label": "max-w | max-h | border | radius",
+      "default": "unset | unset | 0 | 0"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "text color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "background gradient"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "border color"
+    },
+    {
+      "type": "text",
+      "id": "dynamic_text_color",
+      "label": "Dynamic text color"
+    },
+    {
+      "type": "text",
+      "id": "dynamic_background_color",
+      "label": "Dynamic background color"
+    },
+    {
+      "type": "text",
+      "id": "dynamic_border_color",
+      "label": "Dynamic border color"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "header",
+      "content": "Loading State"
+    },
+    {
+      "type": "text",
+      "id": "loading_width_height_aspect",
+      "label": "width | height | aspect",
+      "default": "100% | auto | 0.75",
+      "info": "Aspect ratio only applies if width or height are set to 'auto'"
+    },
+    {
+      "type": "color_background",
+      "id": "loading_background_gradient",
+      "label": "Background color",
+      "default": "rgba(185,185,185, 0.2)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Card"
+    }
+  ],
+  "enabled_on": {
+    "groups": [
+      "custom.card"
+    ]
+  }
+}
+{% endschema %}

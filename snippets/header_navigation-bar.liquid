@@ -1,0 +1,182 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "header_navigation-bar"
+  assign alignment_desktop = section.settings.alignment_desktop
+  assign alignment_mobile = section.settings.alignment_mobile
+  assign open_on_click = section.settings.open_on_click
+  assign background_image = section.settings.background_image
+  assign section_height = section.settings.section_height
+  assign color_scheme = section.settings.color_scheme
+  assign container_spacing = section.settings.container_spacing
+  assign transparent_templates = section.settings.transparent_templates
+  assign transparent_color_scheme = section.settings.transparent_color_scheme
+  assign toggle_area = section.settings.toggle_area
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign section_height = section_height | strip_newlines | replace: ' ', "" | split: '/'
+  assign height = height | first
+
+  assign logo = section.blocks | where: "type", "logo" | first
+  assign logos = section.blocks | where: "type", "logo"
+  assign menu = section.blocks | where: "type", "desktop-menu" | first
+  assign transparent_templates_array = transparent_templates | trim | replace: " ", "" | split: ","
+
+  assign transparent = ""
+  for transparent_template in transparent_templates_array
+    assign transparent_template_prefix = transparent_template | split: "." | first
+    assign template_prefix = template | split: "." | first
+    assign transparent_template_suffix = transparent_template | split: "." | last
+    assign template_suffix = template | split: "." | last
+
+    if transparent_template_prefix != template_prefix
+      continue
+    endif
+    if transparent_template.size == 1 or transparent_template_suffix == template_suffix
+      assign transparent = "navigation-bar--transparent"
+      break
+    endif
+  endfor
+
+  if settings.layout__style == 'solid'
+    assign container_classes = 'inset-0 ' | append: container_spacing
+    assign container_spacing = "border-b border-b-theme-border"
+  endif
+
+  if settings.layout__style == 'floating'
+    assign container_classes = 'border border-theme-border bg-theme-bg inset-x-1.5 top-0 bottom-0 rounded-[20px] mt-4 md:mt-6 px-4 md:px-9 w-full left-1/2 -translate-x-1/2 max-md:shadow-md'
+  endif
+%}
+
+<style>
+  :root {
+    --navigation-bar-height: {{ section_height | last }};
+  }
+
+  @media screen and (min-width: 768px) {
+    :root {
+      --navigation-bar-height: {{ section_height | first }};
+    }
+  }
+
+  {% if transparent != blank %}
+  :root {
+    --navigation-bar-transparent-height: calc(-1 * var(--navigation-bar-height))
+  }
+
+  {% endif %}
+</style>
+
+<header x-data="{ ..._sections.initNavigationBar($el, $refs) }"
+        @scroll.window.passive="$data.toggleTransparent($event, true)"
+        @pointerover="`{{ toggle_area }}` === 'bar' && $data.toggleTransparent"
+        @pointerleave="`{{ toggle_area }}` === 'bar' && $data.toggleTransparent"
+        data-transparent-templates="{{ transparent_templates }}"
+        data-color-scheme="{{ color_scheme }}"
+        data-transparent-color-scheme="{{ transparent_color_scheme }}"
+        {% if open_on_click %}data-open-on-click="true"{% endif %}
+        x-init="()=> { $data.toggleTransparent() ; $watch('$router.template', value => { $data.toggleTransparent() }); $watch('$modal.id', value => { !{{ open_on_click }} && $data.toggleTransparent() }) }"
+        class="relative h-[--height] md:h-[--height-md] {{ container_spacing }} {{ color_scheme }} {{ transparent }}"
+        style="--height-md: {{ section_height | first }};--height: {{ section_height | last }};">
+  {% if background_image %}
+    <div class="pointer-events-none absolute inset-0"
+         x-ref="navigation_bar_background_image">
+      {% render '_object.image', image: background_image, preload: true, width: background_image.width, height: height, class: "size-full object-cover" %}
+    </div>
+  {% endif %}
+  <div class="relative h-full">
+    <div class="absolute flex justify-between gap-2 {{ container_classes }}">
+      <div class="flex items-center gap-2 xxs:flex-min">
+        {% for block in section.blocks %}
+          {% unless menu or logo %}
+            {% break %}
+          {% endunless %}
+          {% if alignment_desktop == 'menu_center' and block.type == 'desktop-menu' %}
+            {% break %}
+          {% endif %}
+          {% if alignment_desktop == 'logo_center' and block.type == 'logo' %}
+            {% break %}
+          {% endif %}
+          {% if alignment_desktop == 'auto' and block.type == 'desktop-menu' %}
+            {% render 'header_navigation-bar.block', block: block, forloop: forloop %}
+            {% break %}
+          {% endif %}
+          {% if alignment_desktop != 'logo_center' and alignment_mobile == 'logo_center' and block.type == 'logo' %}
+            {% render 'header_navigation-bar.block', block: block, forloop: forloop, section_type: section_type, form: form, class: "max-lg:hidden" %}
+            {% continue %}
+          {% endif %}
+          {% render 'header_navigation-bar.block', block: block, forloop: forloop %}
+        {% endfor %}
+      </div>
+      <div class="flex shrink-0 justify-center text-center">
+        {% if alignment_desktop == 'menu_center' and menu %}
+          {% render 'header_navigation-bar.block', block: menu, forloop: forloop, class: "" %}
+        {% endif %}
+        {% if alignment_desktop == 'logo_center' and logo %}
+          {% for logo in logos %}
+            {% render 'header_navigation-bar.block', block: logo, forloop: forloop, class: "" %}
+          {% endfor %}
+        {% endif %}
+        {% if alignment_desktop != 'logo_center' and alignment_mobile == 'logo_center' and logo %}
+          {% for logo in logos %}
+            {% render 'header_navigation-bar.block', block: logo, forloop: forloop, class: "lg:hidden" %}
+          {% endfor %}
+        {% endif %}
+      </div>
+      <div class="flex items-center justify-end gap-2 xxs:flex-min">
+        {% assign block_render = true %}
+        {% unless menu or logo %}
+          {% assign block_render = false %}
+        {% endunless %}
+        {% for block in section.blocks %}
+          {% if alignment_desktop != 'logo_center' and block.type == 'desktop-menu' %}
+            {% assign block_render = false %}
+            {% continue %}
+          {% endif %}
+          {% if alignment_desktop != 'logo_center' and menu == null and block.type == 'logo' %}
+            {% assign block_render = false %}
+            {% continue %}
+          {% endif %}
+          {% if alignment_desktop == 'logo_center' and block.type == 'logo' %}
+            {% assign block_render = false %}
+            {% continue %}
+          {% endif %}
+          {% if alignment_desktop == 'logo_center' and logo == null and block.type == 'desktop-menu' %}
+            {% assign block_render = false %}
+            {% continue %}
+          {% endif %}
+          {% if block_render %}
+            {% continue %}
+          {% endif %}
+          {% render 'header_navigation-bar.block', block: block, forloop: forloop %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="pointer-events-none fixed inset-0 z-[2147483647]">
+  <div class="pointer-events-none relative flex h-full w-full -translate-x-full items-center justify-center opacity-0 transition-all [&.out-active:not(.active)]:translate-x-full ease-in-out group ac:pointer-events-auto ac:opacity-100 ac:translate-x-0  {{ color_scheme }}"
+       data-transition-overlay>
+    <div class="flex h-full w-full items-center justify-center px-[--layout-container-gutter]">
+      <div class="relative">
+        <picture class="relative flex h-36 w-full max-w-sm opacity-30">
+          {% render '_object.image',
+              image: logo.settings.logo,
+              height: 300,
+              default_alt: shop.name,
+              class: "relative w-full h-full object-contain" %}
+        </picture>
+        <picture class="absolute inset-0 flex h-36 w-full max-w-sm !animation-pause group-ac:!animation-play"
+                 style="animation: transitioning 2.6s ease-in-out infinite;">
+          {% render '_object.image',
+              image: logo.settings.logo,
+              height: 300,
+              default_alt: shop.name,
+              class: "relative w-full h-full object-contain" %}
+        </picture>
+      </div>
+    </div>
+  </div>
+</div>

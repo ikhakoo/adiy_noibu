@@ -1,0 +1,30 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "buttons"
+  assign section_type = "media-with-text"
+  assign button_primary_text = block.settings.button_primary_text
+  assign button_primary_url = block.settings.button_primary_url
+  assign button_primary_class = block.settings.button_primary_class
+  assign button_secondary_text = block.settings.button_secondary_text
+  assign button_secondary_url = block.settings.button_secondary_url
+  assign button_secondary_class = block.settings.button_secondary_class
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {{ block.shopify_attributes }}
+    class="flex w-full gap-4 md:gap-6 max-md:flex-col">
+  {% if button_primary_text != blank %}
+    <a href="{{ button_primary_url }}"
+        class="max-md:w-full {{ button_primary_class }}">
+        {% render '_input.inline_richtext', content: button_primary_text, block: block, forloop: forloop %}
+    </a>
+  {% endif %}
+  {% if button_secondary_text != blank %}
+    <a href="{{ button_secondary_url }}"
+        class="max-md:w-full {{ button_secondary_class }}">
+      {% render '_input.inline_richtext', content: button_secondary_text, block: block, forloop: forloop %}
+    </a>
+  {% endif %}
+</div>

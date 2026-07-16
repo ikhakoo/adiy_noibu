@@ -1,0 +1,135 @@
+/************************** Product page change **************************/
+
+@media screen and (min-width: 768px){
+    .template-product .scrollbar-gallery[data-scrollbar]{
+        display:none;
+    }
+}
+
+/* product page icon with text block */
+
+.cs-icon-text{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid #bebebe;
+    border-radius: 10px;
+    padding: 10px;
+}
+.cs-icon-text img{
+    width: 50px;
+}
+.cs-icon-text h3{
+    font-family: 'Poppins';
+    font-weight: 500;
+    font-size: 13px;
+    text-align:center;
+}
+.cs-icon-text hr{
+    width: 20%;
+    height: 2px;
+    background-color: #000;
+}
+.cs-icon-text p{
+    font-size: 13px;
+    text-align:center;
+}
+@media screen and (max-width:768px){
+    .icon-with-text{
+        --grid-cols: 1 !important;
+    }
+    .cs-icon-text{
+        justify-content: start;
+        flex-direction: row;    
+        height: auto;
+        padding: 15px;
+    }
+    .cs-icon-text img{
+        width: 15%;
+    }
+    .cs-icon-text h3{
+        text-align:start;
+        width: 85%;
+    }
+}
+
+/********************************** End ******************************/
+
+/* Logo Slider Product Page */
+.logo-slider{
+    align-items:center;
+    justify-content:center;
+}
+/********************************** End ******************************/
+
+/* product page selector options */
+.template-product .button-pdp-selector {
+    padding-left: .75rem;
+    padding-right: .75rem;
+    border-width: 1.5px;
+    border-radius: 10px;
+}
+.template-product .button-pdp-selector:where(:hover,:focus-visible,:active,.active):not(.button-loading){
+    border-radius: 10px;
+}
+/********************************** End ******************************/
+
+/* Product page accordions */
+.template-product .accordion-content h2{
+    font-size:20px
+}
+.template-product .accordion-content h3,
+.template-product .accordion-content h4,
+.template-product .accordion-content h5,
+.template-product .accordion-content h6{
+    font-size:18px
+}
+/********************************** End ******************************/
+.template-product-a-wood-deck .accordion-options {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+.template-product-a-wood-deck .accordion-options:nth-child(2){
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+/********************************** End ******************************/
+@media screen and (max-width:768px){
+    [data-block-type="option__color"] span.text-sm{
+        font-size:13px;
+    }
+}
+/********************************** End ******************************/
+[data-block-type="price"] > div{
+    flex-direction: row-reverse;
+    align-items: center;
+}
+[data-block-type="price"] > div > span{
+    font-size: 16px;
+}
+div.label-discount{
+    font-size: 13px;
+    margin-top: 8px;
+}
+#pdp_price {
+    align-items: center;
+}
+/********************************** End ******************************/
+
+
+/************************** Collection page product block change **************************/
+.template-collection fieldset legend{
+    background-color: transparent !important;
+    color:#2A2E15 !important;
+}
+/********************************** End ******************************/
+
+/* Design consultation page */
+.design-consultation  fieldset legend{
+    background-color: transparent !important;
+    color:#2A2E15 !important;
+}
+/********************************** End ******************************/
+

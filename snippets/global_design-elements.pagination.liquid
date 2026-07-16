@@ -1,0 +1,220 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "pagination"
+  assign section_type = "global_design-elements"
+  assign title = block.settings.title
+  assign background_color = block.settings.background_color
+  assign background_gradient = block.settings.background_gradient
+  assign text_color = block.settings.text_color
+  assign border_color = block.settings.border_color
+  assign hover_background_color = block.settings.hover_background_color
+  assign hover_background_gradient = block.settings.hover_background_gradient
+  assign hover_text_color = block.settings.hover_text_color
+  assign hover_border_color = block.settings.hover_border_color
+  assign font_family = block.settings.font_family
+  assign size_weight_height_opacity = block.settings.size_weight_height_opacity
+  assign spacing_transform_style_whitespace = block.settings.spacing_transform_style_whitespace
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign width_height_border_width_radius = block.settings.width_height_border_width_radius
+  assign icon_previous = block.settings.icon_previous
+  assign icon_next = block.settings.icon_next
+  assign custom_css = block.settings.custom_css
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign apply_container_queries = block.settings.apply_container_queries
+  assign mobile_background_color = block.settings.mobile_background_color
+  assign mobile_background_gradient = block.settings.mobile_background_gradient
+  assign mobile_text_color = block.settings.mobile_text_color
+  assign mobile_border_color = block.settings.mobile_border_color
+  assign mobile_hover_background_color = block.settings.mobile_hover_background_color
+  assign mobile_hover_background_gradient = block.settings.mobile_hover_background_gradient
+  assign mobile_hover_text_color = block.settings.mobile_hover_text_color
+  assign mobile_hover_border_color = block.settings.mobile_hover_border_color
+  assign override_preview_background = block.settings.override_preview_background
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{%- liquid
+  assign selector = '.' | append: title
+
+  assign container_selector = selector | append: '[data-style-pagination]'
+  assign sub_selector = selector | append: ' [data-pagination-button]'
+
+  assign indicator = selector | append: ' [data-pagination-indicator]'
+
+  render '_utils.dynamic-css', selector: selector, block: block, keys: "flex_direction_align_x_align_y_gap_wrap"
+  render '_utils.dynamic-css', selector: container_selector, block: block, keys: "padding_top_bottom_left_right"
+
+  render '_utils.dynamic-css', selector: sub_selector, block: block, keys: 'font_family,size_weight_height_opacity,spacing_transform_style_whitespace,width_height_border_width_radius, border_color'
+
+  render '_utils.dynamic-css', selector: indicator, block: block, keys: "size_weight_height_opacity, background_color, background_gradient, border_color, mobile_background_color, mobile_background_gradient,mobile_text_color, mobile_border_color, font_family, width_height_border_width_radius, flex_direction_align_x_align_y_gap_wrap"
+
+  if mobile_hover_background_gradient == blank and mobile_hover_background_color == blank or mobile_hover_background_color.alpha == 0
+    assign mobile_hover_background_gradient = hover_background_gradient
+  endif
+  if mobile_hover_background_color == blank or mobile_hover_background_color.alpha == 0
+    assign mobile_hover_background_color = hover_background_color
+  endif
+  if mobile_hover_text_color == blank or mobile_hover_text_color.alpha == 0
+    assign mobile_hover_text_color = hover_text_color
+  endif
+  if mobile_hover_border_color == blank or mobile_hover_border_color.alpha == 0
+    assign mobile_hover_border_color = hover_border_color
+  endif
+
+  assign width_height_border_width_radius = width_height_border_width_radius | strip_newlines | replace: ' ', "" | split: '|'
+  assign icon_width = width_height_border_width_radius[0] | split: '/'
+  assign icon_height = width_height_border_width_radius[1] | split: '/'
+  assign icon_border = width_height_border_width_radius[2] | split: '/'
+  assign icon_radius = width_height_border_width_radius[3] | split: '/'
+
+%}
+
+{%- capture css_desktop -%}
+  .{{ title }} [data-pagination-button] {
+    position: relative;
+    transition: all 150ms;
+    overflow: hidden;
+    transform: translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skew(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+    border-style: solid;
+  }
+
+  .{{ title }} [data-pagination-button]:not(disabled) {
+    cursor: pointer;
+  }
+  .{{ title }} [data-pagination-button]:where(:disabled, .disabled) {
+    cursor: auto;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .{{ title }} [data-pagination-button]:where(:hover,:focus-visible,:active,.active) {
+    border-color: {{ hover_border_color }};
+    color: {{ hover_text_color }};
+    background: {{ hover_background_gradient | default: hover_background_color }};
+  }
+
+  .{{ title }} {
+  --icon-width: {{ icon_width | first | abs | times: 0.44 | round }}px;
+  --icon-height: {{ icon_height | first | abs | times: 0.44 | round }}px;
+  --icon-width-md: {{ icon_width | last | abs | times: 0.7 | round }}px;
+  --icon-height-md: {{ icon_height | last | abs | times: 0.7 | round }}px;
+  --pagination-button-prev: var(--icon-{{ icon_previous | handleize }});
+  --pagination-button-prev-aspect-ratio: var(--icon_previous-{{ icon | handleize }}-aspect-ratio);
+  --pagination-button-next: var(--icon-{{ icon_next | handleize }});
+  --pagination-button-next-aspect-ratio: var(--icon_next-{{ icon | handleize }}-aspect-ratio);
+  }
+
+{%- endcapture -%}
+{%- capture css_mobile -%}
+    .{{ title }} [data-pagination-button]:where(:hover,:focus-visible,:active,.active) {
+    border-color: {{ mobile_hover_border_color }};
+    color: {{ mobile_hover_text_color }};
+    background: {{ mobile_hover_background_gradient | default: mobile_hover_background_color }};
+  }
+{%- endcapture -%}
+
+<style>
+  {{- css_desktop | strip_newlines  -}}
+
+  @media screen and (max-width: 767px) {
+  {{- css_mobile | strip_newlines  -}}
+  }
+
+  @container (max-width: 767px) {
+  {{- css_mobile | strip_newlines  -}}
+  }
+</style>
+
+{% if request.design_mode %}
+  {% if override_preview_background == blank or override_preview_background.alpha == 0 %}
+    {% assign override_preview_background = '#ffffff' %}
+  {% endif %}
+  <section class="fixed inset-0 z-50 flex flex-col gap-16 overflow-y-auto text-balance bg-white py-16 text-black px-container-sm"
+           x-data="{tab: 'single-type'}"
+           style="background: {{ override_preview_background }};"
+           x-show="$editor?.select_block_id === '{{ block.id }}'"
+           x-cloak {{ block.shopify_attributes }}>
+
+    <header class="flex gap-3 font-mono">
+      <button @click="tab='single-type'"
+              type="button"
+              :class="tab === 'single-type' ? 'bg-gray-600 text-gray-50 border-gray-900 hf:bg-gray-700':'border-gray-200/70 bg-gray-100 text-gray-700 hf:text-gray-900 hf:border-gray-300/80 hf:bg-gray-200/90'"
+              class="rounded-sm border px-3 text-sm font-medium py-1.5">{{ selector }}
+      </button>
+    </header>
+
+    <main class="mt-8">
+      <header class="mt-12 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="text-lg font-bold text-gray-600">Desktop</div>
+        <div class="text-lg font-bold text-gray-600">Mobile</div>
+      </header>
+      <section x-show="tab === 'single-type'" class="mt-6 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div>
+          <nav role="navigation">
+              <ol class="{{ title }}">
+                <li data-pagination-button>
+                  <a class="w-full h-full flex items-center justify-center" href="">
+                      <svg class="absolute left-1/2 top-1/2 w-[--icon-width-md] md:w-[--icon-width] h-[--icon-height-md] md:h-[--icon-height] -translate-x-1/2 -translate-y-1/2 bg-current"
+                        style="mask: var(--pagination-button-prev); -webkit-mask: var(--pagination-button-prev); aspect-ratio: var(--pagination-button-prev-aspect-ratio, 1);" aria-hidden="true">
+                      </svg>
+                  </a>
+                </li>
+                <li class="active" aria-current="page" data-pagination-button>
+                  <a class="w-full h-full flex items-center justify-center" href="">
+                    1
+                  </a>
+                </li>
+                <li data-pagination-button>
+                  <a class="w-full h-full flex items-center justify-center" href="">
+                    2
+                  </a>
+                </li>
+                <li data-pagination-button>
+                  <a class="w-full h-full flex items-center justify-center" href="">
+                    <svg class="absolute left-1/2 top-1/2 w-[--icon-width-md] md:w-[--icon-width] h-[--icon-height-md] md:h-[--icon-height] -translate-x-1/2 -translate-y-1/2 bg-current"
+                      style="mask: var(--pagination-button-next); -webkit-mask: var(--pagination-button-next); aspect-ratio: var(--pagination-button-next-aspect-ratio, 1);" aria-hidden="true">
+                    </svg>
+                  </a>
+                </li>
+              </ol>
+          </nav>
+        </div>
+        <div class=" @container max-w-lg">
+          <nav role="navigation">
+            <ol class="{{ title }}">
+              <li data-pagination-button>
+                <a class="w-full h-full flex items-center justify-center" href="">
+                    <svg class="absolute left-1/2 top-1/2 w-[--icon-width-md] md:w-[--icon-width] h-[--icon-height-md] md:h-[--icon-height] -translate-x-1/2 -translate-y-1/2 bg-current"
+                      style="mask: var(--pagination-button-prev); -webkit-mask: var(--pagination-button-prev); aspect-ratio: var(--pagination-button-prev-aspect-ratio, 1);" aria-hidden="true">
+                    </svg>
+                </a>
+              </li>
+              <li class="active" aria-current="page" data-pagination-button>
+                <a class="w-full h-full flex items-center justify-center" href="">
+                  1
+                </a>
+              </li>
+              <li data-pagination-button>
+                <a class="w-full h-full flex items-center justify-center" href="">
+                  2
+                </a>
+              </li>
+              <li data-pagination-button>
+                <a class="w-full h-full flex items-center justify-center" href="">
+                  <svg class="absolute left-1/2 top-1/2 w-[--icon-width-md] md:w-[--icon-width] h-[--icon-height-md] md:h-[--icon-height] -translate-x-1/2 -translate-y-1/2 bg-current"
+                    style="mask: var(--pagination-button-next); -webkit-mask: var(--pagination-button-next); aspect-ratio: var(--pagination-button-next-aspect-ratio, 1);" aria-hidden="true">
+                  </svg>
+                </a>
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </section>
+    </main>
+  </section>
+{% endif %}
+

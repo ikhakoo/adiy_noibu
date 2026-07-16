@@ -1,0 +1,35 @@
+{%- liquid
+  assign section_id = id | default: section.settings.section_id | default: section.id
+  assign color_scheme = section.settings.color_scheme
+  assign container_spacing = section.settings.container_spacing
+  assign border_divider = section.settings.border_divider
+  assign responsive_visibility = section.settings.responsive_visibility
+  assign target_visibility = section.settings.target_visibility
+-%}
+
+{% if insert == "before" %}
+{% render '_utils.dynamic-css', keys: "responsive_visibility,top_bottom_min_height" %}
+  {% if target_visibility == 'targeted' %}
+    <style>
+      {{ section_id | prepend: '#' }}:not(:target) {
+        display: none !important;
+      }
+    </style>
+  {% endif %}
+  {% if target_visibility == 'no_target' %}
+    <style>
+      body:has(*:target) {{ section_id | prepend: '#' }} {
+        display: none !important;
+      }
+    </style>
+  {% endif %}
+<div {% if section_id != blank %}id="{{ section_id }}"{% endif %}
+    data-style-id="{{ section.id }}"
+    data-section-type="{{ section_type }}"
+    data-section-location="{{ section.location }}"
+    data-section-index="{{ section.index0 }}"
+    data-section-block-size="{{ section.blocks | size }}"
+    class="section--{{ section_type }} relative bg-theme-bg text-theme-text grid isolate {{ color_scheme }} {{ container_spacing }} {{ border_divider }}"
+    style="{{ styles | strip_newlines }}"
+>{% endif %}{% if insert == "after" %}</div>{% endif %}
+

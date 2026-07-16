@@ -1,0 +1,32 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid 
+  assign block_type = "card"
+  assign section_type = "text-cards-slider"
+  assign icon_heading = block.settings.icon_heading
+  assign heading = block.settings.heading
+  assign heading_class = block.settings.heading_class
+  assign first_text = block.settings.first_text
+  assign first_text_class = block.settings.first_text_class
+  assign second_text = block.settings.second_text
+  assign second_text_class = block.settings.second_text_class
+  assign third_text = block.settings.third_text
+  assign third_text_class = block.settings.third_text_class
+  assign background_color = block.settings.background_color
+  assign text_align = block.settings.text_align
+  assign horizontal_align = block.settings.horizontal_align
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {{ block.shopify_attributes }}
+    class="flex flex-col w-full gap-3 p-4 md:p-6 overflow-hidden rounded-[20px] {{ text_align }} {{ horizontal_align }} text-black"
+    style="background-color: {{ background_color }};">
+    <div class="flex flex-col gap-3 items-center {{ horizontal_align }}">
+      {% render '_object.image', image: icon_heading, class: 'w-9 h-9 md:w-12 md:h-12' %}
+      {% render '_input.richtext', content: heading, class: heading_class, block: block, forloop: forloop %}
+    </div>
+    {% render '_input.richtext', content: first_text, class: first_text_class, block: block, forloop: forloop %}
+    {% render '_input.richtext', content: second_text, class: second_text_class, block: block, forloop: forloop %}
+    {% render '_input.richtext', content: third_text, class: third_text_class, block: block, forloop: forloop %}
+</div>

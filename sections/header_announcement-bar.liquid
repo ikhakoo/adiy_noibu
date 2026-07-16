@@ -1,0 +1,229 @@
+{%- render "header_announcement-bar" -%}
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    {
+      "type": "range",
+      "id": "display_duration",
+      "label": "Display duration",
+      "info": "Only applicable if multiple announcements are active. Set to 0 to disable auto changing.",
+      "default": 10,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "s"
+    },
+    {
+      "type": "text",
+      "id": "section_height",
+      "label": "Section height",
+      "default": "40px / 30px"
+    },
+    {
+      "type": "select",
+      "id": "responsive_visibility_cart",
+      "label": "Responsive Visibility",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile"
+        },
+        {
+          "value": "cart-only",
+          "label": "Cart"
+        },
+        {
+          "value": "desktop-tablet-only",
+          "label": "Desktop"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Announcement",
+      "type": "announcement",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Mobile"
+        },
+        {
+          "type": "richtext",
+          "id": "content_mobile",
+          "label": "Mobile",
+          "default": "<h6>Shop now!</h6>"
+        },
+        {
+          "type": "select",
+          "id": "align_horizontal__mobile",
+          "label": "Horizontal Alignment",
+          "default": "items-center text-center",
+          "options": [
+            {
+              "value": "items-start text-left",
+              "label": "Left"
+            },
+            {
+              "value": "items-center text-center",
+              "label": "Center"
+            },
+            {
+              "value": "items-end text-right",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "marquee_animation_mobile",
+          "label": "Enable Marquee animation",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "content_mobile_class",
+          "label": "Content class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Desktop"
+        },
+        {
+          "type": "richtext",
+          "id": "content_desktop",
+          "label": "Content",
+          "default": "<h6>Discover the hottest deals of the season. Shop now!</h6>"
+        },
+        {
+          "type": "select",
+          "id": "align_horizontal__desktop",
+          "label": "Horizontal Alignment",
+          "default": "inherit",
+          "options": [
+            {
+              "value": "inherit",
+              "label": "Inherit"
+            },
+            {
+              "value": "md:items-start md:text-left",
+              "label": "Left"
+            },
+            {
+              "value": "md:items-center md:text-center",
+              "label": "Center"
+            },
+            {
+              "value": "md:items-end md:text-right",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "marquee_animation_desktop",
+          "label": "Enable Marquee animation"
+        },
+        {
+          "type": "text",
+          "id": "content_desktop_class",
+          "label": "Content class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "Background image"
+        },
+        {
+          "type": "select",
+          "id": "container_spacing",
+          "default": "px-container-md",
+          "options": [
+            {
+              "value": "px-container-xs",
+              "label": "xs"
+            },
+            {
+              "value": "px-container-sm",
+              "label": "sm"
+            },
+            {
+              "value": "px-container-md",
+              "label": "md"
+            },
+            {
+              "value": "px-container-lg",
+              "label": "lg"
+            },
+            {
+              "value": "px-container-fullwidth",
+              "label": "fullwidth"
+            },
+            {
+              "value": "px-container-gutter",
+              "label": "magazine"
+            }
+          ],
+          "label": "Container Spacing"
+        },
+        {
+          "type": "color_scheme",
+          "id": "color_scheme",
+          "default": "1",
+          "label": "Color scheme"
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility_cart",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "cart-only",
+              "label": "Cart"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "limit": 1,
+  "enabled_on": {
+    "groups": [
+      "custom.header"
+    ]
+  }
+}
+{% endschema %}

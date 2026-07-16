@@ -1,0 +1,46 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "dynamic-text"
+  assign section_type = "card_product-card"
+  assign title = block.settings.title
+  assign type_richtext_metafield = block.settings.type_richtext_metafield
+  assign css_class = block.settings.css_class
+  assign link_to_product = block.settings.link_to_product
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign color_override = block.settings.color_override
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css', block: block %}
+
+{% liquid
+  if color_override != blank and color_override.alpha != 0
+    assign color = color_override | default: "inherit"
+  endif
+
+  if type_richtext_metafield != blank
+    assign title = type_richtext_metafield
+  endif
+%}
+
+<div {{ block.shopify_attributes }}
+    x-data="{ content: renderDynamicText($el.getAttribute('data-content')), content_check: renderDynamicText($el.getAttribute('data-content-check')) }"
+    data-content="{% render '_input.richtext', content: title, class: css_class, escape: true, block: block, forloop: forloop %}"
+    data-content-check="{{ title | strip_html | escape }}"
+    x-effect="() => { if (card?.selected_variant || card?.hydrated) { content = renderDynamicText($el.getAttribute('data-content')) } }"
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    x-show="!!content_check.trim()"
+    x-cloak
+    {% if link_to_product %}
+      :title="`${_stores.router?.pathname?.replace(/^.*?(\/collections\/[^/]*)?.*$/gi,'$1')?.replace(/^\/$/gi,'') ?? ''}/products/${card?.product?.handle}?variant=${card?.selected_variant?.id}`"
+      role="button"
+      tabindex="0"
+      @click.prevent.stop="barba.go(`${_stores.router?.pathname?.replace(/^.*?(\/collections\/[^/]*)?.*$/gi,'$1')?.replace(/^\/$/gi,'') ?? ''}/products/${card?.product?.handle}?variant=${card?.selected_variant?.id}`); $modal.setId('')"
+    {% endif %}
+    style="color: {{ color }}">
+  <div x-html="content"></div>
+</div>

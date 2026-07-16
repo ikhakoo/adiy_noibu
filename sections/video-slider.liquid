@@ -1,0 +1,234 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} .deck-reviews-{{ section.id }} {
+    padding: 60px 0px;
+    background: #ffffff;
+    max-width: 1440px;
+    margin: 0 auto;
+    font-family: inherit;
+  }
+
+  #shopify-section-{{ section.id }} .deck-reviews-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  #shopify-section-{{ section.id }} .deck-reviews-header span {
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: #3A6958;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  #shopify-section-{{ section.id }} .deck-reviews-header h2 {
+    font-size: 40px;
+    font-weight: 500;
+    margin: 0;
+    color: #20221d;
+    line-height: 1.2;
+  }
+
+  #shopify-section-{{ section.id }} .deck-slider-wrapper {
+    position: relative;
+    overflow: hidden;
+    padding: 10px 0;
+  }
+
+  #shopify-section-{{ section.id }} .deck-slider-container {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  #shopify-section-{{ section.id }} .deck-card {
+    flex: 0 0 calc(25% - 15px);
+    border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 9 / 16;
+    position: relative;
+    background: #f0f0f0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  #shopify-section-{{ section.id }} .deck-card video, 
+  #shopify-section-{{ section.id }} .deck-card iframe,
+  #shopify-section-{{ section.id }} .deck-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border: none;
+  }
+
+  /* Play Button Overlay */
+  #shopify-section-{{ section.id }} .video-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.1);
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .deck-nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+  }
+
+  #shopify-section-{{ section.id }} .deck-nav-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid #e0e0e0;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  #shopify-section-{{ section.id }} .deck-nav-btn:hover {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+  }
+
+  #shopify-section-{{ section.id }} .deck-nav-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+  }
+
+  @media (max-width: 1440px) {
+    #shopify-section-{{ section.id }} .deck-slider-wrapper { padding: 0px 10px;}
+    #shopify-section-{{ section.id }} .deck-card { flex: 0 0 40%; }
+  }
+
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .deck-card { flex: 0 0 60%; }
+    #shopify-section-{{ section.id }} .deck-slider-container {gap: 15px;}
+    #shopify-section-{{ section.id }} .deck-slider-wrapper { padding: 0px 10px;}
+    #shopify-section-{{ section.id }} .deck-reviews-header h2 { font-size: 24px; max-width: 70%; line-height: 30px; margin: 0 auto; }
+    #shopify-section-{{ section.id }} .deck-nav { display: flex; justify-content: center;}
+  }
+{%- endstyle -%}
+
+<section class="deck-reviews-{{ section.id }}">
+  <div class="deck-reviews-header">
+    <span>REVIEWS</span>
+    <h2>{{ section.settings.title }}</h2>
+  </div>
+
+  <div class="deck-slider-wrapper">
+    <div class="deck-slider-container" id="DeckSlider-{{ section.id }}">
+      {% for block in section.blocks %}
+        <div class="deck-card" {{ block.shopify_attributes }}>
+          {%- if block.settings.video_file != blank -%}
+            {{ block.settings.video_file | video_tag: autoplay: false, controls: true, loop: true, image_size: '600x' }}
+          {%- elsif block.settings.external_video_url != blank -%}
+            {%- if block.settings.external_video_url.type == 'youtube' -%}
+              <iframe src="https://www.youtube.com/embed/{{ block.settings.external_video_url.id }}" allowfullscreen></iframe>
+            {%- else -%}
+              <iframe src="https://player.vimeo.com/video/{{ block.settings.external_video_url.id }}" allowfullscreen></iframe>
+            {%- endif -%}
+          {%- else -%}
+             {% if block.settings.image != blank %}
+                {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy' }}
+             {% else %}
+                {{ 'collection-1' | placeholder_svg_tag }}
+             {% endif %}
+          {%- endif -%}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="deck-nav">
+    <button class="deck-nav-btn" id="prevBtn-{{ section.id }}" aria-label="Previous">
+      <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </button>
+    <button class="deck-nav-btn" id="nextBtn-{{ section.id }}" aria-label="Next">
+      <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+    </button>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('DeckSlider-{{ section.id }}');
+    const prevBtn = document.getElementById('prevBtn-{{ section.id }}');
+    const nextBtn = document.getElementById('nextBtn-{{ section.id }}');
+    
+    let scrollAmount = 0;
+
+    function getStep() {
+      return container.firstElementChild.offsetWidth + 20;
+    }
+
+    nextBtn.addEventListener('click', () => {
+      const maxScroll = container.scrollWidth - container.parentElement.clientWidth;
+      scrollAmount = Math.min(scrollAmount + getStep(), maxScroll);
+      container.style.transform = `translateX(-${scrollAmount}px)`;
+    });
+
+    prevBtn.addEventListener('click', () => {
+      scrollAmount = Math.max(scrollAmount - getStep(), 0);
+      container.style.transform = `translateX(-${scrollAmount}px)`;
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Custom Video Slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "2,500+ Homeowners Built Their Dream Deck in a Weekend"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review_card",
+      "name": "Video/Image Review",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video_file",
+          "label": "Shopify Hosted Video (Recommended)"
+        },
+        {
+          "type": "video_url",
+          "id": "external_video_url",
+          "label": "External Video (YouTube/Vimeo)",
+          "accept": ["youtube", "vimeo"]
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Fallback Image (If no video)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Video Slider",
+      "blocks": [
+        { "type": "review_card" },
+        { "type": "review_card" },
+        { "type": "review_card" },
+        { "type": "review_card" }
+      ]
+    }
+  ]
+}
+{% endschema %}

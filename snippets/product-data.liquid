@@ -1,0 +1,95 @@
+{% liquid
+  unless product
+    assign not_a_product_page = true
+
+    if request.design_mode
+      assign product = collections.all.products[0]
+    endif
+  endunless
+
+  unless product
+    break
+  endunless
+%}
+
+{%- capture contentForQuerystring -%}{{ content_for_header }}{%- endcapture -%}
+{%- assign query_params = contentForQuerystring | split: '"pageurl":"' | last | split: '"' | first | replace: '\/', '/' | replace: '%20', ' ' | replace: '\u0026', '&' | split: "?" | last -%}
+
+{%- if recommendations.performed? -%}
+  {%- capture recommdationsData -%}
+    [{%- for p in recommendations.products -%}{%- render '_json.product', product: p, meta_product: true, no_description: true -%}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]
+  {%- endcapture -%}
+  <script type="application/json"
+          data-product-recommendations="{{- product.id -}}">{{- recommdationsData | strip_newlines -}}</script>
+  {% if query_params contains "with_product_data=" %}
+    {% capture product_data %}
+      {%- render '_json.product', product: product -%}
+    {% endcapture %}
+    <script type="application/json" data-product-data="{{ product.handle }}">{{ product_data }}</script>
+  {% endif %}
+  {% break %}
+{%- endif -%}
+
+{% capture product_data %}
+  {%- render '_json.product', product: product, meta_product: false -%}
+{% endcapture %}
+
+{% if not_a_product_page %}
+  <script>
+    window._product_card_product = {{ product_data }};
+  </script>
+  {% break %}
+{% endif %}
+
+{% unless query_params contains 'variant=' %}
+  {% assign content = product_data | replace_first: '"selected_variant_id":', '|*|Split_string|*|' %}
+  {% assign content = content | split: "|*|Split_string|*|" %}
+  {% assign part2 = content | last | replace_first: ',', "|*|Split_string|*|" | split: "|*|Split_string|*|" | last %}
+  {% assign product_data = content | first | append: '"selected_variant_id": null,' | append: part2 %}
+{% endunless %}
+
+<script type="application/json"
+        data-product-data="{{ product.handle }}"
+        data-primary-product-data="{{ product.handle }}">{{ product_data }}</script>
+
+<script data-product-data-init="{{ product.handle }}" type="application/javascript">
+  (() => {
+    const product = JSON.parse(document.querySelector(`[data-primary-product-data="{{ product.handle }}"]`)?.innerText);
+    window._product_card_product = product;
+    window['_recent_products'] = [];
+
+    const productData = {
+      loaded: false,
+      handleHydration: async (product) => {
+        const dbKey = `_${window.Shopify.theme.id}--${product.handle}`;
+        _products[product.handle] = {
+          recommendations_loaded_at: 0,
+          related_products: [],
+          complementary_products: [],
+          ...(await idbKeyval?.get(dbKey) || {}),
+          ...product,
+          updated_at: Date.now(),
+        };
+
+        window['_recent_products'] = [[product.handle, product.id], ...(await idbKeyval?.get("most-recent") || [])].filter(([a], i, arr) => arr.findIndex(([b]) => a === b) === i);
+        idbKeyval?.set('most-recent', window['_recent_products']);
+        idbKeyval?.set(dbKey, _products[product.handle]);
+      },
+    };
+
+    document.addEventListener('index-db-loaded', () => {
+      if (productData.loaded) return;
+      productData.loaded = true;
+      productData.handleHydration(product);
+    });
+
+
+    if (typeof idbKeyval !== "undefined" && !productData.loaded) {
+      productData.loaded = true;
+      productData.handleHydration(product);
+    }
+  })();
+</script>
+
+
+

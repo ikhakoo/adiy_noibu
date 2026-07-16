@@ -1,0 +1,28 @@
+<script type="application/javascript">
+  window.routes = {
+    ...{{ routes | json }},
+    file_url: `{{ "" | file_url | split: "?" | first }}`,
+    asset_url: `{{ "theme.js" | asset_url | split: "theme.js?" | first }}`,
+  };
+  window.customer = {{ customer | json }};
+  window.request_path = {{ request.path | json }};
+  window.template = {{ template | json }};
+  window._cart_data = window._cart_data || {{ cart | json }};
+  window.money_format = {{ shop.money_format | json }};
+  window.design_mode = {{ request.design_mode | json }};
+  window.theme_settings = {
+    ...{{ settings | json }},
+    color__color_scheme: "{{ settings.color__color_scheme }}",
+    color_schemes: { {% for theme in settings.color_schemes %}{{ theme.id | json }}: {{ theme.settings | json }}{% unless forloop.last %},{% endunless %}{% endfor %} } }
+  ;
+  window.collection = {{ collection | json }};
+  window._sections = window._sections || {};
+  window._stores = window._stores || {};
+  window._products = window._products || {};
+  window._collections = window._collections || {};
+  window._pages = window._pages || {};
+  window._blogs = window._blogs || {};
+  window._articles = window._articles || {};
+  window._metaobjects = window._metaobjects || {};
+
+</script>

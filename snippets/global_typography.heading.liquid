@@ -1,0 +1,63 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "heading"
+  assign section_type = "global_typography"
+  assign title = block.settings.title
+  assign font_family = block.settings.font_family
+  assign size_weight_height_opacity = block.settings.size_weight_height_opacity
+  assign spacing_transform_style_whitespace = block.settings.spacing_transform_style_whitespace
+  assign custom_css = block.settings.custom_css
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign apply_container_queries = block.settings.apply_container_queries
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign selector = '.' | append: title
+  render '_utils.dynamic-css', selector: selector, block: block, apply_container_queries: true
+%}
+
+
+{% if request.design_mode %}
+  <section class="fixed inset-0 z-50 flex flex-col gap-16 overflow-y-auto text-balance bg-white py-16 text-black px-container-sm"
+           x-data="{tab: 'single-type'}"
+           x-show="$editor?.select_block_id === '{{ block.id }}'"
+           x-cloak {{ block.shopify_attributes }}>
+
+    <header class="flex gap-3 font-mono">
+      <button @click="tab='single-type'"
+              type="button"
+              :class="tab === 'single-type' ? 'bg-gray-600 text-gray-50 border-gray-900 hf:bg-gray-700':'border-gray-200/70 bg-gray-100 text-gray-700 hf:text-gray-900 hf:border-gray-300/80 hf:bg-gray-200/90'"
+              class="rounded-sm border px-3 text-sm font-medium py-1.5">{{ selector }}
+      </button>
+    </header>
+
+    <main class="mt-8">
+      <header class="mt-12 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="text-lg font-bold text-gray-600">Desktop</div>
+        <div class="text-lg font-bold text-gray-600">Mobile</div>
+      </header>
+      <section x-show="tab === 'single-type'" class="mt-6 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="{{ title }}" contenteditable="true">
+          Lorem ipsum dolor sit amet, consectetur.
+        </div>
+        <div class=" @container max-w-lg" contenteditable="true">
+          <div class="{{ title }}">Lorem ipsum dolor sit amet, consectetur.</div>
+        </div>
+      </section>
+      <header class="mt-12 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="text-lg font-bold text-gray-600">Desktop - Long</div>
+        <div class="text-lg font-bold text-gray-600">Mobile - Long</div>
+      </header>
+      <section x-show="tab === 'single-type'" class="mt-6 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="{{ title }}" contenteditable="true">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci atque et fuga illo quas quia tempore veniam vero voluptas voluptates. Consequuntur culpa eum itaque recusandae tenetur! Autem esse eum ipsa ipsum labore nam nobis quibusdam similique ullam voluptatibus. Amet, pariatur repellendus? Doloribus expedita numquam reiciendis?
+        </div>
+        <div class="@container max-w-lg" contenteditable="true">
+          <div class="{{ title }}"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci atque et fuga illo quas quia tempore veniam vero voluptas voluptates. Consequuntur culpa eum itaque recusandae tenetur! Autem esse eum ipsa ipsum labore nam nobis quibusdam similique ullam voluptatibus. Amet, pariatur repellendus? Doloribus expedita numquam reiciendis?
+          </div>
+        </div>
+      </section>
+    </main>
+  </section>
+{% endif %}

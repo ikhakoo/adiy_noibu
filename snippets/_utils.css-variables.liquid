@@ -1,0 +1,48 @@
+{%- comment -%}
+    Generate CSS variables for dynamic Breakpoint CSS
+
+    Accepts:
+    - variable: {string} CSS Variable
+    - input: {array} Array of [first,last] for Desktop | Mobile styles
+    - no_pixel_default: {boolean} Defaults to false - Disables numbers to fallback to 'px' by default
+    - force_pixel: {boolean} Defaults to false - Disables numbers to fallback to 'px' by default
+
+    Usage:
+    {%- render '_utils.css-variables', variable: "--pt", input: top -%}
+
+{%- endcomment -%}
+{% liquid
+  assign desktop = input.first | downcase
+  assign mobile = input.last | downcase
+
+  unless no_pixel_default or absolutely_no_pixel_default
+    assign desktop_number = desktop | abs
+    unless desktop contains 'p' or desktop contains 'm' or desktop contains 'c' or desktop contains '%' or desktop contains 'a' or desktop contains '#' or desktop_number == 0
+      assign desktop = desktop_number | append: "px"
+    endunless
+    assign mobile_number = mobile | abs
+    unless mobile contains 'p' or mobile contains 'm' or mobile contains 'c' or mobile contains '%' or mobile contains 'a' or mobile contains '#' or mobile_number == 0
+      assign mobile = mobile_number | append: "px"
+    endunless
+  endunless
+
+  comment
+    Catch for potential css calc() functions that don't work if 'px' are not added.
+  endcomment
+  unless absolutely_no_pixel_default
+    if mobile == '0'
+      assign desktop = desktop_number | append: "px"
+    endif
+    if desktop == '0'
+      assign mobile = mobile_number | append: "px"
+    endif
+
+  endunless
+
+  if force_pixel
+    assign desktop = desktop_number | append: "px"
+    assign mobile = mobile_number | append: "px"
+  endif
+%}
+{{ variable }}-md: {{ desktop }};{{ variable }}: {{ mobile }};
+

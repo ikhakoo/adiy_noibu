@@ -1,0 +1,19 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "progress-bar"
+  assign section_type = "modal_cart-drawer"
+  assign show_conditionally = block.settings.show_conditionally
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+<div class="w-full @container"
+    data-cart-progress-bar
+    {{ block.shopify_attributes }}
+     x-show="_cart.showConditionally(`{{ show_conditionally }}`) || $editor?.select_block_id === `{{ block.id }}`"
+     x-init="()=>{ 
+      const node = document.querySelector('[data-progress-bar]')?.cloneNode(true); 
+      if (!node) return; 
+      node?.removeAttribute('data-progress-bar');
+      $el.appendChild(node)
+     }">
+</div>

@@ -1,0 +1,192 @@
+{%- render "content-article-grid" -%}
+{% schema %}
+{
+  "name": "Article Grid",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog"
+    },
+    {
+      "type": "text",
+      "id": "display_limit_pagination_limit",
+      "label": "Display limit | Pagination limit",
+      "default": "9999 | 12",
+      "info": "Set Pagination limit to '0' to disable pagination. For infinitive scroll, set the display limit to 9999. The maximum of items loaded without infinite scroll is 50."
+    },
+    {
+      "type": "text",
+      "id": "pagination_class",
+      "label": "Pagination class",
+      "default": "pagination"
+    },
+    {
+      "type": "text",
+      "id": "article_card_class",
+      "label": "Article card class",
+      "default": "article-card"
+    },
+    {
+      "type": "header",
+      "content": "Settings"
+    },
+    {
+      "type": "text",
+      "id": "grid_cols_align_x_align_y_gap",
+      "label": "grid-cols | justify | align | gap",
+      "default": "3/2 | start | center | 24",
+      "info": "Alignment accepts: 'start, center, end, evenly, between'"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "header",
+      "content": "Section Globals"
+    },
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section Id"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "1",
+      "label": "Color scheme"
+    },
+    {
+      "type": "select",
+      "id": "container_spacing",
+      "default": "px-container-md",
+      "options": [
+        {
+          "value": "px-container-xs",
+          "label": "xs"
+        },
+        {
+          "value": "px-container-sm",
+          "label": "sm"
+        },
+        {
+          "value": "px-container-md",
+          "label": "md"
+        },
+        {
+          "value": "px-container-lg",
+          "label": "lg"
+        },
+        {
+          "value": "px-container-fullwidth",
+          "label": "fullwidth"
+        },
+        {
+          "value": "px-container-gutter",
+          "label": "magazine"
+        }
+      ],
+      "label": "Container Spacing"
+    },
+    {
+      "type": "select",
+      "id": "border_divider",
+      "label": "Border Divider",
+      "default": "border-y-none",
+      "options": [
+        {
+          "value": "border-y-none",
+          "label": "None"
+        },
+        {
+          "value": "border-t border-t-theme-border",
+          "label": "Top"
+        },
+        {
+          "value": "border-b border-b-theme-border",
+          "label": "Bottom"
+        },
+        {
+          "value": "border-y border-y-theme-border",
+          "label": "Both"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "top_bottom_min_height",
+      "label": "padding: top | bottom | min-h",
+      "default": "0 | 0 | 0"
+    },
+    {
+      "type": "select",
+      "id": "responsive_visibility",
+      "label": "Responsive Visibility",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile"
+        },
+        {
+          "value": "desktop-tablet-only",
+          "label": "Desktop"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "responsive_breakpoint",
+      "label": "Responsive breakpoint",
+      "default": "768px",
+      "info": "Only adjust this for rare instances on large screen designs"
+    },
+    {
+      "type": "select",
+      "id": "target_visibility",
+      "label": "Target visibility",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "Always"
+        },
+        {
+          "value": "targeted",
+          "label": "Targeted"
+        },
+        {
+          "value": "no_target",
+          "label": "No target"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Article Grid"
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "custom.global",
+      "custom.header",
+      "custom.modal",
+      "custom.card"
+    ]
+  }
+}
+{% endschema %}

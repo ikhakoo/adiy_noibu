@@ -1,0 +1,79 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "layout_child__collapsible"
+  assign section_type = "content-grid"
+  assign label = block.settings.label
+  assign accordion_class = block.settings.accordion_class
+  assign default_state = block.settings.default_state
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign border_width_radius = block.settings.border_width_radius
+  assign background_color = block.settings.background_color
+  assign border_color = block.settings.border_color
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture accordion_content %}
+  <div class="flex" data-style-content-child-collapsible>
+    {% liquid
+      assign count = 0
+      for block in section.blocks
+        if forloop.index0 <= columnIndex
+          continue
+        endif
+        if block.type contains 'layout__' or block.type contains 'layout_child__'
+          break
+        endif
+
+        render 'content-grid.render-blocks', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+
+        assign count = count | plus: 1
+      endfor
+
+      if count == 0
+        assign no_dynamic_content = true
+      endif
+    %}
+  </div>
+{% endcapture %}
+
+{% capture container_content %}
+  {% liquid
+    case default_state
+      when 'open'
+        assign open = true
+      when 'closed'
+        assign open = false
+    endcase
+  %}
+
+  {% render '_utils.dynamic-css',
+      block: block,
+      selector: "& [data-style-content-child-collapsible]",
+      keys: "flex_direction_align_x_align_y_gap_wrap"
+  %}
+  {% render '_utils.dynamic-css',
+      block: block,
+      keys: "responsive_visibility,padding_top_bottom_left_right, border_width_radius, border_color, max_w_flex_col_row_order_align, margin_top_bottom_left_right"
+  %}
+
+
+  <div
+      data-style-id="{{ section.id }}--{{ block.id }}"
+      {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+      {{ block.shopify_attributes }}
+  >
+    {% render '_components.accordion', label: label, content: accordion_content, default_open: open, class: accordion_class, no_richtext_content: true, no_dynamic_content: no_dynamic_content %}
+  </div>
+
+{% endcapture %}
+
+{% if container_content contains '<script type="container/break"></script>' %}
+  {% break %}
+{% endif %}
+{{ container_content }}

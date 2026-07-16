@@ -1,0 +1,142 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "content-collection-grid"
+  assign _collections = section.settings.collections
+  assign display_limit_pagination_limit = section.settings.display_limit_pagination_limit
+  assign pagination_class = section.settings.pagination_class
+  assign collection_card_class = section.settings.collection_card_class
+  assign grid_cols_align_x_align_y_gap = section.settings.grid_cols_align_x_align_y_gap
+  assign section_id = section.settings.section_id
+  assign color_scheme = section.settings.color_scheme
+  assign container_spacing = section.settings.container_spacing
+  assign border_divider = section.settings.border_divider
+  assign top_bottom_min_height = section.settings.top_bottom_min_height
+  assign responsive_visibility = section.settings.responsive_visibility
+  assign responsive_breakpoint = section.settings.responsive_breakpoint
+  assign target_visibility = section.settings.target_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture section_content %}
+
+  {% liquid
+    assign _collections = _collections | default: collections
+
+    assign display_limit_pagination_limit = display_limit_pagination_limit | strip_newlines | replace: ' ', "" | split: '|'
+    assign display_limit = display_limit_pagination_limit[0] | split: '/'
+    assign pagination_limit = display_limit_pagination_limit[1] | split: '/' | first | abs
+
+    assign desktop_display_limit = display_limit.first | abs
+    assign mobile_display_limit = display_limit.last | abs
+
+    assign max_display_limit = desktop_display_limit | at_least: mobile_display_limit | default: 12
+  %}
+
+  {% render '_utils.dynamic-css',
+      block: block,
+      selector: "& [data-style-content-collection-grid]",
+      keys: "grid_cols_align_x_align_y_gap"
+  %}
+
+  {% render "_section.universal-settings", section_type: section_type, insert: "before" %}
+
+  {% if current_page > 1 %}
+    {%- capture contentForQuerystring -%}{{ content_for_header }}{%- endcapture -%}
+    {%- assign query_params = contentForQuerystring | split: '"pageurl":"' | last | split: '"' | first | replace: '\/', '/' | replace: '%20', ' ' | replace: '\u0026', '&' | split: "?" | last -%}
+    {% assign query_pagination_limit = query_params | split: "pagination_limit=" | last | split: "&" | first | abs %}
+    {% if query_pagination_limit != blank and query_pagination_limit != 0 %}
+      {% assign pagination_limit = query_pagination_limit | default: pagination_limit %}
+    {% endif %}
+  {% endif %}
+
+
+  {% if collections.id == _collections.id and pagination_limit > 0 %}
+    {% paginate collections by pagination_limit %}
+      {% assign _collections = collections | uniq %}
+      {% assign _paginate = paginate %}
+    {% endpaginate %}
+  {% endif %}
+
+  <section x-data="{ next_url: `{{ _paginate.next.url }}`, loading: false, count: $refs?.content?.children?.length, max_limit: +`{{ max_display_limit }}`, desktop_limit: +`{{ desktop_display_limit }}`, mobile_limit: +`{{ mobile_display_limit }}` }">
+    <main class="grid"
+          data-style-content-collection-grid="{{ section.id }}"
+          x-ref="content"
+          data-next-url="{{ _paginate.next.url }}">
+      {% for collection in _collections limit: max_display_limit %}
+        {% assign collection_visibility = "" %}
+        {% if forloop.index > desktop_display_limit %}
+          {% assign collection_visibility = "mobile-only" %}
+        {% endif %}
+        {% if forloop.index > mobile_display_limit %}
+          {% assign collection_visibility = "desktop-tablet-only" %}
+        {% endif %}
+        <div class="{{ collection_visibility }} shrink-0 max-w-full w-full h-full">
+          <section class="card-loading collection-card--{{ collection_card_class }}"
+                   data-collection-handle="{{ collection.handle }}"
+                   data-collection-id="{{ collection.id }}"
+                   x-data="{}"
+                   x-init="() => $nextTick(() =>_sections.hydrateCollectionCard($el, '{{ collection_card_class }}', $el.getAttribute('data-collection-handle'), $el.getAttribute('data-collection-id'), ['h-full']))"></section>
+          <script type="application/json"
+                  data-collection-data="{{ collection.handle }}">{%- render '_json.collection', collection: collection -%}</script>
+        </div>
+      {% endfor %}
+    </main>
+  {% if max_display_limit >= 999 %}
+
+    {% if _paginate.next.url and _paginate.current_page == 1 %}
+      <footer x-show="!!next_url"
+              class="p-4"
+              x-data="{loadPages: async () => {
+              if (next_url && !loading) {
+                loading = true;
+               const data = await fetch(`${next_url}&sections={{ section.id }}&pagination_limit={{ pagination_limit }}`).then((data) => data.json());
+                const div = document.createElement('div');
+                div.innerHTML = data['{{ section.id }}'];
+                const root = div.querySelector(`[data-style-content-collection-grid='{{ section.id }}']`);
+                next_url = root.getAttribute('data-next-url');
+                [...(root?.children ?? [])].forEach((child) => {
+                  if (count >= max_limit) {
+                      next_url = '';
+                      loading = false
+                      return;
+                  }
+                  if (count >= desktop_limit) {
+                    child.classList.add('mobile-only')
+                  }
+                  if (count >= mobile_limit) {
+                    child.classList.add('desktop-tablet-only')
+                  }
+                  $refs?.content?.appendChild(child)
+                  count = $refs?.content?.children?.length;
+                });
+                loading = false;
+            }}}"
+              x-intersect.margin.1200px="loadPages"
+              x-effect="()=> {
+              if (!loading && ($el.getBoundingClientRect().top - window.innerHeight) < 1200) {
+                loadPages();
+              }
+            }">
+        <div class="relative h-12 button-loading">
+        </div>
+      </footer>
+    {% endif %}
+  {% else %}
+    {% if pagination_class != blank %}
+      {% render "_components.pagination",
+          class: pagination_class,
+          paginate: _paginate,
+          pagination_container_ref: '$refs.content',
+          html_attributes: 'data-style-pagination' %}
+    {% endif %}
+  {% endif %}
+  </section>
+
+  {% render "_section.universal-settings", insert: "after" %}
+
+{% endcapture %}
+
+{% if section_content contains '/break"></script>' %}
+  {% break %}
+{% endif %}
+{{ section_content }}

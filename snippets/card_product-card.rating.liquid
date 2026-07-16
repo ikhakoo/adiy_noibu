@@ -1,0 +1,68 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "rating"
+  assign section_type = "card_product-card"
+  assign reviews_heading = block.settings.reviews_heading
+  assign css_class = block.settings.css_class
+  assign icon_size_gap = block.settings.icon_size_gap
+  assign icon_active_color = block.settings.icon_active_color
+  assign icon_base_color = block.settings.icon_base_color
+  assign hide_zero_reviews = block.settings.hide_zero_reviews
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign show_conditionally = block.settings.show_conditionally
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign icon_size_gap = icon_size_gap | strip_newlines | replace: ' ', "" | split: '|'
+  assign icon = icon_size_gap[0] | split: '/'
+  assign size = icon_size_gap[1] | split: '/'
+  assign gap = icon_size_gap[2] | split: '/'
+
+  if icon_active_color.alpha > 0
+    assign styles = styles | append: "--color-review-stars:" | append: icon_active_color | append: ";"
+  endif
+
+  if icon_base_color.alpha > 0
+    assign styles = styles | append: "--color-review-stars-base:" | append: icon_base_color | append: ";"
+  endif
+%}
+
+{% render '_utils.dynamic-css', block: block %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    x-show="$data.showConditionally('{{ show_conditionally }}') && (card?.product?.reviews?.review_count > +`{{ hide_zero_reviews }}` || !'{{ hide_zero_reviews }}')">
+  <div class="flex items-center gap-2"
+       style="{{ styles }}">
+    <div class="relative"
+         style="--gap: {{ gap.last }}; --gap-md: {{ gap.first }}; --h: {{ size.last }}; --h-md: {{ size.first }};">
+      <div class="flex gap-dynamic text-[--color-review-stars-base]">
+        {% for i in (1..5) %}
+          {% render '_components.icon', icon: icon, class: "h-dynamic shrink-0" %}
+        {% endfor %}
+      </div>
+      <div class="absolute left-0 top-0 flex gap-dynamic text-[--color-review-stars]"
+           style="clip-path: polygon(0 0,0% 0, 0% 100%, 0 100%)"
+           :style="`clip-path: polygon(0 0, ${((card?.product?.reviews?.rating ?? 0) / 5) * 100}% 0, ${((card?.product?.reviews?.rating ?? 0) / 5) * 100}% 100%, 0 100%);`">
+        {% for i in (1..5) %}
+          {% render '_components.icon', icon: icon, class: "h-dynamic shrink-0" %}
+        {% endfor %}
+      </div>
+    </div>
+    <span class="{{ css_class }}"
+          x-cloak
+          x-show="!!card?.product?.reviews"
+          data-content="{% render '_input.inline_richtext', content: reviews_heading, escape: true, block: block, forloop: forloop %}"
+          x-html="$el.getAttribute('data-content').replace('[count]', card?.product?.reviews?.review_count).replace('[rating]',card?.product?.reviews?.rating || 'No rating')">
+    </span>
+  </div>
+</div>
+
+

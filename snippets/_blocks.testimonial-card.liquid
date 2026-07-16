@@ -1,0 +1,80 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.testimonial-card"
+  assign image = block.settings.image
+  assign width_height_aspect_object_fit = block.settings.width_height_aspect_object_fit
+  assign content = block.settings.content
+  assign content_class = block.settings.content_class
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign border_width_radius = block.settings.border_width_radius
+  assign background_color = block.settings.background_color
+  assign border_color = block.settings.border_color
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign color_override = block.settings.color_override
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+
+  assign content = content | default: "" | append: page_content.content
+
+  if request.design_mode != true
+    if content == blank
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+%}
+
+{% liquid
+  if color_override != blank and color_override.alpha != 0
+    assign color = color_override | default: "inherit"
+  endif
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,margin_top_bottom_left_right, max_w_flex_col_row_order_align,flex_direction_align_x_align_y_gap_wrap, padding_top_bottom_left_right, border_width_radius,background_color,border_color" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: '& [data-style-avatar-image]',
+    keys: "width_height_aspect_object_fit" %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    style="color: {{ color }}" class="">
+  {% if image != blank %}
+    <picture
+        data-style-avatar-image
+        class="relative overflow-hidden shrink-0">
+      {% render '_object.image', image: image, class: "w-full h-full transition-all object-[inherit]" %}
+    </picture>
+  {% endif %}
+  {% if content != blank %}
+    <div class="[&_:where(p,h1,h2,h3,h4,h5,h6)]:flex flex-1">
+      {% render '_input.richtext', content: content, class: content_class, block: block, forloop: forloop %}
+    </div>
+  {% endif %}
+</div>
+
+

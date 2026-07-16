@@ -1,0 +1,81 @@
+{%- comment -%}
+    Generates CSS for Typset declarations -> `sections/typography.liquid`
+
+    Accepts:
+    - selector: {string} CSS Selector
+    - font_family: {string} CSS Font Family
+    - fallback_fonts: {string} CSS Font Fallback Families
+    - size_weight_height_opacity: {string} Size / Weight/ Height / Opacity declarations (desktop / mobile)
+    - spacing_transform_style: {string} Letterspace / Transform / Style declarations (desktop / mobile)
+    - responsive_breakpoint: {string} Breakpoint for responsive design - Defaults to 768px
+
+    Usage:
+    {%- render "_utils.typeset-css", selector: ".class-name", font_family: font_family, fallback_fonts: fallback_fonts, size_weight_height_opacity: size_weight_height_opacity, spacing_transform_style: spacing_transform_style_whitespace -%}
+
+    Notes:
+    Render needs to be within a html <style></style> tag as the output is plain CSS.
+{%- endcomment -%}
+{%- capture CSS -%}
+  {%- liquid
+    if font_family contains " "
+      assign font_family = font_family | replace: "'", '' | replace: '"', '' | prepend: "'" | append: "'"
+    endif
+    if fallback_fonts != blank
+      assign font_family = font_family | append: ', ' | append: fallback_fonts
+    endif
+
+    assign responsive_breakpoint = responsive_breakpoint | default: "768px" | replace: "px", "" | append: "px"
+    assign media_breakpoint = "@media screen and (max-width: " | append: responsive_breakpoint | append: ") "
+    assign container_breakpoint = "@container (max-width: " | append: responsive_breakpoint | append: ") "
+
+    assign size_weight_height_opacity = size_weight_height_opacity | strip_newlines | replace: ' ', "" | split: '|'
+    assign spacing_transform_style_whitespace = spacing_transform_style_whitespace | strip_newlines | replace: ' ', "" | split: '|'
+    assign sizes = size_weight_height_opacity[0] | split: '/'
+    assign weight = size_weight_height_opacity[1] | split: '/'
+    assign height = size_weight_height_opacity[2] | split: '/'
+    assign opacity = size_weight_height_opacity[3] | default: 1 | split: '/'
+    assign spacing = spacing_transform_style[0] | split: '/'
+    assign transform = spacing_transform_style[1] | split: '/'
+    assign style = spacing_transform_style[2] | split: '/'
+  %}
+
+  .SELECTOR_PLACEHOLDER {
+  font-family: FONT_FAMILY;
+  font-size: {{- sizes | first -}};
+  font-weight: {{- weight | first -}};
+  line-height: {{- height | first -}};
+  letter-spacing: {{- spacing | first -}};
+  text-transform: {{- transform | first -}};
+  font-style: {{- style | first -}};
+  opacity: {{- opacity | first -}};
+  }
+
+  MEDIA_QUERY {
+  .SELECTOR_PLACEHOLDER {
+  font-size: {{- sizes | last -}};
+  font-weight: {{- weight | last -}};
+  line-height: {{- height | last -}};
+  letter-spacing: {{- spacing | last -}};
+  text-transform: {{- transform | last -}};
+  font-style: {{- style | last -}};
+  opacity: {{- opacity | last -}};
+  }
+  }
+
+  CONTAINER_QUERY {
+  .SELECTOR_PLACEHOLDER {
+  font-size: {{- sizes | last -}};
+  font-weight: {{- weight | last -}};
+  line-height: {{- height | last -}};
+  letter-spacing: {{- spacing | last -}};
+  text-transform: {{- transform | last -}};
+  font-style: {{- style | last -}};
+  opacity: {{- opacity | last -}};
+  }
+  }
+
+{%- endcapture -%}
+
+
+{{- CSS | strip_newlines | replace: " ", "" | replace: "MEDIA_QUERY", media_breakpoint | replace: "CONTAINER_QUERY", container_breakpoint | replace: ".SELECTOR_PLACEHOLDER", selector | replace: "FONT_FAMILY", font_family -}}
+{{ custom_css | replace: "&", selector }}

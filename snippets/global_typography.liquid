@@ -1,0 +1,311 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "global_typography"
+  assign font_family__body = section.settings.font_family__body
+  assign size_weight_height_opacity__body = section.settings.size_weight_height_opacity__body
+  assign spacing_transform_style_whitespace__body = section.settings.spacing_transform_style_whitespace__body
+  assign custom_css__body = section.settings.custom_css__body
+  assign responsive_breakpoint = section.settings.responsive_breakpoint
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css', selector: "body" %}
+
+{% liquid
+  render '_utils.dynamic-css', selector: "body", apply_container_queries: true
+
+  assign first_richtext_block = true
+
+  for block in section.blocks
+    case block.type
+      when 'font'
+        render "global_typography.font", block: block, fonts: fonts
+      when 'heading'
+        render "global_typography.heading", block: block, fonts: fonts
+      when 'richtext'
+        render "global_typography.richtext", block: block, fonts: fonts, generate_richtext: first_richtext_block
+        assign first_richtext_block = false
+    endcase
+  endfor
+%}
+
+
+{% if request.design_mode %}
+  <section class="fixed inset-0 z-50 flex flex-col gap-16 overflow-y-auto text-balance bg-white py-16 text-black px-container-lg"
+           x-data="{tab: 'data-table'}"
+           x-show="$editor?.select_section_id === '{{ section.id }}' && !$editor?.select_block_id"
+           x-cloak {{ block.shopify_attributes }}>
+
+    <header class="flex gap-3 font-mono">
+      <button @click="tab='data-table'"
+              type="button"
+              :class="tab === 'data-table' ? 'bg-gray-600 text-gray-50 border-gray-900 hf:bg-gray-700':'border-gray-200/70 bg-gray-100 text-gray-700 hf:text-gray-900 hf:border-gray-300/80 hf:bg-gray-200/90'"
+              class="rounded-sm border px-3 text-sm font-medium py-1.5">Data Table
+      </button>
+      <button @click="tab='preview'"
+              type="button"
+              :class="tab === 'preview' ? 'bg-gray-600 text-gray-50 border-gray-900 hf:bg-gray-700':'border-gray-200/70 bg-gray-100 text-gray-700 hf:text-gray-900 hf:border-gray-300/80 hf:bg-gray-200/90'"
+              class="rounded-sm border px-3 text-sm font-medium py-1.5">Preview
+      </button>
+    </header>
+    <table class="mt-8 whitespace-nowrap font-mono" x-show="tab === 'data-table'">
+      <tbody>
+        <tr>
+          <th colspan="4" class="text-2xl pt-5 pb-3 text-left"><strong>Fonts:</strong></th>
+        </tr>
+        {% for block in section.blocks %}
+          {% if block.type == 'font' %}
+            <tr class="md:text-lg">
+              <td class="px-2"><strong>{{ block.settings.name }}</strong></td>
+              <td class="px-2" colspan="3">{{ block.settings.weights }}</td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+      </tbody>
+      <tbody>
+        <tr class="text-left align-bottom">
+          <th class="text-2xl pt-8 pb-3 text-left"><strong>Richtext:</strong></th>
+          <th class="px-2 pt-8 pb-3 text-xl"><strong>Font family</strong></th>
+          <th class="px-2 pt-8 pb-3 text-xl"><strong>sizes</strong></th>
+          <th class="px-2 pt-8 pb-3 text-xl"><strong>weight</strong></th>
+          <th class="px-2 pt-8 pb-3 text-xl"><strong>height</strong></th>
+          <th class="px-2 pt-8 pb-3 text-xl"><strong>opacity</strong></th>
+          <th class="px-2 pt-8 pb-3 text-xl"><strong>spacing</strong></th>
+          <th class="px-2 pt-8 pb-3 text-xl"><strong>transform</strong></th>
+          <th class="px-2 pt-8 pb-3 text-xl"><strong>style</strong></th>
+          <th class="px-2 pt-8 pb-3 text-xl"><strong>whitespace</strong></th>
+        </tr>
+        {% assign setting_keys = "h1,h2,h3,h4,h5,h6,p" | split: ',' %}
+        {% for block in section.blocks %}
+          {% if block.type == 'richtext' %}
+            <tr class="md:text-lg ">
+              <td class="px-2 pt-3"><strong>{{ block.settings.title }}</strong></td>
+            </tr>
+            {% for key in setting_keys %}
+              {% assign selector = "." | append: key %}
+              {% assign _font_family = "font_family__" | append: key %}
+              {% assign _size_weight_height_opacity = "size_weight_height_opacity__" | append: key %}
+              {% assign _spacing_transform_style_whitespace = "spacing_transform_style_whitespace__" | append: key %}
+              {% liquid
+                assign size_weight_height_opacity = block.settings[_size_weight_height_opacity] | strip_newlines | replace: ' ', "" | split: '|'
+                assign sizes = size_weight_height_opacity[0]
+                assign weight = size_weight_height_opacity[1]
+                assign height = size_weight_height_opacity[2]
+                assign opacity = size_weight_height_opacity[3] | default: 1
+
+                assign spacing_transform_style_whitespace = block.settings[_spacing_transform_style_whitespace] | strip_newlines | replace: ' ', "" | split: '|'
+                assign spacing = spacing_transform_style_whitespace[0]
+                assign transform = spacing_transform_style_whitespace[1]
+                assign style = spacing_transform_style_whitespace[2]
+                assign whitespace = spacing_transform_style_whitespace[2]
+              %}
+              <tr class="md:text-lg">
+                <td class="pl-4"><strong>{{ selector }}</strong></td>
+                <td class="px-2">{{ block.settings[_font_family] }}</td>
+                <td class="px-2">{{ sizes }}</td>
+                <td class="px-2">{{ weight }}</td>
+                <td class="px-2">{{ height }}</td>
+                <td class="px-2">{{ opacity }}</td>
+                <td class="px-2">{{ spacing }}</td>
+                <td class="px-2">{{ transform }}</td>
+                <td class="px-2">{{ style }}</td>
+                <td class="px-2">{{ whitespace }}</td>
+              </tr>
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      </tbody>
+      <tbody>
+        <tr class="text-left align-bottom">
+          <th class="text-2xl pt-8 pb-3 text-left"><strong>Custom Typography:</strong></th>
+          <th class="pt-8 pb-3 px-2 text-xl"><strong>Font family</strong></th>
+          <th class="pt-8 pb-3 px-2 text-xl"><strong>sizes</strong></th>
+          <th class="pt-8 pb-3 px-2 text-xl"><strong>weight</strong></th>
+          <th class="pt-8 pb-3 px-2 text-xl"><strong>height</strong></th>
+          <th class="pt-8 pb-3 px-2 text-xl"><strong>opacity</strong></th>
+          <th class="pt-8 pb-3 px-2 text-xl"><strong>spacing</strong></th>
+          <th class="pt-8 pb-3 px-2 text-xl"><strong>transform</strong></th>
+          <th class="pt-8 pb-3 px-2 text-xl"><strong>style</strong></th>
+          <th class="pt-8 pb-3 px-2 text-xl"><strong>whitespace</strong></th>
+        </tr>
+
+        {% for block in section.blocks %}
+          {% if block.type == 'heading' %}
+            {% liquid
+              assign size_weight_height_opacity = block.settings.size_weight_height_opacity | strip_newlines | replace: ' ', "" | split: '|'
+              assign sizes = size_weight_height_opacity[0]
+              assign weight = size_weight_height_opacity[1]
+              assign height = size_weight_height_opacity[2]
+              assign opacity = size_weight_height_opacity[3] | default: 1
+
+              assign spacing_transform_style_whitespace = block.settings.spacing_transform_style_whitespace | strip_newlines | replace: ' ', "" | split: '|'
+              assign spacing = spacing_transform_style_whitespace[0]
+              assign transform = spacing_transform_style_whitespace[1]
+              assign style = spacing_transform_style_whitespace[2]
+              assign whitespace = spacing_transform_style_whitespace[2]
+            %}
+            <tr class="md:text-lg">
+              <td class="pl-4"><strong>.{{ block.settings.title }}</strong></td>
+              <td class="px-2">{{ block.settings.font_family }}</td>
+              <td class="px-2">{{ sizes }}</td>
+              <td class="px-2">{{ weight }}</td>
+              <td class="px-2">{{ height }}</td>
+              <td class="px-2">{{ opacity }}</td>
+              <td class="px-2">{{ spacing }}</td>
+              <td class="px-2">{{ transform }}</td>
+              <td class="px-2">{{ style }}</td>
+              <td class="px-2">{{ whitespace }}</td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+      </tbody>
+
+    </table>
+    <table class="mt-8" x-show="tab === 'preview'">
+      <tbody class="font-mono">
+        <tr>
+          <th colspan="4" class="text-2xl pt-5 pb-3 text-left"><strong>Fonts:</strong></th>
+        </tr>
+        {% for block in section.blocks %}
+          {% if block.type == 'font' %}
+            {% liquid
+              assign name = block.settings.name
+              if name contains " "
+                assign name = name | replace: "'", '' | replace: '"', '' | prepend: "'" | append: "'"
+              endif
+              assign font = block.settings.family
+              assign font_weights = block.settings.weights | strip_newlines | replace: ' ', "" | split: ','
+              assign font_custom_family = block.settings.custom_src
+
+              if font.system? != true
+                for weight_style in font_weights
+                  assign font_id = font.family | append: "_" | append: weight_style
+                  if global_font_ids contains font_id
+                    continue
+                  endif
+                  assign global_font_ids = global_font_ids | append: font_id | append: "|||"
+
+                  if weight_style contains "i"
+                    assign weight_style_i = weight_style | split: "i" | first | strip
+                    assign font_family = font | font_modify: 'weight', weight_style_i
+                    assign font_family = font_family | font_modify: 'style', 'italic'
+                  elsif weight_style contains "o"
+                    assign weight_style_o = weight_style | split: "o" | first | strip
+                    assign font_family = font | font_modify: 'weight', weight_style_o
+                    assign font_family = font_family | font_modify: 'style', 'oblique'
+                  else
+                    assign font_family = font | font_modify: 'weight', weight_style
+                    assign font_family = font_family | font_modify: 'style', 'normal'
+                  endif
+
+                  assign font_family_css = font_family | font_face: font_display: 'swap'
+                  assign font_family_url = font_family | font_url
+                  assign font_css = font_css | append: font_family_css
+                  assign font_preloads_urls = font_preloads_urls | append: ',' | append: font_family_url
+                endfor
+              endif
+              assign font_preloads_urls = font_preloads_urls | split: ',' | uniq %}
+
+
+            {% for weight in font_weights %}
+              {% assign style = 'normal' %}
+              {% if weight contains 'i' %}
+                {% assign style = 'italic' %}
+              {% endif %}
+              {% if weight contains 'o' %}
+                {% assign style = 'oblique' %}
+              {% endif %}
+              <tr class="md:text-lg">
+                <td class="px-2 py-2"><strong>{{ block.settings.name }}</strong></td>
+                <td class="px-2"><strong>{{ weight }}</strong></td>
+                <td class="{{ title }}"
+                    style="font-family: {{ name }}; font-weight: {{ weight | replace: "i", "" | replace: 'o', "" }}; font-style: {{ style }};">
+                  The quick brown fox jumps over the lazy dog.
+                </td>
+              </tr>
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      </tbody>
+      <tbody>
+        <tr class="text-left font-mono">
+          <th class="text-2xl pt-8 pb-3 text-left"><strong>Richtext:</strong></th>
+          <th></th>
+          <th class="px-2 text-xl pt-8 pb-3"><strong>Preview</strong></th>
+
+        </tr>
+        {% assign setting_keys = "h1,h2,h3,h4,h5,h6,p" | split: ',' %}
+        {% for block in section.blocks %}
+          {% if block.type == 'richtext' %}
+            <tr class="md:text-lg ">
+              <td class="px-2 pt-3 font-mono"><strong>{{ block.settings.title }}</strong></td>
+            </tr>
+            {% for key in setting_keys %}
+              {% assign selector = "." | append: key %}
+              {% assign _font_family = "font_family__" | append: key %}
+              {% assign _size_weight_height_opacity = "size_weight_height_opacity__" | append: key %}
+              {% assign _spacing_transform_style_whitespace = "spacing_transform_style_whitespace__" | append: key %}
+              {% liquid
+                assign size_weight_height_opacity = block.settings[_size_weight_height_opacity] | strip_newlines | replace: ' ', "" | split: '|'
+                assign sizes = size_weight_height_opacity[0]
+                assign weight = size_weight_height_opacity[1]
+                assign height = size_weight_height_opacity[2]
+                assign opacity = size_weight_height_opacity[3] | default: 1
+
+                assign spacing_transform_style_whitespace = block.settings[_spacing_transform_style_whitespace] | strip_newlines | replace: ' ', "" | split: '|'
+                assign spacing = spacing_transform_style_whitespace[0]
+                assign transform = spacing_transform_style_whitespace[1]
+                assign style = spacing_transform_style_whitespace[2]
+                assign whitespace = spacing_transform_style_whitespace[2]
+              %}
+              <tr class="md:text-lg">
+                <td class="pl-4"><strong>{{ selector }}</strong></td>
+                <td></td>
+                <td class="p-2 {{ block.settings.title }}">
+                  <{{ key }} class="">
+                  <em>The quick brown fox</em> jumps over the <strong>lazy dog</strong>.
+                </{{ key }}>
+                </td>
+              </tr>
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      </tbody>
+      <tbody>
+        <tr class="text-left font-mono">
+          <th class="text-2xl pt-8 pb-3 text-left whitespace-nowrap"><strong>Custom Typography:</strong></th>
+          <th></th>
+          <th class="px-2 pt-8 pb-3 text-xl"><strong>Preview</strong></th>
+
+        </tr>
+        {% for block in section.blocks %}
+          {% if block.type == 'heading' %}
+            {% liquid
+              assign size_weight_height_opacity = block.settings.size_weight_height_opacity | strip_newlines | replace: ' ', "" | split: '|'
+              assign sizes = size_weight_height_opacity[0]
+              assign weight = size_weight_height_opacity[1]
+              assign height = size_weight_height_opacity[2]
+              assign opacity = size_weight_height_opacity[3] | default: 1
+
+              assign spacing_transform_style_whitespace = block.settings.spacing_transform_style_whitespace | strip_newlines | replace: ' ', "" | split: '|'
+              assign spacing = spacing_transform_style_whitespace[0]
+              assign transform = spacing_transform_style_whitespace[1]
+              assign style = spacing_transform_style_whitespace[2]
+              assign whitespace = spacing_transform_style_whitespace[2]
+            %}
+            <tr class="md:text-lg">
+              <td class="pl-4"><strong>.{{ block.settings.title }}</strong></td>
+              <td></td>
+              <td class="p-2">
+                <div class="{{ block.settings.title }}">
+                  <em>The quick brown fox</em> jumps over the <strong>lazy dog</strong>.
+                </div>
+              </td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+      </tbody>
+
+    </table>
+  </section>
+{% endif %}

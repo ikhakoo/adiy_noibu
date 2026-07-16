@@ -1,0 +1,119 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "layout_child__flex_card"
+  assign section_type = "bundle"
+  assign show_conditionally = block.settings.show_conditionally
+  assign show_based_on_bundle_state = block.settings.show_based_on_bundle_state
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign border_width_radius = block.settings.border_width_radius
+  assign background_color = block.settings.background_color
+  assign border_color = block.settings.border_color
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture container_content %}
+  {% render '_utils.dynamic-css', block: block %}
+  <div
+      data-style-id="{{ section.id }}--{{ block.id }}"
+      {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+      {{ block.shopify_attributes }}
+      x-show="($data.windowWidth >= 1024 || $data.showConditionally(`{{ show_conditionally }}`)) && $data.showBasedOnBundleState(`{{ show_based_on_bundle_state }}`)"
+      class="relative overflow-hidden">
+    {% liquid
+      assign count = 0
+      assign allow_no_cols = true
+      for block in section.blocks
+        if forloop.index0 <= columnIndex
+          continue
+        endif
+        if block.type contains 'layout__' or block.type contains 'layout_child'
+          break
+        endif
+
+        if allow_no_cols
+          if block.type == 'added_products'
+            render 'bundle.added_products', block: block, forloop: forloop
+          endif
+          if block.type == 'added_product_line_items'
+            render 'bundle.added_product_line_items', block: block, forloop: forloop
+          endif
+          if block.type == 'bundle_selector'
+            render 'bundle.bundle_selector', block: block, forloop: forloop
+          endif
+          if block.type == 'filters'
+            render 'bundle.filters', block: block, forloop: forloop
+          endif
+          if block.type == 'product_group'
+            render 'bundle.product_group', block: block, forloop: forloop
+          endif
+          if block.type == 'progress_bar'
+            render 'bundle.progress_bar', block: block, forloop: forloop
+          endif
+          if block.type == 'subscription_selector'
+            render 'bundle.subscription_selector', block: block, forloop: forloop
+          endif
+          if block.type == 'tab_navigation'
+            render 'bundle.tab_navigation', block: block, forloop: forloop
+          endif
+          if block.type == 'filter_navigation'
+            render 'bundle.filter_navigation', block: block, forloop: forloop
+          endif
+          if block.type == 'filter_reset_button'
+            render 'bundle.filter_reset_button', block: block, forloop: forloop
+          endif
+          if block.type == 'add_button'
+            render 'bundle.add_button', block: block, forloop: forloop
+          endif
+          if block.type == 'richtext'
+            render 'bundle.richtext', block: block, forloop: forloop
+          endif
+          if block.type == 'button'
+            render 'bundle.button', block: block, forloop: forloop
+          endif
+          if block.type == 'image-with-caption'
+            render 'bundle.image-with-caption', block: block, forloop: forloop
+          endif
+          if block.type == 'mobile_trigger_button'
+            render 'bundle.mobile_trigger_button', block: block, forloop: forloop
+          endif
+          if block.type == 'quiz_result_product_group'
+            render 'bundle.quiz_result_product_group', block: block, forloop: forloop
+          endif
+          if block.type == 'subtotal'
+            render 'bundle.subtotal', block: block, forloop: forloop
+          endif
+          if block.type == 'order_summary'
+            render 'bundle.order_summary', block: block, forloop: forloop
+          endif
+          if block.type == 'order_totals'
+            render 'bundle.order_totals', block: block, forloop: forloop
+          endif
+          if block.type == 'image'
+            render 'bundle.image', block: block, forloop: forloop
+          endif
+          if block.type == 'upsell_products'
+            render 'bundle.upsell_products', block: block, forloop: forloop
+          endif
+        endif
+
+
+        assign count = count | plus: 1
+      endfor
+
+      if count == 0
+        assign no_dynamic_content = true
+      endif
+    %}
+  </div>
+{% endcapture %}
+
+{% if container_content contains '<script type="container/break"></script>' %}
+  {% break %}
+{% endif %}
+{{ container_content }}

@@ -1,0 +1,34 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "close_button"
+  assign section_type = "content-popup-grid"
+  assign label = block.settings.label
+  assign button_class = block.settings.button_class
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,margin_top_bottom_left_right, max_w_flex_col_row_order_align" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    css_variables: true,
+    keys: "padding_top_bottom_left_right" %}
+
+<div data-style-id="{{ section.id }}--{{ block.id }}"
+     {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+     class="absolute top-[--padding-top] left-[--padding-left] right-[--padding-right] bottom-[--padding-bottom]">
+  <button type="button"
+          @click="$modal.setId('')"
+          class="w-full {{ button_class }}">
+    {% render '_input.inline_richtext', content: label, block: block, forloop: forloop %}
+  </button>
+</div>

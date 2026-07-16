@@ -1,0 +1,84 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "bundle_button"
+  assign section_type = "card_product-card"
+  assign add_to_bundle_content = block.settings.add_to_bundle_content
+  assign add_to_bundle_class = block.settings.add_to_bundle_class
+  assign quantity_content = block.settings.quantity_content
+  assign quantity_class = block.settings.quantity_class
+  assign out_of_stock_content = block.settings.out_of_stock_content
+  assign out_of_stock_class = block.settings.out_of_stock_class
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign show_conditionally = block.settings.show_conditionally
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css', block: block %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    x-show="($data.bundle?.items_added || Shopify.designMode) && $data.showConditionally('{{ show_conditionally }}')"
+    x-ref="bundle_button">
+  <button type="button"
+          x-show="card?.selected_variant?.available && !$data?.bundle?.items_added?.some(item=> item.variant?.id === card?.selected_variant?.id)"
+          class="w-full {{ add_to_bundle_class }}"
+          :class="card?.isAdding ? 'button-loading':''"
+          x-effect="$el.classList.toggle('!hidden', !card?.selected_variant?.available)"
+          x-html="$el.getAttribute('data-content')?.replace('[price]', utils.formatMoney(card?.selected_variant?.price)).replace('[compare_at_price]',  `<span style='text-decoration: line-through; opacity: 0.5;'>${utils.formatMoney(card.selected_variant?.compare_at_price)}</span>`) ?? ''"
+          @click.prevent.stop="() => {
+            $quickView.open = false;
+            $data?.bundle?.addToBundle({ variant: card?.selected_variant, product: card?.product })
+          }"
+          data-content="{% render '_input.inline_richtext', content: add_to_bundle_content, escape: true, block: block, forloop: forloop %}">
+  </button>
+
+  <div x-show="$data?.bundle?.items_added?.some(item=> item.variant?.id === card?.selected_variant?.id)"
+       class="w-full !cursor-default {{ quantity_class }}"
+       :class="card?.isAdding ? 'button-loading':''"
+       x-effect="$el.classList.toggle('!hidden', !card?.selected_variant?.available)">
+
+    <label class="flex w-full justify-between items-center gap-2" aria-label="Bundle Quantity"
+           @click.prevent.stop="()=>{}"
+           x-data="{ quantity_added: $data?.bundle?.items_added?.reduce((acc,item) => (item.variant?.id === card?.selected_variant?.id ? acc += 1 : acc), 0) }"
+           x-effect="quantity_added = $data?.bundle?.items_added?.reduce((acc,item) => (item.variant?.id === card?.selected_variant?.id ? acc += 1 : acc), 0) ">
+      {% if quantity_content != blank %}
+        <span class="flex-1 text-left">{% render '_input.inline_richtext', content: quantity_content, block: block, forloop: forloop %}</span>
+      {% endif %}
+      <button type="button"
+              class="p-0.5"
+              aria-label="Decrease quantity"
+              @click="$data?.bundle?.removeFromBundle({ variant: card?.selected_variant, product: card?.product })">
+        {% render '_components.icon', icon: "minus", class: "size-[0.9em]" %}
+      </button>
+      <input type="number"
+             value="1"
+             min="1"
+             name="value"
+             class="w-8 min-w-0 appearance-none bg-inherit text-center outline-none disabled:pointer-events-none disabled:select-none"
+             disabled="disabled"
+             :value="quantity_added">
+      <button type="button"
+              class="p-0.5"
+              aria-label="Increase quantity"
+              :disabled="(card?.selected_variant?.quantity - quantity_added) < 1 && variant?.inventory_management && variant?.inventory_policy !== 'continue'"
+              @click="$data?.bundle?.addToBundle({ variant: card?.selected_variant, product: card?.product })">
+        {% render '_components.icon', icon: "plus", class: "size-[0.9em]" %}
+      </button>
+    </label>
+  </div>
+
+  <button type="button"
+          x-show="!card?.selected_variant?.available"
+          disabled="disabled"
+          class="w-full {{ out_of_stock_class }}"
+          x-html="$el.getAttribute('data-content')?.replace('[price]', utils.formatMoney(card?.selected_variant?.price)).replace('[compare_at_price]',  `<span style='text-decoration: line-through; opacity: 0.5;'>${utils.formatMoney(card.selected_variant?.compare_at_price)}</span>`) ?? ''"
+          data-content="{% render '_input.inline_richtext', content: out_of_stock_content, escape: true, block: block, forloop: forloop %}">
+  </button>
+
+</div>

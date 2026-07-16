@@ -1,0 +1,209 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "subscription_selector"
+  assign section_type = "bundle"
+  assign show_conditionally = block.settings.show_conditionally
+  assign show_based_on_bundle_state = block.settings.show_based_on_bundle_state
+  assign legend_label = block.settings.legend_label
+  assign legend_class = block.settings.legend_class
+  assign price_calculation = block.settings.price_calculation
+  assign currency_display = block.settings.currency_display
+  assign subscription_content = block.settings.subscription_content
+  assign subscription_highlights = block.settings.subscription_highlights
+  assign savings_highlight_class = block.settings.savings_highlight_class
+  assign savings_target = block.settings.savings_target
+  assign select_class = block.settings.select_class
+  assign discount_percentage_override = block.settings.discount_percentage_override
+  assign one_time_content = block.settings.one_time_content
+  assign one_time_highlights = block.settings.one_time_highlights
+  assign default_selection = block.settings.default_selection
+  assign margin_top_gap = block.settings.margin_top_gap
+  assign grid_cols_align_x_align_y_gap = block.settings.grid_cols_align_x_align_y_gap
+  assign layout_order = block.settings.layout_order
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign border_width_radius = block.settings.border_width_radius
+  assign label_class = block.settings.label_class
+  assign price_class = block.settings.price_class
+  assign text_color = block.settings.text_color
+  assign border_color = block.settings.border_color
+  assign background_color = block.settings.background_color
+  assign hover_text_color = block.settings.hover_text_color
+  assign hover_border_color = block.settings.hover_border_color
+  assign hover_background_color = block.settings.hover_background_color
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+
+  capture subscription_content
+    render '_input.inline_richtext', content: subscription_content
+  endcapture
+
+  assign current_subscription_content = subscription_content | replace: "[value]", '' | strip_newlines
+  assign _subscription_content = subscription_content | escape
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,max_w_flex_col_row_order_align,margin_top_bottom_left_right" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "border_width_radius, margin_top_gap",
+    css_variables: true %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-label]",
+    keys: "padding_top_bottom_left_right,border_width_radius,background_color,border_color,text_color" %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    class="flex flex-col gap-[--gap]"
+    style="--ac-color: {{ hover_text_color }}; --ac-border-color: {{ hover_border_color }}; --ac-bg-color: {{ hover_background_color }}"
+    data-subscription-default-selection="{{ default_selection }}"
+    x-show="$data?.bundle?.selling_plan_options?.length && ($data.windowWidth >= 1024 || $data.showConditionally(`{{ show_conditionally }}`)) && $data.showBasedOnBundleState(`{{ show_based_on_bundle_state }}`)">
+  <fieldset>
+    {% if legend_label != blank %}
+      <legend class="mb-[--margin-top] flex w-full max-w-full truncate {{ legend_class }}">
+        {% render '_input.inline_richtext', content: legend_label, block: block, forloop: forloop %}
+      </legend>
+    {% endif %}
+    <div class="grid gap-[--gap]">
+      <label class="w-full overflow-hidden group ac:text-[--ac-color] ac:border-[--ac-border-color] ac:bg-[--ac-bg-color] {% if default_selection == 'one_time' %}active{% endif %}"
+             x-effect="() => { $el.classList?.toggle('active', !$data?.bundle?.selected_selling_plan); $el.classList?.toggle('cursor-pointer', $data?.bundle?.selected_selling_plan); }"
+          {% if default_selection == 'one_time' %}
+            x-init="$data?.setSellingPlan(null)"
+          {% endif %}
+             aria-label="{{ value }}"
+             data-style-label>
+        <input type="radio"
+               class="sr-only"
+               @change="$data?.setSellingPlan(null)"
+               :checked="!$data?.bundle?.selected_selling_plan"
+               name="{{ block.id }}"
+               value="{{ value }}">
+        <span class="flex items-center gap-1 sm:gap-1.5">
+          <span class="flex size-5 shrink-0 items-center justify-center overflow-hidden rounded-full border-solid border-w-[--border-width] group-ac:text-[--ac-bg-color] group-ac:border-[--ac-border-color] group-ac:bg-[--ac-border-color]">
+            {% render '_components.icon', icon: 'check-mark', class: 'size-3.5 group-ac:opacity-100 opacity-0' %}
+          </span>
+          <span class="shrink-0 {{ label_class }}">
+            {% render '_input.inline_richtext', content: one_time_content, block: block, forloop: forloop %}
+          </span>
+          {% if savings_highlight_class != blank %}
+            {% if savings_target == 'current_savings' %}
+              <span class="shrink-0 {{ savings_highlight_class }}"
+                    x-show="$data?.bundle?.active_discount_wording"
+                    x-html="$data?.bundle?.active_discount_wording"></span>
+            {% endif %}
+            {% if savings_target == 'target_savings' %}
+              <span class="shrink-0 {{ savings_highlight_class }}"
+                    x-show="$data?.bundle?.target_discount_wording"
+                    x-html="$data?.bundle?.target_discount_wording"></span>
+            {% endif %}
+          {% endif %}
+          <span class="ml-auto shrink-0 flex items-baseline lg:gap-2 max-lg:flex-col-reverse {{ price_class }}">
+            <span class="line-through opacity-50 text-[0.7em] lg:text-[0.8em]"
+                  x-show="$data?.bundle?.total_price && $data?.bundle?.discounted_price !== $data?.bundle?.total_price"
+                {% if price_calculation == 'normal' or price_calculation == 'no_discount' %}
+                  x-html="utils.formatMoney($data?.bundle?.total_price, window.money_format.replace(/amount[^}]*/gi,`{{ currency_display }}`))"
+                {% endif %}
+                {% if price_calculation == 'quantity_multiplied' %}
+                  x-html="utils.formatMoney($data?.bundle?.total_price * ($data.state.quantity ?? 1), window.money_format.replace(/amount[^}]*/gi,`{{ currency_display }}`))"
+                {% endif %}
+            ></span>
+            <span x-show="$data?.bundle?.discounted_price"
+                  x-html="utils.formatMoney($data?.bundle?.discounted_price, window.money_format.replace(/amount[^}]*/gi,`{{ currency_display }}`))"></span>
+          </span>
+        </span>
+        <span class="flex flex-col" x-show="!$data?.bundle?.selected_selling_plan">
+          <span class="block pl-3 pt-4" x-show="$el.innerText?.trim()">
+            {% render '_input.richtext', content: one_time_highlights, class: 'richtext-md [&_svg]:!text-[--ac-border-color]', block: block, forloop: forloop %}
+          </span>
+        </span>
+      </label>
+      <label class="w-full group ac:text-[--ac-color] ac:border-[--ac-border-color] ac:bg-[--ac-bg-color] overflow-hidden {% if default_selection == 'subscription' %}active{% endif %} {{ layout_order }}"
+             :class="!$data?.bundle.selling_plan_options?.length ? 'opacity-50' : ''"
+             x-effect="() => { $el.classList?.toggle('active', !!$data?.bundle?.selected_selling_plan); $el.classList?.toggle('cursor-pointer', $data?.bundle.selling_plan_options?.length && !$data?.bundle?.selected_selling_plan); }"
+             aria-label="{{ value }}"
+          {% if default_selection == 'subscription' %}
+            x-init="() => { $data?.setSellingPlan($data?.bundle?.selling_plan_options?.[0]?.selling_plan?.name); $el.classList?.toggle('active', !!$data?.bundle?.selling_plan_options?.[0]?.selling_plan?.name); }"
+          {% endif %}
+             data-style-label>
+        <input type="radio"
+               class="sr-only"
+               @change="$data?.setSellingPlan($data?.bundle?.selling_plan_options?.[0]?.selling_plan?.name)"
+               :checked="!!$data?.bundle?.selected_selling_plan"
+               :disabled="!$data?.bundle.selling_plan_options?.length"
+               name="{{ block.id }}"
+               :value="$data?.bundle?.selling_plan_options?.[0]?.selling_plan?.name">
+        <span class="flex items-center gap-1 sm:gap-1.5">
+          <span class="flex size-5 shrink-0 items-center justify-center overflow-hidden rounded-full border-solid border-w-[--border-width] group-ac:text-[--ac-bg-color] group-ac:border-[--ac-border-color] group-ac:bg-[--ac-border-color]">
+            {% render '_components.icon', icon: 'check-mark', class: 'size-3.5 group-ac:opacity-100 opacity-0' %}
+          </span>
+          <span class="shrink-0 {{ label_class }}"
+                data-content="{{ subscription_content | escape }}"
+                x-html="$el.getAttribute('data-content').replace('[value]', $data?.bundle?.selling_plan_discount_wording)">
+            {{ current_subscription_content }}
+          </span>
+          {% if savings_highlight_class != blank %}
+            <span class="shrink-0 {{ savings_highlight_class }}"
+                  x-show="$data?.bundle?.selling_plan_discount_wording"
+                  x-html="$data?.bundle?.selling_plan_discount_wording"></span>
+          {% endif %}
+          <span class="ml-auto shrink-0 flex items-baseline lg:gap-2 max-lg:flex-col-reverse {{ price_class }}">
+            {% if price_calculation == 'no_discount' %}
+              <span class="line-through opacity-50 text-[0.7em] lg:text-[0.8em]"
+                    x-show="$data?.bundle?.total_price && $data?.bundle?.discounted_price !== $data?.bundle?.total_price"
+                    x-html="utils.formatMoney($data?.bundle?.total_price, window.money_format.replace(/amount[^}]*/gi,`{{ currency_display }}`))"
+              ></span>
+              <span x-show="$data?.bundle?.subscription_price"
+                    x-html="utils.formatMoney($data?.bundle?.discounted_price, window.money_format.replace(/amount[^}]*/gi,`{{ currency_display }}`))"></span>
+            {% else %}
+              <span class="line-through opacity-50 text-[0.7em] lg:text-[0.8em]"
+                    x-show="$data?.bundle?.total_price && $data?.bundle?.subscription_price !== $data?.bundle?.total_price"
+                  {% if price_calculation == 'normal' %}
+                    x-html="utils.formatMoney($data?.bundle?.total_price, window.money_format.replace(/amount[^}]*/gi,`{{ currency_display }}`))"
+                  {% endif %}
+                  {% if price_calculation == 'quantity_multiplied' %}
+                    x-html="utils.formatMoney($data?.bundle?.total_price * ($data.state.quantity ?? 1), window.money_format.replace(/amount[^}]*/gi,`{{ currency_display }}`))"
+                  {% endif %}
+              ></span>
+              <span x-show="$data?.bundle?.subscription_price"
+                    x-html="utils.formatMoney($data?.bundle?.subscription_price, window.money_format.replace(/amount[^}]*/gi,`{{ currency_display }}`))"></span>
+            {% endif %}
+          </span>
+        </span>
+        <span class="flex flex-col" x-show="$data?.bundle?.selected_selling_plan">
+          <span class="block pl-3 pt-4" x-show="$el.innerText?.trim()">
+            {% render '_input.richtext', content: subscription_highlights, class: 'richtext-md [&_svg]:!text-[--ac-border-color]', block: block, forloop: forloop %}
+          </span>
+          <span class="mt-5">
+            {% render "_components.select",
+                dynamic: true,
+                values: 'bundle?.selling_plan_options?.map(item=> item?.selling_plan?.name)',
+                titles: 'bundle?.selling_plan_options?.map(item=> item?.selling_plan?.name)',
+                select_class: select_class,
+                label: 'Bundle Targets',
+                setState: "bundle.selected_selling_plan = value;",
+                state: "bundle?.selected_selling_plan",
+                current_value: 'bundle?.selected_selling_plan',
+                current_title: 'bundle?.selected_selling_plan'
+            %}
+          </span>
+        </span>
+      </label>
+    </div>
+  </fieldset>
+</div>
+
+
+
+

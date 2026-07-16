@@ -1,0 +1,1199 @@
+{
+  "settings_schema": {},
+  "sections": {
+    "bundle": {
+      "blocks": {
+        "tab_navigation": {
+          "name": "----- Tab Navigation -----"
+        },
+        "sidebar_header": {
+          "name": "______ Sidebar / Header __"
+        },
+        "bundle_details_card": {
+          "name": "______ Bundle Details Card __"
+        },
+        "inline_flex_card": {
+          "name": "______ Inline Flex Card ___"
+        },
+        "inline_layout_end": {
+          "name": "______ Inline Layout End ______"
+        },
+        "incentive_target": {
+          "name": "---- Incentive Target ----"
+        },
+        "discounted_auto_add_on": {
+          "name": "---- Discounted Auto Add-on -"
+        }
+      }
+    },
+    "article_card": {
+      "blocks": {
+        "dynamic_image_with_caption": {
+          "name": "Dynamic Image with caption"
+        }
+      }
+    },
+    "collection_card": {
+      "blocks": {
+        "flex_overlay": {
+          "name": "______ Flex Overlay ______"
+        }
+      }
+    },
+    "product_card": {
+      "blocks": {
+        "quick_view_add_to_cart_bundle_action_button": {
+          "name": "Quick View / Add to Cart / Bundle Action - button"
+        },
+        "variant_color_image_swatch": {
+          "name": "Variant: Color / Image Swatch"
+        },
+        "option_color_image_swatch": {
+          "name": "Option: Color / Image Swatch"
+        },
+        "option_radio_buttons_custom": {
+          "name": "Option: Radio Buttons Custom"
+        },
+        "flex_overlay": {
+          "name": "______ Flex Overlay ______"
+        }
+      }
+    },
+    "cart": {
+      "blocks": {
+        "line_items_with_upsell_items": {
+          "name": "Line Items with upsell items"
+        },
+        "line_items_flat_with_upsell_items": {
+          "name": "Line Items Flat with upsell items"
+        },
+        "inline_flex_card": {
+          "name": "______ Inline Flex Card ___"
+        },
+        "inline_layout_end": {
+          "name": "______ Inline Layout End ______"
+        }
+      }
+    },
+    "compare_products": {
+      "blocks": {
+        "dynamic_image_with_caption": {
+          "name": "Dynamic Image with caption"
+        }
+      }
+    },
+    "accounts": {
+      "blocks": {
+        "inline_tab_content": {
+          "name": "______ Inline Tab Content ___"
+        },
+        "inline_flex_card": {
+          "name": "______ Inline Flex Card ___"
+        },
+        "tab_navigation": {
+          "name": "----- Tab Navigation -----"
+        }
+      }
+    },
+    "content_flex": {
+      "blocks": {
+        "inline_flex_card": {
+          "name": "______ Inline Flex Card ___"
+        },
+        "inline_grid_card": {
+          "name": "______ Inline Grid Card ______"
+        },
+        "inline_tab_content": {
+          "name": "______ Inline Tab Content ___"
+        },
+        "inline_collapsible": {
+          "name": "______ Inline Collapsible ______"
+        },
+        "inline_table_row": {
+          "name": "______ Inline Table Row ______"
+        },
+        "inline_layout_end": {
+          "name": "______ Inline Layout End ______"
+        },
+        "tab_navigation": {
+          "name": "----- Tab Navigation -----"
+        },
+        "grid_slider_controls": {
+          "name": "----- Grid Slider Controls -----"
+        }
+      }
+    },
+    "content_grid": {
+      "blocks": {
+        "inline_flex_card": {
+          "name": "______ Inline Flex Card ___"
+        },
+        "inline_grid_card": {
+          "name": "______ Inline Grid Card ______"
+        },
+        "inline_tab_content": {
+          "name": "______ Inline Tab Content ___"
+        },
+        "inline_collapsible": {
+          "name": "______ Inline Collapsible ______"
+        },
+        "inline_table_row": {
+          "name": "______ Inline Table Row ______"
+        },
+        "inline_layout_end": {
+          "name": "______ Inline Layout End ______"
+        },
+        "tab_navigation": {
+          "name": "----- Tab Navigation -----"
+        },
+        "grid_slider_controls": {
+          "name": "----- Grid Slider Controls -----"
+        }
+      }
+    },
+    "content_marquee": {
+      "blocks": {
+        "inline_flex_card": {
+          "name": "______ Inline Flex Card ___"
+        },
+        "inline_grid_card": {
+          "name": "______ Inline Grid Card ______"
+        },
+        "inline_layout_end": {
+          "name": "______ Inline Layout End ______"
+        }
+      }
+    },
+    "content_popup": {
+      "blocks": {
+        "inline_flex_card": {
+          "name": "______ Inline Flex Card ___"
+        },
+        "inline_grid_card": {
+          "name": "______ Inline Grid Card ______"
+        },
+        "inline_tab_content": {
+          "name": "______ Inline Tab Content ___"
+        },
+        "inline_collapsible": {
+          "name": "______ Inline Collapsible ______"
+        },
+        "inline_table_row": {
+          "name": "______ Inline Table Row ______"
+        },
+        "inline_layout_end": {
+          "name": "______ Inline Layout End ______"
+        },
+        "tab_navigation": {
+          "name": "----- Tab Navigation -----"
+        },
+        "grid_slider_controls": {
+          "name": "----- Grid Slider Controls -----"
+        }
+      }
+    },
+    "product_grid": {
+      "blocks": {
+        "filter_sort_navigation_bar": {
+          "name": "Filter/Sort Navigation Bar"
+        },
+        "filter_override_checkboxes": {
+          "name": "Filter override: Checkboxes"
+        },
+        "filter_override_radio_buttons": {
+          "name": "Filter override: Radio Buttons"
+        },
+        "tab_navigation": {
+          "name": "----- Tab Navigation -----"
+        },
+        "inline_tab_content": {
+          "name": "______ Inline Tab Content ___"
+        },
+        "inline_collapsible": {
+          "name": "______ Inline Collapsible ______"
+        },
+        "inline_flex_card": {
+          "name": "______ Inline Flex Card ___"
+        },
+        "inline_grid_card": {
+          "name": "______ Inline Grid Card ______"
+        },
+        "inline_layout_end": {
+          "name": "______ Inline Layout End ______"
+        },
+        "promo_card_flex": {
+          "name": "______ Promo Card - Flex ______"
+        },
+        "promo_card_grid": {
+          "name": "______ Promo Card - Grid ______"
+        },
+        "promo_card_slider": {
+          "name": "______ Promo Card - Slider ______"
+        }
+      }
+    },
+    "search_grid": {
+      "blocks": {
+        "filter_sort_navigation_bar": {
+          "name": "Filter/Sort Navigation Bar"
+        },
+        "filter_override_checkboxes": {
+          "name": "Filter override: Checkboxes"
+        },
+        "filter_override_radio_buttons": {
+          "name": "Filter override: Radio Buttons"
+        },
+        "tab_navigation": {
+          "name": "----- Tab Navigation -----"
+        },
+        "inline_tab_content": {
+          "name": "______ Inline Tab Content ___"
+        },
+        "inline_collapsible": {
+          "name": "______ Inline Collapsible ______"
+        },
+        "inline_flex_card": {
+          "name": "______ Inline Flex Card ___"
+        },
+        "inline_grid_card": {
+          "name": "______ Inline Grid Card ______"
+        },
+        "inline_layout_end": {
+          "name": "______ Inline Layout End ______"
+        },
+        "promo_card_flex": {
+          "name": "______ Promo Card - Flex ______"
+        },
+        "promo_card_grid": {
+          "name": "______ Promo Card - Grid ______"
+        },
+        "promo_card_slider": {
+          "name": "______ Promo Card - Slider ______"
+        }
+      }
+    },
+    "content_slider": {
+      "blocks": {
+        "inline_flex_card": {
+          "name": "______ Inline Flex Card ___"
+        },
+        "inline_grid_card": {
+          "name": "______ Inline Grid Card ______"
+        },
+        "inline_tab_content": {
+          "name": "______ Inline Tab Content ___"
+        },
+        "inline_collapsible": {
+          "name": "______ Inline Collapsible ______"
+        },
+        "inline_table_row": {
+          "name": "______ Inline Table Row ______"
+        },
+        "inline_layout_end": {
+          "name": "______ Inline Layout End ______"
+        }
+      }
+    },
+    "back_in_stock_notification": {
+      "name": "Back in Stock Notification",
+      "presets": {
+        "back_in_stock_notification": {
+          "name": "Back in Stock Notification"
+        }
+      }
+    },
+    "cart_drawer": {
+      "blocks": {
+        "line_items_with_upsell_items": {
+          "name": "Line Items with upsell items"
+        },
+        "line_items_flat_with_upsell_items": {
+          "name": "Line Items Flat with upsell items"
+        },
+        "inline_flex_card": {
+          "name": "______ Inline Flex Card ___"
+        },
+        "sticky_header": {
+          "name": "______ Sticky Header ______"
+        },
+        "sticky_footer": {
+          "name": "______ Sticky Footer ______"
+        },
+        "inline_layout_end": {
+          "name": "______ Inline Layout End ______"
+        }
+      }
+    },
+    "drawer_menu": {
+      "blocks": {
+        "sub_column_end": {
+          "name": "______ Sub Column End ______"
+        },
+        "sub_collapsible": {
+          "name": "______ Sub - Collapsible ______"
+        },
+        "sticky_footer": {
+          "name": "______ Sticky Footer ______"
+        }
+      }
+    },
+    "megamenu_flex": {
+      "blocks": {
+        "inline_flex_card": {
+          "name": "______ Inline Flex Card ___"
+        },
+        "inline_grid_card": {
+          "name": "______ Inline Grid Card ______"
+        },
+        "inline_tab_content": {
+          "name": "______ Inline Tab Content ___"
+        },
+        "inline_collapsible": {
+          "name": "______ Inline Collapsible ______"
+        },
+        "inline_table_row": {
+          "name": "______ Inline Table Row ______"
+        },
+        "inline_layout_end": {
+          "name": "______ Inline Layout End ______"
+        },
+        "tab_navigation": {
+          "name": "----- Tab Navigation -----"
+        },
+        "grid_slider_controls": {
+          "name": "----- Grid Slider Controls -----"
+        }
+      }
+    },
+    "megamenu_grid": {
+      "blocks": {
+        "inline_flex_card": {
+          "name": "______ Inline Flex Card ___"
+        },
+        "inline_grid_card": {
+          "name": "______ Inline Grid Card ______"
+        },
+        "inline_tab_content": {
+          "name": "______ Inline Tab Content ___"
+        },
+        "inline_collapsible": {
+          "name": "______ Inline Collapsible ______"
+        },
+        "inline_table_row": {
+          "name": "______ Inline Table Row ______"
+        },
+        "inline_layout_end": {
+          "name": "______ Inline Layout End ______"
+        },
+        "tab_navigation": {
+          "name": "----- Tab Navigation -----"
+        },
+        "grid_slider_controls": {
+          "name": "----- Grid Slider Controls -----"
+        }
+      }
+    },
+    "product_drawer": {
+      "blocks": {
+        "quick_view_add_to_cart_bundle_action_button": {
+          "name": "Quick View / Add to Cart / Bundle Action - button"
+        },
+        "variant_color_image_swatch": {
+          "name": "Variant: Color / Image Swatch"
+        },
+        "option_color_image_swatch": {
+          "name": "Option: Color / Image Swatch"
+        },
+        "option_radio_buttons_custom": {
+          "name": "Option: Radio Buttons Custom"
+        },
+        "flex_overlay": {
+          "name": "______ Flex Overlay ______"
+        }
+      }
+    },
+    "search": {
+      "blocks": {
+        "inline_flex_card": {
+          "name": "______ Inline Flex Card ___"
+        },
+        "inline_grid_card": {
+          "name": "______ Inline Grid Card ______"
+        },
+        "inline_layout_end": {
+          "name": "______ Inline Layout End ______"
+        },
+        "search_collection_results": {
+          "name": "Search: Collection Results"
+        }
+      }
+    },
+    "vertical_menu": {
+      "blocks": {
+        "inline_flex_card": {
+          "name": "______ Inline Flex Card ___"
+        },
+        "inline_grid_card": {
+          "name": "______ Inline Grid Card ______"
+        },
+        "inline_tab_content": {
+          "name": "______ Inline Tab Content ___"
+        },
+        "inline_collapsible": {
+          "name": "______ Inline Collapsible ______"
+        },
+        "inline_table_row": {
+          "name": "______ Inline Table Row ______"
+        },
+        "inline_layout_end": {
+          "name": "______ Inline Layout End ______"
+        },
+        "tab_navigation": {
+          "name": "----- Tab Navigation -----"
+        },
+        "grid_slider_controls": {
+          "name": "----- Grid Slider Controls -----"
+        }
+      }
+    },
+    "product": {
+      "blocks": {
+        "variant_color_image_swatch": {
+          "name": "Variant: Color / Image Swatch"
+        },
+        "option_color_image_swatch": {
+          "name": "Option: Color / Image Swatch"
+        },
+        "option_swatch_with_caption": {
+          "name": "Option: Swatch with caption"
+        },
+        "option_checkbox_radio_buttons": {
+          "name": "Option: Checkbox & Radio Buttons"
+        },
+        "option_radio_buttons_custom": {
+          "name": "Option: Radio Buttons Custom"
+        },
+        "option_detailed_radio_buttons": {
+          "name": "Option: Detailed Radio Buttons"
+        },
+        "sibling_color_image_swatch": {
+          "name": "Sibling: Color / Image Swatch"
+        },
+        "sibling_radio_buttons_custom": {
+          "name": "Sibling: Radio Buttons Custom"
+        },
+        "subscription_button_selector": {
+          "name": "Subscription Button Selector"
+        },
+        "mobile_header": {
+          "name": "______ Mobile Header ______"
+        }
+      }
+    },
+    "product_add_to_cart_floating": {
+      "name": "Product Add to Cart Floating",
+      "presets": {
+        "product_add_to_cart_floating": {
+          "name": "Product Add to Cart Floating"
+        }
+      }
+    },
+    "product_bar": {
+      "blocks": {
+        "variant_color_image_swatch": {
+          "name": "Variant: Color / Image Swatch"
+        },
+        "option_color_image_swatch": {
+          "name": "Option: Color / Image Swatch"
+        },
+        "option_detailed_radio_buttons": {
+          "name": "Option: Detailed Radio Buttons"
+        },
+        "sibling_color_image_swatch": {
+          "name": "Sibling: Color / Image Swatch"
+        },
+        "subscription_button_selector": {
+          "name": "Subscription Button Selector"
+        }
+      }
+    },
+    "quiz_bundle": {
+      "blocks": {
+        "tab_navigation": {
+          "name": "----- Tab Navigation -----"
+        },
+        "sidebar_header": {
+          "name": "______ Sidebar / Header __"
+        },
+        "bundle_details_card": {
+          "name": "______ Bundle Details Card __"
+        },
+        "inline_flex_card": {
+          "name": "______ Inline Flex Card ___"
+        },
+        "inline_layout_end": {
+          "name": "______ Inline Layout End ______"
+        },
+        "incentive_target": {
+          "name": "---- Incentive Target ----"
+        },
+        "discounted_auto_add_on": {
+          "name": "---- Discounted Auto Add-on -"
+        }
+      }
+    },
+    "quiz_content": {
+      "blocks": {
+        "inline_flex_card": {
+          "name": "______ Inline Flex Card ___"
+        },
+        "inline_grid_card": {
+          "name": "______ Inline Grid Card ______"
+        },
+        "inline_tab_content": {
+          "name": "______ Inline Tab Content ___"
+        },
+        "inline_collapsible": {
+          "name": "______ Inline Collapsible ______"
+        },
+        "inline_table_row": {
+          "name": "______ Inline Table Row ______"
+        },
+        "inline_layout_end": {
+          "name": "______ Inline Layout End ______"
+        },
+        "tab_navigation": {
+          "name": "----- Tab Navigation -----"
+        },
+        "grid_slider_controls": {
+          "name": "----- Grid Slider Controls -----"
+        }
+      }
+    }
+  },
+  "blocks": {},
+  "all": {
+    "empty_char": " ",
+    "section_globals": "Section Globals",
+    "section_id": "Section Id",
+    "color_scheme": "Color scheme",
+    "xs": "xs",
+    "sm": "sm",
+    "md": "md",
+    "lg": "lg",
+    "fullwidth": "fullwidth",
+    "magazine": "magazine",
+    "container_spacing": "Container Spacing",
+    "none": "None",
+    "top": "Top",
+    "bottom": "Bottom",
+    "both": "Both",
+    "border_divider": "Border Divider",
+    "padding_top_bottom_min_h": "padding: top | bottom | min-h",
+    "all": "All",
+    "mobile": "Mobile",
+    "desktop": "Desktop",
+    "responsive_visibility": "Responsive Visibility",
+    "responsive_breakpoint": "Responsive breakpoint",
+    "always": "Always",
+    "targeted": "Targeted",
+    "no_target": "No target",
+    "target_visibility": "Target visibility",
+    "content": "Content",
+    "preheading": "Preheading",
+    "preheading_class": "Preheading class",
+    "heading": "Heading",
+    "heading_class": "Heading class",
+    "subheading": "Subheading",
+    "subheading_class": "Subheading class",
+    "button": "Button",
+    "button_primary_text": "Button primary text",
+    "button_primary_url": "Button primary Url",
+    "button_primary_class": "Button primary class",
+    "before_image": "Before Image",
+    "after_image": "After Image",
+    "bundle_limits": "Bundle Limits",
+    "hard_limit": "Hard limit",
+    "upgrade_limit": "Upgrade limit",
+    "no_limit": "No limit",
+    "restrict_bundle_quantity": "Restrict bundle quantity",
+    "bundle_targets": "Bundle Targets",
+    "amount_based": "Amount based",
+    "quantity_based": "Quantity based",
+    "subtotal": "Subtotal",
+    "final_price": "Final price",
+    "quantity": "Quantity",
+    "incentive_targets": "Incentive Targets",
+    "section_layout": "Section Layout",
+    "desktop_sidebar_width_gap": "desktop sidebar width | gap",
+    "sticky": "Sticky",
+    "normal": "Normal",
+    "product_scroll": "Product scroll",
+    "block_id": "Block Id",
+    "tab_label": "Tab label",
+    "label": "Label",
+    "title": "Title",
+    "title_class": "Title class",
+    "top_bottom_left_right_align": "top | bottom | left | right | align",
+    "products": "Products",
+    "collection": "Collection",
+    "product_card_class": "Product card class",
+    "display_settings": "Display Settings",
+    "grid_cols_justify_align_gap": "grid-cols | justify | align | gap",
+    "show_more_limit_display_limit": "Show more limit | Display limit",
+    "expand_button": "Expand button",
+    "collapse_button": "Collapse button",
+    "button_class": "Button class",
+    "block_globals": "Block Globals",
+    "margin_top_bottom_left_right": "margin: top | bottom | left | right",
+    "max_w_flex_cols_rows_order_align": "max-w | flex | cols | rows | order | align",
+    "section": "Section",
+    "container": "Container",
+    "block": "Block",
+    "if_empty_hide": "If empty, hide:",
+    "anchor_id": "Anchor ID",
+    "limit": "Limit",
+    "ai": "AI",
+    "dollar_highest": "$ highest",
+    "dollar_lowest": "$ lowest",
+    "first": "First",
+    "targeting_algorithm": "Targeting Algorithm",
+    "complementary": "Complementary",
+    "related": "Related",
+    "manual": "Manual",
+    "primary_source": "Primary source",
+    "fallback_source": "Fallback source",
+    "fallback_products": "Fallback products",
+    "include_products_tags": "Include products tags",
+    "exclude_products_tags": "Exclude products tags",
+    "open": "Open",
+    "closed": "Closed",
+    "mobile_show_conditionally": "Mobile Show conditionally",
+    "empty": "Empty",
+    "between": "Between",
+    "full": "Full",
+    "some": "Some",
+    "show_based_on_bundle_state": "Show based on Bundle state",
+    "dir_justify_align_gap_wrap_min_h": "dir | justify | align | gap | wrap | min-h",
+    "off": "Off",
+    "overflow_container": "Overflow container",
+    "scrollbar_settings": "Scrollbar Settings",
+    "scrollbar_class": "Scrollbar class",
+    "padding_top_bottom_left_right": "padding: top | bottom | left | right",
+    "add_to_cart": "Add to Cart",
+    "checkout": "Checkout",
+    "primary_action": "Primary action",
+    "add_state": "Add state",
+    "allow_incomplete_bundles": "Allow incomplete bundles",
+    "incomplete_bundle_state": "Incomplete Bundle state",
+    "select_class": "Select class",
+    "discount_label": "Discount label",
+    "price_content": "Price content",
+    "styling_settings": "Styling Settings",
+    "success_color": "Success color",
+    "success_border_color": "Success Border color",
+    "base_color": "Base color",
+    "base_border_color": "Base Border color",
+    "bar_height_border_radius_gap": "bar height | border | radius | gap",
+    "always_show_description": "Always show description",
+    "quantity_x": "Quantity X",
+    "no_discount": "No Discount",
+    "price_calculation": "Price calculation",
+    "no_decimals": "No Decimals",
+    "currency_display": "Currency display",
+    "subscription_card_content": "Subscription Card Content",
+    "highlights": "Highlights",
+    "savings_highlight_class": "Savings highlight class",
+    "current_savings": "Current Savings",
+    "target_savings": "Target Savings",
+    "savings_target": "Savings Target",
+    "discount_percentage_override": "Discount percentage override",
+    "one_time_card_content": "One-time Card Content",
+    "settings": "Settings",
+    "subscription": "Subscription",
+    "one_time": "One-time",
+    "default_selection": "Default selection",
+    "inline_layout": "Inline Layout",
+    "heading_space_item_gap": "Heading space | Item Gap",
+    "subscription_first": "Subscription first",
+    "one_time_first": "One-time first",
+    "layout": "Layout",
+    "card_styling": "Card Styling",
+    "border_radius_max_h_max_w_overflow": "border | radius | max-h | max-w | overflow",
+    "label_class": "Label class",
+    "price_class": "Price class",
+    "colors": "Colors",
+    "text_color": "text color",
+    "border_color": "border color",
+    "background_color": "background color",
+    "active_colors": "Active Colors",
+    "item_settings": "Item Settings",
+    "add_icon": "Add icon",
+    "background_gradient": "background gradient",
+    "solid": "solid",
+    "dashed": "dashed",
+    "dotted": "dotted",
+    "border_style": "Border Style",
+    "subscription_label_class": "Subscription label class",
+    "show_product_titles": "Show product titles",
+    "add_skeleton_boxes": "Add skeleton boxes",
+    "layout_settings": "Layout Settings",
+    "cols_rows_justify_align_gap": "cols | rows | justify | align | gap",
+    "disabled": "Disabled",
+    "to_slide": "To slide",
+    "to_item": "To item",
+    "scroll_snap": "Scroll snap",
+    "width_height_aspect": "width | height | aspect",
+    "scrollbar": "Scrollbar",
+    "image": "Image",
+    "width_height_aspect_fit_radius": "width | height | aspect | fit | radius",
+    "variant_title_class": "Variant title class",
+    "quantity_stepper_class": "Quantity Stepper class",
+    "page_content": "Page content",
+    "use_page_dynamic_content": "Use Page dynamic content",
+    "content_class": "Content Class",
+    "color_override": "Color override",
+    "url": "Url",
+    "submit": "Submit",
+    "reset": "Reset",
+    "type": "Type",
+    "show_active_state": "Show active state",
+    "caption_content": "Caption Content",
+    "text_over_image": "Text over image",
+    "justify_align_gap_wrap_dir": "justify | align | gap | wrap | dir",
+    "card_styling_optional": "Card Styling (optional)",
+    "top_bottom_left_right_min_h": "top | bottom | left | right | min-h",
+    "border_radius_shadow_gap_align": "border | radius | shadow | gap|align",
+    "use_0_5_for_shadows": "Use 0-5 for Shadows",
+    "block_layout_settings": "Block Layout Settings",
+    "shipping": "Shipping",
+    "shipping_costs": "Shipping costs",
+    "background_blur": "Background Blur",
+    "filter_label": "Filter label",
+    "filter_values": "Filter values",
+    "filter_data_type": "Filter data type",
+    "target": "Target",
+    "discount_percentage": "Discount percentage",
+    "discount_amount": "Discount amount",
+    "label_override": "Label override",
+    "incentive_message": "Incentive message",
+    "success_message": "Success message",
+    "product": "Product",
+    "handle": "Handle",
+    "container_layout": "Container Layout",
+    "vertical": "Vertical",
+    "horizontal": "Horizontal",
+    "orientation": "Orientation",
+    "max_w_max_h_border_radius": "max-w | max-h | border | radius",
+    "loading_state": "Loading State",
+    "inline": "Inline",
+    "over_image": "Over Image",
+    "location": "Location",
+    "block_settings": "Block Settings",
+    "color_settings": "Color Settings",
+    "image_selection": "Image selection",
+    "primary_image": "Primary image",
+    "hover_effect": "Hover Effect",
+    "show_secondary_image": "Show secondary image",
+    "secondary_image": "Secondary image",
+    "available_keys_https_shopify_dev_docs_api_liquid_objects_article": "[Available keys](https://shopify.dev/docs/api/liquid/objects/article)",
+    "type_css_class": "Type CSS class",
+    "dynamic_url": "Dynamic URL",
+    "theme_editor_settings": "Theme Editor Settings",
+    "preview": "Preview",
+    "content_source": "Content source",
+    "show_quantity": "Show quantity",
+    "image_source": "Image source",
+    "text_content": "Text Content",
+    "available_keys_https_shopify_dev_docs_api_liquid_objects_blog": "[Available keys](https://shopify.dev/docs/api/liquid/objects/blog)",
+    "link_to_collection": "Link to collection",
+    "dynamic_text_color": "Dynamic text color",
+    "dynamic_background_color": "Dynamic background color",
+    "dynamic_border_color": "Dynamic border color",
+    "available_keys_https_shopify_dev_docs_api_liquid_objects_collection": "[Available keys](https://shopify.dev/docs/api/liquid/objects/collection)",
+    "height": "Height",
+    "style": "Style",
+    "show_conditionally": "Show conditionally",
+    "only_show_on_hover": "Only show on hover",
+    "available_keys_admin_settings_custom_data": "[Available keys](/admin/settings/custom_data)",
+    "available_keys_https_shopify_dev_docs_api_liquid_objects_page": "[Available keys](https://shopify.dev/docs/api/liquid/objects/page)",
+    "preview_product": "Preview Product",
+    "link_to_product": "Link to product",
+    "set_subscription_as_default": "Set Subscription as default",
+    "hover_colors": "Hover Colors",
+    "override_preview_background": "Override preview background",
+    "selected_variant": "Selected Variant",
+    "metafield": "Metafield",
+    "metafield_image": "Metafield image",
+    "type_richtext_metafield": "Type richtext metafield",
+    "available_keys_https_shopify_dev_docs_api_liquid_objects_product": "[Available keys](https://shopify.dev/docs/api/liquid/objects/product)",
+    "css_class": "CSS class",
+    "discounts": "Discounts",
+    "show_compare_as_price": "Show compare as price",
+    "discount_css_class": "Discount CSS class",
+    "quantity_multiplied": "Quantity Multiplied",
+    "reviews_heading": "Reviews heading",
+    "rating_icons": "Rating Icons",
+    "icon_handle_size_gap": "Icon handle | Size | Gap",
+    "fallback_colors": "Fallback Colors",
+    "icon_active_color": "Icon active color",
+    "icon_base_color": "Icon base color",
+    "hide_reviews": "Hide Reviews",
+    "hide_reviews_if_less_than": "Hide reviews if less than:",
+    "product_content": "Product Content",
+    "dynamic_discounts": "Dynamic - Discounts",
+    "sale": "Sale",
+    "percentage_off": "% off",
+    "save_dollar": "Save $",
+    "hide": "Hide",
+    "label_type": "Label type",
+    "default": "Default",
+    "quick_view_state": "Quick View state",
+    "items_with_variants": "Items with variants",
+    "never": "Never",
+    "quick_view_visibility": "Quick view Visibility",
+    "button_content": "Button content",
+    "add_to_cart_state": "Add To Cart state",
+    "out_of_stock_state": "Out of stock state",
+    "enable_back_in_stock_notifications": "Enable back in stock notifications",
+    "liquid_code": "Liquid Code",
+    "view_product_state": "View Product State",
+    "bundle_state": "Bundle state",
+    "added_quantity_state": "Added Quantity state",
+    "products_with_variants_only": "Products with variants only",
+    "scale_color": "Scale color",
+    "min_days": "Min days",
+    "max_days": "Max days",
+    "delivery_date": "Delivery Date",
+    "delivery_date_class": "Delivery Date class",
+    "delivery_days": "Delivery Days",
+    "delivery_days_class": "Delivery Days class",
+    "radio_button_class": "Radio button class",
+    "variant_highlight": "Variant Highlight",
+    "label_metafield": "Label metafield",
+    "custom_label_class": "Custom label class",
+    "show_all": "Show all",
+    "truncate": "Truncate",
+    "slider": "Slider",
+    "content_flow": "Content flow",
+    "swatches": "Swatches",
+    "primary_source_variant": "Primary source: Variant...",
+    "size_border_radius": "size | border | radius",
+    "outline_width_offset": "outline: width | offset",
+    "outline_color": "outline color",
+    "show_tooltip_on_hover": "Show tooltip on hover",
+    "match_option_titles": "Match Option Titles",
+    "match_exact_word": "Match exact word",
+    "option_title": "Option title",
+    "value": "Value",
+    "radio_button_content": "Radio button content",
+    "accordion_class": "Accordion class",
+    "cart_empty": "Cart Empty",
+    "items_added": "Items Added",
+    "recent": "Recent",
+    "width_height_gap": "Width | Height | Gap",
+    "dividers_height_width_align": "dividers: height | width | align",
+    "divider_color": "divider color",
+    "cart_quantity_display": "Cart Quantity Display",
+    "close_button": "Close Button",
+    "close_button_class": "Close button class",
+    "compare_at_price_class": "Compare at price class",
+    "text_class": "Text class",
+    "additional_content": "Additional Content",
+    "default_state": "Default state",
+    "video": "Video",
+    "optional": "optional",
+    "display_limit": "Display limit",
+    "collection_card_class": "Collection card class",
+    "enable_infinite_scroll": "Enable Infinite scroll",
+    "hide_out_of_stock": "Hide out of stock",
+    "center_items_on_scroll": "Center items on scroll",
+    "metafield_keys": "Metafield keys",
+    "image_layout": "Image Layout",
+    "width_height_aspect_gap": "Width | Height | Aspect | Gap",
+    "content_settings": "Content Settings",
+    "remove_button": "Remove Button",
+    "icon": "Icon",
+    "text": "Text",
+    "remove_button_label_class": "Remove button label class",
+    "icon_size_gap": "icon | size | gap",
+    "quantity_stepper": "Quantity Stepper",
+    "discount_lines_class": "Discount lines class",
+    "upsell_item_settings": "Upsell Item Settings",
+    "removeable": "Removeable",
+    "price_color_override": "Price color override",
+    "compare_at_price_color_override": "Compare at price color override",
+    "category_class": "Category class",
+    "buttons_height": "Buttons Height",
+    "checkbox": "Checkbox",
+    "enabled": "Enabled",
+    "checkbox_class": "Checkbox class",
+    "checkbox_property_name": "Checkbox property name",
+    "not_checked": "Not checked",
+    "checked": "checked",
+    "checkbox_default_state": "Checkbox default state",
+    "textarea": "Textarea",
+    "placeholder": "Placeholder",
+    "textarea_class": "Textarea class",
+    "if_checkbox_checked": "If checkbox checked",
+    "show_dynamically": "Show dynamically:",
+    "limit_characters": "Limit characters",
+    "gift_settings": "Gift Settings",
+    "target_type": "Target Type",
+    "receives_quantity": "Receives Quantity",
+    "allow_duplicates": "Allow duplicates",
+    "card_layout_settings": "Card Layout Settings",
+    "scroll_navigation": "Scroll Navigation",
+    "pagination": "Pagination",
+    "pagination_settings": "Pagination Settings",
+    "plain": "Plain",
+    "accordion": "Accordion",
+    "h_1_accordions": "H1 Accordions",
+    "accordion_settings": "Accordion Settings",
+    "default_label": "Default Label",
+    "background_image": "Background Image",
+    "button_url": "Button Url",
+    "top_padding_bottom_padding": "Top padding | Bottom Padding",
+    "render_tabs_asynchronously": "Render Tabs asynchronously",
+    "auto_scroll_every": "Auto scroll every",
+    "slider_navigation": "Slider Navigation",
+    "style_desktop": "Style Desktop",
+    "inherit": "Inherit",
+    "style_mobile": "Style Mobile",
+    "contact": "Contact",
+    "create_customer": "Create Customer",
+    "customer_login": "Customer Login",
+    "activate_customer_password": "Activate Customer Password",
+    "recover_customer_password": "Recover Customer Password",
+    "reset_customer_password": "Reset Customer Password",
+    "storefront_password": "Storefront Password",
+    "guest_login": "Guest Login",
+    "newsletter_sign_up": "Newsletter Sign-up",
+    "edit_customer_address": "Edit Customer Address",
+    "new_customer_address": "New Customer Address",
+    "form": "Form",
+    "blog": "Blog",
+    "display_limit_pagination_limit": "Display limit | Pagination limit",
+    "pagination_class": "Pagination class",
+    "article_card_class": "Article card class",
+    "image_settings": "Image Settings",
+    "mobile_style": "Mobile style",
+    "slider_buttons": "Slider Buttons",
+    "width_height_border_radius": "width | height | border | radius",
+    "subtitle": "Subtitle",
+    "subtitle_class": "Subtitle class",
+    "paragraph": "Paragraph",
+    "paragraph_class": "Paragraph class",
+    "button_text": "Button text",
+    "card": "Card",
+    "collections": "Collections",
+    "content_card_settings": "Content Card Settings",
+    "use_custom_border_styles": "Use custom border styles",
+    "animation": "Animation",
+    "animate": "Animate",
+    "rotation_duration": "Rotation Duration",
+    "pause_on_hover": "Pause on Hover",
+    "forward": "Forward",
+    "reverse": "Reverse",
+    "animation_direction": "Animation direction",
+    "col_width_height_gap": "col-width | height | gap",
+    "cols_col_min_w_gap_border_radius": "cols | col-min-w | gap | border | radius ",
+    "cover": "Cover",
+    "contain": "Contain",
+    "floating": "Floating",
+    "scroll_behaviour": "Scroll Behaviour",
+    "navigation_buttons": "Navigation Buttons",
+    "filter_heading": "Filter heading",
+    "filter_heading_class": "Filter heading class",
+    "legend_class": "Legend class",
+    "dropdown_icon": "Dropdown Icon",
+    "submit_button_class": "Submit Button class",
+    "sort_settings": "Sort Settings",
+    "show_sort": "Show Sort",
+    "filter_settings": "Filter Settings",
+    "show_filters_as_dropdown_menus": "Show Filters as dropdown menus",
+    "filters_show_count": "Filters show count",
+    "default_checkbox_filters": "Default Checkbox Filters",
+    "filter_checkbox_class": "Filter Checkbox Class",
+    "default_swatch_filters": "Default Swatch Filters",
+    "default_filter_layout": "Default Filter Layout",
+    "default_view_state": "Default view state",
+    "page_card_class": "Page card class",
+    "articles": "Articles",
+    "pages": "Pages",
+    "trigger_handle": "Trigger handle",
+    "close_icon": "Close icon",
+    "logo": "Logo",
+    "menu": "Menu",
+    "link_class": "Link class",
+    "enable_divider": "Enable Divider",
+    "icon_handle": "Icon handle",
+    "text_link": "Text Link",
+    "icon_width_height": "Icon: width | height",
+    "mobile_tablet": "Mobile & Tablet",
+    "desktop_image": "Desktop image",
+    "mobile_image": "Mobile image",
+    "buttons": "Buttons",
+    "button_secondary_text": "Button secondary text",
+    "button_secondary_url": "Button secondary Url",
+    "button_secondary_class": "Button secondary class",
+    "features": "Features",
+    "button_label": "Button label",
+    "css_class_name": "CSS Class name",
+    "typography_settings": "Typography Settings",
+    "font_family": "Font family",
+    "size_weight_height_opacity": "size | weight | height | opacity",
+    "spacing_transform_style_wrap": "spacing | transform | style | wrap",
+    "spacing": "Spacing",
+    "hover_radius_shadow_scale": "Hover: radius | shadow | scale",
+    "custom_css": "custom CSS",
+    "apply_container_queries": "Apply container queries",
+    "mobile_color_overrides": "Mobile Color Overrides",
+    "mobile_hover_colors": "Mobile Hover Colors",
+    "background": "Background",
+    "border": "Border",
+    "placeholder_color": "placeholder color",
+    "allow_resizing": "Allow Resizing",
+    "plus_minus": "plus/minus",
+    "rotating": "rotating",
+    "icon_style": "Icon style",
+    "icon_previous_button": "Icon previous button",
+    "icon_next_button": "Icon next button",
+    "color": "Color",
+    "aspect_ratio": "Aspect ratio",
+    "titles": "Titles",
+    "display_duration": "Display duration",
+    "section_height": "Section height",
+    "cart": "Cart",
+    "left": "Left",
+    "center": "Center",
+    "right": "Right",
+    "horizontal_alignment": "Horizontal Alignment",
+    "enable_marquee_animation": "Enable Marquee animation",
+    "logo_center": "Logo Center",
+    "auto": "Auto",
+    "alignment": "Alignment",
+    "transparent_header": "Transparent Header",
+    "templates": "Templates",
+    "link_css_class": "Link CSS class",
+    "horizontal_padding_gap": "Horizontal Padding | Gap",
+    "dropdown_megamenu": "Dropdown / Megamenu",
+    "dropdown_indicator_icon": "Dropdown Indicator icon",
+    "level_1_dropdown_link_class": "Level 1 dropdown link class",
+    "level_2_dropdown_link_class": "Level 2 dropdown link class",
+    "highlight_active_link": "Highlight active link",
+    "rotate_dropdown_icon": "Rotate dropdown icon",
+    "max_height": "Max height",
+    "input_prefix": "Input prefix",
+    "inline_button": "Inline button",
+    "input_button": "Input & Button",
+    "input_class": "Input class",
+    "name": "Name",
+    "text_alignment": "Text Alignment",
+    "vertical_alignment_desktop": "Vertical Alignment Desktop",
+    "vertical_alignment_mobile": "Vertical Alignment Mobile",
+    "desktop_video": "Desktop video",
+    "mobile_video": "Mobile video",
+    "overlay": "Overlay",
+    "media_content": "Media Content",
+    "richtext_class": "Richtext class",
+    "small_12_px": "Small (12px)",
+    "medium_24_px": "Medium (24px)",
+    "large_48_px": "Large (48px)",
+    "margin_bottom_desktop": "Margin Bottom Desktop",
+    "small_8_px": "Small (8px)",
+    "medium_12_px": "Medium (12px)",
+    "large_16_px": "Large (16px)",
+    "extra_large_24_px": "Extra Large (24px)",
+    "margin_bottom_mobile": "Margin Bottom Mobile",
+    "megamenu_settings": "Megamenu Settings",
+    "close_icon_size": "Close icon | Size",
+    "styling": "Styling",
+    "search_results": "Search results",
+    "grid_orientation": "Grid Orientation",
+    "icon_size": "Icon | Size",
+    "show_all_images": "Show all images",
+    "selected_variant_image_only": "Selected Variant image only.",
+    "selected_variant_image_and_images_following_until_the_next_image_is_assigned_to_a_variant_or_there_are_no_more_images": "Selected Variant image and images following until the next image is assigned to a variant or there are no more images.",
+    "selected_variant_image_and_images_assigned_to_the_metafield_smart_images_on_the_variant_level_set_to_type_list_file_reference": "Selected Variant image and images assigned to the metafield 'smart.images' on the Variant level set to type 'list.file_reference'.",
+    "selected_variant_image_and_images_that_are_not_assigned_to_any_other_variant": "Selected Variant image and images that are not assigned to any other variant.",
+    "only_images_that_are_not_assigned_to_any_variant": "Only images that are not assigned to any variant.",
+    "hide_images_with_alt_text": "Hide images with ALT text:",
+    "caption": "Caption",
+    "caption_class": "Caption class",
+    "checkbox_content": "Checkbox content",
+    "data_source": "Data Source",
+    "metaobject": "Metaobject",
+    "radio_card": "Radio Card",
+    "image_metafield": "Image metafield",
+    "dynamic_content": "Dynamic Content",
+    "dynamic_content_class": "Dynamic content class",
+    "footnote_caption": "Footnote caption",
+    "footnote_caption_class": "Footnote caption class",
+    "card_block_styling": "Card Block Styling",
+    "card_colors": "Card Colors",
+    "primary_source_sibling": "Primary source: Sibling...",
+    "quantity_class": "Quantity class",
+    "out_of_stock": "Out of stock",
+    "out_of_stock_content": "Out of stock content",
+    "product_layout": "Product Layout",
+    "upsell_products": "Upsell products",
+    "upsell_variants_metafield": "Upsell variants metafield",
+    "engraving_input_class": "Engraving Input class",
+    "layout_styling": "Layout Styling",
+    "counter_class": "Counter class",
+    "item_cards": "Item Cards",
+    "item_text_class": "Item text class",
+    "items_layout": "Items layout",
+    "one_time_text": "One-time text",
+    "subscription_text": "Subscription text",
+    "header_content": "Header Content",
+    "header_class": "Header Class",
+    "product_vendor_collection": "Product vendor collection",
+    "show_all_collections_step": "Show all collections step",
+    "always_show_in_editor": "Always show in editor",
+    "hide_target": "Hide target",
+    "match_path": "Match Path",
+    "paths": "Paths",
+    "hide_if_not_set": "Hide if not set",
+    "hide_if_value_is_set": "Hide if value IS set",
+    "match_templates": "Match templates",
+    "required_data_1": "Required Data 1",
+    "required_data_2": "Required Data 2",
+    "required_data_3": "Required Data 3",
+    "required_data_4": "Required Data 4",
+    "required_data_5": "Required Data 5",
+    "required_data_6": "Required Data 6",
+    "required_data_7": "Required Data 7",
+    "required_data_8": "Required Data 8",
+    "required_data_9": "Required Data 9",
+    "required_data_10": "Required Data 10",
+    "required_data_11": "Required Data 11",
+    "required_data_12": "Required Data 12",
+    "required_data_13": "Required Data 13",
+    "required_data_14": "Required Data 14",
+    "required_data_15": "Required Data 15",
+    "menu_layout": "Menu Layout",
+    "if_empty_or_no_target_hide": "If empty or no target, hide:",
+    "comma_separated_list": "Comma separated list.",
+    "z_index": "Z index",
+    "object_fit": "Object fit",
+    "autoplay": "Autoplay",
+    "controls": "controls",
+    "loop": "loop",
+    "muted": "muted",
+    "description": "Description",
+    "image_content_layout": "Image Content Layout",
+    "grid_layout": "Grid layout",
+    "content_key": "Content key",
+    "last_viewed": "Last viewed",
+    "item_layout": "Item Layout",
+    "input_suffix": "Input suffix",
+    "default_value": "Default value",
+    "autocomplete": "Autocomplete",
+    "input_name_attribute": "Input Name Attribute",
+    "email": "Email",
+    "block_layout": "Block Layout",
+    "load_metafield_product_data": "Load metafield product data"
+  }
+}

@@ -1,0 +1,223 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "content-popup-grid"
+  assign _handle = section.settings.handle
+  assign width_height_border_width_radius = section.settings.width_height_border_width_radius
+  assign framing_style = section.settings.framing_style
+  assign background_blur = section.settings.background_blur
+  assign grid_cols_align_x_align_y_gap = section.settings.grid_cols_align_x_align_y_gap
+  assign padding_top_bottom_left_right = section.settings.padding_top_bottom_left_right
+  assign margin_top_bottom_left_right = section.settings.margin_top_bottom_left_right
+  assign border_width_radius = section.settings.border_width_radius
+  assign background_color = section.settings.background_color
+  assign border_color = section.settings.border_color
+  assign section_id = section.settings.section_id
+  assign color_scheme = section.settings.color_scheme
+  assign container_spacing = section.settings.container_spacing
+  assign border_divider = section.settings.border_divider
+  assign top_bottom_min_height = section.settings.top_bottom_min_height
+  assign responsive_visibility = section.settings.responsive_visibility
+  assign responsive_breakpoint = section.settings.responsive_breakpoint
+  assign target_visibility = section.settings.target_visibility
+  assign render_tabs_async = section.settings.render_tabs_async
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture section_content %}
+  {% assign hide_section = section.blocks | where: "type", "hide-section" | first %}
+  {% capture hide_condition %}{% render '_blocks.hide-section', block: hide_section %}{% endcapture %}
+  {% if hide_condition contains 'section/break' %}{% break %}{% endif %}
+
+  {% capture selector %}[data-style-popup="{{ section.id }}"]{% endcapture %}
+  {% render '_utils.dynamic-css', selector: selector, keys: "responsive_visibility" %}
+  {% capture selector %}[data-style-popup-container="{{ section.id }}"]{% endcapture %}
+  {% render '_utils.dynamic-css', selector: selector, keys: "width_height_border_width_radius,background_color,border_color,margin_top_bottom_left_right" %}
+
+  {% liquid
+    case container_spacing
+      when "px-container-xs"
+        assign style = '--max-width-md: calc(min(100vw, var(--layout-page-width-xs)) - var(--layout-container-gutter) * 2);'
+        assign style = style | append: ' --max-width: calc(min(100vw, var(--layout-page-width-xs)));'
+      when "px-container-sm"
+        assign style = '--max-width-md: calc(min(100vw, var(--layout-page-width-sm)) - var(--layout-container-gutter) * 2);'
+        assign style = style | append: ' --max-width: calc(min(100vw, var(--layout-page-width-sm)));'
+      when "px-container-md"
+        assign style = '--max-width-md: calc(min(100vw, var(--layout-page-width-md)) - var(--layout-container-gutter) * 2);'
+        assign style = style | append: ' --max-width: calc(min(100vw, var(--layout-page-width-md)));'
+      when "px-container-lg"
+        assign style = '--max-width-md: calc(min(100vw, var(--layout-page-width-lg)) - var(--layout-container-gutter) * 2);'
+        assign style = style | append: ' --max-width: calc(min(100vw, var(--layout-page-width-lg)));'
+      when "px-container-fullwidth"
+        assign style = '--max-width-md: calc(min(100vw) - var(--layout-container-gutter) * 2);'
+        assign style = style | append: ' --max-width: calc(min(100vw));'
+    endcase
+  %}
+
+  <div data-popup="{{ _handle }}"
+       data-style-popup="{{ section.id }}"
+       x-data="{ open: $modal.id === '{{ _handle | handleize }}', transitioning: false }"
+       x-effect="open = $editor?.select_section_id === '{{ section.id }}' || $modal.id === '{{ _handle | handleize }}'"
+       x-cloak>
+    <div class="fixed inset-0 bg-[--color-modal-background] {{ background_blur }} transition-all duration-150 ease-in-out"
+         :class="clsx(open ? 'z-[2147483647]' : 'z-50')"
+         x-show="open"
+         @click="$modal.setId('')"
+         @transitionstart="transitioning = true"
+         @transitionend="transitioning = false"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"></div>
+    <section class="pointer-events-none fixed inset-0 grid transition-all duration-150 {{ framing_style }}"
+             :class="clsx(open || transitioning ? 'z-[2147483647]' : 'z-50')"
+             x-show="open"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0"
+             x-trap.noautofocus="open">
+      <div class="pointer-events-auto relative max-h-full max-w-full overflow-auto scrollbar-none [&>*]:h-full [&>*]:max-w-[--max-width] [&>*]:md:max-w-[--max-width-md] [&>*]:px-[--layout-container-gutter] {{ color_scheme }}"
+           style="{{ style }}"
+           data-style-popup-container="{{ section.id }}">
+
+        {% assign hide_section = section.blocks | where: "type", "hide-section" | first %}
+        {% capture hide_condition %}{% render '_blocks.hide-section', block: hide_section %}{% endcapture %}
+        {% if hide_condition contains 'section/break' %}{% break %}{% endif %}
+
+        {% render '_utils.dynamic-css',
+            block: block,
+            selector: "& [data-style-content-popup-grid]",
+            keys: "grid_cols_align_x_align_y_gap,padding_top_bottom_left_right,border_width_radius,background_color,border_color"
+        %}
+
+        {% liquid
+          assign tab_blocks = section.blocks | where: "type", "layout__tab_content" | map: "settings" | map: "label"
+          assign inline_tab_blocks = section.blocks | where: "type", "layout_child__tab_content" | map: "settings" | map: "label"
+          assign image_with_caption_tab_blocks = section.blocks | where: "type", "tab-image-with-caption" | map: "settings" | map: "label"
+          assign tab_blocks = tab_blocks | concat: inline_tab_blocks | concat: image_with_caption_tab_blocks | uniq
+          assign form_block = section.blocks | where: "type", "shopify_form" | first
+        %}
+
+
+        {% render "_section.universal-settings", section_type: section_type, insert: "before" %}
+        {% if form_block %}
+          {% form form_block.settings.form_type, id: form_block.id, class: "hidden", article: article %}
+            {% assign form = form %}
+            {%- if form.errors -%}
+              {% for error in form.errors %}
+                {% if form.errors.messages[error] contains 'verify your email' %}
+                  <div class="!hidden"
+                       data-error-content="{{ form.errors.messages[error] | escape }}"
+                       x-init="() => _stores.toast.addToast({type: 'success',target: 'cart', title: 'Please verify your Email',content: $el.getAttribute('data-error-content'), timestamp: Date.now() + 1000 * 15})"></div>
+                  {% continue %}
+                {% endif %}
+                <div class="!hidden"
+                     data-error-content="{{ form.errors.translated_fields[error] | capitalize | append: ": " | append: form.errors.messages[error] | escape }}"
+                     x-init="() => _stores.toast.addToast({type: 'error',target: 'cart', title: 'We\'ve encountered a problem.',content: $el.getAttribute('data-error-content'), timestamp: Date.now() + 1000 * 15})"></div>
+              {% endfor %}
+            {%- endif -%}
+            {%- if form.posted_successfully? -%}
+              <div class="!hidden"
+                   x-init="() => _stores.toast.addToast({type: 'success',target: 'cart', title: 'Success',content: '', timestamp: Date.now() + 1000 * 15})"></div>
+            {%- endif -%}
+          {% endform %}
+        {% endif %}
+        <div class="grid h-full"
+             data-style-content-popup-grid
+             data-tabs="{{ tab_blocks | json | escape }}"
+             x-data="{ tabs: utils.JSONParse($el.getAttribute('data-tabs')), current_tab: utils.JSONParse($el.getAttribute('data-tabs'))[0] ?? '' }">
+             {% for block in section.blocks %}
+
+
+                {% if block.type == 'variant_based_text' %}
+                  {% render 'content-popup-grid.variant_based_text', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0 %}
+                {% endif %}
+             {% endfor %}
+          {% liquid
+            assign allow_no_cols = true
+            assign first_tab = true
+            assign child_layout = false
+            for block in section.blocks
+
+              if child_layout and block.type == 'layout_child__end'
+                assign allow_no_cols = true
+                assign child_layout = false
+              endif
+
+              if allow_no_cols
+                render 'content-grid.render-blocks', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+
+                if block.type == 'close_button'
+                  render 'content-popup-grid.close_button', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+                endif
+
+                if block.type == 'layout_child__tab_content'
+                  render 'content-grid.layout_child__tab_content', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+                  assign allow_no_cols = false
+                  assign child_layout = true
+                endif
+                if block.type == 'layout_child__flex_card'
+                  render 'content-grid.layout_child__flex_card', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+                  assign allow_no_cols = false
+                  assign child_layout = true
+                endif
+                if block.type == 'layout_child__grid_card'
+                  render 'content-grid.layout_child__grid_card', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+                  assign allow_no_cols = false
+                  assign child_layout = true
+                endif
+                if block.type == 'layout_child__collapsible'
+                  render 'content-grid.layout_child__collapsible', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+                  assign allow_no_cols = false
+                  assign child_layout = true
+                endif
+              endif
+
+              if block.type == 'layout__end'
+                assign allow_no_cols = true
+              endif
+
+              if block.type == 'layout__grid'
+                assign allow_no_cols = false
+                render 'content-grid.layout__grid', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+              endif
+
+              if block.type == 'layout__flex'
+                assign allow_no_cols = false
+                render 'content-grid.layout__flex', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+              endif
+
+              if block.type == 'layout__collapsible'
+                assign allow_no_cols = false
+                render 'content-grid.layout__collapsible', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+              endif
+
+              if block.type == 'layout__flex_wrap'
+                assign allow_no_cols = false
+                render 'content-grid.layout__flex_wrap', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+              endif
+
+              if block.type == 'layout__grid_slider'
+                assign allow_no_cols = false
+                render 'content-grid.layout__grid_slider', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+              endif
+
+              if block.type == 'layout__tab_content'
+                assign allow_no_cols = false
+                render 'content-grid.layout__tab_content', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0, first_tab: first_tab
+                assign first_tab = false
+              endif
+            endfor
+          %}
+        </div>
+
+        {% render "_section.universal-settings", insert: "after" %}
+      </div>
+    </section>
+  </div>
+{% endcapture %}
+
+{% if section_content contains '/break"></script>' %}
+  {% break %}
+{% endif %}
+{{ section_content }}

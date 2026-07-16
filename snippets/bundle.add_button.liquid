@@ -1,0 +1,89 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "add_button"
+  assign section_type = "bundle"
+  assign show_conditionally = block.settings.show_conditionally
+  assign show_based_on_bundle_state = block.settings.show_based_on_bundle_state
+  assign action = block.settings.action
+  assign allow_incomplete_bundles = block.settings.allow_incomplete_bundles
+  assign label = block.settings.label
+  assign button_class = block.settings.button_class
+  assign incomplete_label = block.settings.incomplete_label
+  assign incomplete_button_class = block.settings.incomplete_button_class
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if request.design_mode != true
+    if label == blank
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+
+  assign _label = label | replace: '[difference]', '' | replace: '[price]', '' | replace: '[compare_at_price]', ''
+  assign _incomplete_label = incomplete_label | replace: '[difference]', '' | replace: '[price]', '' | replace: '[compare_at_price]', ''
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,margin_top_bottom_left_right,max_w_flex_col_row_order_align" %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    x-show="($data.windowWidth >= 1024 || $data.showConditionally(`{{ show_conditionally }}`)) && $data.showBasedOnBundleState(`{{ show_based_on_bundle_state }}`)">
+  <button type="button"
+          class="w-full {{ button_class }} {{ class }}"
+      {% if allow_incomplete_bundles %}
+        x-show="$data.bundle.item_count || $data.bundle.items_added_to_cart"
+      {% else %}
+        x-show="$data.bundle.items_added_to_cart || ($data.bundle.item_count && !$data.bundle.target_difference)"
+      {% endif %}
+          @click="$data.handleAddToCart('{{ action }}')"
+          :class="$data.bundle.isAdding ? 'button-loading' : ''"
+          :disabled="$data.bundle.isAdding || $data.bundle.items_added_to_cart"
+          x-html="$data.bundle.items_added_to_cart
+            ? 'Items added'
+            : $el.getAttribute('data-content')
+              .replace('[difference]', $data.bundle.target_difference)
+              .replace('[price]', utils.formatMoney($data.bundle.final_price))
+              .replace('[compare_at_price]',  `<span style='text-decoration: line-through; opacity: 0.5;'>${utils.formatMoney($data?.bundle?.total_price)}</span>`) ?? ''"
+          data-content="{% render '_input.inline_richtext', content: label, escape: true, block: block, forloop: forloop %}">
+    {% render '_input.inline_richtext', content: _label, block: block, forloop: forloop %}
+  </button>
+  <button type="button"
+          class="w-full {{ button_class }} {{ class }}"
+          disabled="disabled"
+          x-cloak
+      {% if allow_incomplete_bundles %}
+        x-show="!$data.bundle.item_count && !$data.bundle.items_added_to_cart"
+      {% else %}
+        x-show="!$data.bundle.items_added_to_cart && (!$data.bundle.item_count || $data.bundle.target_difference)"
+      {% endif %}
+          x-html="$el.getAttribute('data-content')
+            .replace('[difference]', $data.bundle.target_difference)
+            .replace('[price]', utils.formatMoney($data.bundle.final_price))
+            .replace('[compare_at_price]',  `<span style='text-decoration: line-through; opacity: 0.5;'>${utils.formatMoney($data?.bundle?.total_price)}</span>`) ?? ''"
+          data-content="{% render '_input.inline_richtext', content: incomplete_label, escape: true, block: block, forloop: forloop %}">
+    {% render '_input.inline_richtext', content: _incomplete_label, block: block, forloop: forloop %}
+  </button>
+</div>

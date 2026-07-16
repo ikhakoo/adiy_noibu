@@ -1,0 +1,35 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid  
+  assign block_type = "richtext"
+  assign section_type = "text-banner"
+  assign preheading = block.settings.preheading
+  assign preheading_class = block.settings.preheading_class
+  assign preheading_margin_bottom_desktop = block.settings.preheading_margin_bottom_desktop
+  assign preheading_margin_bottom_mobile = block.settings.preheading_margin_bottom_mobile
+  assign heading = block.settings.heading
+  assign heading_class = block.settings.heading_class
+  assign heading_margin_bottom_desktop = block.settings.heading_margin_bottom_desktop
+  assign heading_margin_bottom_mobile = block.settings.heading_margin_bottom_mobile
+  assign subheading = block.settings.subheading
+  assign subheading_class = block.settings.subheading_class
+  assign subheading_margin_bottom_desktop = block.settings.subheading_margin_bottom_desktop
+  assign subheading_margin_bottom_mobile = block.settings.subheading_margin_bottom_mobile
+  assign text_color = block.settings.text_color
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign preheading_class =  preheading_class | append: " " | append: preheading_margin_bottom_desktop | append: " " | append: preheading_margin_bottom_mobile
+  assign heading_class =  heading_class | append: " " | append: heading_margin_bottom_desktop | append: " " | append: heading_margin_bottom_mobile
+  assign subheading_class =  subheading_class | append: " " | append: subheading_margin_bottom_desktop | append: " " | append: subheading_margin_bottom_mobile
+%}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {{ block.shopify_attributes }}
+    class="flex flex-col"
+    style="color: {{ text_color }};">
+    {% render '_input.richtext', content: preheading, class: preheading_class, block: block, forloop: forloop %}
+    {% render '_input.richtext', content: heading, class: heading_class, block: block, forloop: forloop %}
+    {% render '_input.richtext', content: subheading, class: subheading_class, block: block, forloop: forloop %}
+</div>

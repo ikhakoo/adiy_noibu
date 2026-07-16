@@ -1,0 +1,72 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "layout_child__table_row"
+  assign section_type = "content-grid"
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign padding_top_bottom_left_right_min_height = block.settings.padding_top_bottom_left_right_min_height
+  assign use_custom_border_styles = block.settings.use_custom_border_styles
+  assign border_width_radius = block.settings.border_width_radius
+  assign background_color = block.settings.background_color
+  assign border_color = block.settings.border_color
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture container_content %}
+  {% render '_utils.dynamic-css', block: block, keys: "flex_direction_align_x_align_y_gap_wrap,padding_top_bottom_left_right_min_height,border_color, background_color", selector: '& td' %}
+  {% render '_utils.dynamic-css', block: block, keys: "border_width_radius", css_variables: true %}
+
+  {% if use_custom_border_styles %}
+    <style>
+
+      [data-style-id="{{ section.id }}--{{ block.id }}"] td {
+        border-style: solid;
+        border-top-width: var(--border-width);
+        border-bottom-width: var(--border-width);
+      }
+
+      [data-style-id="{{ section.id }}--{{ block.id }}"] td:first-of-type {
+        border-top-left-radius: var(--border-radius);
+        border-bottom-left-radius: var(--border-radius);
+        border-left-width: var(--border-width);
+      }
+
+      [data-style-id="{{ section.id }}--{{ block.id }}"] td:last-of-type {
+        border-top-right-radius: var(--border-radius);
+        border-bottom-right-radius: var(--border-radius);
+        border-right-width: var(--border-width);
+      }
+    </style>
+  {% endif %}
+
+  <tr
+      data-style-id="{{ section.id }}--{{ block.id }}"
+      {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+      {{ block.shopify_attributes }}
+      class="relative">
+    {% liquid
+      assign count = 0
+      for block in section.blocks
+        if forloop.index0 <= columnIndex
+          continue
+        endif
+        if block.type contains 'layout__' or block.type contains 'layout_child__'
+          break
+        endif
+        assign responsive_td = '<td class="' | append: block.settings.responsive_visibility | append: '">'
+        echo responsive_td
+        render 'content-grid.render-blocks', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+        echo '</td>'
+        assign count = count | plus: 1
+      endfor
+
+      if count == 0
+        assign no_dynamic_content = true
+      endif
+    %}
+  </tr>
+{% endcapture %}
+
+{% if container_content contains '<script type="container/break"></script>' %}
+  {% break %}
+{% endif %}
+{{ container_content }}

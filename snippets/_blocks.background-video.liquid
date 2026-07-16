@@ -1,0 +1,62 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.background-video"
+  assign desktop_video = block.settings.desktop_video
+  assign desktop_video_id = block.settings.desktop_video_id
+  assign mobile_video = block.settings.mobile_video
+  assign mobile_video_id = block.settings.mobile_video_id
+  assign background_gradient = block.settings.background_gradient
+  assign autoplay = block.settings.autoplay
+  assign controls = block.settings.controls
+  assign loop = block.settings.loop
+  assign muted = block.settings.muted
+  assign z_index = block.settings.z_index
+  assign object_fit = block.settings.object_fit
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if request.design_mode != true
+    if desktop_video == blank and mobile_video == blank
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+%}
+
+{% liquid
+  assign desktop_video = desktop_video
+  assign mobile_video = mobile_video | default: desktop_video
+  assign mobile_id = mobile_id | default: desktop_id
+
+  assign preload = false
+
+  if force_video_preload
+    assign preload = true
+  endif
+
+  assign media_classes_sm = "w-full h-full max-md:hidden " | append: object_fit
+  assign media_classes_md = "w-full h-full md:hidden " | append: object_fit
+%}
+
+<picture class="absolute inset-0 pointer-events-none block overflow-hidden {{ z_index }} {{ responsive_visibility }} {{ block.shopify_attributes }}"
+         style="z-index: {{ z_index }};">
+  {% render '_object.media', media: desktop_video, sizes: "100vw", class: media_classes_sm, id: desktop_id, preload: preload, autoplay: autoplay, controls: controls, loop: loop, muted: muted %}
+  {% render '_object.media', media: mobile_video, sizes: "100vw", class: media_classes_md, id: mobile_id, preload: preload, autoplay: autoplay, controls: controls, loop: loop, muted: muted %}
+  {% if background_gradient != blank %}
+    <div class="absolute inset-0" style="background: {{ background_gradient }}"></div>
+  {% endif %}
+</picture>

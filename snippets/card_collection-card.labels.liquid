@@ -1,0 +1,43 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "labels"
+  assign section_type = "card_collection-card"
+  assign preview = block.settings.preview
+  assign content_source = block.settings.content_source
+  assign label_class__content = block.settings.label_class__content
+  assign flex_row_wrap_align_x_align_y_gap = block.settings.flex_row_wrap_align_x_align_y_gap
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css', block: block, selector: '& [data-style-container]', keys: 'flex_row_wrap_align_x_align_y_gap' %}
+
+{% render '_utils.dynamic-css', block: block %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}>
+  <div data-style-container>
+    {% if request.design_mode and preview %}
+      <div data-loop-item class="{{ label_class__content }}" x-html="'Custom label'"></div>
+      <div class="{{ label_class__discount }}"
+           data-label-type="{{ label_type__discounts }}"
+           x-cloak
+           x-show="!!`{{ label_type__discounts }}`"
+           x-html="getDiscountLabel($el.getAttribute('data-label-type')) || 'discount-label'"></div>
+      {% if label_type__out_of_stock == "show" %}
+        <div class="{{ label_class__out_of_stock }}">{{ default_content__out_of_stock }}</div>
+      {% endif %}
+    {% else %}
+      <template x-for="value in getContentLabels($el.getAttribute('data-labels-key'))"
+                data-labels-key="{{ content_source }}">
+        <div data-loop-item class="{{ label_class__content }}" x-html="value"></div>
+      </template>
+    {% endif %}
+  </div>
+</div>

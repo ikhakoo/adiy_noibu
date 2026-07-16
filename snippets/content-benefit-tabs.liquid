@@ -1,0 +1,104 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "content-benefit-tabs"
+  assign width_height_aspect_object_fit = section.settings.width_height_aspect_object_fit
+  assign border_width_radius = section.settings.border_width_radius
+  assign border_color = section.settings.border_color
+  assign image_mobile_style = section.settings.image_mobile_style
+  assign padding_top_bottom_left_right = section.settings.padding_top_bottom_left_right
+  assign content_mobile_style = section.settings.content_mobile_style
+  assign icon = section.settings.icon
+  assign width_height_gap = section.settings.width_height_gap
+  assign text_color = section.settings.text_color
+  assign section_id = section.settings.section_id
+  assign color_scheme = section.settings.color_scheme
+  assign container_spacing = section.settings.container_spacing
+  assign border_divider = section.settings.border_divider
+  assign top_bottom_min_height = section.settings.top_bottom_min_height
+  assign responsive_visibility = section.settings.responsive_visibility
+  assign responsive_breakpoint = section.settings.responsive_breakpoint
+  assign target_visibility = section.settings.target_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture section_content %}
+  {% assign hide_section = section.blocks | where: "type", "hide-section" | first %}
+  {% capture hide_condition %}{% render '_blocks.hide-section', block: hide_section %}{% endcapture %}
+  {% if hide_condition contains 'section/break' %}{% break %}{% endif %}
+
+  {% render '_utils.dynamic-css',
+      block: block,
+      selector: "& [data-style-image]",
+      keys: "width_height_aspect_object_fit,border_width_radius,border_color"
+  %}
+
+  {% render '_utils.dynamic-css',
+      block: block,
+      css_variables: true,
+      keys: "width_height_gap,text_color"
+  %}
+
+  {% liquid
+    if image_mobile_style == 'fullscreen'
+      assign content_wrapper_classes = 'max-md:-mx-[--layout-container-gutter]'
+    endif
+    if content_mobile_style == 'slider'
+      assign content_mobile_style_class = 'max-lg:hidden'
+    endif
+  %}
+
+  {% render "_section.universal-settings", section_type: section_type, insert: "before" %}
+  <div class="grid items-center gap-6 lg:grid-cols-2 md:gap-12 xl:gap-24"
+       x-defer="intersect"
+       data-grid-slider
+       x-data="{ ..._sections.initContentSlider($refs.container) }">
+    <section class="flex flex-col justify-center {{ content_wrapper_classes }}">
+      <main class="grid snap-x snap-mandatory auto-cols-[100%] grid-flow-col gap-4 overflow-x-auto overflow-y-hidden scrollbar-none"
+            x-ref="container"
+            @resize.window="content_slider.handleResize"
+            x-init="$nextTick(() => content_slider.handleResize())"
+            @scroll="content_slider.handleScroll">
+        {% assign index = 0 %}
+        {% for block in section.blocks %}
+          {% if block.type == 'feature' %}
+            {% render 'content-benefit-tabs.feature', block: block, forloop: forloop, index: index %}
+            {% assign index = index | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      </main>
+      {% liquid
+        for block in section.blocks
+          if block.type == 'pagination'
+            render 'content-slider.pagination', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+          endif
+        endfor
+      %}
+    </section>
+    <section class="flex h-full flex-col justify-center gap-6 lg:gap-9 {{ content_mobile_style_class }}">
+      {% assign index = 0 %}
+      {% for block in section.blocks %}
+        {% if block.type == 'feature' %}
+          <div :class="content_slider?.state?.slide_index !== +`{{ index }}` ? 'lg:opacity-40' : ''"
+               class="transition-all duration-75 flex items-baseline gap-[--gap]"
+               role="button"
+               :role="window.innerWidth > 768 ? 'button' : undefined"
+               :tabindex="window.innerWidth > 768 ? '0' : undefined"
+               @click="content_slider?.scrollToIndex(+`{{ index }}`)">
+            {% if icon != blank %}
+              {% render '_components.icon', icon: icon, html_attributes: 'data-style-icon', class: "max-md:hidden w-dynamic h-dynamic text-[--color]" %}
+            {% endif %}
+            {% render '_input.richtext', content: block.settings.content, class: block.settings.content_class, block: block, forloop: forloop %}
+          </div>
+          {% assign index = index | plus: 1 %}
+        {% endif %}
+      {% endfor %}
+    </section>
+  </div>
+  {% render "_section.universal-settings", insert: "after" %}
+
+{% endcapture %}
+
+{% if section_content contains '/break"></script>' %}
+  {% break %}
+{% endif %}
+{{ section_content }}

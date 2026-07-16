@@ -1,0 +1,60 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "image"
+  assign section_type = "bundle"
+  assign show_conditionally = block.settings.show_conditionally
+  assign show_based_on_bundle_state = block.settings.show_based_on_bundle_state
+  assign image = block.settings.image
+  assign width_height_aspect_object_fit = block.settings.width_height_aspect_object_fit
+  assign url = block.settings.url
+  assign border_width_radius = block.settings.border_width_radius
+  assign background_gradient = block.settings.background_gradient
+  assign border_color = block.settings.border_color
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if request.design_mode != true
+    if image == blank
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility, width_height_aspect_object_fit, border_width_radius, max_w_flex_col_row_order_align, border_color" %}
+
+<figure
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    x-show="($data.windowWidth >= 1024 || $data.showConditionally(`{{ show_conditionally }}`)) && $data.showBasedOnBundleState(`{{ show_based_on_bundle_state }}`)"
+    x-cloak
+    {% if url != blank %}
+      title="{{ url }}"
+      role="button"
+      tabindex="0"
+      @click.prevent.stop="barba.go('{{ url }}'); $modal.setId('')"
+    {% endif %}
+    class="group relative overflow-hidden">
+  {% render '_object.image', image: image, class: "w-full h-full transition-all object-[inherit]" %}
+</figure>

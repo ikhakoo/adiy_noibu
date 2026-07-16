@@ -1,0 +1,203 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "layout__grid_slider"
+  assign section_type = "content-grid"
+  assign slider_cols_rows_align_x_align_y_gap = block.settings.slider_cols_rows_align_x_align_y_gap
+  assign slider_scroll_snap = block.settings.slider_scroll_snap
+  assign slider_overflow_container = block.settings.slider_overflow_container
+  assign infinite_scroll = block.settings.infinite_scroll
+  assign padding_top_bottom_left_right_box = block.settings.padding_top_bottom_left_right_box
+  assign auto_scroll = block.settings.auto_scroll
+  assign scroll_navigation_style = block.settings.scroll_navigation_style
+  assign scroll_navigation_style_mobile = block.settings.scroll_navigation_style_mobile
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign scrollbar_class = block.settings.scrollbar_class
+  assign size_border_width_radius = block.settings.size_border_width_radius
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign background_color = block.settings.background_color
+  assign border_color = block.settings.border_color
+  assign hover_border_color = block.settings.hover_border_color
+  assign hover_background_color = block.settings.hover_background_color
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture container_content %}
+  {% render '_utils.dynamic-css', block: block, keys: "responsive_visibility,max_w_flex_col_row_order_align, margin_top_bottom_left_right" %}
+  {% render '_utils.dynamic-css',
+      block: block,
+      selector: "& [data-style-content-grid-slider]",
+      keys: "slider_cols_rows_align_x_align_y_gap"
+  %}
+
+  {% render '_utils.dynamic-css',
+      block: block,
+      selector: "& :where([data-style-content-grid-slider])",
+      keys: "padding_top_bottom_left_right_box"
+  %}
+
+  {% liquid
+
+    assign slider_cols_rows_align_x_align_y_gap = slider_cols_rows_align_x_align_y_gap | strip_newlines | split: '|'
+    assign grid_cols = slider_cols_rows_align_x_align_y_gap[0] | split: '/'
+
+    assign container_spacing = section.settings.container_spacing
+    case slider_overflow_container
+      when 'all'
+        assign slider_overflow = container_spacing | replace: 'px', '-mx' | append: " scroll-" | append: container_spacing | append: " " | append: container_spacing
+      when 'mobile'
+        assign slider_overflow = container_spacing | replace: 'px', 'max-md:-mx' | append: " max-md:scroll-" | append: container_spacing | append: " max-md:" | append: container_spacing
+      when 'desktop'
+        assign slider_overflow = container_spacing | replace: 'px', 'md:-mx' | append: " md:scroll-" | append: container_spacing | append: " md:" | append: container_spacing
+    endcase
+
+    if scroll_navigation_style_mobile == 'inherit'
+      assign scroll_navigation_style_mobile = scroll_navigation_style
+    endif
+  %}
+
+  <style>
+    @media screen and (max-width: {{ responsive_breakpoint | default: "768px" }}) {
+      [data-style-id="{{ section.id }}--{{ block.id }}"] [data-style-content-grid-slider] > :where(*):nth-of-type({{ grid_cols | last | replace: " ", "" | trim }}n+1) {
+        scroll-snap-align: start;
+      }
+    }
+
+    @media screen and (min-width: {{ responsive_breakpoint | default: "768px" }}) {
+      [data-style-id="{{ section.id }}--{{ block.id }}"] [data-style-content-grid-slider] > :where(*):nth-of-type({{ grid_cols | first | replace: " ", "" | trim }}n+1) {
+        scroll-snap-align: start;
+      }
+    }
+  </style>
+
+  <div
+      data-style-id="{{ section.id }}--{{ block.id }}"
+      {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+      {{ block.shopify_attributes }}
+      class="flex flex-col relative"
+      data-grid-slider
+      x-data="{ ..._sections.initContentSlider($refs.container, undefined,`{{ infinite_scroll }}` === 'true'),  interval: null }"
+      {% if auto_scroll > 0 %}
+        x-init="() => {
+          interval = setInterval(() => {
+            content_slider.scrollToIndex(content_slider.state.slide_index + 1 >= content_slider.state.slide_count && !content_slider.state.infinite ? 0 : content_slider.state.slide_index + 1, 400)
+          }, +`{{ auto_scroll }}` * 1000)
+        }"
+      {% endif %}
+      x-defer="intersect">
+    <div class="relative grid overflow-x-auto scrollbar-none overflow-y-hidden snap-x {{ slider_scroll_snap }} {{ slider_overflow }}"
+         x-ref="container"
+         @resize.window="content_slider.handleResize"
+         x-init="$nextTick(() => content_slider.handleResize())"
+         @scroll="content_slider.handleScroll"
+         @scrollend="content_slider.handleInfiniteScroll"
+         data-style-content-grid-slider>
+      {% liquid
+        assign count = 0
+        assign allow_no_cols = true
+        for block in section.blocks
+          if forloop.index0 <= columnIndex
+            continue
+          endif
+          if block.type contains "layout__"
+            break
+          endif
+
+          if allow_no_cols
+            render 'content-grid.render-blocks', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+
+            assign count = count | plus: 1
+          endif
+
+          if block.type == 'layout_child__end'
+            assign allow_no_cols = true
+          endif
+
+          if block.type == 'layout_child__tab_content'
+            render 'content-grid.layout_child__tab_content', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+            assign allow_no_cols = false
+          endif
+          if block.type == 'layout_child__flex_card'
+            render 'content-grid.layout_child__flex_card', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+            assign allow_no_cols = false
+          endif
+          if block.type == 'layout_child__grid_card'
+            render 'content-grid.layout_child__grid_card', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+            assign allow_no_cols = false
+          endif
+          if block.type == 'layout_child__collapsible'
+            render 'content-grid.layout_child__collapsible', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+            assign allow_no_cols = false
+          endif
+
+        endfor
+
+        if count == 0
+          assign no_dynamic_content = true
+        endif
+      %}
+    </div>
+    {% if scroll_navigation_style == 'scrollbar' or scroll_navigation_style_mobile == 'scrollbar' %}
+      {% liquid
+        if scroll_navigation_style != 'scrollbar'
+          assign scroll_nav_class = 'md:!hidden'
+        endif
+        if scroll_navigation_style_mobile != 'scrollbar'
+          assign scroll_nav_class = 'max-md:!hidden'
+        endif
+      %}
+      {% render '_utils.dynamic-css',
+          block: block,
+          selector: "& [data-style-scroll-navigation]",
+          keys: "padding_top_bottom_left_right",
+          padding_as_margin: true
+      %}
+      <div data-style-scroll-navigation
+           class="z-10 {{ scroll_nav_class }}"
+           x-cloak
+           x-show="content_slider.state.slide_count > 1">
+        {% render "_components.scrollbar",
+            class: scrollbar_class,
+            scroll_container_ref: '$refs.container'
+        %}
+      </div>
+    {% endif %}
+    {% if scroll_navigation_style == 'pagination' or scroll_navigation_style_mobile == 'pagination' %}
+      {% liquid
+        if scroll_navigation_style != 'pagination'
+          assign pagination_nav_class = 'md:!hidden'
+        endif
+        if scroll_navigation_style_mobile != 'pagination'
+          assign pagination_nav_class = 'max-md:!hidden'
+        endif
+      %}
+
+      {% render '_utils.dynamic-css', block: block, selector: '& [data-style-scroll-navigation]', keys: 'flex_direction_align_x_align_y_gap_wrap, padding_top_bottom_left_right', padding_as_margin: true %}
+      {% render '_utils.dynamic-css', block: block, selector: '& [data-style-scroll-navigation] button span', keys: 'size_border_width_radius,background_color,border_color' %}
+      <div data-style-scroll-navigation
+           class="z-10 pointer-events-none {{ pagination_nav_class }}"
+           x-cloak
+           x-show="content_slider.state.slide_count > 1">
+        <template x-for="index in [...new Array(content_slider.state.slide_count ?? 0)].map((_,i) => i)">
+          <button type="button"
+                  :aria-label="`Scroll to slide ${index + 1}`"
+                  class="-m-1.5 p-1.5 hf:opacity-80 pointer-events-auto"
+                  @click="() => content_slider.scrollToIndex(index)">
+            <span class="block rounded-full hfaa:bg-[--hover-bg] hfaa:border-[--hover-border]"
+                  style="--hover-bg: {{ hover_background_color }}; --hover-border: {{ hover_border_color }}; "
+                  :class="content_slider.state.slide_index === index ? 'active' : ''"></span>
+          </button>
+        </template>
+      </div>
+    {% endif %}
+  </div>
+{% endcapture %}
+
+{% if container_content contains '<script type="container/break"></script>' %}
+  {% break %}
+{% endif %}
+{{ container_content }}

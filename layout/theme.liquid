@@ -1,0 +1,430 @@
+{%- capture contentForQuerystring -%}{%- if tinyscript -%}{{ content_for_header }}{%- else -%}{% render 'tiny-script-control' %}{%- endif -%}{%- endcapture -%}
+{%- assign query_params = contentForQuerystring | split: '"pageurl":"' | last | split: '"' | first | replace: '\/', '/' | replace: '%20', ' ' | replace: '\u0026', '&' | split: "?" | last -%}
+{% if request.path == '/collections' %}
+  {% if query_params contains '__modals_data=true' %}
+    <div data-modals-section>{% sections '0_modal' %}</div>
+    <div data-cards-section>{% sections '0_card' %}</div>
+    {{ content }}
+    {% break %}
+  {% endif %}
+{% endif %}
+{% if query_params contains 'barba_prefetch=true' %}
+  {% if theme.role != 'main' %}
+    {% assign dynamic_prefetch = true %}
+  {% endif %}
+{% endif %}
+
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+<head> 
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible"
+        content="IE=edge">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="light only">
+  {%- render "_layout.seo" -%}
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" as="style">
+    <!-- avoiding chrome force dark mode -->
+  <script>
+    var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (isDarkMode) {
+      document.write(`<meta name="color-scheme" content="dark Only"><\/meta>`);
+    }
+  </script>
+  <script async="" src="https://cdn1.affirm.com/js/v2/affirm.js"></script>
+  <style>
+    :root {
+      color-scheme: light only;
+    }
+  </style>
+
+  {% if dynamic_prefetch != true %}
+    {%- render "_layout.imports" -%}
+    {%- render "_layout.dynamic-imports" -%}
+    {%- render "_layout.library-imports" -%}
+    {%- render "_layout.translations" -%}
+    {%- render "_layout.global-layout" -%}
+    {%- render "_layout.global-colors" -%}
+    {%- render "_layout.global-settings" -%}
+
+  {% if theme.role == 'main' or request.path contains '/account' or request.visual_preview_mode %}
+    {%- if tinyscript -%}{{ content_for_header }}{%- else -%}{% render 'tiny-script-control' %}{%- endif -%}
+  {% elsif settings.development__block_content_for_header %}
+    <script>var Shopify = Shopify || {};
+      Shopify.shop = "{{ shop.permanent_domain }}";
+      Shopify.theme = {
+        "name": "{{ theme.name }}",
+        "id": {{ theme.id }},
+        "theme_store_id": null,
+        "role": "{{ theme.role }}",
+      };
+      Shopify.routes = Shopify.routes || {};
+      Shopify.routes.root = "/";</script>
+  {% elsif settings.development__block_app_scripts %}
+    {% capture _content_for_header %}{%- if tinyscript -%}{{ content_for_header }}{%- else -%}{% render 'tiny-script-control' %}{%- endif -%}{% endcapture %}
+    {{ _content_for_header | split: "<script>(function() {" | first }}
+    {% assign parts = _content_for_header | split: "<script>(function() {" | last | replace_first: "</script>", "|~|SPLIT|~|" | split: "|~|SPLIT|~|" %}
+    <script type="accelerate/blocked">(function() { {{ parts | first }}</script>
+    {{ parts | last }}
+  {% else %}
+    {%- if tinyscript -%}{{ content_for_header }}{%- else -%}{% render 'tiny-script-control' %}{%- endif -%}
+  {% endif %}
+
+  {% if theme.role != 'main' and request.design_mode != true and settings.development__enable_marker_io and settings.development__marker_io_id != blank and request.visual_preview_mode != true %}
+    <script>
+      if (!window.location.origin.includes("127.0.0.1")) {
+        window.markerConfig = {
+          project: '{{ settings.development__marker_io_id }}',
+          source: 'snippet',
+        };
+
+        !function (e, r, a) {
+          if (!e.__Marker) {
+            e.__Marker = {};
+            var t = [], n = { __cs: t };
+            ["show", "hide", "isVisible", "capture", "cancelCapture", "unload", "reload", "isExtensionInstalled", "setReporter", "setCustomData", "on", "off"].forEach(function (e) {
+              n[e] = function () {
+                var r = Array.prototype.slice.call(arguments);
+                r.unshift(e), t.push(r);
+              };
+            }), e.Marker = n;
+            var s = r.createElement("script");
+            s.async = 1, s.src = "https://edge.marker.io/latest/shim.js";
+            var i = r.getElementsByTagName("script")[0];
+            i.parentNode.insertBefore(s, i);
+          }
+        }(window, document);
+      }
+    </script>
+  {% endif %}
+
+  {%- if customer.has_account -%}
+  {%- case request.path -%}
+  {%- when "/account/register" -%}
+    <script>
+      window.location.href = `{{ request.origin }}{{ routes.account_url }}`;
+    </script>
+  {%- when "/account/register" -%}
+    <script>
+      window.location.href = `{{ request.origin }}{{ routes.account_url }}`;
+    </script>
+  {%- when "/account/login" -%}
+    <script>
+      window.location.href = `{{ request.origin }}{{ routes.account_url }}`;
+    </script>
+  {%- when "/cart" -%}
+    <script>
+      window.location.href = `{{ request.origin }}{{ routes.root_url }}`;
+    </script>
+  {%- endcase -%}
+  {%- endif -%}
+    <script>
+      document.documentElement.style.setProperty(
+        "--scrollbar-width",
+        `${window.innerWidth - document.documentElement.clientWidth}px`,
+      );
+
+      {% render '_utils.request-idle-callback' %}
+    </script>
+    {% render '_layout.scripts' %}
+  {% endif %}
+  <!-- TrustBox script -->
+    <script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
+  <!-- End TrustBox script -->
+
+  <script type="text/javascript"> (function(c,l,a,r,i,t,y){ c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)}; t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i; y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y); })(window, document, "clarity", "script", "sv0fd0hbr4"); </script>
+  <meta name="google-site-verification" content="s4JOkYRmC3vfw-AxyKxRrRfaloyoha9Bu0_8GiitTm4" />
+{% include 'pagefly-app-header' %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+{{ 'shahzaib.css' | asset_url | stylesheet_tag }}
+</head>
+
+<body id="shopify-override"
+      class="template-{{ template | split: '.' | first | split: '/' | first }} template-{{ template | handleize }} relative flex min-h-screen flex-col overscroll-none {{ settings.color__color_scheme }}"
+      data-barba="wrapper">
+
+  {%- render "_layout.svg-gradients" -%}
+  {% assign hide_chrome_for_page = false %}
+  {% assign hide_nav_pages = 'why-customers-choose-adiy,how-to-build-a-deck' | split: ',' %}
+  {% if request.page_type == 'page' and hide_nav_pages contains template.suffix %}
+    {% assign hide_chrome_for_page = true %}
+  {% endif %}
+  {% unless hide_chrome_for_page %}
+    {% sections '0_global' %}
+  {% endunless %}
+  {% if request.design_mode == false %}
+    <link
+      rel="stylesheet"
+      href="//expertcabin.myshopify.com/cdn/shop/t/7/assets/a-diy_tailwind.css?v=7896825230866442141777471990"
+      preload="true"
+    >
+    <link rel="stylesheet" href="{{ 'custom.css' | asset_url }}">
+  {% endif %}
+  {% unless hide_chrome_for_page %}
+    <header class="header-sections-container">
+      {% sections '0_header' %}
+    </header>
+  {% endunless %}
+  {% if request.design_mode == false or settings.development__block_modals == true or request.visual_preview_mode == true %}
+    <div data-dynamic-modals></div>
+  {% endif %}
+  {% if request.design_mode == false or settings.development__product_cards == true or request.visual_preview_mode == true %}
+    <div data-dynamic-cards></div>
+  {% endif %}
+
+  {% if request.design_mode %}
+
+    <div data-dynamic-cards data-remove-parent-dynamically></div>
+    <div data-dynamic-cards data-remove-parent-dynamically></div>
+
+  {% endif %}
+  {% if theme.role != 'main' %}
+    <script type="application/javascript">
+      () => {
+        localStorage.clear();
+      };
+    </script>
+  {% endif %}
+
+  <script>
+    const startTime = Date.now();
+    const visual_preview_mode = window.location.search.includes('source=visualPreviewInitialLoad');
+    const modalsContainer = visual_preview_mode ? document.querySelector("[data-dynamic-modals]") : document.querySelector("[data-dynamic-modals]:not([data-remove-parent-dynamically])");
+    const cardsContainer = visual_preview_mode ? document.querySelector("[data-dynamic-cards]") : document.querySelector("[data-dynamic-cards]:not([data-remove-parent-dynamically]");
+    const dbKey = `_platter---cached-sections`;
+
+    if ((modalsContainer && !modalsContainer?.children.length) || (cardsContainer && !cardsContainer?.children?.length)) {
+      window.modalsLoaded = false;
+      const res = JSON.parse(localStorage.getItem(dbKey) ?? "{}");
+
+      if (res?.cards && res.timestamp > Date.now() - 1000 * 60 * 30) {
+
+        if (modalsContainer && !modalsContainer?.children.length && res.modals) {
+          modalsContainer.innerHTML = res.modals;
+        }
+        if (cardsContainer && !cardsContainer?.children?.length && res.cards) {
+          cardsContainer.innerHTML = res.cards;
+        }
+
+
+        if (_stores?.quickView) {
+          _stores.quickView.container = document.querySelector("[data-quick-view-container]");
+          _stores.quickView.show_all_container = document.querySelector(
+            "[data-quick-view-show-more]",
+          );
+          _stores.quickView.loading_container = document.querySelector("[data-quick-view-loading]");
+        }
+
+        if (
+          !window.location.origin.includes("127.0.0.1") ||
+          res.timestamp < Date.now() - 1000 * 60 * 15
+        ) {
+          if (window._stores["modal"] && window._stores["modal"].loaded !== true) {
+            window._stores["modal"].loaded = true;
+          }
+          // console.log('modals loaded', Date.now() - startTime);
+          window.modalsLoaded = true;
+          // return;
+        }
+      }
+
+      if (!window.modalsLoaded) {
+        fetch("/collections?__modals_data=true")
+          .then((res) => res.text())
+          .then((res) => {
+            const div = document.createElement('div');
+            div.innerHTML = res;
+            const modalsContent = div.querySelector('[data-modals-section]')?.innerHTML;
+            const cardsContent = div.querySelector('[data-cards-section]')?.innerHTML;
+
+            if (modalsContainer && !modalsContainer?.children.length && modalsContent) {
+              modalsContainer.innerHTML = modalsContent;
+            }
+            if (cardsContainer && !cardsContainer?.children?.length && cardsContent) {
+              cardsContainer.innerHTML = cardsContent;
+            }
+
+
+            try {
+              localStorage.setItem(dbKey, JSON.stringify({
+                modals: modalsContent,
+                cards: cardsContent,
+                timestamp: Date.now(),
+              }));
+            } catch (err) {
+              console.log(err);
+              localStorage.clear();
+              localStorage.setItem(dbKey, JSON.stringify({
+                modals: modalsContent,
+                cards: cardsContent,
+                timestamp: Date.now(),
+              }));
+            }
+
+            if (_stores?.quickView) {
+              _stores.quickView.container = document.querySelector("[data-quick-view-container]");
+              _stores.quickView.show_all_container = document.querySelector(
+                "[data-quick-view-show-more]",
+              );
+              _stores.quickView.loading_container = document.querySelector("[data-quick-view-loading]");
+            }
+            if (window._stores["modal"] && window._stores["modal"].loaded !== true) {
+              window._stores["modal"].loaded = true;
+            }
+            document.querySelectorAll('.card-loading[data-intersected]').forEach(element => {
+              element.setAttribute('data-cards-loaded', 'true');
+            });
+            // console.log('modals loaded', Date.now() - startTime, 'b');
+            window.modalsLoaded = true;
+          });
+      }
+    }
+    if (!modalsContainer && !cardsContainer) {
+      localStorage.removeItem(dbKey);
+    }
+  </script>
+
+  {% if request.design_mode == true %}
+    <script>
+      if (window.location.search.includes('source=visualPreviewInitialLoad')) {
+        const dbKey = `_platter---cached-global-groups`;
+        if (!document.querySelector('.shopify-section-group-0_global')) {
+          window.stylesLoaded = false;
+          console.log('styles loading now via attempting localStorage');
+
+          const res = JSON.parse(localStorage.getItem(dbKey) ?? "{}");
+
+          if (res?.sectionGroups && res.timestamp > Date.now() - 1000 * 60 * 30) {
+
+            res.sectionGroups.forEach(group => {
+              const sectionGroup = document.createElement('div');
+              sectionGroup.innerHTML = group;
+              document.body.prepend(sectionGroup.firstChild);
+            });
+            window.stylesLoaded = true;
+          }
+
+          if (!window.stylesLoaded) {
+            fetch("/")
+              .then((res) => res.text())
+              .then((res) => {
+                const div = document.createElement('div');
+                div.innerHTML = res;
+                const styleSectionGroups = [...div.querySelectorAll('.shopify-section-group-0_global')].map(el => el.outerHTML);
+
+                styleSectionGroups.forEach(group => {
+                  const sectionGroup = document.createElement('div');
+                  sectionGroup.innerHTML = group;
+                  document.body.prepend(sectionGroup.firstChild);
+                });
+
+                try {
+                  localStorage.setItem(dbKey, JSON.stringify({
+                    sectionGroups: styleSectionGroups,
+                    timestamp: Date.now(),
+                  }));
+                } catch (err) {
+                  console.log(err);
+                  localStorage.clear();
+                  localStorage.setItem(dbKey, JSON.stringify({
+                    sectionGroups: styleSectionGroups,
+                    timestamp: Date.now(),
+                  }));
+                }
+                window.stylesLoaded = true;
+              });
+          }
+
+        }
+      }
+    </script>
+  {% endif %}
+
+
+  {% if request.design_mode == true and settings.development__block_modals == false and request.visual_preview_mode != true %}
+    <div data-dynamic-modals>
+      {% sections '0_modal' %}
+    </div>
+  {% endif %}
+
+  <main data-content-root
+        data-barba="container"
+        data-barba-namespace="tmp"
+        data-template="{{ template | escape }}"
+        data-pathname="{{ request.path | escape }}"
+        x-data="{ windowWidth: window.innerWidth, windowHeight: window.innerHeight, scrollTop: window.scrollY }"
+        x-init="document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`)"
+        @resize.window="$data.windowWidth = window.innerWidth, windowHeight = window.innerHeight, document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`)"
+        @scroll.window="$data.scrollTop = window.scrollY"
+        class="relative mt-[--navigation-bar-transparent-height] flex flex-1 shrink-0 flex-col main-sections-container">
+  {% capture layout %}
+    {% if request.design_mode != true or settings.development__block_main_content != true %}
+      {{ content_for_layout }}
+    {% endif %}
+    {% if request.design_mode == false %}
+      {% section 'product-data' %}
+    {% endif %}
+  {% endcapture %} {{ layout | replace: "<img","<img loading='lazy' " | replace: "<video","<video loading='lazy' " }}
+    <div data-content-root-padding></div>
+  </main>
+  {% if dynamic_prefetch != true %}
+
+  {% if request.design_mode != true or settings.development__block_footer_sections != true %}
+    {% unless hide_chrome_for_page %}
+      <footer data-footer-section>
+        {% sections '0_footer' %}
+      </footer>
+    {% endunless %}
+  {% endif %}
+
+  {% if request.design_mode == true and settings.development__product_cards != true and request.visual_preview_mode != true %}
+    <div data-dynamic-cards>
+      {% sections '0_card' %}
+    </div>
+  {% endif %}
+  {% if request.design_mode == true %}
+  <link rel="stylesheet" href="{{ 'custom.css' | asset_url }}">
+
+  <link
+      rel="stylesheet"
+      href="//expertcabin.myshopify.com/cdn/shop/t/7/assets/a-diy_tailwind.css?v=7896825230866442141777471990"
+      preload="true"
+    >
+  {% endif %}
+    {% render '_layout.toast' %}
+    <div data-tooltip-container
+         class="pointer-events-none fixed inset-0 z-[2147483647]"
+         x-init="$watch('$router.pathname', () => { $el.innerHTML = ''; console.log($router.pathname) })"></div>
+    <div class="!hidden
+            max-sm:!hidden sm:!hidden max-md:!hidden md:!hidden max-lg:!hidden lg:!hidden max-xl:!hidden xl:!hidden
+            max-md:-mx-container-xs max-md:-mx-container-sm max-md:-mx-container-md max-md:-mx-container-lg md:-mx-container-xs md:-mx-container-sm md:-mx-container-md md:-mx-container-lg -mx-container-xs -mx-container-sm -mx-container-md -mx-container-lg -mx-container-gutter
+            max-md:px-container-xs max-md:px-container-sm max-md:px-container-md max-md:px-container-lg md:px-container-xs md:px-container-sm md:px-container-md md:px-container-lg px-container-xs px-container-sm px-container-md px-container-lg px-container-gutter
+            max-md:scroll-px-container-xs max-md:scroll-px-container-sm max-md:scroll-px-container-md max-md:scroll-px-container-lg md:scroll-px-container-xs md:scroll-px-container-sm md:scroll-px-container-md md:scroll-px-container-lg scroll-px-container-xs scroll-px-container-sm scroll-px-container-md scroll-px-container-lg
+            [&_:where(p,h1,h2,h3,h4,h5,h6)]:items-center max-md:text-center !font-semibold
+    "></div>
+    <script type="application/javascript">
+      document.documentElement.style.setProperty(
+        "--scrollbar-width",
+        `${window.innerWidth - document.documentElement.clientWidth}px`,
+      );
+    </script>
+    {% if request.design_mode == true %}
+      {% section 'product-data' %}
+    {% endif %}
+
+  {% endif %}
+    <link rel="preload" href="{{ 'splide.min.js' | asset_url }}" as="script"><script src="{{ 'splide.min.js' | asset_url }}"></script>
+
+{{'tiny-img-link-preloader.js' | asset_url | script_tag }}
+{%- render "hero-split-video-modal" -%}
+
+<script src="{{ 'preloader.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'shahzaib.js' | asset_url }}" defer="defer"></script>
+
+
+</body>
+</html>
+
+
+

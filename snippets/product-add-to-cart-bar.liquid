@@ -1,0 +1,72 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "product-add-to-cart-bar"
+  assign sticky = section.settings.sticky
+  assign flex_direction_align_x_align_y_gap_wrap = section.settings.flex_direction_align_x_align_y_gap_wrap
+  assign section_id = section.settings.section_id
+  assign color_scheme = section.settings.color_scheme
+  assign container_spacing = section.settings.container_spacing
+  assign border_divider = section.settings.border_divider
+  assign top_bottom_min_height = section.settings.top_bottom_min_height
+  assign responsive_visibility = section.settings.responsive_visibility
+  assign responsive_breakpoint = section.settings.responsive_breakpoint
+  assign target_visibility = section.settings.target_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture section_content %}
+
+  {% render "_section.universal-settings", section_type: section_type, insert: "before" %}
+  {% render '_utils.dynamic-css', selector: '& [data-style-navbar]', keys: "flex_direction_align_x_align_y_gap_wrap" %}
+
+  {% case sticky %}
+    {% when 'top' %}
+      <style>
+        {{ section.id | prepend: '#shopify-section-' }}:not(:empty) {
+          z-index: 19;
+          top: calc(var(--header-height-offset) - 1px);
+          position: sticky;
+        }
+      </style>
+    {% when 'bottom' %}
+      <style>
+        {{ section.id | prepend: '#shopify-section-' }}:not(:empty) {
+          z-index: 19;
+          top: calc(100vh - var(--height-{{ section.id }}));
+          position: sticky;
+        }
+      </style>
+  {% endcase %}
+
+  <div class="flex justify-between gap-4"
+      {% if sticky == 'bottom' %}
+        x-data=""
+        x-init="document.documentElement.style.setProperty(`--height-{{ section.id }}`, ($el.offsetHeight + 3) + 'px');"
+      {% endif %} >
+    <nav class="flex" data-style-navbar>
+      {% liquid
+        for block in section.blocks
+          if block.type == 'link'
+            render 'product-add-to-cart-bar.link', block: block, forloop: forloop
+          endif
+        endfor
+      %}
+    </nav>
+    {% liquid
+      for block in section.blocks
+        if block.type == 'product'
+          render 'product-add-to-cart-bar.product', block: block, forloop: forloop
+        endif
+      endfor
+    %}
+  </div>
+
+  {% render "_section.universal-settings", section_type: section_type, insert: "after" %}
+
+
+{% endcapture %}
+
+{% if section_content contains '/break"></script>' %}
+  {% break %}
+{% endif %}
+{{ section_content }}

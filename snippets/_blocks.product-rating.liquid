@@ -1,0 +1,99 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.product-rating"
+  assign _product = block.settings.product
+  assign reviews_heading = block.settings.reviews_heading
+  assign css_class = block.settings.css_class
+  assign icon_size_gap = block.settings.icon_size_gap
+  assign icon_active_color = block.settings.icon_active_color
+  assign icon_base_color = block.settings.icon_base_color
+  assign hide_zero_reviews = block.settings.hide_zero_reviews
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign product = _product
+  assign icon_size_gap = icon_size_gap | strip_newlines | replace: ' ', "" | split: '|'
+  assign icon = icon_size_gap[0] | split: '/'
+  assign size = icon_size_gap[1] | split: '/'
+  assign gap = icon_size_gap[2] | split: '/'
+
+  if icon_active_color.alpha > 0
+    assign styles = styles | append: "--color-review-stars:" | append: icon_active_color | append: ";"
+  endif
+
+  if icon_base_color.alpha > 0
+    assign styles = styles | append: "--color-review-stars-base:" | append: icon_base_color | append: ";"
+  endif
+
+  assign reviews_rating = settings.data__product__reviews_rating | replace: " ", '' | split: "."
+  assign reviews_rating = product.metafields[reviews_rating.first][reviews_rating.last].value
+  assign reviews_rating = reviews_rating.rating | default: reviews_rating | default: 0 | times: 1.0
+
+  assign reviews_count = settings.data__product__reviews_count | replace: " ", '' | split: "."
+  assign reviews_count = product.metafields[reviews_count.first][reviews_count.last].value | default: 0 | times: 1
+
+  assign reviews_content = reviews_heading | replace: "[count]", reviews_count | replace: "[rating]", reviews_rating
+%}
+
+{%
+  liquid
+  if request.design_mode != true
+    if _product == blank
+      assign is_empty = true
+    endif
+    if hide_zero_reviews != blank and reviews_count < hide_zero_reviews
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,max_w_flex_col_row_order_align,padding_top_bottom_left_right,margin_top_bottom_left_right,border_width_radius,background_color,background_gradient,border_color" %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    data-block-type="{{ block.type }}">
+  <div class="flex items-center gap-2"
+       style="{{ styles }}">
+    <div class="relative"
+         style="--gap: {{ gap.last }}; --gap-md: {{ gap.first }}; --h: {{ size.last }}; --h-md: {{ size.first }};">
+      <div class="flex gap-dynamic text-[--color-review-stars-base]">
+        {% for i in (1..5) %}
+          {% render '_components.icon', icon: icon, class: "h-dynamic" %}
+        {% endfor %}
+      </div>
+      <div class="absolute left-0 top-0 flex gap-dynamic text-[--color-review-stars]"
+           style="clip-path: polygon(0 0, {{ reviews_rating | divided_by: 5 | times: 100 }}% 0, {{ reviews_rating | divided_by: 5 | times: 100 }}% 100%, 0 100%);">
+        {% for i in (1..5) %}
+          {% render '_components.icon', icon: icon, class: "h-dynamic" %}
+        {% endfor %}
+      </div>
+    </div>
+    <span class="{{ css_class }}"
+          data-content="{% render '_input.inline_richtext', content: reviews_heading, escape: true, block: block, forloop: forloop %}">
+      {% render '_input.inline_richtext', content: reviews_content, block: block, forloop: forloop %}
+    </span>
+  </div>
+</div>

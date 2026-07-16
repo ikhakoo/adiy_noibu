@@ -1,0 +1,750 @@
+{{ 'section-real-people-decks.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="rpd-section"
+  style="
+    --rpd-bg: {{ section.settings.bg_color }};
+    --rpd-stripe: {{ section.settings.stripe_color }};
+    --rpd-card-bg: {{ section.settings.card_bg }};
+    --rpd-card-text: {{ section.settings.card_text }};
+    --rpd-heading: {{ section.settings.heading_color }};
+    --rpd-stats-border: {{ section.settings.stats_border }};
+    --rpd-pill-bg: {{ section.settings.pill_bg }};
+    --rpd-pill-text: {{ section.settings.pill_text }};
+    --rpd-btn-bg: {{ section.settings.btn_bg }};
+    --rpd-btn-text: {{ section.settings.btn_text_color }};
+    --rpd-padding-top: {{ section.settings.padding_top }}px;
+    --rpd-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+  id="{{ section.settings.custom_id }}"
+>
+  <div class="rpd-stripe"></div>
+
+  <div class="rpd-container">
+
+    {%- if section.settings.show_top_rating -%}
+      <div class="rpd-top-rating">
+        {%- if section.settings.top_rating_image != blank -%}
+          <img
+            src="{{ section.settings.top_rating_image | image_url: width: 300 }}"
+            alt="Trustpilot rating"
+            width="140"
+            height="28"
+            loading="lazy"
+          >
+        {%- else -%}
+          <div class="rpd-stars-fallback">
+            {% for i in (1..5) %}
+              <span class="rpd-star{% if i == 5 %} rpd-star--half{% endif %}">★</span>
+            {% endfor %}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.heading != blank -%}
+      <h2 class="rpd-heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="rpd-cards-wrap">
+        <div class="rpd-cards">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'testimonial' -%}
+              <article class="rpd-card" {{ block.shopify_attributes }}>
+                {%- if block.settings.image != blank -%}
+                  <div class="rpd-card__media">
+                    <img
+                      src="{{ block.settings.image | image_url: width: 600 }}"
+                      alt="{{ block.settings.name | escape }}"
+                      width="600"
+                      height="400"
+                      loading="lazy"
+                    >
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.quote != blank -%}
+                  <p class="rpd-card__quote">{{ block.settings.quote }}</p>
+                {%- endif -%}
+
+                <div class="rpd-card__author">
+                  {%- if block.settings.name != blank -%}
+                    <span class="rpd-card__name">{{ block.settings.name }}</span>
+                  {%- endif -%}
+                  {%- if block.settings.location != blank -%}
+                    <span class="rpd-card__sep">•</span>
+                    <span class="rpd-card__loc">{{ block.settings.location }}</span>
+                  {%- endif -%}
+                </div>
+
+                <div class="rpd-card__footer">
+                  {%- if block.settings.badge_text != blank -%}
+                    <span class="rpd-card__pill">
+                      <span class="rpd-card__pill-dot"></span>
+                      {{ block.settings.badge_text }}
+                    </span>
+                  {%- endif -%}
+
+                  {%- if block.settings.rating_image != blank -%}
+                    <img
+                      class="rpd-card__rating"
+                      src="{{ block.settings.rating_image | image_url: width: 200 }}"
+                      alt="Rating"
+                      width="100"
+                      height="20"
+                      loading="lazy"
+                    >
+                  {%- else -%}
+                    <span class="rpd-card__stars">
+                      {% for i in (1..5) %}
+                        <span class="rpd-star{% if i == 5 %} rpd-star--half{% endif %}">★</span>
+                      {% endfor %}
+                    </span>
+                  {%- endif -%}
+                </div>
+              </article>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- assign has_stats = false -%}
+    {%- if section.settings.stat1_value != blank or section.settings.stat2_value != blank or section.settings.stat3_value != blank or section.settings.stat4_value != blank -%}
+      {%- assign has_stats = true -%}
+    {%- endif -%}
+
+    {%- if has_stats -%}
+      <div class="rpd-stats">
+        {%- if section.settings.stat1_value != blank -%}
+          <div class="rpd-stat">
+            <div class="rpd-stat__value">{{ section.settings.stat1_value }}</div>
+            <div class="rpd-stat__label">{{ section.settings.stat1_label }}</div>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.stat2_value != blank -%}
+          <div class="rpd-stat">
+            <div class="rpd-stat__value">{{ section.settings.stat2_value }}</div>
+            <div class="rpd-stat__label">{{ section.settings.stat2_label }}</div>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.stat3_value != blank -%}
+          <div class="rpd-stat">
+            <div class="rpd-stat__value">{{ section.settings.stat3_value }}</div>
+            <div class="rpd-stat__label">{{ section.settings.stat3_label }}</div>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.stat4_value != blank -%}
+          <div class="rpd-stat">
+            <div class="rpd-stat__value">{{ section.settings.stat4_value }}</div>
+            <div class="rpd-stat__label">{{ section.settings.stat4_label }}</div>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.btn_text != blank -%}
+      <div class="rpd-btn-wrap">
+        <a
+          href="{{ section.settings.btn_link | default: '#' }}"
+          class="rpd-btn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {{ section.settings.btn_text }}
+        </a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+<style>
+  #shopify-section-{{ section.id }} .rpd-section {
+    position: relative;
+    background: var(--rpd-bg, #2d5e4e);
+    padding-top: var(--rpd-padding-top, 70px);
+    padding-bottom: var(--rpd-padding-bottom, 70px);
+    overflow: hidden;
+    font-family: 'Poppins';
+  }
+
+  #shopify-section-{{ section.id }} .rpd-stripe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 12px;
+    border-top: 14px solid #00B67A;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-container {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-top-rating {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 60px;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-top-rating img {
+    height: 28px;
+    width: auto;
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-stars-fallback {
+    background: #00b67a;
+    padding: 4px 8px;
+    border-radius: 2px;
+    display: inline-flex;
+    gap: 2px;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-stars-fallback .rpd-star {
+    color: #fff;
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-heading {
+    color: var(--rpd-heading, #ffffff);
+    font-size: 40px;
+    line-height: 50px;
+    font-weight: 500;
+    text-align: center;
+    margin: 0 auto 30px;
+    max-width: 37%;
+    letter-spacing: -0.5px;
+  }
+
+  /* Cards */
+  #shopify-section-{{ section.id }} .rpd-cards-wrap {
+    margin-bottom: 40px;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-card {
+    background: var(--rpd-card-bg, #ffffff);
+    border-radius: 18px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  }
+
+  #shopify-section-{{ section.id }} .rpd-card__media {
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 14px;
+    aspect-ratio: 16 / 11;
+    background: #eee;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-card__quote {
+    color: var(--rpd-card-text, #1a1a1a);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    margin: 0 0 14px;
+    flex-grow: 1;
+    max-width: 86%;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-card__author {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+    font-size: 13px;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-card__name {
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-card__sep {
+    color: #999;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-card__loc {
+    color: #888;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid #f0f0f0;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-card__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--rpd-pill-bg, #1a1a1a);
+    color: var(--rpd-pill-text, #ffffff);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-card__pill-dot {
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-card__rating {
+    height: 20px;
+    width: auto;
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-card__stars {
+    display: inline-flex;
+    gap: 1px;
+    background: #00b67a;
+    padding: 2px 4px;
+    border-radius: 2px;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-card__stars .rpd-star {
+    color: #fff;
+    font-size: 13px;
+    line-height: 1;
+  }
+
+  /* Stats */
+  #shopify-section-{{ section.id }} .rpd-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 50%;
+    margin: 0 auto 30px;
+    border: 1px solid var(--rpd-stats-border, rgba(255, 255, 255, 0.25));
+    border-radius: 14px;
+    padding: 26px 25px;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-stat {
+    text-align: center;
+    color: #fff;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-stat__value {
+    margin-bottom: 4px;
+    letter-spacing: normal;
+    color: #FFF;
+    text-align: center;
+    font-family: Poppins;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-stat__label {
+    font-weight: 400;
+    color: #FFF;
+    font-size: 12px;
+    font-style: normal;
+    line-height: normal;
+  }
+
+  /* Button */
+  #shopify-section-{{ section.id }} .rpd-btn-wrap {
+    display: flex;
+    justify-content: center;
+  }
+
+  #shopify-section-{{ section.id }} .rpd-btn {
+    display: inline-block;
+    background: var(--rpd-btn-bg, #ffffff);
+    color: var(--rpd-btn-text, #1a1a1a);
+    padding: 18px 56px 17px 57px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  /* Tablet */
+  @media (max-width: 1024px) {
+    #shopify-section-{{ section.id }} .rpd-section {
+      padding-top: 56px;
+      padding-bottom: 56px;
+    }
+
+    #shopify-section-{{ section.id }} .rpd-cards {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    #shopify-section-{{ section.id }} .rpd-cards-wrap {
+      margin-bottom: 36px;
+    }
+
+    #shopify-section-{{ section.id }} .rpd-stat__value {
+      font-size: 24px;
+    }
+  }
+  @media (max-width: 1440px) {
+    #shopify-section-{{ section.id }} .rpd-cards {
+      padding: 0 36px; 
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    #shopify-section-{{ section.id }} .rpd-section {
+      padding-top: 44px;
+      padding-bottom: 44px;
+    }
+
+    #shopify-section-{{ section.id }} .rpd-container {
+      padding: 0 16px;
+    }
+
+    #shopify-section-{{ section.id }} .rpd-heading {
+      margin-bottom: 26px;
+      font-size: 24px;
+      line-height: 30px;
+      max-width: 80%;
+    }
+    #shopify-section-{{ section.id }} .rpd-top-rating {
+      margin-bottom: 20px;
+    }
+
+
+    /* Horizontal scroll on mobile for cards */
+    #shopify-section-{{ section.id }} .rpd-cards-wrap {
+      margin-left: 0px;
+      margin-right: -16px;
+      margin-bottom: 28px;
+    }
+
+    #shopify-section-{{ section.id }} .rpd-cards {
+      display: flex;
+      grid-template-columns: none;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding: 4px 16px;
+      gap: 12px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    #shopify-section-{{ section.id }} .rpd-cards::-webkit-scrollbar {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .rpd-card {
+      flex: 0 0 82%;
+      scroll-snap-align: start;
+    }
+
+    /* Stats: 2x2 grid on mobile */
+    #shopify-section-{{ section.id }} .rpd-stats {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px 12px;
+      padding: 20px 14px;
+      margin-bottom: 24px;
+      max-width: 95%;
+    }
+
+    #shopify-section-{{ section.id }} .rpd-stat__value {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    #shopify-section-{{ section.id }} .rpd-stat__label {
+      font-size: 10px;
+    }
+
+    #shopify-section-{{ section.id }} .rpd-btn {
+      padding: 12px 39px 11px 39px;
+      text-align: center;
+      font-size: 9.8px;
+      font-style: normal;
+      letter-spacing: 0.35px;
+    }
+  }
+
+  @media (max-width: 380px) {
+    #shopify-section-{{ section.id }} .rpd-card {
+      flex: 0 0 88%;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Custom Testimonials",
+  "tag": "section",
+  "class": "section-real-people-decks",
+  "settings": [
+    {
+      "type": "text",
+      "id": "custom_id",
+      "label": "Custom ID",
+      "default": "review"
+    },
+    {
+      "type": "header",
+      "content": "General"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Real People. Real Decks. Real Memories."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_top_rating",
+      "label": "Show top rating image/stars",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "top_rating_image",
+      "label": "Top rating image (Trustpilot etc.)",
+      "info": "If empty, fallback green stars will be shown"
+    },
+    {
+      "type": "header",
+      "content": "Stats Bar"
+    },
+    {
+      "type": "text",
+      "id": "stat1_value",
+      "label": "Stat 1 Value",
+      "default": "2,500+"
+    },
+    {
+      "type": "text",
+      "id": "stat1_label",
+      "label": "Stat 1 Label",
+      "default": "Decks Built"
+    },
+    {
+      "type": "text",
+      "id": "stat2_value",
+      "label": "Stat 2 Value",
+      "default": "4.8/5"
+    },
+    {
+      "type": "text",
+      "id": "stat2_label",
+      "label": "Stat 2 Label",
+      "default": "Avg Rating"
+    },
+    {
+      "type": "text",
+      "id": "stat3_value",
+      "label": "Stat 3 Value",
+      "default": "1-2 Days"
+    },
+    {
+      "type": "text",
+      "id": "stat3_label",
+      "label": "Stat 3 Label",
+      "default": "Avg Build Time"
+    },
+    {
+      "type": "text",
+      "id": "stat4_value",
+      "label": "Stat 4 Value",
+      "default": "$8,000+"
+    },
+    {
+      "type": "text",
+      "id": "stat4_label",
+      "label": "Stat 4 Label",
+      "default": "Avg Savings"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button Text",
+      "default": "Read More Reviews"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#2d5e4e"
+    },
+    {
+      "type": "color",
+      "id": "stripe_color",
+      "label": "Top stripe color",
+      "default": "#4ba585"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "stats_border",
+      "label": "Stats border color",
+      "default": "#7aa599"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_text",
+      "label": "Card text",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "pill_bg",
+      "label": "Badge pill background",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "pill_text",
+      "label": "Badge pill text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Button text",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 70
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "limit": 12,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Customer image"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "The kit came with everything I needed, and I saved over $5,000 in contractor fees! I built the entire deck in just a few hours, and it looks amazing."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Customer Name",
+          "default": "Mike R."
+        },
+        {
+          "type": "text",
+          "id": "location",
+          "label": "Location",
+          "default": "Austin, TX"
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Badge text",
+          "default": "Built in 2 days"
+        },
+        {
+          "type": "image_picker",
+          "id": "rating_image",
+          "label": "Rating image (Trustpilot stars)",
+          "info": "If empty, fallback green stars will show"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Testimonials",
+      "blocks": [
+        { "type": "testimonial" },
+        { "type": "testimonial" },
+        { "type": "testimonial" },
+        { "type": "testimonial" }
+      ]
+    }
+  ]
+}
+{% endschema %}

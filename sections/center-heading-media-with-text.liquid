@@ -1,0 +1,171 @@
+<section class="alt-two-column-section" {% if section.settings.section_bg_image != blank %}style="background-image: url({{ section.settings.section_bg_image | image_url: width: 2000 }});"{% endif %}>
+  <div class="alt-two-column-container">
+
+    {% if section.settings.heading != blank %}
+      <h2 class="alt-two-column-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    <!-- ROW 1: mobile image first, desktop side-by-side -->
+    <div class="alt-row-grid">
+      <div class="alt-col image-col">
+        {% if section.settings.first_image != blank %}
+          {{ section.settings.first_image | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'alt-image' }}
+        {% endif %}
+      </div>
+      <div class="alt-col text-col {{ section.settings.first_text_class }}">
+        {{ section.settings.first_richtext }}
+      </div>
+    </div>
+
+    <!-- ROW 2: mobile image first, desktop image left text right -->
+    <div class="alt-row-grid second-row">
+      <div class="alt-col text-col {{ section.settings.second_text_class }}">
+        {{ section.settings.second_richtext }}
+      </div>
+      <div class="alt-col image-col">
+        {% if section.settings.second_image != blank %}
+          {{ section.settings.second_image | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'alt-image' }}
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+.alt-two-column-section {
+  padding: 48px 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.alt-two-column-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.alt-two-column-heading {
+  text-align: center;
+  font-size: 40px;
+  margin-bottom: 48px;
+  font-weight: 500;
+  letter-spacing:-1.2px;
+  line-height:1.2;
+}
+
+.alt-row-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+  margin-bottom: 0px;
+}
+
+.alt-col {
+  width: 100%;
+}
+.alt-col.text-col p
+{
+    margin-bottom:35px ;
+}
+.alt-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+}
+.alt-row-grid.second-row
+{
+    margin-bottom:0;
+}
+.alt-row-grid.second-row img
+{
+    display:none;
+}
+@media screen and (min-width: 768px) {
+  .alt-row-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+  .alt-row-grid.second-row img
+    {
+        display:block;
+    }
+    .alt-two-column-section {
+        padding: 48px 0;
+    }
+    .alt-two-column-container {
+       padding: 0 48px;
+    }
+    .alt-row-grid
+    {
+        margin-bottom:48px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+  .alt-two-column-heading {
+    font-size: 28px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Alternating Two Column",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Section Heading"
+    },
+    {
+      "type": "image_picker",
+      "id": "section_bg_image",
+      "label": "Section Background Image"
+    },
+    {
+      "type": "richtext",
+      "id": "first_richtext",
+      "label": "First Row Rich Text",
+      "default": "<p>Add first row content here.</p>"
+    },
+    {
+      "type": "text",
+      "id": "first_text_class",
+      "label": "First Rich Text Class",
+      "default": "custom-text-style"
+    },
+    {
+      "type": "image_picker",
+      "id": "first_image",
+      "label": "First Row Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "second_image",
+      "label": "Second Row Image"
+    },
+    {
+      "type": "richtext",
+      "id": "second_richtext",
+      "label": "Second Row Rich Text",
+      "default": "<p>Add second row content here.</p>"
+    },
+    {
+      "type": "text",
+      "id": "second_text_class",
+      "label": "Second Rich Text Class",
+      "default": "custom-text-style"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Center Heading with Two Column"
+    }
+  ]
+}
+{% endschema %}

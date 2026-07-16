@@ -1,0 +1,233 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
+{
+  "sections": {
+    "main": {
+      "type": "content-flex",
+      "blocks": {
+        "richtext_eadAVg": {
+          "type": "richtext",
+          "settings": {
+            "title": "<h1><strong>My Account</strong></h1>",
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 32 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "color_override": ""
+          }
+        },
+        "breadcrumbs_T4yzz6": {
+          "type": "breadcrumbs",
+          "settings": {
+            "product_vendor_collection": true,
+            "content_class": "breadcrumbs"
+          }
+        }
+      },
+      "block_order": [
+        "richtext_eadAVg",
+        "breadcrumbs_T4yzz6"
+      ],
+      "settings": {
+        "flex_row_wrap_align_x_align_y_gap": "start | start | 0",
+        "section_id": "",
+        "color_scheme": "",
+        "container_spacing": "px-container-md",
+        "border_divider": "border-y-none",
+        "top_bottom_min_height": "100/64 | 0 | 0",
+        "responsive_visibility": "",
+        "responsive_breakpoint": "768px",
+        "target_visibility": ""
+      }
+    },
+    "content_grid_gXEGnR": {
+      "type": "content-accounts-grid",
+      "blocks": {
+        "layout_flex_daEcWj": {
+          "type": "layout__flex",
+          "settings": {
+            "flex_direction_align_x_align_y_gap_wrap": "column | start | start | 8",
+            "padding_top_bottom_left_right": "24 | 24 | 24 | 24",
+            "border_width_radius": "1 | 6",
+            "background_color": "#fcfcfc",
+            "border_color": "#929292",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "responsive_breakpoint": "768px"
+          }
+        },
+        "richtext_Ty6MDW": {
+          "type": "richtext",
+          "settings": {
+            "title": "<h4><strong>Account</strong></h4>",
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "color_override": ""
+          }
+        },
+        "button_wCDwi7": {
+          "type": "button",
+          "settings": {
+            "label": "<span style=\"text-decoration:underline\">Order history</span>",
+            "url": "/account",
+            "button_class": "richtext-md",
+            "type": "button",
+            "margin_top_bottom_left_right": "8 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "fit | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px"
+          }
+        },
+        "button_fte8X7": {
+          "type": "button",
+          "settings": {
+            "label": "Addresses",
+            "url": "/account/addresses",
+            "button_class": "richtext-md",
+            "type": "button",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "fit | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px"
+          }
+        },
+        "button_gdW4YP": {
+          "type": "button",
+          "settings": {
+            "label": "Sign out",
+            "url": "/account/logout",
+            "button_class": "richtext-md",
+            "type": "button",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "fit | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px"
+          }
+        },
+        "layout_flex_qi98r8": {
+          "type": "layout__flex",
+          "settings": {
+            "flex_direction_align_x_align_y_gap_wrap": "column | start | start | 16",
+            "padding_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "border_width_radius": "0 | 0",
+            "background_color": "",
+            "border_color": "",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 4/1 | 3 | unset/3 | inherit",
+            "responsive_visibility": "",
+            "responsive_breakpoint": "990px"
+          }
+        },
+        "richtext_k3ma6j": {
+          "type": "richtext",
+          "settings": {
+            "title": "<h3><strong>Orders </strong></h3><h4>View all your past orders.</h4>",
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "color_override": ""
+          }
+        },
+        "orders_table_xMmLWe": {
+          "type": "orders_table",
+          "settings": {
+            "border_width_radius": "1 | 6",
+            "background_color": "#fcfcfc",
+            "border_color": "#929292",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px"
+          }
+        },
+        "layout_flex_fYRKPt": {
+          "type": "layout__flex",
+          "settings": {
+            "flex_direction_align_x_align_y_gap_wrap": "column | start | start | 8",
+            "padding_top_bottom_left_right": "24 | 24 | 24 | 24",
+            "border_width_radius": "1 | 6",
+            "background_color": "#fcfcfc",
+            "border_color": "#929292",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "responsive_breakpoint": "768px"
+          }
+        },
+        "richtext_MPyfpe": {
+          "type": "richtext",
+          "settings": {
+            "title": "<h4><strong>Default Address</strong></h4>",
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "color_override": ""
+          }
+        },
+        "default_address_aVKLk8": {
+          "type": "default_address",
+          "settings": {
+            "content_class": "richtext-sm",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px"
+          }
+        }
+      },
+      "block_order": [
+        "layout_flex_daEcWj",
+        "richtext_Ty6MDW",
+        "button_wCDwi7",
+        "button_fte8X7",
+        "button_gdW4YP",
+        "layout_flex_qi98r8",
+        "richtext_k3ma6j",
+        "orders_table_xMmLWe",
+        "layout_flex_fYRKPt",
+        "richtext_MPyfpe",
+        "default_address_aVKLk8"
+      ],
+      "settings": {
+        "grid_cols_align_x_align_y_gap": "5/1| start | start | 24",
+        "section_id": "",
+        "color_scheme": "",
+        "container_spacing": "px-container-md",
+        "border_divider": "border-y-none",
+        "top_bottom_min_height": "24 | 100 / 64 | 0",
+        "responsive_visibility": "",
+        "responsive_breakpoint": "990px",
+        "target_visibility": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "content_grid_gXEGnR"
+  ]
+}

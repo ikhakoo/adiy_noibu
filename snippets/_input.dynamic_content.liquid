@@ -1,0 +1,86 @@
+{% comment %}
+Variables:
+- content
+- class
+- style
+- html_attributes
+{% endcomment %}
+{% comment %}
+    Shopify Input Type - Richtext
+    The input matches Icons via the `_utils.icon` snippet
+
+    Accepts:
+    - content: {string}
+    - class: {string}
+    - style: {string} Inline CSS style declaration
+    - html_attributes: {string} Stringified html attributes i.e. 'data-variable="id"'
+
+    Usage:
+    {% render "_input.richtext", content: content, class: class, style: style, html_attributes: 'data-variable="id"' %}
+{% endcomment %}
+{%- liquid
+  assign loop_index = forloop.index
+  assign keys = keys | replace: ' ', '' | split: ','
+
+  for key in keys
+    assign matcher = '[' | append: key | append: '.'
+    assign full_matcher = '[' | append: key | append: ']'
+    for i in (1..5)
+      if content contains matcher
+        assign split = content | replace_first: matcher, '|~|split|~|' | split: '|~|split|~|'
+        assign split_2 = split[1] | replace_first: ']', '|~|split|~|' | split: '|~|split|~|'
+        assign before_content = split[0]
+        assign after_content = split_2[1]
+        assign properties = split_2[0] | trim | split: '.'
+        assign object = [key]
+        for property in properties
+          if forloop.last
+            if property contains 'compare_at_price|no-decimals'
+              assign _property = property | replace: '|no-decimals', ''
+              if object[_property] > object.price
+                assign object = object[_property] | money_without_trailing_zeros | prepend: '<span class="opacity-50 line-through">' | append: '</span>'
+                break
+              endif
+              assign object = ''
+              break
+            endif
+
+            if property contains 'compare_at_price'
+              if object[property] > object.price
+                assign object = object[property] | money | prepend: '<span class="opacity-50 line-through">' | append: '</span>'
+                break
+              endif
+              assign object = ''
+              break
+            endif
+
+            assign ends_in = property | split: '_' | last
+            if ends_in contains 'price|no-decimals'
+              assign _property = property | replace: '|no-decimals', ''
+              assign object = object[_property] | money_without_trailing_zeros
+              break
+            endif
+
+            if ends_in contains 'price'
+              assign object = object[property] | money
+              break
+            endif
+
+          endif
+          assign object = object[property]
+        endfor
+        assign content = before_content | append: object | append: after_content
+        continue
+      endif
+      break
+    endfor
+
+    if content contains full_matcher
+      assign content = content | replace_first: full_matcher, [key]
+      continue
+    endif
+
+  endfor
+
+-%}
+{{- content -}}

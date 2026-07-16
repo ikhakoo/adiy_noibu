@@ -1,0 +1,1102 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero_banner_w6LNcJ": {
+      "type": "hero-banner",
+      "blocks": {
+        "slide_JkMr6B": {
+          "type": "slide",
+          "settings": {
+            "desktop_image": "shopify://shop_images/image_with_text.png",
+            "background_gradient": "rgba(0,0,0,0)",
+            "preheading": "<p>[icon.5-stars] OVER 5,000 HAPPY CUSTOMERS</p>",
+            "preheading_class": "richtext-md",
+            "heading": "<h1>Transform Your Backyard Without The Hassle</h1>",
+            "heading_class": "richtext-md",
+            "subheading": "",
+            "subheading_class": "richtext-md",
+            "button_primary_text": "",
+            "button_primary_url": "",
+            "button_primary_class": "button-secondary",
+            "button_secondary_text": "",
+            "button_secondary_url": "",
+            "button_secondary_class": "button-secondary-outline",
+            "text_color": "#20221d",
+            "text_align": "text-left",
+            "vertical_align_desktop": "md:justify-center",
+            "vertical_align": "justify-start",
+            "horizontal_align": "items-start mr-auto",
+            "vertical_padding": "0/96px | 0"
+          }
+        }
+      },
+      "block_order": [
+        "slide_JkMr6B"
+      ],
+      "settings": {
+        "top_bottom_min_height": "0 | 0 | 598px/486px",
+        "full_screen": false,
+        "section_id": "",
+        "container_spacing": "px-container-fullwidth",
+        "responsive_visibility": ""
+      }
+    },
+    "text_cards_Uzgmmw": {
+      "type": "text-cards",
+      "blocks": {
+        "card_zr9GBT": {
+          "type": "card",
+          "settings": {
+            "heading": "<h4><strong>Struggling with Contractors?</strong></h4>",
+            "heading_class": "richtext-md",
+            "first_text": "<p><strong>Endless Quotes</strong><br/>Spending weeks getting multiple quotes from contractors who may charge more than expected?</p><p></p><p><strong>High Costs</strong></p><p>Facing quotes that are often sky-high and not within your budget?<br/><br/><strong>Uncertain Timelines</strong></p><p>Frustrated with delays and the uncertainty of whether your deck will be completed on time?</p>",
+            "first_text_class": "richtext-md",
+            "trigger_chatbox": false,
+            "padding": "24px | 24px",
+            "text_align": "text-left",
+            "horizontal_align": "justify-start"
+          }
+        },
+        "card_mK8Pnb": {
+          "type": "card",
+          "settings": {
+            "heading": "<h4><strong>Considering DIY?</strong></h4>",
+            "heading_class": "richtext-md",
+            "first_text": "<p><strong>Time-Consuming</strong></p><p>Planning a deck requires time off work and away from family.</p><p></p><p><strong>Complexity</strong></p><p>Endless hours watching how-to videos, renting or buying tools, and making multiple store trips.</p><p></p><p><strong>Hidden Costs</strong></p><p>What seems like a cost-effective option can quickly become stressful and more expensive with mistakes and added expenses.</p>",
+            "first_text_class": "richtext-md",
+            "trigger_chatbox": false,
+            "padding": "24px | 24px",
+            "text_align": "text-left",
+            "horizontal_align": "justify-start"
+          }
+        }
+      },
+      "block_order": [
+        "card_zr9GBT",
+        "card_mK8Pnb"
+      ],
+      "settings": {
+        "columns": 2,
+        "mobile_layout": "stacked",
+        "gap_content": "24px | 24px",
+        "vertical_padding_section": "48px/36px | 48px/36px",
+        "section_id": "",
+        "container_spacing": "px-container-md",
+        "responsive_visibility": ""
+      }
+    },
+    "text_cards_AtKRDw": {
+      "type": "text-cards",
+      "blocks": {
+        "card_CYbKma": {
+          "type": "card",
+          "settings": {
+            "icon_heading": "shopify://shop_images/mail-02.svg",
+            "heading": "<h4><strong>Email</strong></h4>",
+            "heading_class": "richtext-md",
+            "first_text": "<p>Monday-Friday, 9AM - 5 PM EST excluding holidays. Send us an email at [span.underline||<a href=\"mailto:support@a-diy.com\" title=\"mailto:support@a-diy.com\">support@a-diy.com]</a>.</p>",
+            "first_text_class": "richtext-md",
+            "trigger_chatbox": false,
+            "padding": "24px | 16px",
+            "text_align": "text-center",
+            "horizontal_align": "justify-center"
+          }
+        },
+        "card_aVrWKT": {
+          "type": "card",
+          "settings": {
+            "icon_heading": "shopify://shop_images/phone-outgoing-01.svg",
+            "heading": "<h4><strong>Phone</strong></h4>",
+            "heading_class": "richtext-md",
+            "first_text": "<p>Monday-Friday, 9AM - 5 PM EST excluding holidays. Give us a call [span.underline||<a href=\"tel:1 (786) 358-2872\" title=\"tel:1 (786) 358-2872\">1 (786) 358-2872</a>].</p>",
+            "first_text_class": "richtext-md",
+            "trigger_chatbox": false,
+            "padding": "24px | 16px",
+            "text_align": "text-center",
+            "horizontal_align": "justify-center"
+          }
+        },
+        "card_dynkhM": {
+          "type": "card",
+          "settings": {
+            "icon_heading": "shopify://shop_images/message-smile-square.svg",
+            "heading": "<h4><strong>Chat</strong></h4>",
+            "heading_class": "richtext-md",
+            "first_text": "<p>Is it after hours? </p><p>[span.underline||<a href=\"#\" title=\"#\">Launch our chat</a>] to talk with a specialist now.</p>",
+            "first_text_class": "richtext-md",
+            "trigger_chatbox": false,
+            "padding": "24px | 16px",
+            "text_align": "text-center",
+            "horizontal_align": "justify-center"
+          }
+        }
+      },
+      "block_order": [
+        "card_CYbKma",
+        "card_aVrWKT",
+        "card_dynkhM"
+      ],
+      "disabled": true,
+      "settings": {
+        "columns": 3,
+        "mobile_layout": "stacked",
+        "gap_content": "0 | 0",
+        "vertical_padding_section": "64px/48px | 64px/48px",
+        "section_id": "",
+        "container_spacing": "px-container-md",
+        "responsive_visibility": ""
+      }
+    },
+    "content_flex_j9jztK": {
+      "type": "content-flex",
+      "blocks": {
+        "richtext_LTNCQR": {
+          "type": "richtext",
+          "settings": {
+            "title": "<h2><strong>Why Choose A-DIY?</strong></h2>",
+            "page_content": "",
+            "use_page_content": false,
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | center",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": "",
+            "color_override": ""
+          }
+        }
+      },
+      "block_order": [
+        "richtext_LTNCQR"
+      ],
+      "settings": {
+        "flex_row_wrap_align_x_align_y_gap": "center| stretch | 0 | wrap | row",
+        "padding_top_bottom_left_right": "0 | 0 | 24px | 24px",
+        "margin_top_bottom_left_right": "48 | 0 | 0 | 0",
+        "border_width_radius": "0 | 0 |  |  |",
+        "background_color": "",
+        "border_color": "",
+        "section_id": "",
+        "color_scheme": "",
+        "container_spacing": "px-container-md",
+        "border_divider": "border-y-none",
+        "top_bottom_min_height": "0 | 0 | 0",
+        "responsive_visibility": "",
+        "responsive_breakpoint": "768px",
+        "target_visibility": "",
+        "render_tabs_async": false
+      }
+    },
+    "media_with_text_pGMTFF": {
+      "type": "media-with-text",
+      "blocks": {
+        "image_AhqxAV": {
+          "type": "image",
+          "settings": {
+            "desktop_image": "shopify://shop_images/10-WhyADIY.jpg"
+          }
+        },
+        "richtext_d47dcq": {
+          "type": "richtext",
+          "settings": {
+            "stars": false,
+            "text": "<h3><strong>Affordable and Simple</strong></h3>",
+            "richtext_class": "richtext-md",
+            "text_color": "",
+            "margin_bottom_desktop": "md:mb-3",
+            "margin_bottom_mobile": "mb-3"
+          }
+        },
+        "richtext_PLzKaY": {
+          "type": "richtext",
+          "settings": {
+            "stars": false,
+            "text": "<p>Our deck kits make it easy to upgrade your space without the high costs or complicated assembly. No cutting, no measuring, just quick and effortless setup.</p>",
+            "richtext_class": "richtext-md",
+            "text_color": "",
+            "margin_bottom_desktop": "md:mb-6",
+            "margin_bottom_mobile": "mb-4"
+          }
+        },
+        "dual_text_REFdm8": {
+          "type": "dual_text",
+          "settings": {
+            "first_icon": "",
+            "heading_primary": "<p><strong>Significant Savings</strong></p>",
+            "heading_primary_class": "text-20/16-500",
+            "paragraph_primary": "<p>Our decks cost 30 to 50% less than what local contractors would charge.</p>",
+            "paragraph_primary_class": "richtext-md",
+            "second_icon": "",
+            "heading_secondary": "<p><strong>Easy Assembly</strong></p>",
+            "heading_secondary_class": "text-20/16-500",
+            "paragraph_secondary": "<p>Our kits come together like Lego blocks. Assemble your deck in a few hours. </p>",
+            "paragraph_secondary_class": "richtext-md",
+            "text_color": "",
+            "margin_bottom_desktop": "",
+            "margin_bottom_mobile": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_AhqxAV",
+        "richtext_d47dcq",
+        "richtext_PLzKaY",
+        "dual_text_REFdm8"
+      ],
+      "settings": {
+        "media_position": "left",
+        "media_position_mobile": "top",
+        "background_color": "#ffffff",
+        "section_id": "",
+        "vertical_padding_section": "48px | 48px",
+        "container_spacing": "px-container-md",
+        "responsive_visibility": ""
+      }
+    },
+    "media_with_text_Qffyfd": {
+      "type": "media-with-text",
+      "blocks": {
+        "image_zFBK6T": {
+          "type": "image",
+          "settings": {
+            "desktop_image": "shopify://shop_images/11-WhyADIY.jpg"
+          }
+        },
+        "richtext_KBbttz": {
+          "type": "richtext",
+          "settings": {
+            "stars": false,
+            "text": "<h2><strong>Quality You Can Trust</strong></h2>",
+            "richtext_class": "richtext-md",
+            "text_color": "",
+            "margin_bottom_desktop": "md:mb-3",
+            "margin_bottom_mobile": "mb-3"
+          }
+        },
+        "richtext_gpTNey": {
+          "type": "richtext",
+          "settings": {
+            "stars": false,
+            "text": "<p>Every component is designed for strength and longevity. With expert engineering and rigorous quality control, you get a deck that’s sturdy, reliable, and built to last, giving you peace of mind for years to come.</p>",
+            "richtext_class": "richtext-md",
+            "text_color": "",
+            "margin_bottom_desktop": "md:mb-6",
+            "margin_bottom_mobile": "mb-4"
+          }
+        },
+        "dual_text_KyyTn3": {
+          "type": "dual_text",
+          "settings": {
+            "first_icon": "",
+            "heading_primary": "<p><strong>High Standards</strong></p>",
+            "heading_primary_class": "text-20/16-500",
+            "paragraph_primary": "<p>Built to the highest standards, ensuring durability and aesthetic appeal.</p>",
+            "paragraph_primary_class": "richtext-md",
+            "second_icon": "",
+            "heading_secondary": "<p><strong>Customizable Options</strong></p>",
+            "heading_secondary_class": "text-20/16-500",
+            "paragraph_secondary": "<p>Choose to raise your deck with deck blocks, sono tubes, or helical piles. Add railings and steps easily to fit your vision.</p>",
+            "paragraph_secondary_class": "richtext-md",
+            "text_color": "",
+            "margin_bottom_desktop": "",
+            "margin_bottom_mobile": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_zFBK6T",
+        "richtext_KBbttz",
+        "richtext_gpTNey",
+        "dual_text_KyyTn3"
+      ],
+      "settings": {
+        "media_position": "right",
+        "media_position_mobile": "top",
+        "background_color": "#ffffff",
+        "section_id": "",
+        "vertical_padding_section": "0| 0",
+        "container_spacing": "px-container-md",
+        "responsive_visibility": ""
+      }
+    },
+    "media_with_text_piR9Gt": {
+      "type": "media-with-text",
+      "blocks": {
+        "image_EjQG9Q": {
+          "type": "image",
+          "settings": {
+            "desktop_image": "shopify://shop_images/12-WhyADIY.jpg"
+          }
+        },
+        "richtext_KLVHXM": {
+          "type": "richtext",
+          "settings": {
+            "stars": false,
+            "text": "<h2><strong>Stress-Free Experience</strong></h2>",
+            "richtext_class": "richtext-md",
+            "text_color": "",
+            "margin_bottom_desktop": "md:mb-3",
+            "margin_bottom_mobile": "mb-3"
+          }
+        },
+        "richtext_h87DBB": {
+          "type": "richtext",
+          "settings": {
+            "stars": false,
+            "text": "<p>Skip the hassle of complicated builds and costly contractors. No cutting, no measuring, and no guesswork. With easy assembly, clear 3D instructions, and everything included in the kit, you can enjoy a smooth, frustration-free process from start to finish.</p>",
+            "richtext_class": "richtext-md",
+            "text_color": "",
+            "margin_bottom_desktop": "md:mb-6",
+            "margin_bottom_mobile": "mb-4"
+          }
+        },
+        "dual_text_HJeMnK": {
+          "type": "dual_text",
+          "settings": {
+            "first_icon": "",
+            "heading_primary": "<p><strong>Expert Help Available </strong></p>",
+            "heading_primary_class": "text-20/16-500",
+            "paragraph_primary": "<p>Need assistance? Our experts are always ready to help at every step. Whether you have questions about choosing the right deck, assembling your kit, or anything in between, we’re here to make the process smooth and stress-free.</p>",
+            "paragraph_primary_class": "richtext-md",
+            "second_icon": "",
+            "heading_secondary": "<p><strong>Hassle-Free Process</strong></p>",
+            "heading_secondary_class": "text-20/16-500",
+            "paragraph_secondary": "<p>Forget about multiple quotes, lengthy DIY preparations, and hidden costs. With A-DIY, you get a beautiful, quality deck at a great price, with optional professional help if needed.</p>",
+            "paragraph_secondary_class": "richtext-md",
+            "text_color": "",
+            "margin_bottom_desktop": "",
+            "margin_bottom_mobile": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_EjQG9Q",
+        "richtext_KLVHXM",
+        "richtext_h87DBB",
+        "dual_text_HJeMnK"
+      ],
+      "settings": {
+        "media_position": "left",
+        "media_position_mobile": "top",
+        "background_color": "#ffffff",
+        "section_id": "",
+        "vertical_padding_section": "48px | 48px",
+        "container_spacing": "px-container-md",
+        "responsive_visibility": ""
+      }
+    },
+    "content_grid_ftWWVN": {
+      "type": "content-grid",
+      "blocks": {
+        "button_kWJhej": {
+          "type": "button",
+          "settings": {
+            "label": "Shop deck kits",
+            "url": "shopify://collections/start-your-new-deck",
+            "button_class": "button-secondary",
+            "type": "button",
+            "show_active_state": false,
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "fit/100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        }
+      },
+      "block_order": [
+        "button_kWJhej"
+      ],
+      "settings": {
+        "grid_cols_align_x_align_y_gap": "1 | center| center| 0",
+        "padding_top_bottom_left_right": "0 | 0 | 0 | 0",
+        "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+        "border_width_radius": "0 | 0 |  |  |",
+        "background_color": "",
+        "border_color": "",
+        "section_id": "",
+        "color_scheme": "",
+        "container_spacing": "px-container-md",
+        "border_divider": "border-y-none",
+        "top_bottom_min_height": "0 | 64/36 | 0",
+        "responsive_visibility": "",
+        "responsive_breakpoint": "768px",
+        "target_visibility": "",
+        "render_tabs_async": false
+      }
+    },
+    "comparison_table_9JApEx": {
+      "type": "comparison-table",
+      "blocks": {
+        "row_fqQ4iy": {
+          "type": "row",
+          "settings": {
+            "category": "<h6><strong>Price</strong></h6>",
+            "icon_first_column": "shopify://shop_images/credit-card-check_1.svg",
+            "first_column": "<h6>30-50% less</h6>",
+            "first_column_class": "richtext-md",
+            "second_column": "<h6>Paying premium for time and labor</h6>",
+            "second_column_class": "richtext-md",
+            "third_column": "<h6>Costs vary, often higher than expected</h6>",
+            "third_column_class": "richtext-md"
+          }
+        },
+        "row_9yrPBK": {
+          "type": "row",
+          "settings": {
+            "category": "<h6><strong>Time to Build</strong></h6>",
+            "icon_first_column": "shopify://shop_images/clock-stopwatch_1.svg",
+            "first_column": "<h6>Under 1 hour</h6>",
+            "first_column_class": "richtext-md",
+            "second_column": "<h6>Weeks of waiting and delays</h6>",
+            "second_column_class": "richtext-md",
+            "third_column": "<h6>Endless weekends, losing precious time</h6>",
+            "third_column_class": "richtext-md"
+          }
+        },
+        "row_baNJg9": {
+          "type": "row",
+          "settings": {
+            "category": "<h6><strong>Family Time</strong></h6>",
+            "icon_first_column": "shopify://shop_images/camera-plus.svg",
+            "first_column": "<h6>More time to create memories</h6>",
+            "first_column_class": "richtext-md",
+            "second_column": "<h6>Time spent coordinating and stressing</h6>",
+            "second_column_class": "richtext-md",
+            "third_column": "<h6>Missed moments with loved ones</h6>",
+            "third_column_class": "richtext-md"
+          }
+        },
+        "row_jghKqy": {
+          "type": "row",
+          "settings": {
+            "category": "<h6><strong>Ease & Convenience</strong></h6>",
+            "icon_first_column": "shopify://shop_images/layers-three-01.svg",
+            "first_column": "<h6>Like LEGO for adults!</h6>",
+            "first_column_class": "richtext-md",
+            "second_column": "<h6>Stressful scheduling and oversight</h6>",
+            "second_column_class": "richtext-md",
+            "third_column": "<h6>Frustrating and overwhelming</h6>",
+            "third_column_class": "richtext-md"
+          }
+        },
+        "row_MrFeDx": {
+          "type": "row",
+          "settings": {
+            "category": "<h6><strong>Fulfillment</strong></h6>",
+            "icon_first_column": "shopify://shop_images/check-heart.svg",
+            "first_column": "<h6>Instant gratification</h6>",
+            "first_column_class": "richtext-md",
+            "second_column": "<h6>Watching someone else do it</h6>",
+            "second_column_class": "richtext-md",
+            "third_column": "<h6>Frustrating trial and error</h6>",
+            "third_column_class": "richtext-md"
+          }
+        },
+        "row_NHXewD": {
+          "type": "row",
+          "settings": {
+            "category": "<h6><strong>Customization</strong></h6>",
+            "icon_first_column": "shopify://shop_images/grid-dots-horizontal-center.svg",
+            "first_column": "<h6>Tailored to your dreams</h6>",
+            "first_column_class": "richtext-md",
+            "second_column": "<h6>Limited by budget and contractor</h6>",
+            "second_column_class": "richtext-md",
+            "third_column": "<h6>Depends on skill and time</h6>",
+            "third_column_class": "richtext-md"
+          }
+        },
+        "row_JNEHVk": {
+          "type": "row",
+          "settings": {
+            "category": "<h6><strong>Stress Level</strong></h6>",
+            "icon_first_column": "shopify://shop_images/hearts.svg",
+            "first_column": "<h6>Low—focus on what matters</h6>",
+            "first_column_class": "richtext-md",
+            "second_column": "<h6>High—unforeseen challenges</h6>",
+            "second_column_class": "richtext-md",
+            "third_column": "<h6>High—unexpected complications</h6>",
+            "third_column_class": "richtext-md"
+          }
+        },
+        "row_EJCEMH": {
+          "type": "row",
+          "settings": {
+            "category": "<h6><strong>Memories</strong></h6>",
+            "icon_first_column": "shopify://shop_images/cloud-off.svg",
+            "first_column": "<h6>Building together, bonding</h6>",
+            "first_column_class": "richtext-md",
+            "second_column": "<h6>Waiting, watching, worrying</h6>",
+            "second_column_class": "richtext-md",
+            "third_column": "<h6>Struggling, less time to enjoy</h6>",
+            "third_column_class": "richtext-md"
+          }
+        }
+      },
+      "block_order": [
+        "row_fqQ4iy",
+        "row_9yrPBK",
+        "row_baNJg9",
+        "row_jghKqy",
+        "row_MrFeDx",
+        "row_NHXewD",
+        "row_JNEHVk",
+        "row_EJCEMH"
+      ],
+      "settings": {
+        "first_column": "shopify://shop_images/logotype.png",
+        "second_column": "<h5><strong>Contractor</strong></h5>",
+        "second_column_class": "richtext-md",
+        "third_column": "<h5><strong>DIYer</strong></h5>",
+        "third_column_class": "richtext-md",
+        "button_primary_text": "Shop now",
+        "button_primary_url": "shopify://collections/start-your-new-deck",
+        "button_primary_class": "button-primary",
+        "category_class": "richtext-md",
+        "scrollbar_class": "scrollbar-no-buttons",
+        "vertical_padding_section": "60px | 60px",
+        "section_id": "",
+        "container_spacing": "px-container-md",
+        "responsive_visibility": ""
+      }
+    },
+    "feature_banner_8wPUDz": {
+      "type": "feature-banner",
+      "settings": {
+        "desktop_image": "shopify://shop_images/video_banner_1.png",
+        "background_gradient": "rgba(0, 0, 0, 0.60)",
+        "heading": "<p><strong>Anyone Can Do It</strong></p>",
+        "heading_class": "text-54/40",
+        "subheading": "<p>A-DIY's deck kits include All lumber parts, Screws, Drill bit, Deck blocks. The only additional item you need is a residential power drill for securing the screws​.</p>",
+        "subheading_class": "richtext-md",
+        "button_primary_text": "Watch Video",
+        "button_primary_url": "https://www.youtube.com/watch?v=QxYzaWFjDmM",
+        "button_primary_class": "button-primary",
+        "button_secondary_text": "Instruction Manual",
+        "button_secondary_url": "https://easemble.page.link/ZJMw",
+        "button_secondary_class": "button-secondary-outline",
+        "text_color": "#ffffff",
+        "vertical_padding": "64px | 64px | 700px",
+        "section_id": "",
+        "container_spacing": "px-container-fullwidth",
+        "responsive_visibility": ""
+      }
+    },
+    "image_banner_xMbDq3": {
+      "type": "image-banner",
+      "blocks": {
+        "image_FRKt7Y": {
+          "type": "image",
+          "settings": {
+            "desktop_image": "shopify://shop_images/Image_Ratios_1.png"
+          }
+        },
+        "richtext_Gg7iAk": {
+          "type": "richtext",
+          "settings": {
+            "preheading": "<p><strong>BUY NOW, PAY LATER </strong></p>",
+            "preheading_class": "richtext-md",
+            "heading": "<h2><strong>Flexible Payment Plans With Affirm </strong></h2>",
+            "heading_class": "richtext-md",
+            "subheading": "<p>Get a flexible, transparent, and convenient way to pay over time. Make easy monthly payments over <strong>24months</strong>.</p>",
+            "subheading_class": "richtext-md",
+            "text_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_FRKt7Y",
+        "richtext_Gg7iAk"
+      ],
+      "settings": {
+        "media_position": "right",
+        "background_color": "#f6f4f2",
+        "vertical_padding_section": "48px | 48px",
+        "section_id": "",
+        "container_spacing": "px-container-md",
+        "responsive_visibility": ""
+      }
+    },
+    "content_grid_anUnAm": {
+      "type": "content-grid",
+      "blocks": {
+        "richtext_LtmRRj": {
+          "type": "richtext",
+          "settings": {
+            "title": "<p><strong>REAL REVIEWS</strong></p>",
+            "page_content": "",
+            "use_page_content": false,
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 12px | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | center",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": "",
+            "color_override": ""
+          }
+        },
+        "richtext_kTen9U": {
+          "type": "richtext",
+          "settings": {
+            "title": "<h2><strong>Easy Assembly from Start To Finish</strong></h2>",
+            "page_content": "",
+            "use_page_content": false,
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 48px | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | center",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": "",
+            "color_override": ""
+          }
+        },
+        "layout_grid_slider_jMiAGa": {
+          "type": "layout__grid_slider",
+          "settings": {
+            "slider_cols_rows_align_x_align_y_gap": "4/1.2| 1  | stretch | stretch | 24px",
+            "slider_scroll_snap": "snap-mandatory [&>*]:snap-start",
+            "slider_overflow_container": "mobile",
+            "infinite_scroll": false,
+            "padding_top_bottom_left_right_box": "0 | 24px | 0 | 0",
+            "auto_scroll": 0,
+            "scroll_navigation_style": "scrollbar",
+            "scroll_navigation_style_mobile": "inherit",
+            "padding_top_bottom_left_right": "",
+            "scrollbar_class": "scrollbar-no-buttons",
+            "size_border_width_radius": "12 | 0 | 999px",
+            "flex_direction_align_x_align_y_gap_wrap": "column | stretch | stretch | 16",
+            "background_color": "#cccccc",
+            "border_color": "",
+            "hover_border_color": "",
+            "hover_background_color": "#000000",
+            "margin_top_bottom_left_right": "0 | 24px/0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100%| unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "responsive_breakpoint": "1024px",
+            "anchor_id": ""
+          }
+        },
+        "video_product_card_4ngmMy": {
+          "type": "video-product-card",
+          "settings": {
+            "video": "shopify://files/videos/tolstoy_e78b6fbe-1d6f-4141-b547-00082aee77e1.webm",
+            "aspect_ratio": "0.621 | 0.652",
+            "background_gradient": "rgba(0,0,0,0)",
+            "autoplay": false,
+            "controls": true,
+            "loop": true,
+            "muted": false,
+            "width_height_aspect_object_fit": "60px | auto | auto | cover | 12px",
+            "label": "",
+            "label_class": "richtext-md",
+            "url": "",
+            "padding_top_bottom_left_right": "",
+            "border_width_radius": "0 | 20px |  |  |",
+            "background_color": "#f6f4f2",
+            "border_color": "",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        },
+        "video_product_card_DKB6Wb": {
+          "type": "video-product-card",
+          "settings": {
+            "video": "shopify://files/videos/reelUp_dn6j1i437k1731437157245_low.mp4",
+            "aspect_ratio": "0.621 | 0.652",
+            "background_gradient": "rgba(0,0,0,0)",
+            "autoplay": false,
+            "controls": true,
+            "loop": true,
+            "muted": false,
+            "width_height_aspect_object_fit": "60px | auto | auto | cover | 12px",
+            "label": "",
+            "label_class": "richtext-md",
+            "url": "",
+            "padding_top_bottom_left_right": "",
+            "border_width_radius": "0 | 20px |  |  |",
+            "background_color": "#f6f4f2",
+            "border_color": "",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        },
+        "video_product_card_rRBdXK": {
+          "type": "video-product-card",
+          "settings": {
+            "video": "shopify://files/videos/reelUp_a5rsq447ezp1731437157245_low.mp4",
+            "aspect_ratio": "0.621 | 0.652",
+            "background_gradient": "rgba(0,0,0,0)",
+            "autoplay": false,
+            "controls": true,
+            "loop": true,
+            "muted": false,
+            "width_height_aspect_object_fit": "60px | auto | auto | cover | 12px",
+            "label": "",
+            "label_class": "richtext-md",
+            "url": "",
+            "padding_top_bottom_left_right": "",
+            "border_width_radius": "0 | 20px |  |  |",
+            "background_color": "#f6f4f2",
+            "border_color": "",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        },
+        "video_product_card_Yf6CQy": {
+          "type": "video-product-card",
+          "settings": {
+            "video": "shopify://files/videos/reelUp_4tt3gvxgh0m1731437157245_original.mp4",
+            "aspect_ratio": "0.621 | 0.652",
+            "background_gradient": "rgba(0,0,0,0)",
+            "autoplay": false,
+            "controls": true,
+            "loop": true,
+            "muted": false,
+            "width_height_aspect_object_fit": "60px | auto | auto | cover | 12px",
+            "label": "",
+            "label_class": "richtext-md",
+            "url": "",
+            "padding_top_bottom_left_right": "",
+            "border_width_radius": "0 | 20px |  |  |",
+            "background_color": "#f6f4f2",
+            "border_color": "",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        },
+        "layout_end_qHDdwC": {
+          "type": "layout__end",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "richtext_LtmRRj",
+        "richtext_kTen9U",
+        "layout_grid_slider_jMiAGa",
+        "video_product_card_4ngmMy",
+        "video_product_card_DKB6Wb",
+        "video_product_card_rRBdXK",
+        "video_product_card_Yf6CQy",
+        "layout_end_qHDdwC"
+      ],
+      "custom_css": [
+        "[data-style-id*=\"--video_product_card\"] {scroll-snap-align: center;}"
+      ],
+      "settings": {
+        "grid_cols_align_x_align_y_gap": "1 | stretch | stretch | 0",
+        "padding_top_bottom_left_right": "0 | 0 | 0 | 0",
+        "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+        "border_width_radius": "0 | 0 |  |  |",
+        "background_color": "",
+        "border_color": "",
+        "section_id": "",
+        "color_scheme": "color_scheme_1",
+        "container_spacing": "px-container-md",
+        "border_divider": "border-y-none",
+        "top_bottom_min_height": "64px/48px | 64px/48px | 0",
+        "responsive_visibility": "",
+        "responsive_breakpoint": "768px",
+        "target_visibility": "",
+        "render_tabs_async": false
+      }
+    },
+    "content_grid_TC6qhc": {
+      "type": "content-grid",
+      "blocks": {
+        "layout_flex_AAqq4P": {
+          "type": "layout__flex",
+          "settings": {
+            "flex_direction_align_x_align_y_gap_wrap": "column | left | center|",
+            "padding_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "border_width_radius": "0 | 0",
+            "background_color": "rgba(0,0,0,0)",
+            "border_color": "",
+            "margin_top_bottom_left_right": "48/0 | 48/36 | 0 | 24/0",
+            "max_w_flex_col_row_order_align": "464px/100% | unset | 2 | unset | inherit",
+            "responsive_visibility": "",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        },
+        "richtext_HE9cKD": {
+          "type": "richtext",
+          "settings": {
+            "title": "<p>What Are <br/>People Saying?</p>",
+            "page_content": "",
+            "use_page_content": false,
+            "content_class": "text-54/40",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | unset | center",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": "",
+            "color_override": "rgba(0,0,0,0)"
+          }
+        },
+        "layout_grid_slider_qfRMac": {
+          "type": "layout__grid_slider",
+          "settings": {
+            "slider_cols_rows_align_x_align_y_gap": "1 | 1  | center/start | start | 80/24",
+            "slider_scroll_snap": "snap-mandatory [&>*]:snap-start",
+            "slider_overflow_container": "",
+            "infinite_scroll": false,
+            "padding_top_bottom_left_right_box": "0 | 0 | 0 | 0",
+            "auto_scroll": 0,
+            "scroll_navigation_style": "pagination",
+            "scroll_navigation_style_mobile": "inherit",
+            "padding_top_bottom_left_right": "32/24 | 0 | 48/16 | 48/16",
+            "scrollbar_class": "scrollbar",
+            "size_border_width_radius": "12/8 | 0 | 999px",
+            "flex_direction_align_x_align_y_gap_wrap": "row | start/center| center | 12/8",
+            "background_color": "#cccccc",
+            "border_color": "",
+            "hover_border_color": "",
+            "hover_background_color": "#20221d",
+            "margin_top_bottom_left_right": "0 | 0 | 48/0 | 48/0",
+            "max_w_flex_col_row_order_align": "100% | unset | 5 | unset | inherit",
+            "responsive_visibility": "",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        },
+        "text_card_Ymc4K3": {
+          "type": "text-card",
+          "settings": {
+            "title": "<p>[icon.5-stars.20.#FFD773]</p><p></p><p>\"The kit came with everything I needed AND I savedover $5,000 in contractor fees. I built the whole deck built in just one weekend. It looks amazing, I couldn't be more proud of what I accomplished. Definitely recommend to anyone who wants a beautiful deck without the hassle!\"</p><p></p><p><strong>Lori M.</strong></p>",
+            "content_class": "text-20/16-500",
+            "url": "",
+            "width_height_aspect": "100% | 100% | auto",
+            "flex_row_wrap_align_x_align_y_gap": "start | start | 0",
+            "padding_top_bottom_left_right": "48/32 | 48/32 | 48/24 | 48/24",
+            "border_width_radius": "0 | 30px/20px",
+            "text_color": "",
+            "background_gradient": "rgb(246, 244, 242)",
+            "border_color": "rgba(0,0,0,0)",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | unset | left",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        },
+        "text_card_KGccTg": {
+          "type": "text-card",
+          "settings": {
+            "title": "<p>[icon.5-stars.20.#FFD773]</p><p></p><p>\"Being in the construction business, I appreciate a well-engineered product. A-DIY's DIY deck is a testament to sound engineering. The assembly process is intuitive, and the deck's modular design is a stroke of genius. It's become a talking point among my colleagues.\"</p><p><br/></p><p><strong>Mathew R.</strong></p>",
+            "content_class": "text-20/16-500",
+            "url": "",
+            "width_height_aspect": "100% | 100% | auto",
+            "flex_row_wrap_align_x_align_y_gap": "start | start | 0",
+            "padding_top_bottom_left_right": "48/32 | 48/32 | 48/24 | 48/24",
+            "border_width_radius": "0 | 30px/20px",
+            "text_color": "",
+            "background_gradient": "rgb(246, 244, 242)",
+            "border_color": "rgba(0,0,0,0)",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | unset | left",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        },
+        "text_card_KbYizd": {
+          "type": "text-card",
+          "settings": {
+            "title": "<p>[icon.5-stars.20.#FFD773]</p><p></p><p>\"I'm not the handiest person, but A-DIY's instructions were so clear that I had my deck up in under an hour. The cost was a fraction of what I was quoted by contractors, and the quality is fantastic. My friends are amazed at how quickly I transformed my outdoor space.\"</p><p><br/></p><p><strong>Steve J.</strong></p>",
+            "content_class": "text-20/16-500",
+            "url": "",
+            "width_height_aspect": "100% | 100% | auto",
+            "flex_row_wrap_align_x_align_y_gap": "start | start | 0",
+            "padding_top_bottom_left_right": "48/32 | 48/32 | 48/24 | 48/24",
+            "border_width_radius": "0 | 30px/20px",
+            "text_color": "",
+            "background_gradient": "rgb(246, 244, 242)",
+            "border_color": "rgba(0,0,0,0)",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | unset | left",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        }
+      },
+      "block_order": [
+        "layout_flex_AAqq4P",
+        "richtext_HE9cKD",
+        "layout_grid_slider_qfRMac",
+        "text_card_Ymc4K3",
+        "text_card_KGccTg",
+        "text_card_KbYizd"
+      ],
+      "settings": {
+        "grid_cols_align_x_align_y_gap": "7/1 | center | start | 0",
+        "padding_top_bottom_left_right": "0 | 0 | 0 | 0",
+        "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+        "border_width_radius": "0 | 0",
+        "background_color": "",
+        "border_color": "",
+        "section_id": "",
+        "color_scheme": "color_scheme_1",
+        "container_spacing": "px-container-md",
+        "border_divider": "border-y-none",
+        "top_bottom_min_height": "64/48 | 64/48 | 0",
+        "responsive_visibility": "",
+        "responsive_breakpoint": "768px",
+        "target_visibility": "",
+        "render_tabs_async": false
+      }
+    },
+    "content_grid_YBWgdD": {
+      "type": "content-grid",
+      "blocks": {
+        "layout_flex_Uj9wJx": {
+          "type": "layout__flex",
+          "settings": {
+            "flex_direction_align_x_align_y_gap_wrap": "column | start| center| 12",
+            "padding_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "border_width_radius": "0 | 0",
+            "background_color": "",
+            "border_color": "",
+            "margin_top_bottom_left_right": "0 | 36/24 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        },
+        "richtext_97rByY": {
+          "type": "richtext",
+          "settings": {
+            "title": "<p><strong>PREMIUM MATERIALS, EASY ASSEMBLY</strong></p>",
+            "page_content": "",
+            "use_page_content": false,
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "max | unset | 1 | unset | center",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": "",
+            "color_override": ""
+          }
+        },
+        "richtext_t7YyrF": {
+          "type": "richtext",
+          "settings": {
+            "title": "<h2><strong>Try It Out For Yourself </strong></h2>",
+            "page_content": "",
+            "use_page_content": false,
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "max/100% | unset | 1 | | unset | center",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": "",
+            "color_override": ""
+          }
+        },
+        "layout_end_wXpJJT": {
+          "type": "layout__end",
+          "settings": {}
+        },
+        "product_cards_rLXhdj": {
+          "type": "product-cards",
+          "settings": {
+            "products": [],
+            "collection": "start-your-new-deck",
+            "display_limit": "12 / 4",
+            "product_card_class": "product-card",
+            "hide_out_of_stock": false,
+            "slider_cols_rows_align_x_align_y_gap": "3/1.2| 1 | center | start| 24/12",
+            "slider_scroll_snap": "snap-mandatory [&>*]:snap-start",
+            "snap_center": true,
+            "slider_overflow_container": "all",
+            "infinite_scroll": false,
+            "scrollbar_class": "scrollbar-no-buttons",
+            "padding_top_bottom_left_right": "48/16 | 0 | 0 | 0",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "960px",
+            "anchor_id": "",
+            "metafield_keys": ""
+          }
+        }
+      },
+      "block_order": [
+        "layout_flex_Uj9wJx",
+        "richtext_97rByY",
+        "richtext_t7YyrF",
+        "layout_end_wXpJJT",
+        "product_cards_rLXhdj"
+      ],
+      "settings": {
+        "grid_cols_align_x_align_y_gap": "1 | stretch | stretch | 0",
+        "padding_top_bottom_left_right": "0 | 0 | 0 | 0",
+        "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+        "border_width_radius": "0 | 0",
+        "background_color": "",
+        "border_color": "",
+        "section_id": "",
+        "color_scheme": "color_scheme_1",
+        "container_spacing": "px-container-md",
+        "border_divider": "border-y-none",
+        "top_bottom_min_height": "80/48 | 100/48 | 0",
+        "responsive_visibility": "",
+        "responsive_breakpoint": "768px",
+        "target_visibility": "",
+        "render_tabs_async": false
+      }
+    }
+  },
+  "order": [
+    "hero_banner_w6LNcJ",
+    "text_cards_Uzgmmw",
+    "text_cards_AtKRDw",
+    "content_flex_j9jztK",
+    "media_with_text_pGMTFF",
+    "media_with_text_Qffyfd",
+    "media_with_text_piR9Gt",
+    "content_grid_ftWWVN",
+    "comparison_table_9JApEx",
+    "feature_banner_8wPUDz",
+    "image_banner_xMbDq3",
+    "content_grid_anUnAm",
+    "content_grid_TC6qhc",
+    "content_grid_YBWgdD"
+  ]
+}

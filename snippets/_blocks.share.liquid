@@ -1,0 +1,98 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.share"
+  assign url = block.settings.url
+  assign share_title = block.settings.share_title
+  assign description = block.settings.description
+  assign image = block.settings.image
+  assign facebook = block.settings.facebook
+  assign facebook_icon = block.settings.facebook_icon
+  assign twitter = block.settings.twitter
+  assign twitter_icon = block.settings.twitter_icon
+  assign pinterest = block.settings.pinterest
+  assign pinterest_icon = block.settings.pinterest_icon
+  assign linkedin = block.settings.linkedin
+  assign linkedin_icon = block.settings.linkedin_icon
+  assign email = block.settings.email
+  assign email_icon = block.settings.email_icon
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign width_height = block.settings.width_height
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign color_override = block.settings.color_override
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign object = page | default: product | default: article | default: collection | default: blog
+  assign share_url = url | default: object.url | replace: shop.url, '' | prepend: shop.url | url_param_escape
+  assign title = share_title | default: object.title | url_param_escape
+  assign description = description | default: object.excerpt_or_content | default: object.content | strip_html | truncatewords: 15 | url_param_escape
+  assign image = image | default: object.image | default: object.featured_image | default: object.featured_media | img_url: 'large' | prepend: 'https:' | url_param_escape
+%}
+
+{% render '_utils.dynamic-css', block: block, keys: "responsive_visibility,max_w_flex_col_row_order_align, margin_top_bottom_left_right,flex_direction_align_x_align_y_gap_wrap" %}
+{% render '_utils.dynamic-css', block: block, selector: '& [data-style-icon]', keys: "width_height" %}
+
+{% liquid
+  if color_override != blank and color_override.alpha != 0
+    assign color = color_override | default: "inherit"
+  endif
+%}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    style="color: {{ color }}">
+  {% if facebook %}
+    <a class="hf:opacity-70"
+       title="Share on Facebook"
+       href="https://www.facebook.com/sharer.php?u={{ share_url }}"
+       target="_blank"
+       rel="noopener">
+      {%- render '_components.icon', icon: facebook_icon, html_attributes: 'data-style-icon', class: ' ' -%}
+    </a>
+  {% endif %}
+  {% if twitter %}
+    <a class="hf:opacity-70"
+       title="Share on Twitter"
+       href="https://twitter.com/share?{% if title != blank %}text={{ title }}&{% endif %}url={{ share_url }}"
+       target="_blank"
+       rel="noopener">
+      {%- render '_components.icon', icon: twitter_icon, html_attributes: 'data-style-icon', class: ' ' -%}
+    </a>
+  {% endif %}
+  {% if pinterest %}
+    <a class="hf:opacity-70"
+       title="Share on Pinterest"
+       href="https://pinterest.com/pin/create/button/?url={{ share_url }}{% if image != blank %}&media={{ image }}{% endif %}&description={{ description }}"
+       target="_blank"
+       rel="noopener">
+      {%- render '_components.icon', icon: pinterest_icon, html_attributes: 'data-style-icon', class: ' ' -%}
+    </a>
+  {% endif %}
+  {% if linkedin %}
+    <a class="hf:opacity-70"
+       title="Share on LinkedIn"
+       href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url }}"
+       target="_blank"
+       rel="noopener">
+      {%- render '_components.icon', icon: linkedin_icon, html_attributes: 'data-style-icon', class: ' ' -%}
+    </a>
+  {% endif %}
+  {% if email %}
+    <a class="hf:opacity-70"
+       title="Share via Email"
+       href="mailto:?&subject={{ title | escape }}&body={{ share_url }}">
+      {% render '_components.icon', icon: email_icon, html_attributes: 'data-style-icon', class: ' ' %}
+    </a>
+  {% endif %}
+
+</div>
+
+

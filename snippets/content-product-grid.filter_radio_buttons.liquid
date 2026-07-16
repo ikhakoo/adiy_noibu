@@ -1,0 +1,39 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "filter_radio_buttons"
+  assign section_type = "content-product-grid"
+  assign title = block.settings.title
+  assign filters_show_count = block.settings.filters_show_count
+  assign button_class = block.settings.button_class
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "flex_direction_align_x_align_y_gap_wrap"
+%}
+
+<fieldset data-filter-param="{{ filter.param_name }}" class="flex"
+          data-style-id="{{ section.id }}--{{ block.id }}">
+  {% for value in filter.values %}
+    {% assign label = value.label %}
+    {% if filters_show_count %}
+      {% assign label = value.label | append: ' (' | append: value.count | append: ')' %}
+    {% endif %}
+    <label x-data="{ checked: $el.firstElementChild.checked }"
+           class="shrink-0 !outline-none cursor-pointer {{ button_class }}"
+           :class="checked ? 'active' : ''"
+           aria-label="{{ label }}">
+      <input type="checkbox"
+             class="sr-only"
+             @change="checked = $el.checked"
+             name="{{ value.param_name }}"
+          {% if value.active %}
+            checked="checked"
+          {% endif %}
+             value="{{ value.value }}">
+      <span>{{ label }}</span>
+    </label>
+  {%- endfor -%}
+</fieldset>

@@ -1,0 +1,1744 @@
+{%- render "global_design-elements" -%}
+{% schema %}
+{
+  "name": "Design Elements",
+  "settings": [],
+  "blocks": [
+    {
+      "name": "Select Dropdown",
+      "type": "select",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "CSS Class name",
+          "default": "button-primary",
+          "info": "hyphens / lowercase / no-spaces [kebab-case](https://developer.mozilla.org/en-US/docs/Glossary/Kebab_case)"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color",
+          "default": "#79EAA3"
+        },
+        {
+          "type": "color_background",
+          "id": "background_gradient",
+          "label": "background gradient",
+          "default": "linear-gradient(rgba(0, 0, 0, 0.0))"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "text color",
+          "default": "#020e0e"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color",
+          "default": "#020e0e"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Hover Colors"
+        },
+        {
+          "type": "color",
+          "id": "hover_background_color",
+          "label": "background color",
+          "default": "#0a346e"
+        },
+        {
+          "type": "color_background",
+          "id": "hover_background_gradient",
+          "label": "background gradient",
+          "default": "linear-gradient(rgba(0, 0, 0, 0.0))"
+        },
+        {
+          "type": "color",
+          "id": "hover_text_color",
+          "label": "text color",
+          "default": "#f8fafa"
+        },
+        {
+          "type": "color",
+          "id": "hover_border_color",
+          "label": "border color",
+          "default": "#f8fafa"
+        },
+        {
+          "type": "header",
+          "content": "Typography Settings"
+        },
+        {
+          "type": "text",
+          "id": "font_family",
+          "label": "Font family",
+          "default": "inherit"
+        },
+        {
+          "type": "text",
+          "id": "size_weight_height_opacity",
+          "label": "size | weight | height | opacity",
+          "default": "16px | 400 | 1.2 | 1"
+        },
+        {
+          "type": "text",
+          "id": "spacing_transform_style_whitespace",
+          "label": "spacing | transform | style | wrap",
+          "default": "0 | none | normal | nowrap"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Spacing"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right_min_height",
+          "label": "top | bottom | left | right | min-h",
+          "default": "16/14 | 16/14 | 32/28 | 32/28 | 0"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius_shadow_gap_text_align",
+          "label": "border | radius | shadow | gap|align",
+          "default": "1px | 0 | 0 | 6px | center",
+          "info": "Use 0-5 for Shadows"
+        },
+        {
+          "type": "text",
+          "id": "hover_radius_shadow_scale",
+          "label": "Hover: radius | shadow | scale",
+          "default": "4px | 0 | 100%",
+          "info": "Shadows: Use 0-5 for shadows"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon",
+          "default": "chevron-up-down"
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "checkbox",
+          "id": "apply_container_queries",
+          "label": "Apply container queries",
+          "default": true,
+          "info": "Create CSS for container queries. Use this for specific smaller styling in areas like the Cart Drawer and spaces where mobile styles should be applied on desktop views. This also enables the preview mode in the Theme editor."
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Mobile Color Overrides"
+        },
+        {
+          "type": "paragraph",
+          "content": "Leave empty to keep desktop & mobile identical."
+        },
+        {
+          "type": "color",
+          "id": "mobile_background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color_background",
+          "id": "mobile_background_gradient",
+          "label": "background gradient"
+        },
+        {
+          "type": "color",
+          "id": "mobile_text_color",
+          "label": "text color"
+        },
+        {
+          "type": "color",
+          "id": "mobile_border_color",
+          "label": "border color"
+        },
+        {
+          "type": "header",
+          "content": "Mobile Hover Colors"
+        },
+        {
+          "type": "color",
+          "id": "mobile_hover_background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color_background",
+          "id": "mobile_hover_background_gradient",
+          "label": "background gradient"
+        },
+        {
+          "type": "color",
+          "id": "mobile_hover_text_color",
+          "label": "text color"
+        },
+        {
+          "type": "color",
+          "id": "mobile_hover_border_color",
+          "label": "border color"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "color",
+          "id": "override_preview_background",
+          "label": "Override preview background"
+        }
+      ]
+    },
+    {
+      "name": "Quantity Stepper style",
+      "type": "quantity",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "CSS Class name",
+          "default": "quantity-stepper",
+          "info": "hyphens / lowercase / no-spaces [kebab-case](https://developer.mozilla.org/en-US/docs/Glossary/Kebab_case)"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color",
+          "default": "#79EAA3"
+        },
+        {
+          "type": "color_background",
+          "id": "background_gradient",
+          "label": "background gradient",
+          "default": "linear-gradient(rgba(0, 0, 0, 0.0))"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "text color",
+          "default": "#020e0e"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color",
+          "default": "#020e0e"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Typography Settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_label",
+          "label": "Show label",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "font_family",
+          "label": "Font family",
+          "default": "inherit"
+        },
+        {
+          "type": "text",
+          "id": "size_weight_height_opacity",
+          "label": "size | weight | height | opacity",
+          "default": "16px | 400 | 1.2 | 1"
+        },
+        {
+          "type": "text",
+          "id": "spacing_transform_style_whitespace",
+          "label": "spacing | transform | style | wrap",
+          "default": "0 | none | normal | nowrap"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Spacing"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right_min_height",
+          "label": "top | bottom | left | right | min-h",
+          "default": "16/14 | 16/14 | 32/28 | 32/28 | 0"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius_shadow_gap_text_align",
+          "label": "border | radius | shadow | gap|align",
+          "default": "1px | 0 | 0 | 6px | center",
+          "info": "Use 0-5 for Shadows"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "custom CSS",
+          "default": "& {\n}"
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "checkbox",
+          "id": "apply_container_queries",
+          "label": "Apply container queries",
+          "default": true,
+          "info": "Create CSS for container queries. Use this for specific smaller styling in areas like the Cart Drawer and spaces where mobile styles should be applied on desktop views. This also enables the preview mode in the Theme editor."
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Mobile Color Overrides"
+        },
+        {
+          "type": "paragraph",
+          "content": "Leave empty to keep desktop & mobile identical."
+        },
+        {
+          "type": "color",
+          "id": "mobile_background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color_background",
+          "id": "mobile_background_gradient",
+          "label": "background gradient"
+        },
+        {
+          "type": "color",
+          "id": "mobile_text_color",
+          "label": "text color"
+        },
+        {
+          "type": "color",
+          "id": "mobile_border_color",
+          "label": "border color"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "color",
+          "id": "override_preview_background",
+          "label": "Override preview background"
+        }
+      ]
+    },
+    {
+      "name": "Checkbox input",
+      "type": "checkbox",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "CSS Class name",
+          "default": "input-checkbox",
+          "info": "hyphens / lowercase / no-spaces [kebab-case](https://developer.mozilla.org/en-US/docs/Glossary/Kebab_case)"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color",
+          "default": "#353535"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "text color",
+          "default": "#020e0e"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Checkbox Active Colors"
+        },
+        {
+          "type": "color",
+          "id": "active_background_color",
+          "label": "Background",
+          "default": "#353535"
+        },
+        {
+          "type": "color",
+          "id": "active_color_icon",
+          "label": "Icon",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "active_border_color",
+          "label": "Border",
+          "default": "#000000"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Checkbox Styling"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "icon",
+          "default": "check-mark"
+        },
+        {
+          "type": "text",
+          "id": "size_border_width_radius_gap",
+          "label": "size | border | radius | gap",
+          "default": "20px | 1px | 0 | 16px"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Typography Settings"
+        },
+        {
+          "type": "text",
+          "id": "font_family",
+          "label": "Font family",
+          "default": "inherit"
+        },
+        {
+          "type": "text",
+          "id": "size_weight_height_opacity",
+          "label": "size | weight | height | opacity",
+          "default": "16px | 400 | 1.2 | 1"
+        },
+        {
+          "type": "text",
+          "id": "spacing_transform_style_whitespace",
+          "label": "spacing | transform | style | wrap",
+          "default": "0 | none | normal | nowrap"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "custom CSS",
+          "default": "& {\n}"
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "checkbox",
+          "id": "apply_container_queries",
+          "label": "Apply container queries",
+          "default": true,
+          "info": "Create CSS for container queries. Use this for specific smaller styling in areas like the Cart Drawer and spaces where mobile styles should be applied on desktop views. This also enables the preview mode in the Theme editor."
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Mobile Color Overrides"
+        },
+        {
+          "type": "paragraph",
+          "content": "Leave empty to keep desktop & mobile identical."
+        },
+        {
+          "type": "color",
+          "id": "mobile_background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color",
+          "id": "mobile_text_color",
+          "label": "text color"
+        },
+        {
+          "type": "color",
+          "id": "mobile_border_color",
+          "label": "border color"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Mobile Checkbox Active Colors"
+        },
+        {
+          "type": "color",
+          "id": "mobile_active_background_color",
+          "label": "Background"
+        },
+        {
+          "type": "color",
+          "id": "mobile_active_color_icon",
+          "label": "Icon"
+        },
+        {
+          "type": "color",
+          "id": "mobile_active_border_color",
+          "label": "Border"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "color",
+          "id": "override_preview_background",
+          "label": "Override preview background"
+        }
+      ]
+    },
+    {
+      "name": "Text Input",
+      "type": "input",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "CSS Class name",
+          "default": "input-text",
+          "info": "hyphens / lowercase / no-spaces [kebab-case](https://developer.mozilla.org/en-US/docs/Glossary/Kebab_case)"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color_background",
+          "id": "background_gradient",
+          "label": "background gradient",
+          "default": "linear-gradient(rgba(0, 0, 0, 0.0))"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "text color",
+          "default": "#020e0e"
+        },
+        {
+          "type": "color",
+          "id": "placeholder_color",
+          "label": "placeholder color",
+          "default": "#d3d3d3"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color",
+          "default": "#020e0e"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Typography Settings"
+        },
+        {
+          "type": "text",
+          "id": "font_family",
+          "label": "Font family",
+          "default": "inherit"
+        },
+        {
+          "type": "text",
+          "id": "size_weight_height_opacity",
+          "label": "size | weight | height | opacity",
+          "default": "16px | 400 | 1.2 | 1"
+        },
+        {
+          "type": "text",
+          "id": "spacing_transform_style_whitespace",
+          "label": "spacing | transform | style | wrap",
+          "default": "0 | none | normal | nowrap"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Spacing"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right_min_height",
+          "label": "top | bottom | left | right | min-h",
+          "default": "16/14 | 16/14 | 32/28 | 32/28 | 0"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius_shadow_gap_text_align",
+          "label": "border | radius | shadow | gap|align",
+          "default": "1px | 0 | 0 | 6px | center",
+          "info": "Use 0-5 for Shadows"
+        },
+        {
+          "type": "select",
+          "id": "resizable",
+          "label": "Allow Resizing",
+          "default": "vertical",
+          "options": [
+            {
+              "value": "auto",
+              "label": "All"
+            },
+            {
+              "value": "horizontal",
+              "label": "Horizontal"
+            },
+            {
+              "value": "vertical",
+              "label": "Vertical"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
+          ]
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "custom CSS",
+          "default": "& {\n}"
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "checkbox",
+          "id": "apply_container_queries",
+          "label": "Apply container queries",
+          "default": true,
+          "info": "Create CSS for container queries. Use this for specific smaller styling in areas like the Cart Drawer and spaces where mobile styles should be applied on desktop views. This also enables the preview mode in the Theme editor."
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Mobile Color Overrides"
+        },
+        {
+          "type": "paragraph",
+          "content": "Leave empty to keep desktop & mobile identical."
+        },
+        {
+          "type": "color",
+          "id": "mobile_background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color_background",
+          "id": "mobile_background_gradient",
+          "label": "background gradient"
+        },
+        {
+          "type": "color",
+          "id": "mobile_text_color",
+          "label": "text color"
+        },
+        {
+          "type": "color",
+          "id": "mobile_placeholder_color",
+          "label": "placeholder color"
+        },
+        {
+          "type": "color",
+          "id": "mobile_border_color",
+          "label": "border color"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "color",
+          "id": "override_preview_background",
+          "label": "Override preview background"
+        }
+      ]
+    },
+    {
+      "name": "Textarea",
+      "type": "textarea",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "CSS Class name",
+          "default": "input-textarea",
+          "info": "hyphens / lowercase / no-spaces [kebab-case](https://developer.mozilla.org/en-US/docs/Glossary/Kebab_case)"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color_background",
+          "id": "background_gradient",
+          "label": "background gradient",
+          "default": "linear-gradient(rgba(0, 0, 0, 0.0))"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "text color",
+          "default": "#020e0e"
+        },
+        {
+          "type": "color",
+          "id": "placeholder_color",
+          "label": "placeholder color",
+          "default": "#d3d3d3"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color",
+          "default": "#020e0e"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Typography Settings"
+        },
+        {
+          "type": "text",
+          "id": "font_family",
+          "label": "Font family",
+          "default": "inherit"
+        },
+        {
+          "type": "text",
+          "id": "size_weight_height_opacity",
+          "label": "size | weight | height | opacity",
+          "default": "16px | 400 | 1.2 | 1"
+        },
+        {
+          "type": "text",
+          "id": "spacing_transform_style_whitespace",
+          "label": "spacing | transform | style | wrap",
+          "default": "0 | none | normal | nowrap"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Spacing"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right_min_height",
+          "label": "top | bottom | left | right | min-h",
+          "default": "16/14 | 16/14 | 32/28 | 32/28 | 0"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius_shadow_gap_text_align",
+          "label": "border | radius | shadow | gap|align",
+          "default": "1px | 0 | 0 | 6px | center",
+          "info": "Use 0-5 for Shadows"
+        },
+        {
+          "type": "select",
+          "id": "resizable",
+          "label": "Allow Resizing",
+          "default": "vertical",
+          "options": [
+            {
+              "value": "auto",
+              "label": "All"
+            },
+            {
+              "value": "horizontal",
+              "label": "Horizontal"
+            },
+            {
+              "value": "vertical",
+              "label": "Vertical"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
+          ]
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "custom CSS",
+          "default": "& {\n}"
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "checkbox",
+          "id": "apply_container_queries",
+          "label": "Apply container queries",
+          "default": true,
+          "info": "Create CSS for container queries. Use this for specific smaller styling in areas like the Cart Drawer and spaces where mobile styles should be applied on desktop views. This also enables the preview mode in the Theme editor."
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Mobile Color Overrides"
+        },
+        {
+          "type": "paragraph",
+          "content": "Leave empty to keep desktop & mobile identical."
+        },
+        {
+          "type": "color",
+          "id": "mobile_background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color_background",
+          "id": "mobile_background_gradient",
+          "label": "background gradient"
+        },
+        {
+          "type": "color",
+          "id": "mobile_text_color",
+          "label": "text color"
+        },
+        {
+          "type": "color",
+          "id": "mobile_placeholder_color",
+          "label": "placeholder color"
+        },
+        {
+          "type": "color",
+          "id": "mobile_border_color",
+          "label": "border color"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "color",
+          "id": "override_preview_background",
+          "label": "Override preview background"
+        }
+      ]
+    },
+    {
+      "name": "Accordion / Collapsible",
+      "type": "accordion",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "CSS Class name",
+          "default": "accordion",
+          "info": "hyphens / lowercase / no-spaces [kebab-case](https://developer.mozilla.org/en-US/docs/Glossary/Kebab_case)"
+        },
+        {
+          "type": "header",
+          "content": "Label Typography Settings"
+        },
+        {
+          "type": "text",
+          "id": "font_family",
+          "label": "Font family",
+          "default": "inherit"
+        },
+        {
+          "type": "text",
+          "id": "size_weight_height_opacity",
+          "label": "size | weight | height | opacity",
+          "default": "16px | 400 | 1.2 | 1"
+        },
+        {
+          "type": "text",
+          "id": "spacing_transform_style_whitespace",
+          "label": "spacing | transform | style | wrap",
+          "default": "0 | none | normal | nowrap"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "10px | 10px | 0 | 0"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Icon"
+        },
+        {
+          "type": "select",
+          "id": "icon_style",
+          "label": "Icon style",
+          "default": "plus",
+          "options": [
+            {
+              "value": "plus",
+              "label": "plus/minus"
+            },
+            {
+              "value": "icon_plain",
+              "label": "icon"
+            },
+            {
+              "value": "icon_rotating",
+              "label": "rotating"
+            },
+            {
+              "value": "none",
+              "label": "none"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon",
+          "default": "chevron-down"
+        },
+        {
+          "type": "text",
+          "id": "width_height",
+          "label": "Icon: width | height",
+          "default": "auto | 20px"
+        },
+        {
+          "type": "header",
+          "content": "Dropdown Content Settings"
+        },
+        {
+          "type": "text",
+          "id": "richtext_class",
+          "label": "Richtext set class",
+          "default": "richtext-sm"
+        },
+        {
+          "type": "text",
+          "id": "content_top_bottom_left_right",
+          "label": "Content: Top | Bottom | Left | Right",
+          "default": "10px | 10px | 0 | 0"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Border"
+        },
+        {
+          "type": "text",
+          "id": "borders_top_bottom_left_right",
+          "label": "Borders: Top | Bottom | Left | Right",
+          "default": "0 | 1px | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius",
+          "label": "border | radius | max-h | max-w | overflow",
+          "default": "0 0 1px 0 | 0 | | ",
+          "info": "Border can be set via the border-shorthand for. I.e '0 0 1px 0' sets only the bottom border."
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "checkbox",
+          "id": "apply_container_queries",
+          "label": "Apply container queries",
+          "default": true,
+          "info": "Create CSS for container queries. Use this for specific smaller styling in areas like the Cart Drawer and spaces where mobile styles should be applied on desktop views. This also enables the preview mode in the Theme editor."
+        },
+        {
+          "type": "header",
+          "content": "Color Overrides"
+        },
+        {
+          "type": "paragraph",
+          "content": "Leave empty to keep desktop to use the sections colors."
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color_background",
+          "id": "background_gradient",
+          "label": "background gradient"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "text color"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color",
+          "default": "#020e0e"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Mobile Color Overrides"
+        },
+        {
+          "type": "paragraph",
+          "content": "Leave empty to keep desktop & mobile identical."
+        },
+        {
+          "type": "color",
+          "id": "mobile_background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color_background",
+          "id": "mobile_background_gradient",
+          "label": "background gradient"
+        },
+        {
+          "type": "color",
+          "id": "mobile_text_color",
+          "label": "text color"
+        },
+        {
+          "type": "color",
+          "id": "mobile_border_color",
+          "label": "border color"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "color",
+          "id": "override_preview_background",
+          "label": "Override preview background"
+        }
+      ]
+    },
+    {
+      "name": "Scroll Controls",
+      "type": "scrollbar",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "CSS Class name",
+          "default": "scrollbar",
+          "info": "hyphens / lowercase / no-spaces [kebab-case](https://developer.mozilla.org/en-US/docs/Glossary/Kebab_case)"
+        },
+        {
+          "type": "header",
+          "content": "Scrollbar"
+        },
+        {
+          "type": "select",
+          "id": "scrollbar_responsive_visibility_hidden",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "hidden",
+              "label": "None"
+            },
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "track_color",
+          "label": "Track Color",
+          "default": "#c0c1c3"
+        },
+        {
+          "type": "color_background",
+          "id": "track_color_gradient",
+          "label": "Track Gradient"
+        },
+        {
+          "type": "color",
+          "id": "thumb_color",
+          "label": "Thumb Color",
+          "default": "#111827"
+        },
+        {
+          "type": "color",
+          "id": "thumb_hover_color",
+          "label": "Thumb Hover Color",
+          "default": "#000000"
+        },
+        {
+          "type": "text",
+          "id": "height_radius_top_bottom",
+          "label": "Height | Radius | Top | Bottom",
+          "default": "5px / 4px | 32px | 6px | 6px"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Previous / Next buttons"
+        },
+        {
+          "type": "select",
+          "id": "buttons_responsive_visibility_hidden",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "hidden",
+              "label": "None"
+            },
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "icon_style",
+          "label": "Icon style",
+          "default": "animated",
+          "options": [
+            {
+              "value": "animated",
+              "label": "Animated Arrow"
+            },
+            {
+              "value": "icon",
+              "label": "Icon Selector"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "icon_previous",
+          "label": "Icon previous button",
+          "default": "chevron-left"
+        },
+        {
+          "type": "text",
+          "id": "icon_next",
+          "label": "Icon next button",
+          "default": "chevron-right"
+        },
+        {
+          "type": "text",
+          "id": "size_border_width_radius",
+          "label": "size | border | radius",
+          "default": "28px /24px | 1px | 999px"
+        },
+        {
+          "type": "text",
+          "id": "flex_row_wrap_align_x_align_y_gap",
+          "label": "justify | align | gap | wrap | dir",
+          "default": "between | center | 8px",
+          "info": "Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "color",
+          "id": "icon_color",
+          "label": "Icon color",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "button_background_color",
+          "label": "Button background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "button_border_color",
+          "label": "Border color",
+          "default": "#000000"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "color",
+          "id": "icon_hover_color",
+          "label": "Icon Hover color"
+        },
+        {
+          "type": "color",
+          "id": "button_hover_background_color",
+          "label": "Button Hover background color",
+          "default": "#d3d3d3"
+        },
+        {
+          "type": "color",
+          "id": "button_border_hover_color",
+          "label": "Border Hover color",
+          "default": "#000000"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Item counter"
+        },
+        {
+          "type": "select",
+          "id": "counter_responsive_visibility_hidden",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "hidden",
+              "label": "None"
+            },
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "counter_color",
+          "label": "Color",
+          "default": "#000000"
+        },
+        {
+          "type": "text",
+          "id": "font_family",
+          "label": "Font family",
+          "default": "inherit"
+        },
+        {
+          "type": "text",
+          "id": "size_weight_height_opacity",
+          "label": "size | weight | height | opacity",
+          "default": "14px | 500 | 1.2 | 1"
+        },
+        {
+          "type": "text",
+          "id": "spacing_transform_style_whitespace",
+          "label": "spacing | transform | style | wrap",
+          "default": "0 | none | normal | nowrap"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "text",
+          "id": "flex_direction_align_x_align_y_gap_wrap",
+          "label": "dir | justify | align | gap | wrap | min-h",
+          "default": "column | stretch | stretch | 0 | nowrap",
+          "info": "Direction accepts: 'row','column'. Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "checkbox",
+          "id": "apply_container_queries",
+          "label": "Apply container queries",
+          "default": true,
+          "info": "Create CSS for container queries. Use this for specific smaller styling in areas like the Cart Drawer and spaces where mobile styles should be applied on desktop views. This also enables the preview mode in the Theme editor."
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "color",
+          "id": "override_preview_background",
+          "label": "Override preview background"
+        }
+      ]
+    },
+    {
+      "name": "Pagination",
+      "type": "pagination",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "CSS Class name",
+          "default": "pagination",
+          "info": "hyphens / lowercase / no-spaces [kebab-case](https://developer.mozilla.org/en-US/docs/Glossary/Kebab_case)"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color_background",
+          "id": "background_gradient",
+          "label": "background gradient",
+          "default": "linear-gradient(rgba(0, 0, 0, 0.0))"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "text color",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color",
+          "default": "#000000"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Hover Colors"
+        },
+        {
+          "type": "color",
+          "id": "hover_background_color",
+          "label": "background color",
+          "default": "#000000"
+        },
+        {
+          "type": "color_background",
+          "id": "hover_background_gradient",
+          "label": "background gradient",
+          "default": "linear-gradient(rgba(0, 0, 0, 0.0))"
+        },
+        {
+          "type": "color",
+          "id": "hover_text_color",
+          "label": "text color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "hover_border_color",
+          "label": "border color",
+          "default": "#000000"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Typography Settings"
+        },
+        {
+          "type": "text",
+          "id": "font_family",
+          "label": "Font family",
+          "default": "inherit"
+        },
+        {
+          "type": "text",
+          "id": "size_weight_height_opacity",
+          "label": "size | weight | height | opacity",
+          "default": "14px/12px | 400 | 1.35 | 1"
+        },
+        {
+          "type": "text",
+          "id": "spacing_transform_style_whitespace",
+          "label": "spacing | transform | style | wrap",
+          "default": "0 | none | normal | nowrap"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "text",
+          "id": "flex_direction_align_x_align_y_gap_wrap",
+          "label": "dir | justify | align | gap | wrap | min-h",
+          "default": "row | center | center | 12/8 | nowrap",
+          "info": "Direction accepts: 'row','column'. Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Pagination Buttons"
+        },
+        {
+          "type": "text",
+          "id": "width_height_border_width_radius",
+          "label": "width | height | border | radius",
+          "default": "24px/16px | 24px/16px | 1px | 0"
+        },
+        {
+          "type": "text",
+          "id": "icon_previous",
+          "label": "Icon previous button",
+          "default": "chevron-left"
+        },
+        {
+          "type": "text",
+          "id": "icon_next",
+          "label": "Icon next button",
+          "default": "chevron-right"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "custom CSS",
+          "default": "& {\n}"
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "checkbox",
+          "id": "apply_container_queries",
+          "label": "Apply container queries",
+          "default": true,
+          "info": "Create CSS for container queries. Use this for specific smaller styling in areas like the Cart Drawer and spaces where mobile styles should be applied on desktop views. This also enables the preview mode in the Theme editor."
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Mobile Color Overrides"
+        },
+        {
+          "type": "paragraph",
+          "content": "Leave empty to keep desktop & mobile identical."
+        },
+        {
+          "type": "color",
+          "id": "mobile_background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color_background",
+          "id": "mobile_background_gradient",
+          "label": "background gradient"
+        },
+        {
+          "type": "color",
+          "id": "mobile_text_color",
+          "label": "text color"
+        },
+        {
+          "type": "color",
+          "id": "mobile_border_color",
+          "label": "border color"
+        },
+        {
+          "type": "header",
+          "content": "Mobile Hover Colors"
+        },
+        {
+          "type": "color",
+          "id": "mobile_hover_background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color_background",
+          "id": "mobile_hover_background_gradient",
+          "label": "background gradient"
+        },
+        {
+          "type": "color",
+          "id": "mobile_hover_text_color",
+          "label": "text color"
+        },
+        {
+          "type": "color",
+          "id": "mobile_hover_border_color",
+          "label": "border color"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "color",
+          "id": "override_preview_background",
+          "label": "Override preview background"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

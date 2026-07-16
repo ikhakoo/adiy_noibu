@@ -1,0 +1,173 @@
+{%- render "megamenu" -%}
+{% schema %}
+{
+  "name": "Megamenu",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Megamenu Settings"
+    },
+    {
+      "type": "text",
+      "id": "handle",
+      "label": "Trigger handle",
+      "info": "Triggered by any link to `href=\"#megamenu--{handle}\""
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "select",
+      "id": "background_blur",
+      "label": "Background Blur",
+      "default": "backdrop-blur-md",
+      "options": [
+        {
+          "value": "",
+          "label": "none"
+        },
+        {
+          "value": "backdrop-blur-sm",
+          "label": "sm"
+        },
+        {
+          "value": "backdrop-blur-md",
+          "label": "md"
+        },
+        {
+          "value": "backdrop-blur-lg",
+          "label": "lg"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Grid Columns",
+      "default": 12,
+      "min": 1,
+      "max": 12,
+      "step": 1
+    },
+    {
+      "type": "header",
+      "content": "Section Globals"
+    },
+    {
+      "type": "text",
+      "id": "vertical_padding_section",
+      "label": "Top padding | Bottom Padding",
+      "default": "0 | 0 "
+    },
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section Id"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Image With Content",
+      "type": "image-with-content",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "richtext",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "title_class",
+          "label": "Title class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Url"
+        },
+        {
+          "type": "range",
+          "id": "columns_span",
+          "label": "Grid columns span",
+          "default": 4,
+          "min": 1,
+          "max": 12,
+          "step": 1
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Megamenu",
+      "blocks": [
+        {
+          "type": "image-with-content",
+          "settings": {
+            "image": "shopify://shop_images/Collection_Card.png",
+            "title": "<h3><strong>KDAT Pressure Treated</strong></h3>",
+            "title_class": "richtext-md",
+            "icon": "shopify://shop_images/action.png",
+            "url": "shopify://collections/pressure-treated-wood-deck-kits",
+            "columns_span": 4
+          }
+        },
+        {
+          "type": "image-with-content",
+          "settings": {
+            "image": "shopify://shop_images/Collection_Card_1.png",
+            "title": "<h3><strong>Cedar Wood</strong></h3>",
+            "title_class": "richtext-md",
+            "icon": "shopify://shop_images/action.png",
+            "url": "shopify://collections/cedar-wood-deck-kits",
+            "columns_span": 4
+          }
+        },
+        {
+          "type": "image-with-content",
+          "settings": {
+            "image": "shopify://shop_images/Image_Ratios.png",
+            "title": "<h3><strong>Trex Composite</strong></h3>",
+            "title_class": "richtext-md",
+            "icon": "shopify://shop_images/action.png",
+            "url": "shopify://collections",
+            "columns_span": 4
+          }
+        }
+      ],
+      "settings": {
+        "handle": "shop",
+        "background_blur": "backdrop-blur-md",
+        "columns": 12,
+        "vertical_padding_section": "0 | 0",
+        "section_id": ""
+      }
+    }
+  ],
+  "enabled_on": {
+    "groups": [
+      "custom.modal"
+    ]
+  }
+}
+{% endschema %}

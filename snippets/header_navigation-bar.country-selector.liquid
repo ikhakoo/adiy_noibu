@@ -1,0 +1,45 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "country-selector"
+  assign section_type = "header_navigation-bar"
+  assign style = block.settings.style
+  assign icon = block.settings.icon
+  assign text_class = block.settings.text_class
+  assign url = block.settings.url
+  assign responsive_visibility = block.settings.responsive_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign url = url | default: '/#modal--country-selector'
+%}
+
+
+<a href="{{ url }}"
+   title="Open Country Selector"
+   class="relative flex items-center shrink-0 whitespace-nowrap justify-center p-0.5 {{ responsive_visibility }} {{ class }}" {{ block.shopify_attributes }}>
+  {% if style == "icon" %}
+    {% render '_components.icon', icon: icon, class: "h-5 shrink-0" %}
+  {% endif %}
+  {% if style == "country" %}
+    <span class="{{ text_class }}">
+      {{ localization.country.name }}
+    </span>
+  {% endif %}
+  {% if style == "currency" %}
+    <span class="{{ text_class }}">
+      {{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }}
+    </span>
+  {% endif %}
+  {% if style == "flag" %}
+    <span class="flex items-center gap-2 {{ text_class }}">
+      {{ localization.country | image_url: width: 16 | image_tag }} {{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }}
+    </span>
+  {% endif %}
+  {% if style == "full" %}
+    <span class="{{ text_class }}">
+      {{ localization.country.name }} ({{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }})
+    </span>
+  {% endif %}
+</a>
+

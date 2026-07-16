@@ -1,0 +1,597 @@
+{%- render "content-benefit-tabs" -%}
+{% schema %}
+{
+  "name": "Feature Tabs",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image Settings"
+    },
+    {
+      "type": "text",
+      "id": "width_height_aspect_object_fit",
+      "label": "width | height | aspect | fit | radius",
+      "default": "100% | auto | auto | cover | 0",
+      "info": "Aspect ratio only applies if width or height are set to 'auto'"
+    },
+    {
+      "type": "text",
+      "id": "border_width_radius",
+      "label": "border | radius | max-h | max-w | overflow",
+      "default": "0 | 0 |  |  | ",
+      "info": "Border can be set via the border-shorthand for. I.e '0 0 1px 0' sets only the bottom border."
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "border color"
+    },
+    {
+      "type": "select",
+      "id": "image_mobile_style",
+      "label": "Mobile style",
+      "default": "fullscreen",
+      "options": [
+        {
+          "value": "fullscreen",
+          "label": "Fullscreen"
+        },
+        {
+          "value": "container",
+          "label": "Container"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "text",
+      "id": "padding_top_bottom_left_right",
+      "label": "padding: top | bottom | left | right",
+      "default": "0 | 0 | 0 | 0"
+    },
+    {
+      "type": "select",
+      "id": "content_mobile_style",
+      "label": "Mobile style",
+      "default": "expand",
+      "options": [
+        {
+          "value": "expand",
+          "label": "Expand"
+        },
+        {
+          "value": "slider",
+          "label": "Slider"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "header",
+      "content": "Icon Settings"
+    },
+    {
+      "type": "text",
+      "id": "icon",
+      "label": "Icon"
+    },
+    {
+      "type": "text",
+      "id": "width_height_gap",
+      "label": "Icon: width | height | gap",
+      "default": "auto | 20/32"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "text color"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "header",
+      "content": "Section Globals"
+    },
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section Id"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "1",
+      "label": "Color scheme"
+    },
+    {
+      "type": "select",
+      "id": "container_spacing",
+      "default": "px-container-md",
+      "options": [
+        {
+          "value": "px-container-xs",
+          "label": "xs"
+        },
+        {
+          "value": "px-container-sm",
+          "label": "sm"
+        },
+        {
+          "value": "px-container-md",
+          "label": "md"
+        },
+        {
+          "value": "px-container-lg",
+          "label": "lg"
+        },
+        {
+          "value": "px-container-fullwidth",
+          "label": "fullwidth"
+        },
+        {
+          "value": "px-container-gutter",
+          "label": "magazine"
+        }
+      ],
+      "label": "Container Spacing"
+    },
+    {
+      "type": "select",
+      "id": "border_divider",
+      "label": "Border Divider",
+      "default": "border-y-none",
+      "options": [
+        {
+          "value": "border-y-none",
+          "label": "None"
+        },
+        {
+          "value": "border-t border-t-theme-border",
+          "label": "Top"
+        },
+        {
+          "value": "border-b border-b-theme-border",
+          "label": "Bottom"
+        },
+        {
+          "value": "border-y border-y-theme-border",
+          "label": "Both"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "top_bottom_min_height",
+      "label": "padding: top | bottom | min-h",
+      "default": "0 | 0 | 0"
+    },
+    {
+      "type": "select",
+      "id": "responsive_visibility",
+      "label": "Responsive Visibility",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile"
+        },
+        {
+          "value": "desktop-tablet-only",
+          "label": "Desktop"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "responsive_breakpoint",
+      "label": "Responsive breakpoint",
+      "default": "768px",
+      "info": "Only adjust this for rare instances on large screen designs"
+    },
+    {
+      "type": "select",
+      "id": "target_visibility",
+      "label": "Target visibility",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "Always"
+        },
+        {
+          "value": "targeted",
+          "label": "Targeted"
+        },
+        {
+          "value": "no_target",
+          "label": "No target"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Feature",
+      "type": "feature",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        },
+        {
+          "type": "text",
+          "id": "content_class",
+          "label": "Content class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "Slider pagination",
+      "type": "pagination",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Slider Buttons"
+        },
+        {
+          "type": "text",
+          "id": "width_height_border_width_radius",
+          "label": "width | height | border | radius",
+          "default": "12px | 12px | 0 | 999px"
+        },
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color",
+          "default": "#CCCCCC"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        },
+        {
+          "type": "color",
+          "id": "hover_border_color",
+          "label": "border color"
+        },
+        {
+          "type": "color",
+          "id": "hover_background_color",
+          "label": "background color",
+          "default": "#000000"
+        },
+        {
+          "type": "text",
+          "id": "flex_direction_align_x_align_y_gap_wrap",
+          "label": "dir | justify | align | gap | wrap | min-h",
+          "default": "row | center | center | 6px",
+          "info": "Direction accepts: 'row','column'. Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        }
+      ],
+      "limit": 1
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feature Tabs - 1",
+      "settings": {
+        "width_height_aspect_object_fit": "100% | auto | auto | cover",
+        "border_width_radius": "0 | 0",
+        "border_color": "",
+        "image_mobile_style": "fullscreen",
+        "padding_top_bottom_left_right": "0 | 0 | 0 | 0",
+        "content_mobile_style": "slider",
+        "section_id": "",
+        "color_scheme": "color_scheme_1",
+        "container_spacing": "px-container-md",
+        "border_divider": "border-y-none",
+        "top_bottom_min_height": "80 | 100 | 0 | 0",
+        "responsive_visibility": "",
+        "responsive_breakpoint": "768px",
+        "target_visibility": ""
+      },
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "image": "",
+            "content": "",
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "image": "",
+            "content": "<p></p>",
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "image": "",
+            "content": "",
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px"
+          }
+        },
+        {
+          "type": "pagination",
+          "settings": {
+            "width_height_border_width_radius": "35px | 4px | 0 | 100px",
+            "background_color": "#cccccc",
+            "border_color": "",
+            "hover_border_color": "",
+            "hover_background_color": "#000000",
+            "flex_direction_align_x_align_y_gap_wrap": "row | center | start | 8",
+            "padding_top_bottom_left_right": "32/0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "responsive_breakpoint": "768px"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Feature Tabs - 2",
+      "settings": {
+        "width_height_aspect_object_fit": "100% | auto | 1 | cover",
+        "border_width_radius": "0 | 0 |",
+        "border_color": "",
+        "image_mobile_style": "fullscreen",
+        "padding_top_bottom_left_right": "0 | 0 | 0 | 0",
+        "content_mobile_style": "expand",
+        "icon": "",
+        "width_height_gap": "auto | 20/32",
+        "text_color": "",
+        "section_id": "",
+        "color_scheme": "color_scheme_1",
+        "container_spacing": "px-container-lg",
+        "border_divider": "border-y-none",
+        "top_bottom_min_height": "0 | 102/64 | 0",
+        "responsive_visibility": "desktop-tablet-only",
+        "responsive_breakpoint": "768px",
+        "target_visibility": ""
+      },
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/pdp_yeti_book_1.webp",
+            "content": "<h3>[icon.hiw-stars.64px.image] 1 </h3><p>Our <strong>books</strong> teach emotional lessons.</p>",
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/pdp_yak_kin.webp",
+            "content": "<h3>[icon.hiw-stars.64px.image] 2</h3><p>Our <strong>plush creatures</strong> bring lessons to life.</p>",
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/pdp_sloth_book_2022-03-29-215512_nghp.webp",
+            "content": "<h3>[icon.hiw-stars.64px.image] 3</h3><p><strong>Together</strong> they build an inner voice that lasts a lifetime.</p>",
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px"
+          }
+        },
+        {
+          "type": "pagination",
+          "settings": {
+            "width_height_border_width_radius": "35px | 4px | 0 | 50px",
+            "background_color": "#d9d4d2",
+            "border_color": "",
+            "hover_border_color": "",
+            "hover_background_color": "#077496",
+            "flex_direction_align_x_align_y_gap_wrap": "row | center | start | 16",
+            "padding_top_bottom_left_right": "32  | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "desktop-tablet-only",
+            "responsive_breakpoint": "768px"
+          }
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "*"
+    ]
+  }
+}
+{% endschema %}

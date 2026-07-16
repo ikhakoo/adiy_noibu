@@ -1,0 +1,275 @@
+<section
+  class="two-column-section-new"
+  style="background-color: {{ section.settings.section_bg_color }};"
+>
+  <div class="custom-container">
+    <!-- Heading -->
+    <h2 class="section-heading {% if section.settings.heading_class != 'none' %}{{ section.settings.heading_class }}{% endif %}">
+      {{ section.settings.section_heading }}
+    </h2>
+
+    <!-- Heading Rich Text -->
+    <div class="heading-rich-text heading-rich-text-80 {% if section.settings.heading_richtext_class != 'none' %}{{ section.settings.heading_richtext_class }}{% endif %}">
+      {{ section.settings.heading_richtext }}
+    </div>
+
+    <!-- Two Columns -->
+    <div class="two-column-wrapper">
+
+      <!-- Left Column -->
+      <div class="column-box-new">
+        {% if section.settings.left_image %}
+          <img
+            src="{{ section.settings.left_image | image_url: width: 700 }}"
+            alt="Left Image"
+            loading="lazy"
+          >
+        {% endif %}
+
+        <div class="column-content-new {% if section.settings.left_content_class != 'none' %}{{ section.settings.left_content_class }}{% endif %}">
+          {{ section.settings.left_content }}
+        </div>
+
+        {% if section.settings.left_button_text != blank %}
+          <a
+            href="{{ section.settings.left_button_link }}"
+            class="{{ section.settings.left_button_class }}"
+          >
+            {{ section.settings.left_button_text }}
+          </a>
+        {% endif %}
+      </div>
+
+      <!-- Right Column -->
+      <div class="column-box-new">
+        {% if section.settings.right_image %}
+          <img
+            src="{{ section.settings.right_image | image_url: width: 700 }}"
+            alt="Right Image"
+            loading="lazy"
+          >
+        {% endif %}
+
+        <div class="column-content-new {% if section.settings.right_content_class != 'none' %}{{ section.settings.right_content_class }}{% endif %}">
+          {{ section.settings.right_content }}
+        </div>
+
+        {% if section.settings.right_button_text != blank %}
+          <a
+            href="{{ section.settings.right_button_link }}"
+            class="{{ section.settings.right_button_class }}"
+          >
+            {{ section.settings.right_button_text }}
+          </a>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .two-column-section-new {
+    padding: 48px 20px;
+  }
+
+  .custom-container {
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .section-heading {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 28px;
+    font-weight:500;
+    letter-spacing:-1.2px;
+  }
+
+  .heading-rich-text {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .two-column-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+
+  .column-box-new {
+    background: #f6f4f2;
+    border-radius: 10px;
+    padding: 30px;
+  }
+.column-box-new h3
+{
+    margin-bottom: 0px;
+    font-size: 20px;
+    font-weight:500;
+    margin-top:10px;
+}
+.two-column-section-new .column-box-new ul
+{
+    margin-top:25px;
+    margin-bottom: 35px;
+    list-style:disc;
+    margin-left:25px;
+}
+.two-column-section-new .column-box-new ul li
+{
+  margin-bottom:10px;
+}
+.column-box-new p
+{
+    margin-top:10px;
+}
+.column-box-new img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 35px;
+    display: block;
+}
+
+.column-content-new {
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .two-column-wrapper {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media(min-width:768px)
+  {
+        .custom-container
+        {
+            padding:0 48px; 
+        }
+        .section-heading {
+            font-size: 40px;
+        }
+        .column-box-new h3
+        {
+            font-size: 26px;
+        }
+        .heading-rich-text-80
+        {
+            max-width:70%;
+            margin-left:auto;
+            margin-right:auto;
+        }
+    }
+</style>
+
+{% schema %}
+{
+  "name": "Two Column Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Heading",
+      "default": "Section Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading_class",
+      "label": "Heading Class",
+      "default": "none"
+    },
+    {
+      "type": "richtext",
+      "id": "heading_richtext",
+      "label": "Heading Rich Text",
+      "default": "<p>Add your rich text here</p>"
+    },
+    {
+      "type": "text",
+      "id": "heading_richtext_class",
+      "label": "Heading Rich Text Class",
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Section Background Color",
+      "default": "#ffffff"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "left_image",
+      "label": "Left Column Image"
+    },
+    {
+      "type": "richtext",
+      "id": "left_content",
+      "label": "Left Column Content"
+    },
+    {
+      "type": "text",
+      "id": "left_content_class",
+      "label": "Left Content Class",
+      "default": "none"
+    },
+    {
+      "type": "text",
+      "id": "left_button_text",
+      "label": "Left Button Text",
+      "default": "Learn More"
+    },
+    {
+      "type": "url",
+      "id": "left_button_link",
+      "label": "Left Button Link"
+    },
+    {
+      "type": "text",
+      "id": "left_button_class",
+      "label": "Left Button Class",
+      "default": "button"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "right_image",
+      "label": "Right Column Image"
+    },
+    {
+      "type": "richtext",
+      "id": "right_content",
+      "label": "Right Column Content"
+    },
+    {
+      "type": "text",
+      "id": "right_content_class",
+      "label": "Right Content Class",
+      "default": "none"
+    },
+    {
+      "type": "text",
+      "id": "right_button_text",
+      "label": "Right Button Text",
+      "default": "Learn More"
+    },
+    {
+      "type": "url",
+      "id": "right_button_link",
+      "label": "Right Button Link"
+    },
+    {
+      "type": "text",
+      "id": "right_button_class",
+      "label": "Right Button Class",
+      "default": "button"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Two Column Section Button"
+    }
+  ]
+}
+{% endschema %}

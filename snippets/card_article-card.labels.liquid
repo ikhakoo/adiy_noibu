@@ -1,0 +1,59 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "labels"
+  assign section_type = "card_article-card"
+  assign preview = block.settings.preview
+  assign content_source = block.settings.content_source
+  assign label_class__content = block.settings.label_class__content
+  assign tag_quantity = block.settings.tag_quantity
+  assign label_class__tags = block.settings.label_class__tags
+  assign flex_row_wrap_align_x_align_y_gap = block.settings.flex_row_wrap_align_x_align_y_gap
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css', block: block, selector: '& [data-style-container]', keys: 'flex_row_wrap_align_x_align_y_gap' %}
+
+{% liquid
+  assign tag_quantity = tag_quantity | strip_newlines | replace: ' ', "" | split: '|'
+  assign tag_quantity = tag_quantity[0] | split: '/'
+  assign desktop_tag_quantity = tag_quantity.first | abs
+  assign mobile_tag_quantity = tag_quantity.last | abs
+  assign max_tag_quantity = desktop_tag_quantity | at_least: mobile_tag_quantity | default: 3
+%}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    class="{{ block.settings.responsive_visibility }}"
+    x-data="{ custom_labels: getContentLabels($el.getAttribute('data-labels-key')) ?? [], tag_labels: card?.article?.tags?.split(',')?.map(tag => tag.trim()).slice(0, +`{{ max_tag_quantity }}`) ?? [] }"
+    x-cloak
+    x-show="[...custom_labels, ...tag_labels].length"
+    data-labels-key="{{ content_source }}"
+    data-style-column>
+  <div class="" data-style-container>
+    {% if request.design_mode and preview %}
+      <div class="{{ label_class__content }}" x-html="'Custom label'"></div>
+      {% if max_tag_quantity > 0 %}
+        <div class="{{ label_class__tags }}" x-html="'Tag label'"></div>
+      {% endif %}
+    {% else %}
+      <template x-for="value in custom_labels">
+        <div data-loop-item class="{{ label_class__content }}" x-html="value"></div>
+      </template>
+      {% if max_tag_quantity > 0 %}
+        <template x-for="(value, index) in tag_labels">
+          <div data-loop-item
+               :class="index >= +`{{ desktop_tag_quantity }}` ? 'mobile-only' : index >= +`{{ mobile_tag_quantity }}` ? 'desktop-tablet-only' : ''">
+            <div x-html="value" class="{{ label_class__tags }}"></div>
+          </div>
+        </template>
+      {% endif %}
+    {% endif %}
+  </div>
+</div>

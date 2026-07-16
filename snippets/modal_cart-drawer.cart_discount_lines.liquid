@@ -1,0 +1,51 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "cart_discount_lines"
+  assign section_type = "modal_cart-drawer"
+  assign show_conditionally = block.settings.show_conditionally
+  assign text_class = block.settings.text_class
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign color_override = block.settings.color_override
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if color_override != blank and color_override.alpha != 0
+    assign color = color_override | default: "inherit"
+  endif
+%}
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,margin_top_bottom_left_right, max_w_flex_col_row_order_align" %}
+
+{% liquid
+  if color_override != blank and color_override.alpha != 0
+    assign color = color_override | default: "inherit"
+  endif
+%}
+
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    style="color: {{ color }}"
+    x-show="(($cart.state?.cart_level_discount_applications?.length || $cart.state?.selling_plan_discount_applications?.some(d => d.value > 0)) && _cart.showConditionally(`{{ show_conditionally }}`)) || $editor?.select_block_id === `{{ block.id }}`"
+    class="flex flex-col gap-2 items-center">
+  <template x-for="discount in ($cart.state?.cart_level_discount_applications ?? [])">
+    <div class="flex w-full justify-between gap-2 {{ text_class }}">
+      <div x-html="discount?.title ?? discount?.discount_application?.title"></div>
+      <div x-html="utils.formatMoney(-(discount?.total_allocated_amount ?? discount?.discount_application?.total_allocated_amount))"></div>
+    </div>
+  </template>
+  <template x-for="discount in ($cart.state?.selling_plan_discount_applications ?? [])">
+    <div class="flex w-full justify-between gap-2 {{ text_class }}" x-show="discount?.value > 0">
+      <div x-html="discount?.name"></div>
+      <div x-html="utils.formatMoney(-discount?.value)"></div>
+    </div>
+  </template>
+</div>

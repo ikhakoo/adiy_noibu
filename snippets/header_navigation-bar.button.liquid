@@ -1,0 +1,15 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "button"
+  assign section_type = "header_navigation-bar"
+  assign title = block.settings.title
+  assign css_class = block.settings.css_class
+  assign url = block.settings.url
+  assign responsive_visibility = block.settings.responsive_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+<a href="{{ url }}"
+   class="{{ responsive_visibility }} {{ css_class }} {{ class }}" {{ block.shopify_attributes }}>
+  {% render '_input.inline_richtext', content: title, block: block, forloop: forloop %}
+</a>

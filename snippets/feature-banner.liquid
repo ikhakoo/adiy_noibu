@@ -1,0 +1,80 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "feature-banner"
+  assign desktop_image = section.settings.desktop_image
+  assign mobile_image = section.settings.mobile_image
+  assign background_gradient = section.settings.background_gradient
+  assign heading = section.settings.heading
+  assign heading_class = section.settings.heading_class
+  assign subheading = section.settings.subheading
+  assign subheading_class = section.settings.subheading_class
+  assign button_primary_text = section.settings.button_primary_text
+  assign button_primary_url = section.settings.button_primary_url
+  assign button_primary_class = section.settings.button_primary_class
+  assign button_secondary_text = section.settings.button_secondary_text
+  assign button_secondary_url = section.settings.button_secondary_url
+  assign button_secondary_class = section.settings.button_secondary_class
+  assign text_color = section.settings.text_color
+  assign vertical_padding = section.settings.vertical_padding
+  assign section_id = section.settings.section_id
+  assign container_spacing = section.settings.container_spacing
+  assign responsive_visibility = section.settings.responsive_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign mobile_image = mobile_image | default: desktop_image
+  assign preload = false
+
+  if section.index0 < 1
+    assign preload = true
+  endif
+  
+  assign media_classes_sm = "w-full h-full max-md:hidden object-cover"
+  assign media_classes_md = "w-full h-full md:hidden object-cover"
+
+  assign vertical_padding = vertical_padding | strip_newlines | replace: ' ', "" | split: '|'
+  assign pt = vertical_padding[0] | split: '/'
+  assign pb = vertical_padding[1] | split: '/'
+  assign min_h = vertical_padding[2] | split: '/'
+  assign padding_styles_content = "--pt:" | append: pt.last | append: "; --pt-md:" | append: pt.first | append: ";--pb:" | append: pb.last | append: "; --pb-md:" | append: pb.first | append: ";" | append: ";--min-h:" | append: min_h.last | append: "; --min-h-md:" | append: min_h.first | append: ";"
+
+%}
+
+{% render "_section.universal-settings", section_type: section_type, insert: "before" %}
+<section class="flex flex-col">
+  <div class="grid h-full overflow-y-hidden grid-flow-col gap-0 auto-cols-[100%]">
+    <div class="w-full snap-start shrink-0 relative h-full px-container-md pt-[--pt] md:pt-[--pt-md] pb-[--pb] md:pb-[--pb-md] min-h-[--min-h] md:min-h-[--min-h-md]"
+        style="{{ padding_styles_content }};">
+      <picture class="absolute inset-0 pointer-events-none block {{ block.shopify_attributes }}"
+              style="z-index: -10;">
+        {% render '_object.image', image: desktop_image, sizes: "100vw", class: media_classes_sm, preload: preload %}
+        {% render '_object.image', image: mobile_image, sizes: "100vw", class: media_classes_md, preload: preload %}
+        <div class="absolute inset-0" style="background: {{ background_gradient }}"></div>
+      </picture>
+      <div
+          class="flex flex-col w-full gap-2 md:gap-3 h-full max-w-[740px] justify-end md:justify-center"
+          style="color: {{ text_color }}">
+        {% render '_input.richtext', content: heading, class: heading_class, block: block, forloop: forloop %}
+        {% render '_input.richtext', content: subheading, class: subheading_class, block: block, forloop: forloop %}
+        {% if button_primary_text != blank or button_secondary_text != blank %}
+          <div class="flex gap-3 mt-7 md:mt-9 max-md:flex-col">
+            {% if button_primary_text != blank %}
+              <a href="{{ button_primary_url }}"
+                  class="max-md:w-full {{ button_primary_class }}">
+                  {% render '_input.inline_richtext', content: button_primary_text, block: block, forloop: forloop %}
+              </a>
+            {% endif %}
+            {% if button_secondary_text != blank %}
+              <a href="{{ button_secondary_url }}"
+                  class="max-md:w-full {{ button_secondary_class }}">
+                {% render '_input.inline_richtext', content: button_secondary_text, block: block, forloop: forloop %}
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% render "_section.universal-settings", section_type: section_type, insert: "after" %}

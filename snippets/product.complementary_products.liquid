@@ -1,0 +1,193 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "complementary_products"
+  assign section_type = "product"
+  assign legend_label = block.settings.legend_label
+  assign legend_class = block.settings.legend_class
+  assign product_card_class = block.settings.product_card_class
+  assign limit = block.settings.limit
+  assign primary_source = block.settings.primary_source
+  assign fallback_source = block.settings.fallback_source
+  assign fallback_products = block.settings.fallback_products
+  assign orientation = block.settings.orientation
+  assign margin_top_gap = block.settings.margin_top_gap
+  assign flex_dividers_height_width_align = block.settings.flex_dividers_height_width_align
+  assign divider_background_color = block.settings.divider_background_color
+  assign border_width_radius = block.settings.border_width_radius
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign background_color = block.settings.background_color
+  assign background_gradient = block.settings.background_gradient
+  assign border_color = block.settings.border_color
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign show_conditionally = block.settings.show_conditionally
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  case orientation
+    when 'horizontal'
+      assign container_classes = "grid-flow-col-dense auto-cols-auto [&>section]:min-w-[--min-w] md:[&>section]:min-w-[--min-w-md]"
+      assign divider_classes = "border-l-w-[--divider] md:border-l-w-[--divider-md]"
+
+    when 'vertical'
+      assign container_classes = ""
+      assign divider_classes = "border-t-w-[--divider] md:border-t-w-[--divider-md]"
+  endcase
+
+  assign index = 0
+  assign complementary_products = product.metafields.shopify--discovery--product_recommendation.complementary_products.value
+  assign related_products = product.metafields.shopify--discovery--product_recommendation.related_products.value
+
+  assign products = null | uniq
+
+  case primary_source
+    when 'complementary'
+      for _product in complementary_products
+        if index >= limit
+          break
+        endif
+        assign complementary_product = complementary_products | where: 'id', _product.id
+        if complementary_product.first.id == product.id
+          continue
+        endif
+        assign products = products | concat: complementary_product | uniq
+        assign index = index | plus: 1
+      endfor
+    when 'related'
+      for _product in related_products
+        if index >= limit
+          break
+        endif
+        assign related_product = related_products | where: 'id', _product.id
+        if related_product.first.id == product.id
+          continue
+        endif
+        assign products = products | concat: related_product | uniq
+        assign index = index | plus: 1
+      endfor
+    when 'manual'
+      for _product in fallback_products
+        if index >= limit
+          break
+        endif
+        assign fallback_product = fallback_products | where: 'id', _product.id
+        if fallback_product.first.id == product.id
+          continue
+        endif
+        assign products = products | concat: fallback_product | uniq
+        assign index = index | plus: 1
+      endfor
+  endcase
+
+  case secondary_source
+    when 'complementary'
+      for _product in complementary_products
+        if index >= limit
+          break
+        endif
+        assign complementary_product = complementary_products | where: 'id', _product.id
+        if complementary_product.first.id == product.id
+          continue
+        endif
+        assign products = products | concat: complementary_product | uniq
+        assign index = index | plus: 1
+      endfor
+    when 'related'
+      for _product in related_products
+        if index >= limit
+          break
+        endif
+        assign related_product = related_products | where: 'id', _product.id
+        if related_product.first.id == product.id
+          continue
+        endif
+        assign products = products | concat: related_product | uniq
+        assign index = index | plus: 1
+      endfor
+    when 'manual'
+      for _product in fallback_products
+        if index >= limit
+          break
+        endif
+        assign fallback_product = fallback_products | where: 'id', _product.id
+        if fallback_product.first.id == product.id
+          continue
+        endif
+        assign products = products | concat: fallback_product | uniq
+        assign index = index | plus: 1
+      endfor
+  endcase
+
+  for _product in fallback_products
+    if index >= limit
+      break
+    endif
+    assign fallback_product = fallback_products | where: 'id', _product.id
+    if fallback_product.first.id == product.id
+      continue
+    endif
+    assign products = products | concat: fallback_product | uniq
+    assign index = index | plus: 1
+  endfor
+
+  assign index = 0
+%}
+
+{% capture fallback_product_data %}
+  [{% for _product in fallback_products %}
+  {%- render '_json.product', product: _product -%}{% unless forloop.last %},{% endunless %}
+{% endfor %}]
+{% endcapture %}
+
+{% render '_utils.dynamic-css', block: block, selector: '& [data-style-divider]', keys: 'flex_dividers_height_width_align,divider_background_color' %}
+{% render '_utils.dynamic-css', block: block, keys: "margin_top_gap", css_variables: true %}
+
+{% render '_utils.dynamic-css', block: block, keys: "responsive_visibility,max_w_flex_col_row_order_align,margin_top_bottom_left_right" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: '& [data-style-container]',
+    keys: "padding_top_bottom_left_right,border_width_radius,background_color,background_gradient,border_color" %}
+
+<section
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    x-show="$data.state?.show_complementary_products && $data.showConditionally('{{ show_conditionally }}')"
+    {% if products.size <= 0 %}
+      x-cloak
+    {% endif %}
+    data-block-type="{{ block.type }}">
+  {% if legend_label != blank %}
+    <header class="mb-[--margin-top] flex w-full max-w-full truncate {{ legend_class }}">
+      {% render '_input.inline_richtext', content: legend_label, block: block, forloop: forloop %}
+    </header>
+  {% endif %}
+  <div data-style-container class="overflow-hidden">
+    <div class="grid gap-[calc(var(--gap)/2)] overflow-x-auto overflow-y-none scrollbar-none {{ container_classes }}"
+         data-style-product-grid
+         data-fallback-products="{{ fallback_product_data | escape }}"
+         x-effect="() => { if (state.product.recommendations_loaded_at || state.product?.complementary_products?.length) renderComplementaryProducts($el, `{{ primary_source }}`, `{{ fallback_source }}`, `{{ product_card_class }}`, +`{{ limit }}`)}">
+      {% for _product in products %}
+        <section
+            class="card-loading product-card--{{ product_card_class }}"
+            data-product-handle="{{ _product.handle }}"
+            data-product-id="{{ _product.id }}"
+            x-data="{}"
+            {% if request.visual_preview_mode %}
+              data-intersected
+            {% endif %}
+            x-init="() => $nextTick(() => _sections.hydrateProductCard($el, '{{ product_card_class }}', $el.getAttribute('data-product-handle'), $el.getAttribute('data-product-id')))"></section>
+        {% unless forloop.last %}
+          <div data-style-divider></div>
+        {% endunless %}
+        {% assign index = index | plus: 1 %}
+      {% endfor %}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,211 @@
+<section 
+  class="quote-steps-section" 
+  style="background-color: {{ section.settings.bg_color }};"
+>
+  <div class="page-width">
+    
+    <div class="main-grid">
+      
+      <!-- LEFT COLUMN -->
+      <div 
+        class="quote-col {{ section.settings.left_class }}" 
+        style="border-left: 2px solid {{ section.settings.quote_border_color }}; padding-left:20px;"
+      >
+        <div class="{{ section.settings.quote_class }}">
+          {{ section.settings.quote }}
+        </div>
+        <div class="{{ section.settings.author_class }}">
+          {{ section.settings.author }}
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="{{ section.settings.right_class }}">
+        
+        <!-- ROW 1 -->
+        <div class="step-row {{ section.settings.row1_class }}">
+          <div class="step-num {{ section.settings.num_class }}">1</div>
+          <div class="{{ section.settings.text1_class }}">
+            {{ section.settings.text1 }}
+          </div>
+        </div>
+
+        <!-- ROW 2 -->
+        <div class="step-row {{ section.settings.row2_class }}">
+          <div class="step-num {{ section.settings.num_class }}">2</div>
+          <div class="{{ section.settings.text2_class }}">
+            {{ section.settings.text2 }}
+          </div>
+        </div>
+
+        <!-- ROW 3 -->
+        <div class="step-row {{ section.settings.row3_class }}">
+          <div class="step-num {{ section.settings.num_class }}">3</div>
+          <div class="{{ section.settings.text3_class }}">
+            {{ section.settings.text3 }}
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+.quote-steps-section {
+  width: 100%;
+  
+}
+
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  max-width:1440px;
+  padding: 48px 20px;
+  margin-left:auto;
+  margin-right:auto;
+
+}
+
+.step-row {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  align-items: start;
+  margin-bottom: 20px;
+}
+
+.step-num {
+  font-size: 28px;
+  font-weight: bold;
+  color:#4077AD;
+}
+
+@media (max-width: 768px) {
+  .main-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media(min-width:1025px)
+{
+    .main-grid {
+    max-width:1440px;
+    padding: 48px 48px;
+    }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Quote + 3 Steps",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "quote_border_color",
+      "label": "Quote Border Color",
+      "default": "#4077AD"
+    },
+
+    {
+      "type": "richtext",
+      "id": "quote",
+      "label": "Quote"
+    },
+    {
+      "type": "text",
+      "id": "quote_class",
+      "label": "Quote Class"
+    },
+
+    {
+      "type": "richtext",
+      "id": "author",
+      "label": "Author"
+    },
+    {
+      "type": "text",
+      "id": "author_class",
+      "label": "Author Class"
+    },
+
+    {
+      "type": "richtext",
+      "id": "text1",
+      "label": "Step 1 Text"
+    },
+    {
+      "type": "text",
+      "id": "text1_class",
+      "label": "Step 1 Class"
+    },
+
+    {
+      "type": "richtext",
+      "id": "text2",
+      "label": "Step 2 Text"
+    },
+    {
+      "type": "text",
+      "id": "text2_class",
+      "label": "Step 2 Class"
+    },
+
+    {
+      "type": "richtext",
+      "id": "text3",
+      "label": "Step 3 Text"
+    },
+    {
+      "type": "text",
+      "id": "text3_class",
+      "label": "Step 3 Class"
+    },
+
+    {
+      "type": "text",
+      "id": "num_class",
+      "label": "Number Class"
+    },
+
+    {
+      "type": "text",
+      "id": "left_class",
+      "label": "Left Column Class"
+    },
+    {
+      "type": "text",
+      "id": "right_class",
+      "label": "Right Column Class"
+    },
+
+    {
+      "type": "text",
+      "id": "row1_class",
+      "label": "Row 1 Class"
+    },
+    {
+      "type": "text",
+      "id": "row2_class",
+      "label": "Row 2 Class"
+    },
+    {
+      "type": "text",
+      "id": "row3_class",
+      "label": "Row 3 Class"
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "Quote + 3 Steps"
+    }
+  ]
+}
+{% endschema %}

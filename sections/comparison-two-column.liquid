@@ -1,0 +1,200 @@
+<section class="two-column-section" style="background-color: {{ section.settings.background_color }};">
+  <div class="two-column-container">
+
+    {% if section.settings.heading != blank %}
+      <h2 class="two-column-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    <div class="two-column-grid">
+
+      <!-- LEFT COLUMN -->
+      <div class="two-column-item">
+        <div class="column-content">{{ section.settings.left_content | raw }}</div>
+        {% if section.settings.left_button_text != blank %}
+          <a href="{{ section.settings.left_button_link }}" class="{{ section.settings.left_button_class }}">
+            {{ section.settings.left_button_text }}
+          </a>
+        {% endif %}
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="two-column-item">
+        <div class="column-content">{{ section.settings.right_content | raw }}</div>
+        {% if section.settings.right_button_text != blank %}
+          <a href="{{ section.settings.right_button_link }}" class="{{ section.settings.right_button_class }}">
+            {{ section.settings.right_button_text }}
+          </a>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+.two-column-section {
+  padding: 48px 0;
+}
+
+.two-column-container {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+}
+
+.two-column-heading {
+  text-align: center;
+  font-size: 40px;
+  letter-spacing: -1.2px;
+  line-height: 1.2;
+  margin-bottom: 48px;
+  font-weight:500;
+}
+
+/* GRID */
+.two-column-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+/* COLUMN */
+.two-column-item {
+  text-align: left;
+}
+
+/* COLUMN CONTENT */
+.column-content {
+  margin-bottom: 20px;
+  font-size: 16px;
+  line-height: 1.7;
+  font-weight:200;
+}
+.two-column-section ul
+{
+  list-style: disc;
+  margin-left: 25px;
+  margin-bottom: 15px;
+}
+/* H3 inside column content */
+.column-content h3 {
+  font-size: 26px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+/* BUTTON */
+.two-column-item a {
+ 
+}
+
+/* DESKTOP / TABLET */
+@media screen and (min-width: 768px) {
+  .two-column-container
+  {
+    padding:0 48px;
+  }
+  .two-column-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+  .two-column-item:first-child {
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
+    padding-right: 48px;
+  }
+  .two-column-item:last-child {
+    padding-left: 48px;
+  }
+}
+
+/* MOBILE */
+@media screen and (max-width: 767px) {
+  .two-column-heading {
+    font-size: 28px;
+    letter-spacing: -1.2px;
+    line-height: 1.2;
+    margin-bottom:48px;
+  }
+  .column-content h3 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Two Column Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Section Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "left_content",
+      "label": "Left Column Content",
+      "default": "<h3>Left Column</h3><p>Enter your text here.</p>"
+    },
+    {
+      "type": "text",
+      "id": "left_button_text",
+      "label": "Left Button Text",
+      "default": "Click Here"
+    },
+    {
+      "type": "text",
+      "id": "left_button_class",
+      "label": "Left Button Class",
+      "default": "btn-primary"
+    },
+    {
+      "type": "text",
+      "id": "left_button_link",
+      "label": "Left Button Link",
+      "default": "#"
+    },
+    {
+      "type": "richtext",
+      "id": "right_content",
+      "label": "Right Column Content",
+      "default": "<h3>Right Column</h3><p>Enter your text here.</p>"
+    },
+    {
+      "type": "text",
+      "id": "right_button_text",
+      "label": "Right Button Text",
+      "default": "Click Here"
+    },
+    {
+      "type": "text",
+      "id": "right_button_class",
+      "label": "Right Button Class",
+      "default": "btn-primary"
+    },
+    {
+      "type": "text",
+      "id": "right_button_link",
+      "label": "Right Button Link",
+      "default": "#"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section Background Color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Two Column Section"
+    }
+  ]
+}
+{% endschema %}

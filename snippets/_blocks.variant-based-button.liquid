@@ -1,0 +1,78 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.variant-based-button"
+  assign variant_metafield = block.settings.variant_metafield
+  assign url = block.settings.url
+  assign button_class = block.settings.button_class
+  assign show_active_state = block.settings.show_active_state
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{%- liquid
+  assign parts = variant_metafield | split: "."
+  assign namespace = parts[0]
+  assign key = parts[1]
+-%}
+
+{% if product %}
+  {% liquid
+    if show_active_state
+      if url == request.path
+        assign active_class = 'active'
+      endif
+    endif
+
+    if product.selected_or_first_available_variant.metafields[namespace][key]
+      assign metafield_content = product.selected_or_first_available_variant.metafields[namespace][key].value
+    else
+      assign metafield_content = ""
+    endif
+  %}
+
+  {% render '_utils.dynamic-css',
+      block: block,
+      keys: "responsive_visibility,margin_top_bottom_left_right, max_w_flex_col_row_order_align" %}
+
+  <div
+      data-style-id="{{ section.id }}--{{ block.id }}"
+      {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+      {{ block.shopify_attributes }}
+      x-data="{
+        product: _stores?.main_product?.state?.product,
+        selected_variant: _stores?.main_product?.state?.selected_variant,
+        ns: '{{ namespace }}',
+        key: '{{ key }}',
+        buttonText: ''
+      }"
+      x-effect="() => {
+        if ($store?.main_product?.state?.product && $store?.main_product?.state?.selected_variant ) {
+          product = $store?.main_product?.state?.product;
+          selected_variant = $store?.main_product?.state?.selected_variant;
+
+          buttonText = selected_variant
+            ?.metafields?.[ns]
+            ?.[key];
+        }
+      }">
+    <a href="{{ url }}"
+      class="w-full {{ button_class }} {{ class }} {{ active_class }}" x-show="buttonText">
+      <span x-html="buttonText"></span>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_13863_21361)">
+        <path d="M7.99998 10.6663V7.99967M7.99998 5.33301H8.00665M14.6666 7.99967C14.6666 11.6816 11.6819 14.6663 7.99998 14.6663C4.31808 14.6663 1.33331 11.6816 1.33331 7.99967C1.33331 4.31778 4.31808 1.33301 7.99998 1.33301C11.6819 1.33301 14.6666 4.31778 14.6666 7.99967Z" stroke="#C30012" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <defs>
+        <clipPath id="clip0_13863_21361">
+        <rect width="16" height="16" fill="white"/>
+        </clipPath>
+        </defs>
+      </svg>
+    </a>
+  </div>
+{% endif %}

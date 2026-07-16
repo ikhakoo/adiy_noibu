@@ -1,0 +1,40 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "modal_megamenu-flex"
+  assign _handle = section.settings.handle
+  assign background_blur = section.settings.background_blur
+  assign flex_row_wrap_align_x_align_y_gap = section.settings.flex_row_wrap_align_x_align_y_gap
+  assign padding_top_bottom_left_right = section.settings.padding_top_bottom_left_right
+  assign margin_top_bottom_left_right = section.settings.margin_top_bottom_left_right
+  assign border_width_radius = section.settings.border_width_radius
+  assign background_color = section.settings.background_color
+  assign border_color = section.settings.border_color
+  assign section_id = section.settings.section_id
+  assign color_scheme = section.settings.color_scheme
+  assign container_spacing = section.settings.container_spacing
+  assign border_divider = section.settings.border_divider
+  assign top_bottom_min_height = section.settings.top_bottom_min_height
+  assign responsive_visibility = section.settings.responsive_visibility
+  assign responsive_breakpoint = section.settings.responsive_breakpoint
+  assign target_visibility = section.settings.target_visibility
+  assign render_tabs_async = section.settings.render_tabs_async
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+<div data-megamenu="{{ _handle }}"
+     x-data="{ open: $modal.id === 'megamenu--{{ _handle | handleize }}' }"
+     x-effect="open = $editor?.select_section_id === '{{ section.id }}' || $modal.id === 'megamenu--{{ _handle | handleize }}'"
+     x-cloak>
+  <div class="fixed inset-x-0 bottom-0 top-[--header-height-offset] z-10 transition duration-75 ease-in-out bg-[--color-modal-background] {{ background_blur }}"
+       x-show="open"
+       @click="$modal.setId('')"
+       @pointerover="$modal.setId('')"></div>
+  <section class="pointer-events-none fixed inset-x-0 top-[--header-height-offset] z-20 bg-theme-bg {{ color_scheme }}"
+           data-section-type="megamenu-flex"
+           x-show="open"
+           x-trap.noautofocus="open">
+    <div class="pointer-events-auto relative flex flex-col h-full max-h-[calc(100vh-var(--header-height-offset)-40px)] overflow-auto scrollbar-none">
+      {% render 'content-flex' %}
+    </div>
+  </section>
+</div>

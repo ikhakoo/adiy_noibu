@@ -1,0 +1,111 @@
+{% liquid
+  assign option1 = -1
+  assign option2 = -1
+  assign option3 = -1
+
+  for block in section.blocks
+    assign blockIndex0 = forloop.index0
+
+    unless block.type contains "option__"
+      continue
+    endunless
+
+    if option1 == blockIndex0 or option2 == blockIndex0 or option3 == blockIndex0
+      continue
+    endif
+
+    assign match_option_titles = block.settings.match_option_titles
+    assign match_exact_word = block.settings.match_exact_word
+
+
+    if match_option_titles == blank
+      continue
+    endif
+
+    assign match_options = match_option_titles | split: ","
+
+    for option in product.options
+      assign optionIndex = forloop.index
+      if optionIndex == 1 and option1 != -1
+        continue
+      endif
+      if optionIndex == 2 and option2 != -1
+        continue
+      endif
+      if optionIndex == 3 and option3 != -1
+        continue
+      endif
+
+      for match_option in match_options
+        assign _match_option = match_option | trim
+
+        if match_exact_word
+          if option == _match_option
+            if optionIndex == 1 and option1 == -1
+              assign option1 = blockIndex0
+              break
+            endif
+            if optionIndex == 2 and option2 == -1
+              assign option2 = blockIndex0
+              break
+            endif
+            if optionIndex == 3 and option3 == -1
+              assign option3 = blockIndex0
+              break
+            endif
+          endif
+        else
+          assign _match_option = match_option | trim | downcase
+          assign _option = option | downcase
+          if _option contains _match_option
+            if optionIndex == 1 and option1 == -1
+              assign option1 = blockIndex0
+              break
+            endif
+            if optionIndex == 2 and option2 == -1
+              assign option2 = blockIndex0
+              break
+            endif
+            if optionIndex == 3 and option3 == -1
+              assign option3 = blockIndex0
+              break
+            endif
+          endif
+        endif
+      endfor
+    endfor
+  endfor
+
+  for block in section.blocks
+    assign blockIndex0 = forloop.index0
+    unless block.type contains "option__"
+      continue
+    endunless
+
+    if option1 == blockIndex0 or option2 == blockIndex0 or option3 == blockIndex0
+      continue
+    endif
+
+    if block.settings.match_option_titles != blank
+      continue
+    endif
+
+    for option in product.options
+      assign optionIndex = forloop.index
+      if optionIndex == 1 and option1 == -1
+        assign option1 = blockIndex0
+        break
+      endif
+      if optionIndex == 2 and option2 == -1
+        assign option2 = blockIndex0
+        break
+      endif
+      if optionIndex == 3 and option3 == -1
+        assign option3 = blockIndex0
+        break
+      endif
+    endfor
+  endfor
+
+%}
+{{ option1 }},{{ option2 }},{{ option3 }}

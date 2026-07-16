@@ -1,0 +1,16 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "image"
+  assign section_type = "image-feed"
+  assign image = block.settings.image
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+<div data-style-id="{{ section.id }}--{{ block.id }}"
+     class="grid w-full h-full snap-center shrink-0 relative"
+     {{ block.shopify_attributes }}>
+  <div class="flex w-full h-full">
+    {% render '_object.image', image: image, sizes: "100vw", class: "w-[341px] h-auto aspect-1 object-cover rounded-[20px] ", preload: false %}
+  </div>
+</div>
+

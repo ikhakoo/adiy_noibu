@@ -1,0 +1,61 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "modal_country-selector"
+  assign show_flag = section.settings.show_flag
+  assign close_icon = section.settings.close_icon
+  assign text_class = section.settings.text_class
+  assign background_blur = section.settings.background_blur
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if settings.layout__style == 'solid'
+    assign container_classes = 'border-r border-r-theme-border inset-0 top-3.5'
+  endif
+
+  if settings.layout__style == 'floating'
+    assign container_classes = 'inset-1.5 top-5 rounded-md'
+  endif
+%}
+
+<div x-data="{ open:  $modal.id === 'country-selector' }"
+     x-effect="open = $editor?.select_section_id === '{{ section.id }}' || $modal.id === 'country-selector'"
+     x-cloak>
+  <div class="fixed inset-x-0 bottom-0 top-[--header-height-offset] z-40 bg-[--color-modal-background] {{ background_blur }} transition duration-150 ease-in-out"
+       x-show="open"
+       x-transition:enter-start="opacity-0"
+       x-transition:enter-end="opacity-100"
+       x-transition:leave-start="opacity-100"
+       x-transition:leave-end="opacity-0"></div>
+  <aside class="fixed bottom-0 right-0 top-[--header-height-offset] z-50 w-full max-w-sm transition-all duration-150 ease-in-out -mt-3.5 pt-3.5"
+         @click.stop.outside="$modal.setId('')"
+         x-show="open"
+         x-trap.noautofocus="open"
+         x-transition:enter-start="translate-x-full"
+         x-transition:enter-end="translate-x-0"
+         x-transition:leave-start="translate-x-0"
+         x-transition:leave-end="translate-x-full">
+    <button type="button"
+            class="absolute -left-6 top-5 text-white max-md:hidden hf:text-theme-text/90"
+            @click="$modal.setId(open ? '' : 'country-selector')">
+      <span class="sr-only">Close Drawer</span>
+      {% render '_components.icon', icon: close_icon, class: "h-5 shrink-0" %}
+    </button>
+    <main class="bg-white absolute overflow-y-auto scrollbar-y-slim py-4 {{ container_classes }}">
+      {% form 'localization', class: "relative flex flex-col", return_to: routes.root_url %}
+        {% for country in localization.available_countries %}
+          <button class="text-left flex items-center py-2 gap-2 px-5 hf:bg-gray-100 {% if country.iso_code == localization.country.iso_code %}bg-gray-200{% endif %}"
+                  type="submit"
+                  name="country_code"
+                  @click="async () => { await idbKeyval.clear(); return true }"
+                  {% if country.iso_code == localization.country.iso_code %}aria-checked="true"{% endif %}
+                  value="{{ country.iso_code }}"
+                  aria-label="Country Selector">
+            {% render '_object.image', image: country, width: 18 %}
+            <span class="{{ text_class }}">{{ country.name }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})</span>
+          </button>
+        {% endfor %}
+      {% endform %}
+    </main>
+  </aside>
+</div>

@@ -1,0 +1,42 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "dynamic-checkout-button"
+  assign section_type = "modal_cart-drawer"
+  assign button_height = block.settings.button_height
+  assign show_conditionally = block.settings.show_conditionally
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign border_divider = block.settings.border_divider
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: " max_w_flex_col_row_order_align, padding_top_bottom_left_right" %}
+
+
+<div class="{{ border_divider }}"
+    {{ block.shopify_attributes }}
+     x-data="{ checkingOut: false }"
+     x-show="_cart.showConditionally(`{{ show_conditionally }}`) || $editor?.select_block_id === `{{ block.id }}`"
+     data-style-id="{{ section.id }}--{{ block.id }}">
+  {% if additional_checkout_buttons %}
+    <style>
+        shopify-accelerated-checkout-cart {
+          --shopify-accelerated-checkout-button-block-size: {{ button_height }}px;
+          --shopify-accelerated-checkout-button-inline-size: {{ button_height }}px;
+          --shopify-accelerated-checkout-button-border-radius: 1000px;
+          --shopify-accelerated-checkout-button-box-shadow: none;
+          --shopify-accelerated-checkout-inline-alignment: stretch;
+          --shopify-accelerated-checkout-row-gap: 12px;
+          --shopify-accelerated-checkout-skeleton-animation-opacity-start: 1;
+          --shopify-accelerated-checkout-skeleton-animation-opacity-end: 0.5;
+          --shopify-accelerated-checkout-skeleton-animation-duration: 4s;
+          --shopify-accelerated-checkout-skeleton-animation-timing-function: ease;
+        }
+    </style>
+    <div class="additional-checkout-buttons--vertical">
+      {{ content_for_additional_checkout_buttons }}
+    </div>
+  {% endif %}
+</div>

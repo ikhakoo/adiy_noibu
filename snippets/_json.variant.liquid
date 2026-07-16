@@ -1,0 +1,58 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign base_product = section.settings.base_product
+  assign reviews_rating = section.settings.reviews_rating
+  assign reviews_count = section.settings.reviews_count
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+
+  unless product and variant
+    break
+  endunless
+
+  assign variant_namespaces = section.blocks | where: "type", "variant_metafield" | map: "settings" | map: "title" | join: ',' | prepend: 'smart,' | split: ',' | uniq
+%}
+
+{% capture json %}
+  {
+  "available": {{ variant.available | json }},
+  "featured_media": {{ variant.featured_media | json }},
+  "option1": {{ variant.option1 | json }},
+  "option2": {{ variant.option2 | json }},
+  "option3": {{ variant.option3 | json }},
+  "options": {{ variant.options | json }},
+  "price": {{ variant.price | json }},
+  "compare_at_price": {{ variant.compare_at_price | json }},
+  "id": {{ variant.id | json }},
+  "sku": {{ variant.sku | json }},
+  "title": {{ variant.title | json }},
+  "product_id": {{ variant.product.id }},
+  "product_handle": "{{ variant.product.handle }}",
+  "inventory_quantity": {{ variant.inventory_quantity | json }},
+  "inventory_policy": {{ variant.inventory_policy | json }},
+  "inventory_management": {{ variant.inventory_management | json }},
+  "selling_plan_allocations": [{% for plan in variant.selling_plan_allocations %}{
+  "checkout_charge_amount": {{ plan.checkout_charge_amount | json }},
+  "compare_at_price": {{ plan.compare_at_price | json }},
+  "per_delivery_price": {{ plan.per_delivery_price | json }},
+  "price": {{ plan.price | json }},
+  "selling_plan": {{ plan.selling_plan | json }},
+  "selling_plan_group_id": {{ plan.selling_plan_group_id | json }}
+  }{% unless forloop.last %},{% endunless %}{% endfor %}],
+  "metafields": {
+  {% unless skip_metafields == true %}
+    {%- for namespace in variant_namespaces -%}
+      "{{- namespace -}}": {%- render '_json.metafield', namespace: variant.metafields[namespace], with_product_data: settings.data__product__variant__load_product_data -%}{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  {% endunless %}
+  }
+  }
+{% endcapture %}
+{% if escape %}
+  {{- json | trim | strip_newlines | escape -}}
+{% else %}
+  {{- json | trim | strip_newlines -}}
+{% endif %}
+

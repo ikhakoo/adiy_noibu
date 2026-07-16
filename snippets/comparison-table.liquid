@@ -1,0 +1,114 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "comparison-table"
+  assign first_column = section.settings.first_column
+  assign second_column = section.settings.second_column
+  assign second_column_class = section.settings.second_column_class
+  assign third_column = section.settings.third_column
+  assign third_column_class = section.settings.third_column_class
+  assign button_primary_text = section.settings.button_primary_text
+  assign button_primary_url = section.settings.button_primary_url
+  assign button_primary_class = section.settings.button_primary_class
+  assign category_class = section.settings.category_class
+  assign scrollbar_class = section.settings.scrollbar_class
+  assign vertical_padding_section = section.settings.vertical_padding_section
+  assign section_id = section.settings.section_id
+  assign color_scheme = section.settings.color_scheme
+  assign container_spacing = section.settings.container_spacing
+  assign border_divider = section.settings.border_divider
+  assign top_bottom_min_height = section.settings.top_bottom_min_height
+  assign responsive_visibility = section.settings.responsive_visibility
+  assign responsive_breakpoint = section.settings.responsive_breakpoint
+  assign target_visibility = section.settings.target_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign vertical_padding_section = vertical_padding_section | strip_newlines | replace: ' ', "" | split: '|'
+  assign pt = vertical_padding_section[0] | split: '/'
+  assign pb = vertical_padding_section[1] | split: '/'
+  assign target_id = section_id | default: section.id
+%}
+
+<style>
+  #{{ target_id }} {
+    padding-top: {{ pt.first }};
+    padding-bottom: {{ pb.first }};
+  }
+  @media (max-width: 768px) {
+    #{{ target_id }} {
+      padding-top: {{ pt.last }};
+      padding-bottom: {{ pb.last }};
+    }
+  }
+</style>
+
+{% render "_section.universal-settings", section_type: section_type, section_id: section.id, insert: "before" %}
+
+<section x-data="{ ..._sections.initContentSlider($refs.container) }"
+         class="flex flex-col"
+         style="--content-cols-desktop:2; --content-cols-mobile:4;">
+
+  <table class="grid relative overflow-x-auto scrollbar-none mb-5 -mx-container-md scroll-px-container-md px-container-md"
+         x-ref="container"
+         @resize.window="content_slider.handleResize"
+         x-init="$nextTick(() => content_slider.handleResize())"
+         @scroll="content_slider.handleScroll">
+    <thead class="w-max mx-auto">
+      <tr class="grid grid-cols-[repeat(var(--content-cols-mobile),_85px)] md:grid-cols-[252px_360px_repeat(var(--content-cols-desktop),_252px)]">
+        <th></th>
+        <th class="relative h-4 md:h-6 bg-[#4077AD] rounded-t-[20px]"></th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr class="grid grid-cols-[repeat(var(--content-cols-mobile),_85px)] md:grid-cols-[252px_360px_repeat(var(--content-cols-desktop),_252px)]">
+        <th class="px-0.5 md:px-6 py-3 h-10 md:h-[72px] select-none opacity-0 rounded-tl-[20px]">Category</th>
+        <th class="relative px-0.5 md:px-6 pb-3 md:pb-6 h-10 md:h-[72px] bg-[#4077AD]">
+          {% if first_column != blank %}
+            <picture class="flex absolute inset-0 items-center">
+              {% render '_object.image', image: first_column, class: "w-full h-3.5 md:h-10 relative object-contain" %}
+            </picture>
+          {% endif %}
+        </th>
+        <th class="flex px-0.5 md:px-6 py-3 h-10 md:h-[72px] items-center justify-center">
+          {% render '_input.richtext', content: second_column, class: second_column_class, block: block, forloop: forloop %}
+        </th>
+        <th class="flex px-0.5 md:px-6 py-3 h-10 md:h-[72px] items-center justify-center">
+          {% render '_input.richtext', content: third_column, class: third_column_class, block: block, forloop: forloop %}
+        </th>
+      </tr>
+    </thead>
+    <tbody class="relative w-max grid mx-auto before:absolute before:top-0 before:inset-x-0 before:bottom-[84px] before:md:bottom-[72px]  before:pointer-events-none">
+      {% liquid
+      for block in section.blocks
+        case block.type
+          when "row"
+            render 'comparison-table.row', block: block, forloop: forloop, section_type: section_type
+        endcase 
+      endfor
+      %}
+      <tr class="grid grid-cols-[repeat(var(--content-cols-mobile),_85px)] md:grid-cols-[252px_360px_repeat(var(--content-cols-desktop),_252px)]">
+        {% for i in (1..4) %}
+          {% if i == 2 %}
+            <td class="md:pt-2 px-3 md:px-6 flex items-center h-4 {% if button_primary_text != blank %}md:h-[72px]{% else %}md:h-6{% endif %} place-content-center border-[#4077AD] bg-[#4077AD] z-[1] rounded-b-[20px]">
+              {% if button_primary_text != blank %}
+                <a href="{{ button_primary_url }}"
+                    class="{{ button_primary_class }} w-full">
+                    {% render '_input.inline_richtext', content: button_primary_text, block: block, forloop: forloop %}
+                </a>
+              {% endif %}
+            </td>
+          {% else %}
+          <td class="h-[72px]"></td>
+          {% endif %}
+        {% endfor %}
+      </tr>
+    </tbody>
+  </table>
+
+  {% if scrollbar_class != blank %}
+    {% render "_components.scrollbar", class: scrollbar_class, scroll_container_ref: '$refs.container', html_attributes: 'data-style-scrollbar' %}
+  {% endif %}
+</section>
+
+{% render "_section.universal-settings", section_type: section_type, insert: "after" %}

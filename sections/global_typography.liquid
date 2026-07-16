@@ -1,0 +1,417 @@
+{%- render "global_typography" -%}
+{% schema %}
+{
+  "name": "Typography",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Root Typography"
+    },
+    {
+      "type": "text",
+      "id": "font_family__body",
+      "label": "Font family",
+      "default": "Inter"
+    },
+    {
+      "type": "text",
+      "id": "size_weight_height_opacity__body",
+      "label": "size | weight | height | opacity",
+      "default": "16px | 400 | 1.3 | 1"
+    },
+    {
+      "type": "text",
+      "id": "spacing_transform_style_whitespace__body",
+      "label": "spacing | transform | style | wrap",
+      "default": "0 | none | normal"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css__body",
+      "label": "custom CSS",
+      "default": "& strong {\n  font-weight: bolder;\n}\n& em {\n  font-style: italic;\n}\n& [style=\"text-decoration:underline\"] {\n  text-decoration: underline;\n}"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "text",
+      "id": "responsive_breakpoint",
+      "label": "Responsive breakpoint",
+      "default": "768px",
+      "info": "Only adjust this for rare instances on large screen designs"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Font",
+      "type": "font",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Font family name",
+          "default": "Inter"
+        },
+        {
+          "type": "font_picker",
+          "id": "family",
+          "label": "Font Family",
+          "default": "inter_n4",
+          "info": "If you want to use a Custom Font, set the Font Family to a SYSTEM FONT: sans-serif, serif or mono"
+        },
+        {
+          "type": "text",
+          "id": "weights",
+          "label": "Font Weights / Styles",
+          "default": "300, 400, 400i, 700, 700i, 800"
+        },
+        {
+          "type": "header",
+          "content": "Custom Fonts Only"
+        },
+        {
+          "type": "liquid",
+          "id": "custom_src",
+          "label": "Custom font declaration",
+          "info": "Accepts HTML / Liquid"
+        },
+        {
+          "type": "text",
+          "id": "fallback_families",
+          "label": "Font Family",
+          "default": "-apple-system, BlinkMacSystemFont, \"San Francisco\", \"Segoe UI\", Roboto, \"Helvetica Neue\", sans-serif"
+        },
+        {
+          "type": "paragraph",
+          "content": "Custom fonts can be uploaded to Shopify (Admin -> Content -> Files) or directly into the theme `assets` folder. For Font Setup instructions [read more](https://fonts.google.com/knowledge/using_type/using_web_fonts)"
+        }
+      ],
+      "limit": 5
+    },
+    {
+      "name": "Richtext Set",
+      "type": "richtext",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "CSS Class name",
+          "default": "richtext-md",
+          "info": "hyphens / lowercase / no-spaces [kebab-case](https://developer.mozilla.org/en-US/docs/Glossary/Kebab_case)"
+        },
+        {
+          "type": "header",
+          "content": "Paragraph - p"
+        },
+        {
+          "type": "text",
+          "id": "font_family__p",
+          "label": "Font family",
+          "default": "inherit"
+        },
+        {
+          "type": "text",
+          "id": "size_weight_height_opacity__p",
+          "label": "size | weight | height | opacity",
+          "default": "16px | 400 | 1.7 | 1"
+        },
+        {
+          "type": "text",
+          "id": "spacing_transform_style_whitespace__p",
+          "label": "spacing | transform | style | wrap",
+          "default": "0 | none | normal"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css__p",
+          "label": "custom CSS",
+          "default": "& strong {\n  font-weight: bolder;\n}\n& em {\n  font-style: italic;\n}\n& [style=\"text-decoration:underline\"] {\n  text-decoration: underline;\n}"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Heading 1 - h1"
+        },
+        {
+          "type": "text",
+          "id": "font_family__h1",
+          "label": "Font family",
+          "default": "inherit"
+        },
+        {
+          "type": "text",
+          "id": "size_weight_height_opacity__h1",
+          "label": "size | weight | height | opacity",
+          "default": "48px / 36px | 400 | 1 | 1"
+        },
+        {
+          "type": "text",
+          "id": "spacing_transform_style_whitespace__h1",
+          "label": "spacing | transform | style | wrap",
+          "default": "0 | none | normal"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css__h1",
+          "label": "custom CSS",
+          "default": "& strong {\n  font-weight: bolder;\n}\n& em {\n  font-style: italic;\n}\n& [style=\"text-decoration:underline\"] {\n  text-decoration: underline;\n}"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Heading 2 - h2"
+        },
+        {
+          "type": "text",
+          "id": "font_family__h2",
+          "label": "Font family",
+          "default": "inherit"
+        },
+        {
+          "type": "text",
+          "id": "size_weight_height_opacity__h2",
+          "label": "size | weight | height | opacity",
+          "default": "36px / 32px | 400 | 1.1 | 1"
+        },
+        {
+          "type": "text",
+          "id": "spacing_transform_style_whitespace__h2",
+          "label": "spacing | transform | style | wrap",
+          "default": "0 | none | normal"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css__h2",
+          "label": "custom CSS",
+          "default": "& strong {\n  font-weight: bolder;\n}\n& em {\n  font-style: italic;\n}\n& [style=\"text-decoration:underline\"] {\n  text-decoration: underline;\n}"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Heading 3 - h3"
+        },
+        {
+          "type": "text",
+          "id": "font_family__h3",
+          "label": "Font family",
+          "default": "inherit"
+        },
+        {
+          "type": "text",
+          "id": "size_weight_height_opacity__h3",
+          "label": "size | weight | height | opacity",
+          "default": "30px / 24px | 400 | 1.2 | 1"
+        },
+        {
+          "type": "text",
+          "id": "spacing_transform_style_whitespace__h3",
+          "label": "spacing | transform | style | wrap",
+          "default": "0 | none | normal"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css__h3",
+          "label": "custom CSS",
+          "default": "& strong {\n  font-weight: bolder;\n}\n& em {\n  font-style: italic;\n}\n& [style=\"text-decoration:underline\"] {\n  text-decoration: underline;\n}"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Heading 4 - h4"
+        },
+        {
+          "type": "text",
+          "id": "font_family__h4",
+          "label": "Font family",
+          "default": "inherit"
+        },
+        {
+          "type": "text",
+          "id": "size_weight_height_opacity__h4",
+          "label": "size | weight | height | opacity",
+          "default": "24px / 20px | 400 | 1.3 | 1"
+        },
+        {
+          "type": "text",
+          "id": "spacing_transform_style_whitespace__h4",
+          "label": "spacing | transform | style | wrap",
+          "default": "0 | none | normal"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css__h4",
+          "label": "custom CSS",
+          "default": "& strong {\n  font-weight: bolder;\n}\n& em {\n  font-style: italic;\n}\n& [style=\"text-decoration:underline\"] {\n  text-decoration: underline;\n}"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Heading 5 - h5"
+        },
+        {
+          "type": "text",
+          "id": "font_family__h5",
+          "label": "Font family",
+          "default": "inherit"
+        },
+        {
+          "type": "text",
+          "id": "size_weight_height_opacity__h5",
+          "label": "size | weight | height | opacity",
+          "default": "21px / 16px | 400 | 1.3 | 1"
+        },
+        {
+          "type": "text",
+          "id": "spacing_transform_style_whitespace__h5",
+          "label": "spacing | transform | style | wrap",
+          "default": "0 | none | normal"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css__h5",
+          "label": "custom CSS",
+          "default": "& strong {\n  font-weight: bolder;\n}\n& em {\n  font-style: italic;\n}\n& [style=\"text-decoration:underline\"] {\n  text-decoration: underline;\n}"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Heading 6 - h6"
+        },
+        {
+          "type": "text",
+          "id": "font_family__h6",
+          "label": "Font family",
+          "default": "inherit"
+        },
+        {
+          "type": "text",
+          "id": "size_weight_height_opacity__h6",
+          "label": "size | weight | height | opacity",
+          "default": "14px | 500 | 1.5 | 1"
+        },
+        {
+          "type": "text",
+          "id": "spacing_transform_style_whitespace__h6",
+          "label": "spacing | transform | style | wrap",
+          "default": "0 | none | normal"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css__h6",
+          "label": "custom CSS",
+          "default": "& strong {\n  font-weight: bolder;\n}\n& em {\n  font-style: italic;\n}\n& [style=\"text-decoration:underline\"] {\n  text-decoration: underline;\n}"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "checkbox",
+          "id": "apply_container_queries",
+          "label": "Apply container queries",
+          "default": true,
+          "info": "Create CSS for container queries. Use this for specific smaller styling in areas like the Cart Drawer and spaces where mobile styles should be applied on desktop views. This also enables the preview mode in the Theme editor."
+        }
+      ]
+    },
+    {
+      "name": "Single Type",
+      "type": "heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "CSS Class name",
+          "default": "text-16/14",
+          "info": "hyphens / lowercase / no-spaces [kebab-case](https://developer.mozilla.org/en-US/docs/Glossary/Kebab_case)"
+        },
+        {
+          "type": "text",
+          "id": "font_family",
+          "label": "Font family",
+          "default": "inherit"
+        },
+        {
+          "type": "text",
+          "id": "size_weight_height_opacity",
+          "label": "size | weight | height | opacity",
+          "default": "16px/14px | 400 | 1.3 | 1"
+        },
+        {
+          "type": "text",
+          "id": "spacing_transform_style_whitespace",
+          "label": "spacing | transform | style | wrap",
+          "default": "0 | none | normal | "
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "custom CSS",
+          "default": "& {\n}"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "checkbox",
+          "id": "apply_container_queries",
+          "label": "Apply container queries",
+          "default": true,
+          "info": "Create CSS for container queries. Use this for specific smaller styling in areas like the Cart Drawer and spaces where mobile styles should be applied on desktop views. This also enables the preview mode in the Theme editor."
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

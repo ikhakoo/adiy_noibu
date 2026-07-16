@@ -1,0 +1,180 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "line-items"
+  assign section_type = "modal_cart-drawer"
+  assign width_height_aspect_gap = block.settings.width_height_aspect_gap
+  assign title_class = block.settings.title_class
+  assign variant_title_class = block.settings.variant_title_class
+  assign price_class = block.settings.price_class
+  assign compare_at_price_class = block.settings.compare_at_price_class
+  assign remove_button_type = block.settings.remove_button_type
+  assign remove_button_class = block.settings.remove_button_class
+  assign icon_size_gap = block.settings.icon_size_gap
+  assign quantity_class = block.settings.quantity_class
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign border_divider = block.settings.border_divider
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+
+  assign icon_size_gap = icon_size_gap | strip_newlines | replace: ' ', "" | split: '|'
+  assign icon = icon_size_gap[0] | split: '/'
+  assign icon_size = icon_size_gap[1] | split: '/'
+  assign icon_gap = icon_size_gap[2] | split: '/'
+
+  assign width_height_aspect_gap = width_height_aspect_gap | strip_newlines | replace: ' ', "" | split: '|'
+  assign width = width_height_aspect_gap[0] | split: '/'
+  assign height = width_height_aspect_gap[1] | split: '/'
+  assign aspect = width_height_aspect_gap[2] | split: '/'
+  assign gap = width_height_aspect_gap[3] | split: '/'
+
+%}
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "max_w_flex_col_row_order_align"
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: '& [data-style-line-item]',
+    keys: "padding_top_bottom_left_right"
+%}
+
+{% capture styles %}
+  --w-md: {{ width.first }};--w: {{ width.last }};
+  --h-md: {{ height.first }};--h: {{ height.last }};
+  --aspect-md: {{ aspect.first }};--aspect: {{ aspect.last }};
+  --gap-md: {{ gap.first }};--gap: {{ gap.last }};
+{% endcapture %}
+
+{% capture icon_styles %}
+  --w-md: {{ icon_size.first }};--w: {{ icon_size.last }};
+  --h-md: {{ icon_size.first }};--h: {{ icon_size.last }};
+  --gap-md: {{ icon_gap.first }};--gap: {{ icon_gap.last }};
+{% endcapture %}
+
+
+<div data-style-id="{{ section.id }}--{{ block.id }}"
+    {{ block.shopify_attributes }}
+     class="flex flex-col gap-2" style="{{ styles | strip_newlines }}">
+  <template x-for="(item, index) in $cart.state.items">
+    <section class="flex items-start gap-dynamic {{ border_divider }}"
+             data-style-line-item
+             :class="line_item?.quantity ? '' : 'hidden'"
+             x-effect="line_item = $cart.state.items[index], 
+                product = await _product.getHydratedProductData(item.handle, item.product_id), 
+                variant = product?.variants?.find(v => v.id === item.variant_id)"
+             x-data="{ 
+                line_item: $cart.state.items[index], 
+                product: _products[item.handle], 
+                variant: _products[item.handle]?.variants?.find(v => v.id === item.variant_id)
+              }">
+      <picture class="relative w-dynamic h-dynamic aspect-dynamic">
+        <img x-show="line_item?.featured_image?.url"
+             :src="line_item?.featured_image?.url"
+             :alt="line_item?.featured_image?.alt ?? line_item?.title"
+             :srcset="utils.getImageSrcSet(line_item?.featured_image?.url ?? '', 256)"
+             width="256"
+             height="256"
+             loading="lazy"
+             onload="this.classList.remove('!opacity-0')"
+             class="relative h-full w-full object-cover !opacity-0"
+             sizes="(max-width: 768px) 20vw, (max-width: 1024px) 33vw, 33vw">
+      </picture>
+      <main class="flex flex-1 flex-col">
+        <div class="flex gap-dynamic" style="{{ icon_styles | strip_newlines }}">
+          <p x-html="line_item?.product_title" class="flex-1 {{ title_class }}"
+              role="button"
+              tabindex="0"
+              @click.prevent.stop="barba.go(line_item?.url); $modal.setId('')"></p>
+          {% if remove_button_type == 'icon' %}
+            <button type="button"
+              class="h-0 w-4 overflow-visible"
+              @click="_cart.updateLineItemQuantity(0, index)">
+              {% render "_components.icon", icon: icon, class: "w-dynamic h-dynamic" %}
+            </button>
+          {% endif %}
+        </div>
+        <h4 class="mt-1 {{ variant_title_class }}"
+            x-html="line_item?.variant_title"
+            x-show="line_item?.variant_title && line_item?.variant_title !== 'Default Title'"></h4>
+        <div class="mt-1 {{ variant_title_class }}"
+             x-data="{ properties: Object.entries(line_item?.properties ?? {})?.filter(([key]) => !/^_/gi.test(key)) }"
+             x-effect="properties = Object.entries(line_item?.properties ?? {})?.filter(([key]) => !/^_/gi.test(key))"
+             x-show="properties?.length"
+             x-html="properties.map(([key,val])=>`<div>${key}: ${val}</div>`)"></div>
+        {% comment %}        <div class="mt-1 {{ variant_title_class }}"
+                     x-show="line_item?.selling_plan_allocation?.selling_plan?.name"
+                     x-html="line_item?.selling_plan_allocation?.selling_plan?.name"></div>{% endcomment %}
+        <div class="mt-1.5 {{ price_class }}"
+             x-html="utils.formatMoney(line_item?.final_price)"></div>
+        <div class="mt-2 grid grid-cols-[auto,auto] gap-2">
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex w-min">
+              <div class="flex items-center justify-between {{ quantity_class }}"
+                      @click.prevent.stop="()=>{}">
+                    <span class="flex-1" data-quantity-label>Quantity</span>
+                    <span class="flex items-center">
+                      <button type="button"
+                              class="p-0.5"
+                              aria-label="Decrease quantity"
+                              :disabled="$cart.loading"
+                              @click="()=> {
+                                      const target = Math.max(0, item?.quantity - 1)
+                                      _cart.updateLineItemQuantity(target, index);
+                                      sub_items?.forEach(item => {
+                                          _cart.updateLineItemQuantity(target, item.index)
+                                      })
+                                    }">
+                        {% render '_components.icon', icon: "minus", class: "size-[0.9em]" %}
+                      </button>
+                      <label aria-label="Quantity" class="flex items-center justify-center">
+                        <input type="number"
+                              min="0"
+                              name="value"
+                              class="w-8 min-w-0 appearance-none bg-inherit text-center outline-none disabled:pointer-events-none disabled:select-none"
+                              @change="value = Math.max(0, Math.min(variant?.inventory_management === 'shopify' &&
+                                  variant?.inventory_policy === 'deny' ? 
+                                  variant?.inventory_quantity - item?.quantity : 
+                                  999, $event.target.value))"
+                              disabled="disabled"
+                              :value="item?.quantity">
+                      </label>
+                      <button type="button"
+                              class="p-0.5"
+                              aria-label="Increase quantity"
+                              :disabled="$cart.loading || (
+                                  variant?.inventory_management === 'shopify' 
+                                  && variant?.inventory_policy === 'deny' 
+                                  && (variant?.inventory_quantity - item?.quantity) <= 0
+                                )"
+                              @click="() => {
+                                      const value = Math.min(variant?.inventory_management === 'shopify' && variant?.inventory_policy === 'deny' ? variant?.inventory_quantity: 999, item?.quantity + 1);
+                                      _cart.updateLineItemQuantity(value, index);
+                                      sub_items?.forEach(item => {
+                                      _cart.updateLineItemQuantity(value, item.index)
+                                    })
+                                    }">
+                        {% render '_components.icon', icon: "plus", class: "size-[0.9em]" %}
+                      </button>
+                    </span>
+                  </div>
+                </div>
+                <div x-show="sub_items?.length" class="{{ price_class }}"
+                    x-html="utils.formatMoney(sub_items?.reduce((acc,item)=>acc+=item.final_price, item.final_price))"></div>
+            </div>
+            {% if remove_button_type == 'text' %}
+              <button type="button"
+                class="{{ remove_button_class }}"
+                :disabled="$cart.loading"
+                @click="_cart.updateLineItemQuantity(0, index);  sub_items?.forEach(item => _cart.updateLineItemQuantity(0, item.index))">
+                Remove
+              </button>
+          {% endif %}
+        </div>
+      </main>
+    </section>
+  </template>
+</div>

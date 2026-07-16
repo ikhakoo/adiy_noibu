@@ -1,0 +1,271 @@
+
+@layer utilities {
+
+
+  .ml-dynamic {
+    margin-left: var(--margin-left, var(--ml));
+  }
+  .mr-dynamic {
+    margin-right:  var(--margin-right, var(--mr));
+  }
+
+  .mt-dynamic {
+    margin-top: var(--margin-top, var(--mt));
+  }
+
+  .mb-dynamic {
+    margin-bottom:  var(--margin-bottom, var(--mb));
+  }
+
+  .my-dynamic {
+    margin-top: var(--margin-top, var(--mt));
+    margin-bottom:  var(--margin-bottom, var(--mb));
+  }
+
+  .mx-dynamic {
+    margin-left: var(--margin-left, var(--ml));
+    margin-right:  var(--margin-right, var(--mr));
+  }
+
+  .m-dynamic {
+    margin-top: var(--margin-top, var(--mt));
+    margin-bottom:  var(--margin-bottom, var(--mb));
+    margin-left: var(--margin-left, var(--ml));
+    margin-right:  var(--margin-right, var(--mr));
+  }
+
+  .pl-dynamic {
+    padding-left: var(--padding-left, var(--pl));
+  }
+  .pr-dynamic {
+    padding-right:  var(--padding-right, var(--pr));
+  }
+
+  .pt-dynamic {
+    padding-top: var(--padding-top, var(--pt));
+  }
+
+  .pb-dynamic {
+    padding-bottom:  var(--padding-bottom, var(--pb));
+  }
+
+  .py-dynamic {
+    padding-top: var(--padding-top, var(--pt));
+    padding-bottom:  var(--padding-bottom, var(--pb));
+  }
+
+  .px-dynamic {
+    padding-left: var(--padding-left, var(--pl));
+    padding-right:  var(--padding-right, var(--pr));
+  }
+
+  .p-dynamic {
+    padding-top: var(--padding-top, var(--pt));
+    padding-bottom:  var(--padding-bottom, var(--pb));
+    padding-left: var(--padding-left, var(--pl));
+    padding-right:  var(--padding-right, var(--pr));
+  }
+
+  .aspect-dynamic {
+    aspect-ratio: var(--aspect-ratio, var(--aspect, auto))
+  }
+
+  .object-dynamic {
+    object-fit: var(--object-fit, initial)
+  }
+
+  .w-dynamic {
+    width: var(--width, var(--w))
+  }
+
+  .h-dynamic {
+    height: var(--height, var(--h))
+  }
+
+}
+
+
+.rounded-dynamic {
+  @apply rounded-[--rounded] md:rounded-[--rounded-md];
+}
+
+.border-w-dynamic {
+  @apply border-w-[--border-w] md:border-w-[--border-w-md];
+}
+
+.gap-dynamic {
+  @apply gap-[--gap] md:gap-[--gap-md];
+}
+
+.gap-x-dynamic {
+  @apply gap-x-[--gap-x] md:gap-x-[--gap-x-md];
+}
+
+.gap-y-dynamic {
+  @apply gap-y-[--gap-y] md:gap-y-[--gap-y-md];
+}
+
+.grid-cols-dynamic {
+  @apply grid-cols-[repeat(var(--grid-cols,1),1fr)] md:grid-cols-[repeat(var(--grid-cols-md,1),1fr)]
+}
+
+.col-span-dynamic {
+  @apply col-[--col-span] md:col-[--col-span-md]
+}
+
+.w-dynamic {
+  @apply w-[--w] md:w-[--w-md];
+}
+
+.min-w-dynamic {
+  @apply min-w-[--min-w] md:min-w-[--min-w-md];
+}
+
+.max-w-dynamic {
+  @apply max-w-[--max-w] md:max-w-[--max-w-md];
+}
+
+.h-dynamic {
+  @apply h-[--h] md:h-[--h-md];
+}
+
+.min-h-dynamic {
+  @apply min-h-[--min-h] md:min-h-[--min-h-md];
+}
+
+.max-h-dynamic {
+  @apply max-h-[--max-h] md:max-h-[--max-h-md];
+}
+
+.size-dynamic {
+  @apply size-[--size] md:size-[--size-md];
+}
+
+
+.flex-dynamic {
+  @apply flex-[--flex] md:flex-[--flex-md];
+}
+
+.text-align-dynamic {
+  text-align: var(--text-align);
+}
+
+.justify-dynamic {
+  justify-content: var(--justify);
+}
+
+.align-content-dynamic {
+  align-content: var(--align-content);
+}
+
+.align-items-dynamic {
+  align-items: var(--align-items);
+}
+
+@media screen and (min-width: 768px) {
+  .text-align-dynamic {
+    text-align: var(--text-align-md);
+  }
+  .justify-dynamic {
+    justify-content: var(--justify-md);
+  }
+  .align-content-dynamic {
+    align-content: var(--align-content-md);
+  }
+  .align-items-dynamic {
+    align-items: var(--align-items-md);
+  }
+}
+
+@container (max-width: 767px) {
+  .mt-dynamic {
+    @apply mt-[--mt];
+  }
+
+  .mb-dynamic {
+    @apply mb-[--mb];
+  }
+
+  .ml-dynamic {
+    @apply ml-[--ml];
+  }
+
+  .mr-dynamic {
+    @apply mr-[--mr];
+  }
+
+  .my-dynamic {
+    @apply mt-[--mt];
+    @apply mb-[--mb];
+  }
+
+  .mx-dynamic {
+    @apply ml-[--ml];
+    @apply mr-[--mr];
+  }
+
+  .m-dynamic {
+    @apply mt-[--mt];
+    @apply mb-[--mb];
+    @apply ml-[--ml];
+    @apply mr-[--mr];
+  }
+
+  .rounded-dynamic {
+    @apply rounded-[--rounded];
+  }
+
+  .border-w-dynamic {
+    @apply border-w-[--border-w];
+  }
+
+  .gap-dynamic {
+    @apply gap-[--gap];
+  }
+
+  .gap-x-dynamic {
+    @apply gap-x-[--gap-x];
+  }
+
+  .gap-y-dynamic {
+    @apply gap-y-[--gap-y];
+  }
+
+  .min-w-dynamic {
+    @apply min-w-[--min-w];
+  }
+
+  .max-w-dynamic {
+    @apply max-w-[--max-w];
+  }
+
+
+  .min-h-dynamic {
+    @apply min-h-[--min-h];
+  }
+
+  .max-h-dynamic {
+    @apply max-h-[--max-h];
+  }
+
+  .size-dynamic {
+    @apply size-[--size];
+  }
+
+  .flex-dynamic {
+    @apply flex-[--flex];
+  }
+
+  .text-align-dynamic {
+    text-align: var(--text-align);
+  }
+
+  .justify-dynamic {
+    justify-content: var(--justify);
+  }
+
+  .align-content-dynamic {
+    align-content: var(--align-content);
+  }
+
+}

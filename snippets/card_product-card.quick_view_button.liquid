@@ -1,0 +1,76 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "quick_view_button"
+  assign section_type = "card_product-card"
+  assign quick_view_visibility = block.settings.quick_view_visibility
+  assign quick_view_content = block.settings.quick_view_content
+  assign quick_view_class = block.settings.quick_view_class
+  assign add_to_cart_content = block.settings.add_to_cart_content
+  assign add_to_cart_class = block.settings.add_to_cart_class
+  assign out_of_stock_content = block.settings.out_of_stock_content
+  assign out_of_stock_class = block.settings.out_of_stock_class
+  assign enable_back_in_stock_notifications = block.settings.enable_back_in_stock_notifications
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign show_conditionally = block.settings.show_conditionally
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css', block: block %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    x-show="$data.showConditionally('{{ show_conditionally }}')">
+  {% if quick_view_visibility != 'never' %}
+    <button type="button"
+            @click.prevent.stop="$quickView.renderQuickView(card?.product_handle, $data, $refs?.bundle_button, card?.selected_variant?.id)"
+            class="w-full {{ quick_view_class }}"
+            :class="card?.isAdding ? 'button-loading':''"
+        {% if quick_view_visibility == 'only_variants' %}
+          x-effect="() => { $el.classList.toggle('!hidden', card?.product?.variants?.length <= 1) }"
+        {% endif %}
+            x-html="$el.getAttribute('data-content')
+            .replace('[price|no-decimals]', utils.formatMoney(card?.selected_variant?.price, window?.money_format?.replace(/\{(\s*)amount(\s*)}/gi, '{$1amount_no_decimals$2}')))
+            .replace('[price]', utils.formatMoney(card?.selected_variant?.price))
+            .replace('[compare_at_price|no-decimals]',  `<span style='text-decoration: line-through; opacity: 0.5;'>${utils.formatMoney(card.selected_variant?.compare_at_price, window?.money_format?.replace(/\{(\s*)amount(\s*)}/gi, '{$1amount_no_decimals$2}'))}</span>`)
+            .replace('[compare_at_price]',  `<span style='text-decoration: line-through; opacity: 0.5;'>${utils.formatMoney(card.selected_variant?.compare_at_price)}</span>`) ?? ''"
+            data-content="{% render '_input.inline_richtext', content: quick_view_content, escape: true, block: block, forloop: forloop %}">
+    </button>
+  {% endif %}
+
+  {% if quick_view_visibility != 'all' %}
+    <button type="submit"
+            class="w-full {{ add_to_cart_class }}"
+            :class="card?.isAdding ? 'button-loading':''"
+        {% if quick_view_visibility == 'only_variants' %}
+          x-effect="() => { $el.classList.toggle('!hidden', !card?.selected_variant?.available || card?.product?.variants?.length > 1) }"
+        {% else %}
+          x-effect="$el.classList.toggle('!hidden', !card?.selected_variant?.available)"
+        {% endif %}
+            x-html="$el.getAttribute('data-content').replace('[price]', utils.formatMoney(card?.selected_variant?.price)).replace('[compare_at_price]',  `<span style='text-decoration: line-through; opacity: 0.5;'>${utils.formatMoney(card.selected_variant?.compare_at_price)}</span>`) ?? ''"
+            @click.prevent.stop="handleAddToCart($event)"
+            data-content="{% render '_input.inline_richtext', content: add_to_cart_content, escape: true, block: block, forloop: forloop %}">
+    </button>
+
+    <button type="button"
+        {% if enable_back_in_stock_notifications %}
+          @click="$data.handleBackInStockNotification($event)"
+        {% else %}
+          disabled="disabled"
+        {% endif %}
+            class="w-full {{ out_of_stock_class }}"
+        {% if quick_view_visibility == 'only_variants' %}
+          x-effect="() => { $el.classList.toggle('!hidden', card?.selected_variant?.available || card?.product?.variants?.length > 1) }"
+        {% else %}
+          x-effect="$el.classList.toggle('!hidden', card?.selected_variant?.available)"
+        {% endif %}
+            x-html="$el.getAttribute('data-content').replace('[price]', utils.formatMoney(card?.selected_variant?.price)).replace('[compare_at_price]',  `<span style='text-decoration: line-through; opacity: 0.5;'>${utils.formatMoney(card.selected_variant?.compare_at_price)}</span>`) ?? ''"
+            data-content="{% render '_input.inline_richtext', content: out_of_stock_content, escape: true, block: block, forloop: forloop %}">
+    </button>
+  {% endif %}
+</div>

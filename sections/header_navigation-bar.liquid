@@ -1,0 +1,729 @@
+{%- render "header_navigation-bar" -%}
+{% schema %}
+{
+  "name": "Navigation bar",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Desktop"
+    },
+    {
+      "type": "select",
+      "id": "alignment_desktop",
+      "label": "Alignment",
+      "default": "menu_center",
+      "options": [
+        {
+          "value": "menu_center",
+          "label": "Menu Center"
+        },
+        {
+          "value": "logo_center",
+          "label": "Logo Center"
+        },
+        {
+          "value": "auto",
+          "label": "Auto"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "header",
+      "content": "Mobile"
+    },
+    {
+      "type": "select",
+      "id": "alignment_mobile",
+      "label": "Alignment",
+      "default": "logo_center",
+      "options": [
+        {
+          "value": "logo_center",
+          "label": "Logo Center"
+        },
+        {
+          "value": "auto",
+          "label": "Auto"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_on_click",
+      "label": "Open on click",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "section_height",
+      "label": "Section height",
+      "default": "40px / 30px"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "1",
+      "label": "Color scheme"
+    },
+    {
+      "type": "select",
+      "id": "container_spacing",
+      "default": "px-container-md",
+      "options": [
+        {
+          "value": "px-container-xs",
+          "label": "xs"
+        },
+        {
+          "value": "px-container-sm",
+          "label": "sm"
+        },
+        {
+          "value": "px-container-md",
+          "label": "md"
+        },
+        {
+          "value": "px-container-lg",
+          "label": "lg"
+        },
+        {
+          "value": "px-container-fullwidth",
+          "label": "fullwidth"
+        },
+        {
+          "value": "px-container-gutter",
+          "label": "magazine"
+        }
+      ],
+      "label": "Container Spacing"
+    },
+    {
+      "type": "header",
+      "content": "Transparent Header"
+    },
+    {
+      "type": "text",
+      "id": "transparent_templates",
+      "label": "Templates",
+      "info": "List of templates that should trigger the transparent header. Comma separated list of templates. I.e. `product.custom-template, index, page, collection.all`"
+    },
+    {
+      "type": "color_scheme",
+      "id": "transparent_color_scheme",
+      "default": "1",
+      "label": "Transparent Color scheme"
+    },
+    {
+      "type": "select",
+      "id": "toggle_area",
+      "label": "Toggle Area",
+      "default": "bar",
+      "options": [
+        {
+          "value": "bar",
+          "label": "Navigation Bar"
+        },
+        {
+          "value": "links",
+          "label": "Menu Links"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Desktop Menu",
+      "type": "desktop-menu",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        },
+        {
+          "type": "text",
+          "id": "link_class",
+          "label": "Link CSS class",
+          "default": "nav-link"
+        },
+        {
+          "type": "text",
+          "id": "padding_x_gap",
+          "label": "Horizontal Padding | Gap",
+          "default": "24px | 4px"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Dropdown / Megamenu"
+        },
+        {
+          "type": "text",
+          "id": "dropdown_icon",
+          "label": "Dropdown Indicator icon",
+          "default": "chevron-down"
+        },
+        {
+          "type": "text",
+          "id": "level_1_link_class",
+          "label": "Level 1 dropdown link class",
+          "default": "nav-link"
+        },
+        {
+          "type": "text",
+          "id": "level_2_link_class",
+          "label": "Level 2 dropdown link class",
+          "default": "nav-link"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_active_link",
+          "label": "Highlight active link",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "rotate_dropdown_icon",
+          "label": "Rotate dropdown icon",
+          "default": true
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "desktop-only",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-tablet-only",
+              "label": "Mobile & Tablet"
+            },
+            {
+              "value": "desktop-only",
+              "label": "Desktop"
+            }
+          ]
+        }
+      ],
+      "limit": 1
+    },
+    {
+      "name": "Secondary Menu",
+      "type": "secondary-menu",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        },
+        {
+          "type": "text",
+          "id": "link_class",
+          "label": "Link CSS class",
+          "default": "nav-link"
+        },
+        {
+          "type": "text",
+          "id": "padding_x_gap",
+          "label": "Horizontal Padding | Gap",
+          "default": "24px | 4px"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Dropdown / Megamenu"
+        },
+        {
+          "type": "text",
+          "id": "dropdown_icon",
+          "label": "Dropdown Indicator icon",
+          "default": "chevron-down"
+        },
+        {
+          "type": "text",
+          "id": "level_1_link_class",
+          "label": "Level 1 dropdown link class",
+          "default": "nav-link"
+        },
+        {
+          "type": "text",
+          "id": "level_2_link_class",
+          "label": "Level 2 dropdown link class",
+          "default": "nav-link"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_active_link",
+          "label": "Highlight active link",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "rotate_dropdown_icon",
+          "label": "Rotate dropdown icon",
+          "default": true
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "desktop-only",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-tablet-only",
+              "label": "Mobile & Tablet"
+            },
+            {
+              "value": "desktop-only",
+              "label": "Desktop"
+            }
+          ]
+        }
+      ],
+      "limit": 1
+    },
+    {
+      "name": "Logo",
+      "type": "logo",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Logo"
+        },
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Default"
+        },
+        {
+          "type": "image_picker",
+          "id": "logo_transparent",
+          "label": "Transparent Header"
+        },
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "range",
+          "id": "max_height",
+          "label": "Max height",
+          "default": 80,
+          "min": 20,
+          "max": 120,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-tablet-only",
+              "label": "Mobile & Tablet"
+            },
+            {
+              "value": "desktop-only",
+              "label": "Desktop"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Cart icon",
+      "type": "cart-icon",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon",
+          "default": "cart"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Url",
+          "info": "Defaults to `/#modal--cart-drawer` to activate the Cart Drawer"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "text",
+          "id": "width_height",
+          "label": "Icon: width | height",
+          "default": "auto | 20"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_cart_quantity",
+          "label": "Show quantity",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-tablet-only",
+              "label": "Mobile & Tablet"
+            },
+            {
+              "value": "desktop-only",
+              "label": "Desktop"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Search icon",
+      "type": "search-icon",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon",
+          "default": "search"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Url",
+          "info": "Defaults to `/#modal--search` to activate the Search modal"
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-tablet-only",
+              "label": "Mobile & Tablet"
+            },
+            {
+              "value": "desktop-only",
+              "label": "Desktop"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Account icon",
+      "type": "account-icon",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon",
+          "default": "user"
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-tablet-only",
+              "label": "Mobile & Tablet"
+            },
+            {
+              "value": "desktop-only",
+              "label": "Desktop"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Menu icon",
+      "type": "menu-icon",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon",
+          "default": "hamburger"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Url",
+          "info": "Defaults to `/#modal--drawer-menu` to activate the drawer menu"
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-tablet-only",
+              "label": "Mobile & Tablet"
+            },
+            {
+              "value": "desktop-only",
+              "label": "Desktop"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Country selector",
+      "type": "country-selector",
+      "settings": [
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Style",
+          "default": "icon",
+          "options": [
+            {
+              "value": "icon",
+              "label": "Icon"
+            },
+            {
+              "value": "country",
+              "label": "Name"
+            },
+            {
+              "value": "currency",
+              "label": "Currenc"
+            },
+            {
+              "value": "flag",
+              "label": "Flag"
+            },
+            {
+              "value": "full",
+              "label": "Full"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon",
+          "default": "globe"
+        },
+        {
+          "type": "text",
+          "id": "text_class",
+          "label": "Text class",
+          "default": "nav-link"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Url",
+          "info": "Defaults to `/#modal--cart-drawer` to activate the Cart Drawer"
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-tablet-only",
+              "label": "Mobile & Tablet"
+            },
+            {
+              "value": "desktop-only",
+              "label": "Desktop"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Horizontal divider",
+      "type": "horizontal-divider",
+      "settings": [
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color",
+          "default": "#e5e7eb"
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-tablet-only",
+              "label": "Mobile & Tablet"
+            },
+            {
+              "value": "desktop-only",
+              "label": "Desktop"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Layout Spacer",
+      "type": "layout-spacer",
+      "settings": [
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-tablet-only",
+              "label": "Mobile & Tablet"
+            },
+            {
+              "value": "desktop-only",
+              "label": "Desktop"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Button",
+      "type": "button",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Title",
+          "default": "Button"
+        },
+        {
+          "type": "text",
+          "id": "css_class",
+          "label": "Style Class",
+          "default": "button-primary"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Url"
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-tablet-only",
+              "label": "Mobile & Tablet"
+            },
+            {
+              "value": "desktop-only",
+              "label": "Desktop"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "limit": 1,
+  "enabled_on": {
+    "groups": [
+      "custom.header"
+    ]
+  }
+}
+{% endschema %}

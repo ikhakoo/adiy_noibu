@@ -1,0 +1,25 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "account-icon"
+  assign section_type = "header_navigation-bar"
+  assign icon = block.settings.icon
+  assign responsive_visibility = block.settings.responsive_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign url = routes.account_login_url
+  if customer
+    assign url = routes.account_url
+  endif
+%}
+
+
+<a href="{{ url }}"
+    {% if url contains 'customer_identity' %}
+      data-barba-prevent="self"
+    {% endif %}
+   title="Account"
+   class="relative flex items-center justify-center h-6 w-6 {{ responsive_visibility }} {{ class }}" {{ block.shopify_attributes }}>
+  {% render '_components.icon', icon: icon, class: "h-5 shrink-0" %}
+</a>

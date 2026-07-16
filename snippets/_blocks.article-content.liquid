@@ -1,0 +1,86 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.article-content"
+  assign default_article = block.settings.default_article
+  assign content_class = block.settings.content_class
+  assign blog_navigation = block.settings.blog_navigation
+  assign blog_navigation_class = block.settings.blog_navigation_class
+  assign prev_button = block.settings.prev_button
+  assign next_button = block.settings.next_button
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign article = default_article | default: article
+%}
+
+{% liquid
+  if request.design_mode != true
+    if article == blank
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+%}
+
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,margin_top_bottom_left_right, max_w_flex_col_row_order_align" %}
+
+
+<section
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    class=""
+    style="color: {{ color }}">
+  <article class="richtext-margins">
+    {% render '_input.richtext', content: article.content, class: content_class, block: block, forloop: forloop %}
+  </article>
+
+  {%- if blog_navigation and blog.previous_article or blog.next_article -%}
+    {%- comment -%}
+      Implementation may look a bit strange here as we're using the "next_article" for the previous button and vice-versa. But we actually found that from
+      a user point of view, it feels "more logical", if you are on the most recent article, to have a button "next article" on the right that goes to the
+      previous article.
+    {%- endcomment -%}
+
+    <footer class="flex w-full items-center justify-between mt-12 {{ blog_navigation_class }}">
+      {% if prev_button %}
+        <a class="flex items-center gap-3 opacity-30 ac:opacity-100 hf:opacity-70 {% if blog.previous_article %}active{% endif %}"
+           {%- if blog.previous_article -%}href="{{ blog.previous_article.url }}"{%- endif -%}
+           rel="prev">
+          {% render '_input.inline_richtext', content: prev_button, block: block, forloop: forloop %}
+        </a>
+      {% endif %}
+
+      {% if next_button %}
+        <a class="flex items-center gap-3 opacity-30 ac:opacity-100 hf:opacity-70  {% if blog.next_article %}active{% endif %}"
+           {% if blog.next_article %}href="{{ blog.next_article.url }}"{% endif %}
+           rel="next">
+          {% render '_input.inline_richtext', content: next_button, block: block, forloop: forloop %}
+        </a>
+      {% endif %}
+    </footer>
+  {%- endif -%}
+
+</section>
+

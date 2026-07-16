@@ -1,0 +1,361 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "scrollbar"
+  assign section_type = "global_design-elements"
+  assign title = block.settings.title
+  assign scrollbar_responsive_visibility_hidden = block.settings.scrollbar_responsive_visibility_hidden
+  assign track_color = block.settings.track_color
+  assign track_color_gradient = block.settings.track_color_gradient
+  assign thumb_color = block.settings.thumb_color
+  assign thumb_hover_color = block.settings.thumb_hover_color
+  assign height_radius_top_bottom = block.settings.height_radius_top_bottom
+  assign buttons_responsive_visibility_hidden = block.settings.buttons_responsive_visibility_hidden
+  assign icon_style = block.settings.icon_style
+  assign icon_previous = block.settings.icon_previous
+  assign icon_next = block.settings.icon_next
+  assign size_border_width_radius = block.settings.size_border_width_radius
+  assign flex_row_wrap_align_x_align_y_gap = block.settings.flex_row_wrap_align_x_align_y_gap
+  assign icon_color = block.settings.icon_color
+  assign button_background_color = block.settings.button_background_color
+  assign button_border_color = block.settings.button_border_color
+  assign icon_hover_color = block.settings.icon_hover_color
+  assign button_hover_background_color = block.settings.button_hover_background_color
+  assign button_border_hover_color = block.settings.button_border_hover_color
+  assign counter_responsive_visibility_hidden = block.settings.counter_responsive_visibility_hidden
+  assign counter_color = block.settings.counter_color
+  assign font_family = block.settings.font_family
+  assign size_weight_height_opacity = block.settings.size_weight_height_opacity
+  assign spacing_transform_style_whitespace = block.settings.spacing_transform_style_whitespace
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign apply_container_queries = block.settings.apply_container_queries
+  assign override_preview_background = block.settings.override_preview_background
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+
+  assign selector = '.' | append: title
+
+  if font_family contains " "
+    assign font_family = font_family | replace: "'", '' | replace: '"', '' | prepend: "'" | append: "'"
+  endif
+
+  assign padding_top_bottom_left_right = padding_top_bottom_left_right | strip_newlines | replace: ' ', "" | split: '|'
+  assign top = padding_top_bottom_left_right[0] | split: '/'
+  assign bottom = padding_top_bottom_left_right[1] | split: '/'
+  assign left = padding_top_bottom_left_right[2] | split: '/'
+  assign right = padding_top_bottom_left_right[3] | split: '/'
+
+  assign height_radius_top_bottom = height_radius_top_bottom | strip_newlines | replace: ' ', "" | split: '|'
+  assign scrollbar_height = height_radius_top_bottom[0] | split: '/'
+  assign scrollbar_radius = height_radius_top_bottom[1] | split: '/'
+  assign scrollbar_top = height_radius_top_bottom[2] | split: '/'
+  assign scrollbar_bottom = height_radius_top_bottom[3] | default: 1 | split: '/'
+
+  assign size_border_width_radius = size_border_width_radius | strip_newlines | replace: ' ', "" | split: '|'
+  assign button_size = size_border_width_radius[0] | split: '/'
+  assign button_border = size_border_width_radius[1] | split: '/'
+  assign button_radius = size_border_width_radius[2] | split: '/'
+
+  assign size_weight_height_opacity = size_weight_height_opacity | strip_newlines | replace: ' ', "" | split: '|'
+  assign sizes = size_weight_height_opacity[0] | split: '/'
+  assign weight = size_weight_height_opacity[1] | split: '/'
+  assign height = size_weight_height_opacity[2] | split: '/'
+  assign opacity = size_weight_height_opacity[3] | default: 1 | split: '/'
+
+  assign spacing_transform_style_whitespace = spacing_transform_style_whitespace | strip_newlines | replace: ' ', "" | split: '|'
+  assign spacing = spacing_transform_style_whitespace[0] | split: '/'
+  assign transform = spacing_transform_style_whitespace[1] | split: '/'
+  assign style = spacing_transform_style_whitespace[2] | split: '/'
+  assign whitespace = spacing_transform_style_whitespace[3] | split: '/'
+%}
+
+{%- capture css_desktop -%}
+  .{{ title }} {
+  padding: {{ top | first }} {{ right | first }} {{ bottom | first }} {{ left | first }};
+  }
+
+  {% case scrollbar_responsive_visibility_hidden %}
+    {% when "hidden" %}
+      .{{ title }} .scrollbar-scrollbar {
+      display: none;
+      }
+    {% when "mobile-only" %}
+      @media screen and (min-width: 768px) {
+      .{{ title }} .scrollbar-scrollbar:has(:not(.\@container *)) {
+      display: none;
+      }
+      }
+      @container (min-width: 768px) {
+      .{{ title }} .scrollbar-scrollbar {
+      display: none;
+      }
+      }
+    {% when "desktop-tablet-only" %}
+      @media screen and (max-width: 767px) {
+      .{{ title }} .scrollbar-scrollbar:has(:not(.\@container *)) {
+      display: none;
+      }
+      }
+
+      @container (max-width: 767px) {
+      .{{ title }} .scrollbar-scrollbar {
+      display: none;
+      }
+      }
+  {% endcase %}
+  {% case buttons_responsive_visibility_hidden %}
+    {% when "hidden" %}
+      .{{ title }} .scrollbar-button {
+      display: none;
+      }
+    {% when "mobile-only" %}
+      @media screen and (min-width: 768px) {
+      .{{ title }} .scrollbar-button:has(:not(.\@container *)) {
+      display: none;
+      }
+      }
+      @container (min-width: 768px) {
+      .{{ title }} .scrollbar-button {
+      display: none;
+      }
+      }
+    {% when "desktop-tablet-only" %}
+      @media screen and (max-width: 767px) {
+      .{{ title }} .scrollbar-button:has(:not(.\@container *)) {
+      display: none;
+      }
+      }
+      @container (max-width: 767px) {
+      .{{ title }} .scrollbar-button {
+      display: none;
+      }
+      }
+  {% endcase %}
+  {% case counter_responsive_visibility_hidden %}
+    {% when "hidden" %}
+      .{{ title }} .scrollbar-counter {
+      display: none;
+      }
+    {% when "mobile-only" %}
+      @media screen and (min-width: 768px) {
+      .{{ title }} .scrollbar-counter:has(:not(.\@container *)) {
+      display: none;
+      }
+      }
+
+      @container (min-width: 768px) {
+      .{{ title }} .scrollbar-counter {
+      display: none;
+      }
+      }
+    {% when "desktop-tablet-only" %}
+      @media screen and (max-width: 767px) {
+      .{{ title }} .scrollbar-counter:has(:not(.\@container *)) {
+      display: none;
+      }
+      }
+
+      @container (max-width: 767px) {
+      .{{ title }} .scrollbar-counter {
+      display: none;
+      }
+      }
+  {% endcase %}
+
+  .{{ title }} .scrollbar-scrollbar {
+  margin-top: {{ scrollbar_top | first }};
+  margin-bottom: {{ scrollbar_bottom | first }};
+  }
+
+  .{{ title }} .scrollbar-track {
+  background-color: {{ track_color }};
+  background: {{ track_color_gradient }};
+  height:  {{ scrollbar_height | first }};
+  border-radius:  {{ scrollbar_radius | first }};
+  }
+
+  .{{ title }} .scrollbar-thumb {
+  background-color: {{ thumb_color }};
+  }
+
+  .{{ title }} .scrollbar-thumb:where(:hover,:focus-visible,:active,.active):not(.button-loading) {
+  background-color: {{ thumb_hover_color }};
+  }
+
+
+  {% case icon_style %}
+    {% when "animated" %}
+      .{{ title }}  .simple-icon {
+      display: none !important;
+      }
+
+
+    {% when "icon" %}
+      .{{ title }} .animated-icon {
+      display: none !important;
+      }
+      .{{ title }} {
+      --scroll-button-prev: var(--icon-{{ icon_previous | handleize }});
+      --scroll-button-prev-aspect-ratio: var(--icon_previous-{{ icon | handleize }}-aspect-ratio);
+      --scroll-button-next: var(--icon-{{ icon_next | handleize }});
+      --scroll-button-next-aspect-ratio: var(--icon_next-{{ icon | handleize }}-aspect-ratio);
+      }
+  {% endcase %}
+
+  .{{ title }} .scrollbar-button {
+  color: {{ icon_color }};
+  background: {{ button_background_color }};
+  border-color: {{ button_border_color }};
+  border-style: solid;
+  --icon-size: {{ button_size | first | abs | times: 0.44 | round }}px;
+  --icon-size-md: {{ button_size | first | abs | times: 0.7 | round }}px;
+  width: {{ button_size | first }};
+  height: {{ button_size | first }};
+  border-radius:  {{ button_radius | first }};
+  border-width:  {{ button_border | first }};
+  }
+
+  .{{ title }} .scrollbar-button:where(:hover):not(.button-loading) {
+  color: {{ icon_hover_color }};
+  background: {{ button_hover_background_color }};
+  border-color: {{ button_border_hover_color }};
+  }
+
+
+
+  .{{ title }} .scrollbar-counter {
+  color: {{ counter_color }};
+  font-family: {{ font_family }};
+  font-size: {{- sizes | first -}};
+  font-weight: {{- weight | first -}};
+  line-height: {{- height | first -}};
+  letter-spacing: {{- spacing | first -}};
+  text-transform: {{- transform | first -}};
+  font-style: {{- style | first -}};
+  white-space: {{- whitespace | first -}};
+  opacity: {{- opacity | first -}};
+  }
+
+{%- endcapture -%}
+
+{%- capture css_mobile -%}
+  .{{ title }} {
+  padding: {{ top | last }} {{ right | last }} {{ bottom | last }} {{ left | last }};
+  }
+
+  .{{ title }} .scrollbar-scrollbar {
+  margin-top: {{ scrollbar_top | last }};
+  margin-bottom: {{ scrollbar_bottom | last }};
+  }
+
+  .{{ title }} .scrollbar-track {
+  height:  {{ scrollbar_height | last }};
+  border-radius:  {{ scrollbar_radius | last }};
+  }
+
+
+  .{{ title }} .scrollbar-button {
+  --icon-size: {{ button_size | last | abs | times: 0.44 | round }}px;
+  --icon-size-md: {{ button_size | last | abs | times: 0.7 | round }}px;
+  width: {{ button_size | last }};
+  height: {{ button_size | last }};
+  border-radius:  {{ button_radius | last }};
+  border-width:  {{ button_border | last }};
+  }
+
+
+  .{{ title }} .scrollbar-counter {
+  font-size: {{- sizes | last -}};
+  font-weight: {{- weight | last -}};
+  line-height: {{- height | last -}};
+  letter-spacing: {{- spacing | last -}};
+  text-transform: {{- transform | last -}};
+  font-style: {{- style | last -}};
+  white-space: {{- whitespace | last -}};
+  opacity: {{- opacity | last -}};
+  }
+
+{%- endcapture -%}
+
+{% capture flex_selector %}.{{ title }} [data-style-scrollbar-buttons-layout]{% endcapture %}
+{% render '_utils.dynamic-css', block: block, selector: flex_selector, keys: 'flex_row_wrap_align_x_align_y_gap' %}
+{% capture flex_selector %}.{{ title }}[data-scrollbar]{% endcapture %}
+{% render '_utils.dynamic-css', block: block, selector: flex_selector, keys: 'flex_direction_align_x_align_y_gap_wrap' %}
+
+<style>
+  {{- css_desktop | strip_newlines  -}}
+
+  @media screen and (max-width: 767px) {
+  {{- css_mobile | strip_newlines  -}}
+  }
+
+  @container (max-width: 767px) {
+  {{- css_mobile | strip_newlines  -}}
+  }
+</style>
+
+{% if request.design_mode %}
+  {% if override_preview_background == blank or override_preview_background.alpha == 0 %}
+    {% assign override_preview_background = '#ffffff' %}
+  {% endif %}
+  <section class="fixed inset-0 z-50 flex flex-col gap-16 overflow-y-auto text-balance bg-white py-16 text-black px-container-sm"
+           x-data="{tab: 'single-type'}"
+           style="background: {{ override_preview_background }};"
+           x-show="$editor?.select_block_id === '{{ block.id }}'"
+           x-cloak {{ block.shopify_attributes }}>
+
+    <header class="flex gap-3 font-mono">
+      <button @click="tab='single-type'"
+              type="button"
+              :class="tab === 'single-type' ? 'bg-gray-600 text-gray-50 border-gray-900 hf:bg-gray-700':'border-gray-200/70 bg-gray-100 text-gray-700 hf:text-gray-900 hf:border-gray-300/80 hf:bg-gray-200/90'"
+              class="rounded-sm border px-3 text-sm font-medium py-1.5">{{ selector }}
+      </button>
+    </header>
+
+    <main class="mt-8">
+      <header class="mt-12 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="text-lg font-bold text-gray-600">Desktop</div>
+        <div class="text-lg font-bold text-gray-600">Mobile</div>
+      </header>
+      <section x-show="tab === 'single-type'" class="mt-6 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div x-data class="relative max-w-[600px] overflow-hidden">
+          <div x-ref="container"
+               class="relative grid auto-cols-[400px] grid-flow-col h-80 scrollbar-none snap-x snap-mandatory gap-4 overflow-x-auto bg-gradient-to-r from-sky-50 to-sky-600/50">
+            <div class="h-full flex-1 snap-start bg-indigo-400/20"></div>
+            <div class="h-full flex-1 snap-start bg-indigo-400/20"></div>
+            <div class="h-full flex-1 snap-start bg-indigo-400/20"></div>
+            <div class="h-full flex-1 snap-start bg-indigo-400/20"></div>
+            <div class="h-full flex-1 snap-start bg-indigo-400/20"></div>
+            <div class="h-full flex-1 snap-start bg-indigo-400/20"></div>
+            <div class="h-full flex-1 snap-start bg-indigo-400/20"></div>
+          </div>
+          {% render "_components.scrollbar",
+              class: title,
+              scroll_container_ref: '$refs.container'
+          %}
+        </div>
+        <div class=" @container max-w-lg">
+          <div x-data class="relative max-w-full overflow-hidden">
+            <div x-ref="container"
+                 class="relative grid auto-cols-[200px] grid-flow-col h-80 scrollbar-none snap-x snap-mandatory gap-4 overflow-x-auto bg-gradient-to-r from-sky-50 to-sky-600/50">
+              <div class="h-full flex-1 snap-start bg-emerald-400/20"></div>
+              <div class="h-full flex-1 snap-start bg-emerald-400/20"></div>
+              <div class="h-full flex-1 snap-start bg-emerald-400/20"></div>
+              <div class="h-full flex-1 snap-start bg-emerald-400/20"></div>
+              <div class="h-full flex-1 snap-start bg-emerald-400/20"></div>
+              <div class="h-full flex-1 snap-start bg-emerald-400/20"></div>
+              <div class="h-full flex-1 snap-start bg-emerald-400/20"></div>
+            </div>
+            {% render "_components.scrollbar",
+                class: title,
+                scroll_container_ref: '$refs.container'
+            %}
+          </div>
+        </div>
+      </section>
+    </main>
+  </section>
+{% endif %}

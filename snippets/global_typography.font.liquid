@@ -1,0 +1,106 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "font"
+  assign section_type = "global_typography"
+  assign name = block.settings.name
+  assign family = block.settings.family
+  assign weights = block.settings.weights
+  assign custom_src = block.settings.custom_src
+  assign fallback_families = block.settings.fallback_families
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{{ custom_src }}
+
+{%- if custom_src == blank and family.system? != true and family != blank -%}
+  <link rel="preload"
+        as="font"
+        href="{{ family | font_url }}"
+        type="font/woff2"
+        crossorigin>
+{%- endif -%}
+
+{% liquid
+  assign font = family
+  assign font_weights = weights | strip_newlines | replace: ' ', "" | split: ','
+  assign font_custom_family = custom_src
+  if name contains " "
+    assign name = name | replace: "'", '' | replace: '"', '' | prepend: "'" | append: "'"
+  endif
+
+  if font.system? != true
+    for weight_style in font_weights
+      assign font_id = font.family | append: "_" | append: weight_style
+      if global_font_ids contains font_id
+        continue
+      endif
+      assign global_font_ids = global_font_ids | append: font_id | append: "|||"
+
+      if weight_style contains "i"
+        assign weight_style_i = weight_style | split: "i" | first | strip
+        assign font_family = font | font_modify: 'weight', weight_style_i
+        assign font_family = font_family | font_modify: 'style', 'italic'
+      elsif weight_style contains "o"
+        assign weight_style_o = weight_style | split: "o" | first | strip
+        assign font_family = font | font_modify: 'weight', weight_style_o
+        assign font_family = font_family | font_modify: 'style', 'oblique'
+      else
+        assign font_family = font | font_modify: 'weight', weight_style
+        assign font_family = font_family | font_modify: 'style', 'normal'
+      endif
+
+      assign font_family_css = font_family | font_face: font_display: 'swap'
+      assign font_family_url = font_family | font_url
+      assign font_css = font_css | append: font_family_css
+      assign font_preloads_urls = font_preloads_urls | append: ',' | append: font_family_url
+    endfor
+  endif
+  assign font_preloads_urls = font_preloads_urls | split: ',' | uniq
+%}
+
+{% for font_preloads_url in font_preloads_urls %}
+  {% if font_preloads_url != blank %}
+    <link rel="preload"
+          as="font"
+          href="{{ font_preloads_url }}"
+          type="font/woff2"
+          crossorigin>
+  {% endif %}
+{% endfor %}
+
+<style>
+  {{ font_css }}
+</style>
+
+{% if request.design_mode %}
+  <section class="fixed inset-0 z-50 flex flex-col gap-16 overflow-y-auto text-balance bg-white py-16 text-black px-container-sm"
+           x-data="{tab: 'single-type'}"
+           x-show="$editor?.select_block_id === '{{ block.id }}'"
+           x-cloak {{ block.shopify_attributes }}>
+
+    <header class="flex gap-3 font-mono">
+      <button @click="tab='single-type'"
+              type="button"
+              :class="tab === 'single-type' ? 'bg-gray-600 text-gray-50 border-gray-900 hf:bg-gray-700':'border-gray-200/70 bg-gray-100 text-gray-700 hf:text-gray-900 hf:border-gray-300/80 hf:bg-gray-200/90'"
+              class="rounded-sm border px-3 text-sm font-medium py-1.5">{{ name }}
+      </button>
+    </header>
+
+    <main class="mt-8 flex flex-col gap-4 text-xl" style="font-family: {{ name }}, {{ fallback_families | replace: '"', "'" }};">
+      {% for weight in font_weights %}
+        {% assign style = 'normal' %}
+        {% if weight contains 'i' %}
+          {% assign style = 'italic' %}
+        {% endif %}
+        {% if weight contains 'o' %}
+          {% assign style = 'oblique' %}
+        {% endif %}
+        <div class="{{ title }}"
+             contenteditable="true"
+             style="font-weight: {{ weight | replace: "i", "" | replace: 'o', "" }}; font-style: {{ style }};">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore doloribus voluptates.
+        </div>
+      {% endfor %}
+    </main>
+  </section>
+{% endif %}

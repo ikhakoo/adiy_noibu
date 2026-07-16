@@ -1,0 +1,78 @@
+{%- render "global_swatches" -%}
+{% schema %}
+{
+  "name": "Color / Image swatches",
+  "settings": [
+    {
+      "type": "text",
+      "id": "preview_options",
+      "label": "Preview options",
+      "default": "color, colour, model, style",
+      "info": "Comma separated list of items to preview. This helps to verify if all products have color swatches setup properly."
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Color Swatch",
+      "type": "color_swatch",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titles",
+          "info": "Comma separated list of variant titles. Case in-sensitive."
+        },
+        {
+          "type": "color",
+          "id": "swatch",
+          "label": "Color"
+        }
+      ]
+    },
+    {
+      "name": "Color Gradient Swatch",
+      "type": "color_gradient_swatch",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titles",
+          "info": "Comma separated list of variant titles. Case in-sensitive."
+        },
+        {
+          "type": "color_background",
+          "id": "swatch",
+          "label": "Gradient color"
+        }
+      ]
+    },
+    {
+      "name": "Image Swatch",
+      "type": "image_swatch",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titles",
+          "info": "Comma separated list of variant titles. Case in-sensitive."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "groups": [
+      "custom.global"
+    ]
+  },
+  "presets": [
+    {
+      "name": "Color / Image swatches"
+    }
+  ]
+}
+{% endschema %}

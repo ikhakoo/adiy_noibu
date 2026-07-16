@@ -1,0 +1,45 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "card"
+  assign section_type = "content-cards"
+  assign image = block.settings.image
+  assign title = block.settings.title
+  assign title_class = block.settings.title_class
+  assign paragraph = block.settings.paragraph
+  assign paragraph_class = block.settings.paragraph_class
+  assign button_text = block.settings.button_text
+  assign button_url = block.settings.button_url
+  assign button_class = block.settings.button_class
+  assign background_color = block.settings.background_color
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign image_class = "w-full max-w-[296px] h-[187px] md:h-[197px] rounded-[20px] object-cover mb-2 md:mb-4"
+  assign title_class = title_class | append: " lg:px-3"
+  assign paragraph_class = paragraph_class | append: " flex-grow"
+%}
+
+<div data-style-id="{{ section.id }}--{{ block.id }}"
+     class="grid w-full snap-center shrink-0 relative h-full"
+     {% if button_url != blank %}
+      title="{{ button_url }}"
+      role="button"
+      tabindex="0"
+      @click.prevent.stop="barba.go('{{ button_url }}'); $modal.setId('')"
+    {% endif %}
+     {{ block.shopify_attributes }}>
+  <div class="flex flex-col w-full h-full gap-2 text-center items-center p-4 lg:p-6 rounded-[20px]"
+  style="background-color: {{ background_color }};">
+    {% render '_object.image', image: image, sizes: "100vw", class: image_class, preload: false %}
+    {% render '_input.richtext', content: title, class: title_class, block: block, forloop: forloop %}
+    {% render '_input.richtext', content: paragraph, class: paragraph_class, block: block, forloop: forloop %}
+    {% if button_text != blank %}
+      <a href="{{ button_url }}"
+          class="{{ button_class }} mt-2 md:mt-4">
+          {% render '_input.inline_richtext', content: button_text, block: block, forloop: forloop %}
+      </a>
+    {% endif %}
+  </div>
+</div>
+

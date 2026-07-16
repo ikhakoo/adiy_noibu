@@ -1,0 +1,220 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_code_AJwnNM": {
+      "type": "custom-code",
+      "blocks": {
+        "css_zT7A4w": {
+          "type": "css",
+          "settings": {
+            "css": "h1 {\nposition: relative;\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    margin: 0 auto 40px;\n}\n\np {\nmargin-block-end :16px;\nmargin-block-start :16px;\n}\n\nol, ul {\nmargin-block-end :32px;\nmargin-block-start :16px;\n}\n\np:first-child {\n    -webkit-margin-before: 0;\n    margin-block-start: 0;\n}"
+          }
+        }
+      },
+      "block_order": [
+        "css_zT7A4w"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "content_flex_bxDk3Q": {
+      "type": "content-flex",
+      "blocks": {
+        "richtext_rYW8Bw": {
+          "type": "richtext",
+          "settings": {
+            "title": "<h1>{{ block.settings.page_content.title }}</h1>",
+            "page_content": "{{ page }}",
+            "use_page_content": false,
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 24 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": "",
+            "color_override": "rgba(0,0,0,0)"
+          }
+        }
+      },
+      "block_order": [
+        "richtext_rYW8Bw"
+      ],
+      "disabled": true,
+      "settings": {
+        "flex_row_wrap_align_x_align_y_gap": "start | start | 0",
+        "padding_top_bottom_left_right": "0 | 0 | 0 | 0",
+        "margin_top_bottom_left_right": "0 | 0 | auto/0 | auto/0",
+        "border_width_radius": "0 | 0 | | 1168/unset",
+        "background_color": "",
+        "border_color": "",
+        "section_id": "",
+        "color_scheme": "",
+        "container_spacing": "px-container-md",
+        "border_divider": "border-y-none",
+        "top_bottom_min_height": "48/36 | 48/36 | 0",
+        "responsive_visibility": "",
+        "responsive_breakpoint": "768px",
+        "target_visibility": "",
+        "render_tabs_async": false
+      }
+    },
+    "hero_banner_JPztXm": {
+      "type": "hero-banner",
+      "blocks": {
+        "slide_RhG3er": {
+          "type": "slide",
+          "settings": {
+            "desktop_image": "shopify://shop_images/image_with_text.png",
+            "background_gradient": "rgba(0,0,0,0)",
+            "preheading": "<p>[icon.5-stars] OVER 5,000 HAPPY CUSTOMERS</p>",
+            "preheading_class": "richtext-md",
+            "heading": "<h1>Thank You For Your Application</h1>",
+            "heading_class": "richtext-md",
+            "subheading": "<p><strong>An A-DIY Certified Consultant will be in touch with next steps.</strong></p>",
+            "subheading_class": "richtext-md",
+            "button_primary_text": "",
+            "button_primary_url": "",
+            "button_primary_class": "button-secondary",
+            "button_secondary_text": "",
+            "button_secondary_url": "",
+            "button_secondary_class": "button-secondary-outline",
+            "text_color": "#20221d",
+            "text_align": "text-left",
+            "vertical_align_desktop": "md:justify-center",
+            "vertical_align": "justify-start",
+            "horizontal_align": "items-start mr-auto",
+            "vertical_padding": "0/96px | 0"
+          }
+        }
+      },
+      "block_order": [
+        "slide_RhG3er"
+      ],
+      "settings": {
+        "top_bottom_min_height": "0 | 0 | 680px/510px",
+        "full_screen": false,
+        "section_id": "",
+        "container_spacing": "px-container-fullwidth",
+        "responsive_visibility": ""
+      }
+    },
+    "content_grid_UdWmKX": {
+      "type": "content-grid",
+      "blocks": {
+        "layout_flex_B9D6pg": {
+          "type": "layout__flex",
+          "settings": {
+            "flex_direction_align_x_align_y_gap_wrap": "column | start| center | 12",
+            "padding_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "border_width_radius": "0 | 0 |  |  |",
+            "background_color": "",
+            "border_color": "",
+            "margin_top_bottom_left_right": "0 | 36/24 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        },
+        "richtext_webgCm": {
+          "type": "richtext",
+          "settings": {
+            "title": "<h2><strong>Start Your New Deck</strong></h2>",
+            "page_content": "",
+            "use_page_content": false,
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "max/100% | unset | 1 | | unset | center",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": "",
+            "color_override": ""
+          }
+        },
+        "layout_end_rkFfVe": {
+          "type": "layout__end",
+          "settings": {}
+        },
+        "product_cards_bFznUQ": {
+          "type": "product-cards",
+          "settings": {
+            "products": [],
+            "collection": "start-your-new-deck",
+            "display_limit": "12 / 4",
+            "product_card_class": "product-card",
+            "hide_out_of_stock": false,
+            "slider_cols_rows_align_x_align_y_gap": "3/1.2 |  1 | center | start| 24/12",
+            "slider_scroll_snap": "snap-mandatory",
+            "snap_center": false,
+            "slider_overflow_container": "",
+            "infinite_scroll": false,
+            "scrollbar_class": "scrollbar-no-buttons",
+            "padding_top_bottom_left_right": "48/16 | 0 | 0 | 0",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "960px",
+            "anchor_id": "",
+            "metafield_keys": ""
+          }
+        }
+      },
+      "block_order": [
+        "layout_flex_B9D6pg",
+        "richtext_webgCm",
+        "layout_end_rkFfVe",
+        "product_cards_bFznUQ"
+      ],
+      "settings": {
+        "grid_cols_align_x_align_y_gap": "1 | stretch | stretch | 0",
+        "padding_top_bottom_left_right": "0 | 0 | 0 | 0",
+        "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+        "border_width_radius": "0 | 0 |  |  |",
+        "background_color": "",
+        "border_color": "",
+        "section_id": "",
+        "color_scheme": "",
+        "container_spacing": "px-container-md",
+        "border_divider": "border-y-none",
+        "top_bottom_min_height": "80/48 | 100/48 | 0",
+        "responsive_visibility": "",
+        "responsive_breakpoint": "768px",
+        "target_visibility": "",
+        "render_tabs_async": false
+      }
+    },
+    "custom_code_3WMmDD": {
+      "type": "custom-code",
+      "blocks": {
+        "javascript_76bcyz": {
+          "type": "javascript",
+          "settings": {
+            "javascript": "let fbqFired = false; \n\ndocument.addEventListener('DOMContentLoaded', function() {\n    setTimeout(function() {\n        if (typeof fbq === 'function' && !fbqFired) {\n            fbq('track', 'Lead');\n            fbqFired = true;  \n        } else if (typeof fbq !== 'function') {\n            console.error('fbq is not defined yet');\n        }\n    }, 7000); \n});"
+          }
+        }
+      },
+      "block_order": [
+        "javascript_76bcyz"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "custom_code_AJwnNM",
+    "content_flex_bxDk3Q",
+    "hero_banner_JPztXm",
+    "content_grid_UdWmKX",
+    "custom_code_3WMmDD"
+  ]
+}

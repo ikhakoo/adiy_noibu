@@ -1,0 +1,220 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "gallery"
+  assign section_type = "product"
+  assign desktop_layout = block.settings.desktop_layout
+  assign filter_images = block.settings.filter_images
+  assign hide_image_alt = block.settings.hide_image_alt
+  assign scroll_to_selected_variant_image = block.settings.scroll_to_selected_variant_image
+  assign image_gap_aspect_ratio = block.settings.image_gap_aspect_ratio
+  assign border_width_radius = block.settings.border_width_radius
+  assign border_color = block.settings.border_color
+  assign additional_view = block.settings.additional_view
+  assign infinite_scroll = block.settings.infinite_scroll
+  assign scrollbar_class = block.settings.scrollbar_class
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign image_gap_aspect_ratio = image_gap_aspect_ratio | strip_newlines | replace: ' ', "" | split: '|'
+  assign image_gap = image_gap_aspect_ratio[0] | split: '/'
+  assign aspect_ratio = image_gap_aspect_ratio[1] | split: '/'
+
+  assign preload = true
+
+  assign empty_array = "" | split: "" | uniq
+  assign hide_media_ids = product.media | where: "alt", hide_image_alt | map: 'id'
+
+  assign media_array = product.media
+  assign variant_media_id = product.selected_or_first_available_variant.featured_media.id | default: 'invalid_placeholder'
+  assign variant_media_ids = product.variants | map: "featured_media" | map: "id" | uniq
+
+  case filter_images
+    when "show_all"
+      assign show_media_ids = media_array | map: "id"
+    when "selected_variant"
+      assign show_media_ids = media_array | where: "id", variant_media_id | map: "id"
+    when "variant_images_by_order"
+
+      assign show_media_ids = media_array | where: "id", variant_media_id | map: "id"
+      assign continue = true
+      for media in media_array
+        if media.id == variant_media_id
+          assign continue = false
+          continue
+        endif
+        if continue
+          continue
+        endif
+
+        if variant_media_ids contains media.id
+          break
+        endif
+
+        assign arr = media_array | where: "id", media.id | map: "id"
+        assign show_media_ids = show_media_ids | concat: arr | uniq
+
+      endfor
+
+    when "variant_images_by_metafield"
+      assign metafield_attribute = ''
+      assign show_media_ids = media_array | where: "id", variant_media_id | map: "id"
+
+      assign metafield_show_media_ids = product.selected_or_first_available_variant.metafields.smart.images.value | map: "id"
+      assign show_media_ids = show_media_ids | concat: metafield_show_media_ids | uniq
+
+      for variant in product.variants
+        assign metafield_media_array = variant.metafields.smart.images.value | where: "id"
+        assign media_array = media_array | concat: metafield_media_array | uniq
+      endfor
+    when "variant_images_and_unassigned"
+
+      assign show_media_ids = media_array | where: "id", variant_media_id | map: "id"
+
+      for media in media_array
+        if variant_media_ids contains media.id
+          continue
+        endif
+
+        assign arr = media_array | where: "id", media.id | map: "id"
+        assign show_media_ids = show_media_ids | concat: arr | uniq
+
+      endfor
+
+
+    when "first_or_selected_image"
+      assign show_media_ids = media_array | first | map: "id"
+
+  endcase
+
+  assign media_id_array = media_array | map: "id" | uniq
+  assign show_index0 = -1
+
+
+  case desktop_layout
+    when 'col'
+      assign container_classes = 'product-gallery--column'
+      assign sizes = "(max-width: 768px) 95vw, (max-width: 1024px) 50vw, 50vw"
+      if media_id_array.size < 2
+        assign gallery_classes = "sticky-product-section"
+      endif
+    when 'grid'
+      assign container_classes = 'product-gallery--grid'
+      assign sizes = "(max-width: 768px) 95vw, (max-width: 1024px) 50vw, 25vw"
+      if media_id_array.size < 6
+        assign gallery_classes = "sticky-product-section"
+      endif
+    when 'hero_grid'
+      assign container_classes = 'product-gallery--hero-grid'
+      assign sizes = "(max-width: 768px) 95vw, (max-width: 1024px) 50vw, 25vw"
+      if media_id_array.size < 5
+        assign gallery_classes = "sticky-product-section"
+      endif
+    when 'slider'
+      assign container_classes = ''
+      assign sizes = "(max-width: 768px) 95vw, (max-width: 1024px) 50vw, 50vw"
+      assign gallery_classes = "sticky-product-section"
+  endcase
+%}
+
+{% render '_utils.dynamic-css', block: block, selector: '& [data-style-media-item]', keys: 'border_width_radius,border_color' %}
+{% render '_utils.dynamic-css', block: block, keys: "responsive_visibility" %}
+
+<section
+    x-ref="gallery"
+    class="shrink-0 h-min mb-auto flex-1 lg:py-dynamic max-lg:-mx-[--layout-container-gutter] {{ gallery_classes }} max-md:overflow-y-hidden"
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    style="--gap-md: {{ image_gap | first }};--gap: {{ image_gap | last }};--aspect-ratio-md: {{ aspect_ratio | first }};--aspect-ratio: {{ aspect_ratio | last }};"
+    x-data="{ ..._sections.initContentSlider($refs.scrollContainer, undefined,`{{ infinite_scroll }}` === 'true') }"
+    data-settings="{{ block.settings | json | escape }}"
+    {{ block.shopify_attributes }}>
+  <main
+      class="flex snap-x snap-mandatory aa overflow-x-auto scrollbar-none max-lg:order-first gap-dynamic max-lg:scroll-px-[--layout-container-gutter] max-lg:px-[--layout-container-gutter] {{ container_classes }}"
+      data-main-product-images
+      @resize.window="content_slider.handleResize"
+      x-init="$nextTick(() => content_slider.handleResize())"
+      x-ref="scrollContainer">
+      {% assign visible_count = 0 %}
+    {% for media_id in media_id_array %}
+      {% liquid
+        assign media = media_array | where: "id", media_id | first
+        assign hide_class = "hidden"
+
+        if show_media_ids contains media.id
+          assign show_index0 = show_index0 | plus: 1
+          assign hide_class = ""
+        endif
+
+        if hide_media_ids contains media.id and hidden_class == ""
+          assign show_index0 = show_index0 | minus: 1
+        endif
+
+        if hide_media_ids contains media.id
+          assign show_index0 = show_index0 | minus: 1
+          assign hide_class = "!hidden"
+        endif
+        
+        if forloop.first
+          assign show = true
+        else
+          if visible_count < 50
+            assign show = true
+          else
+            assign show = false
+          endif
+        endif
+        
+        if show == false
+          continue
+        endif
+
+        if forloop.first
+          assign sizes = "(max-width: 768px) 95vw, (max-width: 1024px) 50vw, 50vw"
+        endif
+        unless forloop.first
+          assign visible_count = visible_count | plus: 1
+        endunless
+        if forloop.index0 >= product.media.size
+          assign metafield_attribute = 'data-metafield-media'
+        endif
+      %}
+
+      <picture data-media-id="{{ media.id }}"
+               data-style-media-item
+               tabindex="-1"
+          {% if additional_view == 'media_gallery' %}
+            :class="'cursor-pointer'"
+            @click="openMediaGallery(+$el.getAttribute('data-media-id'))"
+          {% endif %}
+          {{ metafield_attribute }}
+               class="snap-start relative flex aspect-[--aspect-ratio] w-full shrink-0 overflow-hidden lg:aspect-[--aspect-ratio-md] h-full {{ hide_class }}"
+               style="{% if aspect_ratio.first == 'auto' %}--aspect-ratio-md: {{ media.preview_image.aspect_ratio }};{% endif %}{% if aspect_ratio.last == 'auto' %}--aspect-ratio: {{ media.preview_image.aspect_ratio }};{% endif %}">
+        {% if show_index0 > 1 or section.index0 > 1 %}
+          {% assign preload = false %}
+        {% endif %}
+        {% render '_object.media', media: media, class: "w-full h-full object-cover", sizes: "(max-width: 768px) 95vw, (max-width: 1024px) 50vw, 40vw", preload: preload %}
+      </picture>
+    {% endfor %}
+  </main>
+  {% if block.settings.grd_img1 != blank %}
+  <div class="media-four-grid">
+    <img src="{{ block.settings.grd_img1 | img_url: 'master' }}" width="100%" height="100%">
+    <img src="{{ block.settings.grd_img2 | img_url: 'master' }}" width="100%" height="100%">
+    <img src="{{ block.settings.grd_img3 | img_url: 'master' }}" width="100%" height="100%">
+    <img src="{{ block.settings.grd_img4 | img_url: 'master' }}" width="100%" height="100%">
+  </div>
+  {% endif %}
+  {% capture scrollbarClasses %}{{ scrollbar_class }} max-lg:px-[--layout-container-gutter]{% endcapture %}
+  {% render '_components.scrollbar', scroll_container_ref: "$refs.scrollContainer", class: scrollbarClasses %}
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when "thumbnails" %}
+        {% if block.settings.position == 'below' %}
+          {% render 'product.thumbnails', block: block, forloop: forloop, section_type: section_type, form: form, product: product, variant: variant, class: class %}
+        {% endif %}
+    {% endcase %}
+  {% endfor %}
+</section>
+

@@ -1,0 +1,79 @@
+{%- render "modal_quick-view" -%}
+{% schema %}
+{
+  "name": "Quick View",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Settings"
+    },
+    {
+      "type": "text",
+      "id": "close_icon",
+      "label": "Close icon",
+      "default": "x-mark"
+    },
+    {
+      "type": "text",
+      "id": "border_width_radius",
+      "label": "border | radius | max-h | max-w | overflow",
+      "default": "0px | 8px / 8px 8px 0 0",
+      "info": "Border can be set via the border-shorthand for. I.e '0 0 1px 0' sets only the bottom border."
+    },
+    {
+      "type": "text",
+      "id": "padding_top_bottom_left_right",
+      "label": "padding: top | bottom | left | right",
+      "default": "48px/40px | 48px/12px | 36px/0| 36px/0"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "border color"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "background_blur",
+      "label": "Background Blur",
+      "default": "backdrop-blur-md",
+      "options": [
+        {
+          "value": "",
+          "label": "none"
+        },
+        {
+          "value": "backdrop-blur-sm",
+          "label": "sm"
+        },
+        {
+          "value": "backdrop-blur-md",
+          "label": "md"
+        },
+        {
+          "value": "backdrop-blur-lg",
+          "label": "lg"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "responsive_breakpoint",
+      "label": "Responsive breakpoint",
+      "default": "768px",
+      "info": "Only adjust this for rare instances on large screen designs"
+    }
+  ],
+  "limit": 1,
+  "enabled_on": {
+    "groups": [
+      "custom.modal"
+    ]
+  }
+}
+{% endschema %}

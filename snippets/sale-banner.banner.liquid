@@ -1,0 +1,23 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "banner"
+  assign section_type = "sale-banner"
+  assign preheading = block.settings.preheading
+  assign preheading_class = block.settings.preheading_class
+  assign heading = block.settings.heading
+  assign heading_class = block.settings.heading_class
+  assign subheading = block.settings.subheading
+  assign subheading_class = block.settings.subheading_class
+  assign background_color = block.settings.background_color
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {{ block.shopify_attributes }}
+    class="flex flex-col w-full gap-3 p-6 overflow-hidden rounded-[20px] md:rounded-[30px] text-center text-white"
+    style="background-color: {{ background_color }};">
+    {% render '_input.richtext', content: preheading, class: preheading_class, block: block, forloop: forloop %}
+    {% render '_input.richtext', content: heading, class: heading_class, block: block, forloop: forloop %}
+    {% render '_input.richtext', content: subheading, class: subheading_class, block: block, forloop: forloop %}
+</div>

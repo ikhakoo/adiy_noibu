@@ -1,0 +1,35 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "checkout-button"
+  assign section_type = "modal_cart-drawer"
+  assign label = block.settings.label
+  assign button_class = block.settings.button_class
+  assign show_conditionally = block.settings.show_conditionally
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign border_divider = block.settings.border_divider
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: " max_w_flex_col_row_order_align, padding_top_bottom_left_right" %}
+
+
+<div class="{{ border_divider }}"
+    {{ block.shopify_attributes }}
+     x-data="{ checkingOut: false }"
+     x-show="_cart.showConditionally(`{{ show_conditionally }}`) || $editor?.select_block_id === `{{ block.id }}`"
+     data-style-id="{{ section.id }}--{{ block.id }}">
+  <button type="submit"
+          name="checkout"
+          value="Checkout"
+          @click="checkingOut = true; await utils.delay(5000); checkingOut = false"
+          class="{{ button_class }} w-full"
+          x-effect="()=> { $el.toggleAttribute('disabled', $cart.loading || $cart.debounce_updates?.length) }"
+          :class="$cart.loading || $cart.debounce_updates?.length || checkingOut ? 'button-loading pointer-events-none': '' "
+          :disabled="$cart.loading || $cart.debounce_updates?.length"
+          data-content="{% render "_input.inline_richtext", content: label, escape: true, block: block, forloop: forloop %}"
+          x-html="_cart.renderDynamicTextWithFormattedPrice($el.getAttribute('data-content'))">
+  </button>
+</div>

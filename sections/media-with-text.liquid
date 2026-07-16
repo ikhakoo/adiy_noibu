@@ -1,0 +1,554 @@
+{%- render "media-with-text" -%}
+{% schema %}
+{
+  "name": "Media with text",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "Media Position Desktop",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "media_position_mobile",
+      "label": "Media Position Mobile",
+      "default": "top",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "background color"
+    },
+    {
+      "type": "header",
+      "content": "Section Globals"
+    },
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section Id"
+    },
+    {
+      "type": "text",
+      "id": "vertical_padding_section",
+      "label": "Top padding | Bottom Padding",
+      "default": "0 | 0 "
+    },
+    {
+      "type": "select",
+      "id": "container_spacing",
+      "default": "px-container-md",
+      "options": [
+        {
+          "value": "px-container-xs",
+          "label": "xs"
+        },
+        {
+          "value": "px-container-sm",
+          "label": "sm"
+        },
+        {
+          "value": "px-container-md",
+          "label": "md"
+        },
+        {
+          "value": "px-container-lg",
+          "label": "lg"
+        },
+        {
+          "value": "px-container-fullwidth",
+          "label": "fullwidth"
+        },
+        {
+          "value": "px-container-gutter",
+          "label": "magazine"
+        }
+      ],
+      "label": "Container Spacing"
+    },
+    {
+      "type": "select",
+      "id": "responsive_visibility",
+      "label": "Responsive Visibility",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile"
+        },
+        {
+          "value": "desktop-tablet-only",
+          "label": "Desktop"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Richtext",
+      "type": "richtext",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "checkbox",
+          "id": "stars",
+          "label": "Enable stars",
+          "default": false
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Richtext"
+        },
+        {
+          "type": "text",
+          "id": "richtext_class",
+          "label": "Richtext class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "header",
+          "content": "Content Settings"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text Color"
+        },
+        {
+          "type": "select",
+          "id": "margin_bottom_desktop",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "none"
+            },
+            {
+              "value": "md:mb-3",
+              "label": "Small (12px)"
+            },
+            {
+              "value": "md:mb-6",
+              "label": "Medium (24px)"
+            },
+            {
+              "value": "md:mb-12",
+              "label": "Large (48px)"
+            }
+          ],
+          "label": "Margin Bottom Desktop"
+        },
+        {
+          "type": "select",
+          "id": "margin_bottom_mobile",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "none"
+            },
+            {
+              "value": "mb-2",
+              "label": "Small (8px)"
+            },
+            {
+              "value": "mb-3",
+              "label": "Medium (12px)"
+            },
+            {
+              "value": "mb-4",
+              "label": "Large (16px)"
+            },
+            {
+              "value": "mb-6",
+              "label": "Extra Large (24px)"
+            }
+          ],
+          "label": "Margin Bottom Mobile"
+        }
+      ]
+    },
+    {
+      "name": "Dual text",
+      "type": "dual_text",
+      "settings": [
+        {
+          "type": "header",
+          "content": "First text"
+        },
+        {
+          "type": "text",
+          "id": "first_icon",
+          "label": "Icon handle"
+        },
+        {
+          "type": "richtext",
+          "id": "heading_primary",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "heading_primary_class",
+          "label": "Heading class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "richtext",
+          "id": "paragraph_primary",
+          "label": "Paragraph"
+        },
+        {
+          "type": "text",
+          "id": "paragraph_primary_class",
+          "label": "Paragraph class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "header",
+          "content": "Second text"
+        },
+        {
+          "type": "text",
+          "id": "second_icon",
+          "label": "Icon Handle"
+        },
+        {
+          "type": "richtext",
+          "id": "heading_secondary",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "heading_secondary_class",
+          "label": "Heading class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "richtext",
+          "id": "paragraph_secondary",
+          "label": "Paragraph"
+        },
+        {
+          "type": "text",
+          "id": "paragraph_secondary_class",
+          "label": "Paragraph class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "header",
+          "content": "Content Settings"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text Color"
+        },
+        {
+          "type": "select",
+          "id": "margin_bottom_desktop",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "none"
+            },
+            {
+              "value": "md:mb-3",
+              "label": "Small (12px)"
+            },
+            {
+              "value": "md:mb-6",
+              "label": "Medium (24px)"
+            },
+            {
+              "value": "md:mb-12",
+              "label": "Large (48px)"
+            }
+          ],
+          "label": "Margin Bottom Desktop"
+        },
+        {
+          "type": "select",
+          "id": "margin_bottom_mobile",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "none"
+            },
+            {
+              "value": "mb-2",
+              "label": "Small (8px)"
+            },
+            {
+              "value": "mb-3",
+              "label": "Medium (12px)"
+            },
+            {
+              "value": "mb-4",
+              "label": "Large (16px)"
+            },
+            {
+              "value": "mb-6",
+              "label": "Extra Large (24px)"
+            }
+          ],
+          "label": "Margin Bottom Mobile"
+        }
+      ]
+    },
+    {
+      "name": "Buttons",
+      "type": "buttons",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Buttons"
+        },
+        {
+          "type": "text",
+          "id": "button_primary_text",
+          "label": "Button primary text"
+        },
+        {
+          "type": "url",
+          "id": "button_primary_url",
+          "label": "Button primary Url"
+        },
+        {
+          "type": "text",
+          "id": "button_primary_class",
+          "label": "Button primary class",
+          "default": "button-primary"
+        },
+        {
+          "type": "text",
+          "id": "button_secondary_text",
+          "label": "Button secondary text"
+        },
+        {
+          "type": "url",
+          "id": "button_secondary_url",
+          "label": "Button secondary Url"
+        },
+        {
+          "type": "text",
+          "id": "button_secondary_class",
+          "label": "Button secondary class",
+          "default": "button-secondary"
+        }
+      ]
+    },
+    {
+      "name": "Image",
+      "type": "image",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Media Content"
+        },
+        {
+          "type": "header",
+          "content": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "desktop_image",
+          "label": "Desktop image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile image"
+        }
+      ]
+    },
+    {
+      "name": "Video",
+      "type": "video",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Media Content"
+        },
+        {
+          "type": "header",
+          "content": "Video"
+        },
+        {
+          "type": "video",
+          "id": "desktop_video",
+          "label": "Desktop Video"
+        },
+        {
+          "type": "video",
+          "id": "mobile_video",
+          "label": "Mobile video"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Media With Text",
+      "blocks": [
+        {
+          "type": "image",
+          "settings": {
+            "desktop_image": "shopify://shop_images/Image_Ratios_292dcf41-cdcc-432e-8850-43e5bc4bbe06.png"
+          }
+        },
+        {
+          "type": "richtext",
+          "settings": {
+            "stars": false,
+            "text": "<p>MODULAR DESIGNS</p>",
+            "richtext_class": "text-16/14-500",
+            "text_color": "",
+            "margin_bottom_desktop": "md:mb-3",
+            "margin_bottom_mobile": "mb-2"
+          }
+        },
+        {
+          "type": "richtext",
+          "settings": {
+            "stars": false,
+            "text": "<h1>The Perfect Fit For Your Backyard</h1>",
+            "richtext_class": "richtext-md",
+            "text_color": "",
+            "margin_bottom_desktop": "md:mb-3",
+            "margin_bottom_mobile": "mb-2"
+          }
+        },
+        {
+          "type": "richtext",
+          "settings": {
+            "stars": false,
+            "text": "<p>Elevate your gatherings with our modular design - Connect deck kits for a spacious outdoor experience. Connect with us today to start planning your new deck build.</p>",
+            "richtext_class": "richtext-md",
+            "text_color": "",
+            "margin_bottom_desktop": "md:mb-12",
+            "margin_bottom_mobile": "mb-6"
+          }
+        },
+        {
+          "type": "buttons",
+          "settings": {
+            "button_primary_text": "",
+            "button_primary_url": "",
+            "button_primary_class": "button-primary",
+            "button_secondary_text": "free design consultation",
+            "button_secondary_url": "",
+            "button_secondary_class": "button-secondary"
+          }
+        }
+      ],
+      "settings": {
+        "media_position": "left",
+        "background_color": "#ffffff",
+        "section_id": "",
+        "vertical_padding_section": "32px/24px | 48px",
+        "container_spacing": "px-container-md",
+        "responsive_visibility": ""
+      }
+    },
+    {
+      "name": "Media With Text - 1",
+      "blocks": [
+        {
+          "type": "image",
+          "settings": {
+            "desktop_image": "shopify://shop_images/Image_Ratios_19.png"
+          }
+        },
+        {
+          "type": "richtext",
+          "settings": {
+            "stars": false,
+            "text": "<h2><strong>Affordable and Simple</strong></h2>",
+            "richtext_class": "richtext-md",
+            "text_color": "",
+            "margin_bottom_desktop": "md:mb-3",
+            "margin_bottom_mobile": "mb-3"
+          }
+        },
+        {
+          "type": "richtext",
+          "settings": {
+            "stars": false,
+            "text": "<p>Lorem ipsum dolor sit amet consectetur. Tellus nisl magnis montes sapien lorem ipsum dolor .</p>",
+            "richtext_class": "richtext-md",
+            "text_color": "",
+            "margin_bottom_desktop": "md:mb-6",
+            "margin_bottom_mobile": "mb-4"
+          }
+        },
+        {
+          "type": "dual_text",
+          "settings": {
+            "first_icon": "",
+            "heading_primary": "<h4><strong>Significant Savings</strong></h4>",
+            "heading_primary_class": "richtext-md",
+            "paragraph_primary": "<p>Our decks cost 30 to 50% less than what local contractors would charge.</p>",
+            "paragraph_primary_class": "richtext-md",
+            "second_icon": "",
+            "heading_secondary": "<h4><strong>Easy Assembly</strong></h4>",
+            "heading_secondary_class": "richtext-md",
+            "paragraph_secondary": "<p>Our kits come together like Lego blocks. Assemble your deck in under 45 minutes once the footings are secured.</p>",
+            "paragraph_secondary_class": "richtext-md",
+            "text_color": "",
+            "margin_bottom_desktop": "",
+            "margin_bottom_mobile": ""
+          }
+        }
+      ],
+      "settings": {
+        "media_position": "left",
+        "background_color": "#ffffff",
+        "section_id": "",
+        "vertical_padding_section": "48px | 48px",
+        "container_spacing": "px-container-md",
+        "responsive_visibility": ""
+      }
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "*"
+    ]
+  }
+}
+{% endschema %}

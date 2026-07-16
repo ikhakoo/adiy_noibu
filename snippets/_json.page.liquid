@@ -1,0 +1,27 @@
+{% liquid
+
+  unless page
+    break
+  endunless
+
+  assign page_namespaces = settings.data__page__metafield | prepend: 'smart,' | split: ',' | uniq
+%}
+
+{% capture json %}
+  {
+  "author": {{ page.author | json }},
+  "content": {{ page.content | json }},
+  "handle": {{ page.handle | json }},
+  "id": {{ page.id }},
+  "published_at": "{{ article.published_at | date: "%Y-%m-%dT%H:%M:%S%z" }}",
+  "template_suffix": {{ page.template_suffix | json }},
+  "title": {{ page.title | json }},
+  "url": {{ page.url | json }},
+  "metafields": {
+  {%- for namespace in page_namespaces -%}
+    "{{- namespace -}}": {%- render '_json.metafield', namespace: page.metafields[namespace], with_product_data: settings.data__page__load_product_data -%}{%- unless forloop.last -%},{%- endunless -%}
+  {%- endfor -%}
+  }
+  }
+{% endcapture %}
+{{- json | trim | strip_newlines -}}

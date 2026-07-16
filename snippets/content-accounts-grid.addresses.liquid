@@ -1,0 +1,95 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "addresses"
+  assign section_type = "content-accounts-grid"
+  assign border_width_radius = block.settings.border_width_radius
+  assign background_color = block.settings.background_color
+  assign border_color = block.settings.border_color
+  assign background_blur = block.settings.background_blur
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css', block: block, keys: "responsive_visibility,margin_top_bottom_left_right,max_w_flex_col_row_order_align" %}
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: '& [data-style-container]',
+    keys: "border_width_radius,background_color,border_color" %}
+
+{% paginate customer.addresses by 1000 %}
+  <div
+      data-style-id="{{ section.id }}--{{ block.id }}"
+      {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+      {{ block.shopify_attributes }}>
+    <main class="grid gap-4 lg:grid-cols-3 md:grid-cols-2">
+      {% assign address = customer.default_address %}
+
+      {%- for address in customer.addresses -%}
+        {%- if address.id != customer.default_address.id -%}
+          {%- continue -%}
+        {%- endif -%}
+        <section data-style-container
+                 class="flex h-full flex-col px-6 py-4 text-sm">
+          <header class="mb-2 font-medium uppercase tracking-wide">Default Address</header>
+          <main>
+            {{- address | format_address -}}
+          </main>
+          <footer class="mt-2 flex flex-1 items-end gap-3 text-13 uppercase text-primary-outline">
+            <button type="button"
+                    @click="$modal.setId('address--{{ address.id }}')">
+              Edit
+            </button>
+            <form method="post"
+                  action="/account/addresses/{{ address.id }}"
+            >
+              <input type="hidden"
+                     name="_method"
+                     value="delete"
+                     data-address-delete="{{ address.id }}">
+              <button type="submit">Delete</button>
+            </form>
+          </footer>
+        </section>
+        {% render 'content-accounts-grid.address-modal', address: address %}
+      {% endfor %}
+
+      {%- assign address_count = paginate.current_offset | plus: 2 -%}
+
+      {%- for address in customer.addresses -%}
+        {%- if address.id == customer.default_address.id -%}
+          {%- continue -%}
+        {%- endif -%}
+
+        <section data-style-container
+                 class="flex h-full flex-col px-6 py-4 text-sm">
+          <header class="mb-2 font-medium uppercase tracking-wide">Address {{ address_count }}</header>
+          <main>
+            {{- address | format_address -}}
+          </main>
+          <footer class="mt-2 flex flex-1 items-end gap-3 text-13 uppercase text-primary-outline">
+            <button type="button"
+                    @click="$modal.setId('address--{{ address.id }}')">
+              Edit
+            </button>
+            <form method="post"
+                  action="/account/addresses/{{ address.id }}">
+              <input type="hidden"
+                     name="_method"
+                     value="delete"
+                     data-address-delete="{{ address.id }}">
+              <button type="submit">Delete</button>
+            </form>
+          </footer>
+        </section>
+
+        {%- assign address_count = address_count | plus: 1 -%}
+        {% render 'content-accounts-grid.address-modal', address: address %}
+      {%- endfor -%}
+    </main>
+  </div>
+{% endpaginate %}

@@ -1,0 +1,85 @@
+{% comment %}
+    Scroll controls element
+
+    Accepts:
+    - class: {string}
+    - scroll_container_ref: {string} - Variable to dynamically set the dropdown to open / close for multi accordion effect
+
+    Usage:
+    {% render "_components.scrollbar",
+        class: scrollbar_class,
+        scroll_container_ref: '$refs.container'
+    %}
+{% endcomment %}
+
+{% assign scroll_speed = scroll_speed | default: 200 %}
+
+<div x-data="{ ..._scrollbar.init($refs.scrollBar, $refs.scrollThumb, {{ scroll_container_ref }}, {{ scroll_speed }}) }"
+     data-scrollbar
+     class="{{ class | default: 'scrollbar' }} !hidden"
+     x-effect="() => { $el.classList.toggle('!hidden', (Math.round(scrollbar.width * 10) / 10) === 1) }"
+    {{ html_attributes }}>
+  <div class="flex-1 scrollbar-scrollbar" role="scrollbar">
+    <div class="-my-2 flex w-full cursor-pointer items-center py-2 scrollbar"
+         @click="handleScrollBarClick($event)"
+         x-ref="scrollBar">
+      <div class="flex w-full items-center rounded-full scrollbar-track">
+        <button type="button"
+                x-ref="scrollThumb"
+                @click.stop=""
+                @pointerdown.prevent.stop="handleScrollThumbPointerDown"
+                @keydown.prevent.stop.left="handlePrevClick"
+                @keydown.prevent.stop.right="handleNextClick"
+                :disabled="($data?.content_slider?.state?.infinite && $data?.content_slider?.state?.block_scroll_events)"
+                aria-label="Scroll thumb"
+                :style="`left: ${scrollbar.left * 100}%; width: ${scrollbar.width * 100}%;`"
+                class="relative h-full min-w-10 cursor-grab rounded-full scrollbar-thumb">
+          <span class="absolute inset-0 -my-2 w-full"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="flex items-center justify-between scrollbar-controls"
+       data-style-scrollbar-buttons-layout>
+    <button type="button"
+            class="relative flex items-center justify-center rounded-full transition-all scrollbar-button group"
+            :class="(scrollbar.currentPage === 1 && +`{{ scroll_speed }}` && !$data?.content_slider?.state?.infinite) || ($data?.content_slider?.state?.infinite && $data?.content_slider?.state?.block_scroll_events) ? 'opacity-30 pointer-events-none' : ''"
+            :disabled="(scrollbar.currentPage === 1 && !!+`{{ scroll_speed }}` && !$data?.content_slider?.state?.infinite) || ($data?.content_slider?.state?.infinite && $data?.content_slider?.state?.block_scroll_events)"
+            aria-label="Scroll left" @click="handlePrevClick($event, $data.content_slider)">
+      <svg class="mr-[calc(var(--icon-size)/3)] rotate-180 size-[--icon-size] stroke-2 animated-icon"
+           fill="none"
+           viewBox="0 0 10 10"
+           aria-hidden="true"
+           stroke="currentColor">
+        <path class="opacity-0 transition group-hover:opacity-100" d="M0 5h7"></path>
+        <path class="transition group-hover:translate-x-[calc(var(--icon-size)/4)]" d="M1 1l4 4-4 4"></path>
+      </svg>
+      <svg class="absolute left-1/2 top-1/2 size-[--icon-size-md] -translate-x-1/2 -translate-y-1/2 bg-current simple-icon"
+           style="mask: var(--scroll-button-prev); -webkit-mask: var(--scroll-button-prev); aspect-ratio: var(--scroll-button-prev-aspect-ratio, 1);">
+      </svg>
+
+    </button>
+    <div class="mx-auto select-none text-center scrollbar-counter">
+      <span x-html="$data?.content_slider?.state?.infinite ? `${scrollbar.currentPage > scrollbar.pages / 2 ? scrollbar.currentPage - scrollbar.pages / 2 : scrollbar.currentPage} / ${scrollbar.pages / 2}` : `${scrollbar.currentPage} / ${scrollbar.pages}`"></span>
+    </div>
+    <button type="button"
+            class="relative flex items-center justify-center rounded-full transition-all scrollbar-button group"
+            :class="((scrollbar.no_next_page && !$data?.content_slider?.state?.infinite) && +`{{ scroll_speed }}` ) || ($data?.content_slider?.state?.infinite && $data?.content_slider?.state?.block_scroll_events) ? 'opacity-30 pointer-events-none' : ''"
+            :disabled="((scrollbar.no_next_page && !$data?.content_slider?.state?.infinite) && !!+`{{ scroll_speed }}`) || ($data?.content_slider?.state?.infinite && $data?.content_slider?.state?.block_scroll_events)"
+            aria-label="Scroll right" @click="handleNextClick($event, $data.content_slider)">
+      <svg class="ml-[calc(var(--icon-size)/3)] size-[--icon-size] stroke-2 animated-icon"
+           fill="none"
+           viewBox="0 0 10 10"
+           aria-hidden="true"
+           stroke="currentColor">
+        <path class="opacity-0 transition group-hover:opacity-100" d="M0 5h7"></path>
+        <path class="transition group-hover:translate-x-[calc(var(--icon-size)/4)]" d="M1 1l4 4-4 4"></path>
+      </svg>
+
+      <svg class="absolute left-1/2 top-1/2 size-[--icon-size-md] -translate-x-1/2 -translate-y-1/2 bg-current simple-icon"
+           style="mask: var(--scroll-button-next); -webkit-mask: var(--scroll-button-next); aspect-ratio: var(--scroll-button-next-aspect-ratio, 1);">
+      </svg>
+    </button>
+  </div>
+</div>
+

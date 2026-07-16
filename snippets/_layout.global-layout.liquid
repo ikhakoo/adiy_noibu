@@ -1,0 +1,80 @@
+<style>
+  :root {
+    --header-height: calc((var(--navigation-bar-height, 0px) + var(--progress-bar-height, 0px)) + var(--announcement-bar-height, 0px));
+    --header-height-offset: calc((var(--navigation-bar-height, 0px) + var(--progress-bar-height, 0px)) + var(--announcement-bar-height, 0px));
+  }
+
+  .header-sections-container [data-announcement-bar] {
+    height: var(--announcement-bar-height, 0px);
+  }
+
+  .header-sections-container [data-progress-bar] {
+    height: var(--progress-bar-height, 0px);
+  }
+
+  {% comment %}{%  if settings.layout__header_sticky %}{% endcomment %}
+  .header-sections-container {
+    position: sticky;
+    left: 0;
+    right: 0;
+    top: calc(-1 * (var(--progress-bar-height, 0px) + var(--announcement-bar-height, 0px)));
+    z-index: 30;
+  }
+
+  /*.header-sections-container > :last-child {
+    anchor-name: --anchor-navigation-bar
+  }
+
+  [data-section-type="megamenu-flex"], [data-section-type="megamenu-grid"] {
+    top: anchor(--anchor-navigation-bar bottom) !important;
+    left: anchor(--anchor-navigation-bar left) !important;
+  }*/
+
+  [data-section-type="megamenu-flex"]:before, [data-section-type="megamenu-grid"]:before {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: var(--navigation-bar-height);
+    bottom: 99%;
+    left: 0;
+    right: 0;
+    background-color: inherit;
+  }
+
+  {% comment %}{% endif %}{% endcomment %}
+  :root {
+
+    --layout-page-width-fullwidth: 0px;
+    --layout-page-width-xs: {{ settings.layout__page_width_xs }}px;
+    --layout-page-width-sm: {{ settings.layout__page_width_sm }}px;
+    --layout-page-width-md: {{ settings.layout__page_width_md }}px;
+    --layout-page-width-lg: {{ settings.layout__page_width_lg }}px;
+
+  }
+
+  :root {
+    --layout-container-gutter: {{ settings.layout__page_gutter_mobile }}px;
+    --100vw-no-scrollbar: calc(100vw - var(--scrollbar-width, 19px));
+
+    @media screen and (min-width: 768px) {
+      --layout-container-gutter: {{ settings.layout__page_gutter_desktop }}px;
+    }
+    --layout-container-padding-fullwidth: max(calc((var(--100vw-no-scrollbar) - var(--layout-page-width-fullwidth)) / 2), var(--layout-container-gutter));
+    --layout-container-padding-xs: max(calc((var(--100vw-no-scrollbar) - var(--layout-page-width-xs)) / 2), var(--layout-container-gutter));
+    --layout-container-padding-sm: max(calc((var(--100vw-no-scrollbar) - var(--layout-page-width-sm)) / 2), var(--layout-container-gutter));
+    --layout-container-padding-md: max(calc((var(--100vw-no-scrollbar) - var(--layout-page-width-md)) / 2), var(--layout-container-gutter));
+    --layout-container-padding-lg: max(calc((var(--100vw-no-scrollbar) - var(--layout-page-width-lg)) / 2), var(--layout-container-gutter));
+    --layout-y-container: max(calc((100vh - 878px) / 2), var(--layout-container-gutter));
+  }
+
+  @media screen and (min-width: 768px) {
+    :root {
+      --layout-padding-sm: {{ settings.layout__padding_sm }}px;
+      --layout-padding-md: {{ settings.layout__padding_md }}px;
+      --layout-padding-lg: {{ settings.layout__padding_lg }}px;
+      --layout-padding-xl: {{ settings.layout__padding_xl }}px;
+    }
+  }
+
+
+</style>

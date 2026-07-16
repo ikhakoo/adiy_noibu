@@ -1,0 +1,125 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "product-bar"
+  assign _product = section.settings.product
+  assign sticky = section.settings.sticky
+  assign flex_direction_align_x_align_y_gap_wrap = section.settings.flex_direction_align_x_align_y_gap_wrap
+  assign padding_top_bottom_left_right = section.settings.padding_top_bottom_left_right
+  assign section_id = section.settings.section_id
+  assign color_scheme = section.settings.color_scheme
+  assign container_spacing = section.settings.container_spacing
+  assign border_divider = section.settings.border_divider
+  assign top_bottom_min_height = section.settings.top_bottom_min_height
+  assign responsive_visibility = section.settings.responsive_visibility
+  assign responsive_breakpoint = section.settings.responsive_breakpoint
+  assign target_visibility = section.settings.target_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture section_content %}
+
+  {% if _product == blank and request.visual_preview_mode == true %}
+    {% assign _product = collections.all.products[0] %}
+  {% endif %}
+  {% render "_section.universal-settings", section_type: section_type, insert: "before" %}
+  {% render '_utils.dynamic-css', selector: "& [data-style-product-bar]", keys: "flex_direction_align_x_align_y_gap_wrap,padding_top_bottom_left_right" %}
+
+  {% case sticky %}
+    {% when 'top' %}
+      <style>
+        {{ section.id | prepend: '#shopify-section-' }}:not(:empty) {
+          z-index: 19;
+          top: var(--header-height-offset);
+          position: sticky;
+        }
+      </style>
+    {% when 'bottom' %}
+      <style>
+        {{ section.id | prepend: '#shopify-section-' }}:not(:empty) {
+          z-index: 19;
+          top: calc(100vh - var(--height-{{ section.id }}));
+          position: sticky;
+        }
+      </style>
+  {% endcase %}
+
+  <div
+      {% if sticky == 'bottom' %}
+        x-init="$nextTick(() => { document.documentElement.style.setProperty(`--height-{{ section.id }}`, ($el.offsetHeight + 3) + 'px'); document.querySelector('[data-content-root-padding]').style.height = 'calc(var(--height-{{ section.id }}) - 3px)' })"
+        @resize.window="$nextTick(() => { document.documentElement.style.setProperty(`--height-{{ section.id }}`, ($el.offsetHeight + 3) + 'px'); document.querySelector('[data-content-root-padding]').style.height = 'calc(var(--height-{{ section.id }}) - 3px)' })"
+      {% endif %}
+      data-style-product-bar
+      {% if _product.handle == product.handle or _product.handle == blank %}
+        x-data="{
+          ..._sections.initProduct($el, $refs, $el.getAttribute('data-handle')),
+          initiated: false
+        }"
+        x-effect="() => { if (!initiated && _stores.main_product) {
+          initiated = true;
+          state = _stores.main_product?.state;
+          card = _stores.main_product?.card;
+          bundle = _stores.main_product?.bundle;
+          settings = _stores.main_product?.settings;
+          showConditionally = _stores.main_product?.showConditionally;
+          handleAddToCart = _stores.main_product?.handleAddToCart;
+          styleDynamicBuyButton = _stores.main_product?.styleDynamicBuyButton;
+          setSelectedVariant = _stores.main_product?.setSelectedVariant;
+          setProductOption = _stores.main_product?.setProductOption;
+          setSiblingProduct = _stores.main_product?.setSiblingProduct;
+          setSellingPlan = _stores.main_product?.setSellingPlan;
+          setQuantity = _stores.main_product?.setQuantity;
+          handleStickyScroll = _stores.main_product?.handleStickyScroll;
+          scrollToMediaById = _stores.main_product?.scrollToMediaById;
+          openMediaGallery = _stores.main_product?.openMediaGallery;
+          truncateChildren = _stores.main_product?.truncateChildren;
+          renderComplementaryProducts = _stores.main_product?.renderComplementaryProducts;
+          hasAvailableVariant = _stores.main_product?.hasAvailableVariant;
+          getContentLabels = _stores.main_product?.getContentLabels;
+          getDiscountLabel = _stores.main_product?.getDiscountLabel;
+          renderDynamicText = _stores.main_product?.renderDynamicText
+          }
+        }"
+      {% else %}
+        x-data="{ ..._sections.initProduct($el, $refs, $el.getAttribute('data-handle')) }"
+      {% endif %}
+      data-handle="{{ _product.handle | default: product.handle }}">
+    {% liquid
+      assign allow_no_cols = true
+      for block in section.blocks
+        if block.type == 'layout__end'
+          assign allow_no_cols = true
+        endif
+
+        if block.type == 'layout__mobile_header'
+          assign allow_no_cols = false
+        endif
+
+        if block.type == 'layout__grid'
+          assign allow_no_cols = false
+          render 'product.layout__grid', block: block, forloop: forloop, section_type: section_type, form: form, product: product, variant: variant, class: class, optionBlocks: optionBlocks, product_form_id: product_form_id, form: form, columnIndex: forloop.index0
+        endif
+
+        if block.type == 'layout__flex'
+          assign allow_no_cols = false
+          render 'product.layout__flex', block: block, forloop: forloop, section_type: section_type, form: form, product: product, variant: variant, class: class, optionBlocks: optionBlocks, product_form_id: product_form_id, form: form, columnIndex: forloop.index0
+        endif
+
+        if allow_no_cols
+          if block.type == 'layout_child__collapsible'
+            render 'content-grid.layout_child__collapsible', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+            assign allow_no_cols = false
+            continue
+          endif
+
+          render 'product.block', block: block, forloop: forloop, section_type: section_type, form: form, product: product, variant: variant, class: class, optionBlocks: optionBlocks, product_form_id: product_form_id, form: form
+        endif
+      endfor
+    %}
+  </div>
+  {% render "_section.universal-settings", section_type: section_type, insert: "after" %}
+{% endcapture %}
+
+{% if section_content contains '/break"></script>' %}
+  {% break %}
+{% endif %}
+{{ section_content }}

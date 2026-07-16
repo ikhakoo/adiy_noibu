@@ -1,0 +1,61 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "cart-note"
+  assign section_type = "modal_cart-drawer"
+  assign checkbox_enabled = block.settings.checkbox_enabled
+  assign checkbox_label = block.settings.checkbox_label
+  assign checkbox_class = block.settings.checkbox_class
+  assign checkbox_name = block.settings.checkbox_name
+  assign checkbox_default_state = block.settings.checkbox_default_state
+  assign textarea_placeholder = block.settings.textarea_placeholder
+  assign textarea_label = block.settings.textarea_label
+  assign textarea_class = block.settings.textarea_class
+  assign dynamic_display = block.settings.dynamic_display
+  assign limit_characters = block.settings.limit_characters
+  assign show_conditionally = block.settings.show_conditionally
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign border_divider = block.settings.border_divider
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if checkbox_default_state == 'checked'
+    assign default_checked = true
+  endif
+  assign checkbox_name = "attributes[" | append: checkbox_name | append: "]"
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: " max_w_flex_col_row_order_align, padding_top_bottom_left_right" %}
+
+<div class="{{ border_divider }} flex flex-col gap-4"
+    {{ block.shopify_attributes }}
+     x-data="{ checkbox_checked: $el.querySelector(`input[type='checkbox']`)?.checked ?? false }"
+     x-show="_cart.showConditionally(`{{ show_conditionally }}`) || $editor?.select_block_id === `{{ block.id }}`"
+     data-style-id="{{ section.id }}--{{ block.id }}">
+  {% if checkbox_enabled %}
+    {% render "_components.checkbox",
+        class: checkbox_class,
+        label: checkbox_label,
+        name: checkbox_name,
+        default_checked: default_checked,
+        html_attribtues: "",
+        setState: 'checkbox_checked = value'
+    %}
+  {% endif %}
+  <div {% if dynamic_display == 'show_checkbox_checked' and checkbox_enabled %}
+    x-show="checkbox_checked"
+      {% endif %}>
+    {% render "_components.textarea",
+        class: textarea_class,
+        label: textarea_label,
+        placeholder: textarea_placeholder,
+        name: 'note',
+        default_value: "",
+        html_attribtues: "",
+        maxlength: limit_characters
+    %}
+  </div>
+</div>

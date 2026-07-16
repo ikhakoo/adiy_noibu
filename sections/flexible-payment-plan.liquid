@@ -1,0 +1,565 @@
+{%- liquid
+  assign s = section.settings
+  assign sid = section.id
+-%}
+
+<style>
+  /* Mobile Only Logic */
+  {%- if s.mobile_only -%}
+    @media screen and (min-width: 768px) {
+      #efp-{{ sid }} {
+        display: none !important;
+      }
+    }
+  {%- endif -%}
+  {%- if s.desktop_only -%}
+    @media screen and (max-width: 767px) {
+      #efp-{{ sid }} {
+        display: none !important;
+      }
+    }
+  {%- endif -%}
+  #efp-{{ sid }} {
+    --efp-bg: {{ s.bg_color }};
+    --efp-eyebrow-color: {{ s.eyebrow_color }};
+    --efp-eyebrow-size: {{ s.eyebrow_size }}px;
+    --efp-eyebrow-size-m: {{ s.eyebrow_size_mobile }}px;
+    --efp-heading-color: {{ s.heading_color }};
+    --efp-heading-size: {{ s.heading_size }}px;
+    --efp-heading-size-m: {{ s.heading_size_mobile }}px;
+    --efp-desc-color: {{ s.description_color }};
+    --efp-desc-size: {{ s.description_size }}px;
+    --efp-desc-size-m: {{ s.description_size_mobile }}px;
+    --efp-terms-color: {{ s.terms_color }};
+    --efp-terms-size: {{ s.terms_size }}px;
+    --efp-terms-size-m: {{ s.terms_size_mobile }}px;
+    --efp-pad-top: {{ s.padding_top }}px;
+    --efp-pad-bottom: {{ s.padding_bottom }}px;
+    --efp-pad-top-m: {{ s.padding_top_mobile }}px;
+    --efp-pad-bottom-m: {{ s.padding_bottom_mobile }}px;
+
+    margin-top: {{ s.margin_top }}px;
+    margin-bottom: {{ s.margin_bottom }}px;
+    padding-top: var(--efp-pad-top);
+    padding-bottom: var(--efp-pad-bottom);
+    background-color: var(--efp-bg);
+    {%- if s.bg_image != blank -%}
+      background-image: url({{ s.bg_image | image_url: width: 2400 }});
+      background-size: cover;
+      background-position: {{ s.bg_position }};
+      background-repeat: no-repeat;
+    {%- endif -%}
+    position: relative;
+    overflow: hidden;
+  }
+
+  #efp-{{ sid }} .efp-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,{{ s.bg_overlay | divided_by: 100.0 }});
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  #efp-{{ sid }} .efp-container {
+    max-width: {{ s.container_width }}px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  #efp-{{ sid }} .efp-wrapper {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: clamp(30px, 5vw, 80px);
+    align-items: center;
+  }
+
+  #efp-{{ sid }} .efp-text {
+    max-width: 560px;
+  }
+
+  #efp-{{ sid }} .efp-eyebrow {
+    font-size: var(--efp-eyebrow-size);
+    color: var(--efp-eyebrow-color);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+    line-height: 1.2;
+  }
+
+  #efp-{{ sid }} .efp-heading {
+    font-size: var(--efp-heading-size);
+    color: var(--efp-heading-color);
+    font-weight: 500;
+    line-height: 1.1;
+    margin: 0 0 18px;
+    letter-spacing: -0.02em;
+  }
+
+  #efp-{{ sid }} .efp-description {
+    font-size: var(--efp-desc-size);
+    color: var(--efp-desc-color);
+    line-height: 1.55;
+    margin: 0 0 18px;
+    font-weight: 400;
+  }
+
+  #efp-{{ sid }} .efp-description :is(p, *) { margin: 0 0 8px; }
+  #efp-{{ sid }} .efp-description :is(strong, b) { font-weight: 700; color: inherit; }
+
+  #efp-{{ sid }} .efp-terms {
+    font-size: var(--efp-terms-size);
+    color: var(--efp-terms-color);
+    line-height: 1.5;
+    margin: 0;
+    font-weight: 700;
+  }
+  #efp-{{ sid }} .efp-terms :is(p, *) { margin: 0; }
+
+  /* IMAGE BLOCK */
+  #efp-{{ sid }} .efp-image-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #efp-{{ sid }} .efp-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    object-fit: contain;
+    border-radius: 26px;
+  }
+
+  #efp-{{ sid }} .efp-placeholder {
+    color: #999;
+    font-size: 14px;
+    padding: 40px;
+    border: 1px dashed #ccc;
+    border-radius: 8px;
+  }
+
+  /* TABLET */
+  @media (max-width: 1440px) {
+#efp-{{ sid }} .efp-container {
+    padding-left: clamp(20px, 4vw, 40px);
+    padding-right: clamp(20px, 4vw, 40px);
+  }
+}
+  @media (max-width: 1024px) {
+    #efp-{{ sid }} .efp-wrapper {
+      gap: 30px;
+    }
+  }
+
+  /* MOBILE */
+  @media (max-width: 749px) {
+    #efp-{{ sid }} {
+      padding-top: var(--efp-pad-top-m);
+      padding-bottom: var(--efp-pad-bottom-m);
+    }
+    #efp-{{ sid }} .efp-wrapper {
+      grid-template-columns: 1fr;
+      gap: 28px;
+      text-align: left;
+    }
+    #efp-{{ sid }} .efp-text {
+      max-width: 100%;
+    }
+    #efp-{{ sid }} .efp-eyebrow { font-size: var(--efp-eyebrow-size-m); }
+    #efp-{{ sid }} .efp-heading { font-size: var(--efp-heading-size-m); }
+    #efp-{{ sid }} .efp-description { font-size: var(--efp-desc-size-m); }
+    #efp-{{ sid }} .efp-terms { font-size: var(--efp-terms-size-m); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #efp-{{ sid }} * {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+
+<section id="efp-{{ sid }}" class="efp-section">
+  {%- if s.bg_image != blank and s.bg_overlay > 0 -%}
+    <div class="efp-overlay"></div>
+  {%- endif -%}
+
+  <div class="efp-container">
+    <div class="efp-wrapper">
+
+      <div class="efp-text">
+        {%- if s.eyebrow_text != blank -%}
+          <p class="efp-eyebrow">{{ s.eyebrow_text }}</p>
+        {%- endif -%}
+
+        {%- if s.heading_text != blank -%}
+          <h2 class="efp-heading">{{ s.heading_text }}</h2>
+        {%- endif -%}
+
+        {%- if s.description != blank -%}
+          <div class="efp-description">{{ s.description }}</div>
+        {%- endif -%}
+
+        {%- if s.terms_text != blank -%}
+          <div class="efp-terms">{{ s.terms_text }}</div>
+        {%- endif -%}
+      </div>
+
+      {%- for block in section.blocks -%}
+        {%- assign b = block.settings -%}
+        <div
+          class="efp-image-wrap"
+          style="max-width: {{ b.image_max_width }}px;"
+          {{ block.shopify_attributes }}
+        >
+          {%- if b.image != blank -%}
+            {{
+              b.image
+              | image_url: width: 1200
+              | image_tag:
+                  loading: 'lazy',
+                  alt: b.alt_text,
+                  widths: '400, 600, 800, 1200',
+                  class: 'efp-image'
+            }}
+          {%- else -%}
+            <div class="efp-placeholder">Add payment providers image</div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Flexible Payment Plans",
+  "tag": "section",
+  "class": "section-flexible-payment-plans",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Visibility"
+    },
+     {
+      "type": "checkbox",
+      "id": "desktop_only",
+      "label": "Show on desktop_Only",
+      "info": "Tick this to hide the section on mobile devices.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_only",
+      "label": "Show on Mobile Only",
+      "info": "Tick this to hide the section on Desktop devices.",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Top Margin",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Bottom Margin",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "label": "Container Max Width",
+      "min": 800,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "default": 1280
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "select",
+      "id": "bg_position",
+      "label": "Background Position",
+      "options": [
+        { "value": "center center", "label": "Center" },
+        { "value": "top center", "label": "Top" },
+        { "value": "bottom center", "label": "Bottom" },
+        { "value": "left center", "label": "Left" },
+        { "value": "right center", "label": "Right" }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "range",
+      "id": "bg_overlay",
+      "label": "Background Overlay Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Eyebrow Text"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_text",
+      "label": "Eyebrow Text",
+      "default": "FLEXIBLE FINANCING"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow Color",
+      "default": "#1A4D3E"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_size",
+      "label": "Eyebrow Size (Desktop)",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_size_mobile",
+      "label": "Eyebrow Size (Mobile)",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading_text",
+      "label": "Heading Text",
+      "default": "Flexible Payment Plans"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#0E0E0E"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading Size (Desktop)",
+      "min": 24,
+      "max": 90,
+      "step": 1,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading Size (Mobile)",
+      "min": 20,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Description"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Get your deck now with <strong>$0</strong> down and <strong>0%</strong> interest. Enjoy flexible and transparent payments up to 24 months.</p>"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#5C5C5C"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Description Size (Desktop)",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "description_size_mobile",
+      "label": "Description Size (Mobile)",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Terms Text"
+    },
+    {
+      "type": "richtext",
+      "id": "terms_text",
+      "label": "Terms Text",
+      "default": "<p>Financing is subject to credit approval. Terms and conditions apply.</p>"
+    },
+    {
+      "type": "color",
+      "id": "terms_color",
+      "label": "Terms Color",
+      "default": "#7A7A7A"
+    },
+    {
+      "type": "range",
+      "id": "terms_size",
+      "label": "Terms Size (Desktop)",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "terms_size_mobile",
+      "label": "Terms Size (Mobile)",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    }
+  ],
+  "blocks": [
+    {
+      "type": "payment_provider",
+      "name": "Image",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Payment Providers Image",
+          "info": "Upload the full payment card image (e.g. Klarna + Affirm)."
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Alt Text",
+          "default": "Payment providers"
+        },
+        {
+          "type": "range",
+          "id": "image_max_width",
+          "label": "Image Max Width (Desktop)",
+          "min": 200,
+          "max": 800,
+          "step": 10,
+          "unit": "px",
+          "default": 500
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Flexible Payment Plans",
+      "blocks": [
+        {
+          "type": "payment_provider",
+          "settings": {
+            "alt_text": "Payment providers"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

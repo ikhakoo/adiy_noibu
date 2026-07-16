@@ -1,0 +1,14 @@
+{% for block in section.blocks %}
+  {% if block.type == 'css' %}
+    <style>{{ block.settings.css }}</style>
+  {% endif %}
+  {% if block.type == 'liquid' %}
+    {{ block.settings.custom_liquid }}
+  {% endif %}
+  {% if block.type == 'javascript' %}
+    <script type="application/javascript">{{ block.settings.javascript }}</script>
+  {% endif %}
+  {% if block.type == 'json' %}
+    <script type="application/json">{{ block.settings.json }}</script>
+  {% endif %}
+{% endfor %}

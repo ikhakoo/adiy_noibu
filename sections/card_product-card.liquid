@@ -1,0 +1,3909 @@
+{%- render "card_product-card" -%}
+{% schema %}
+{
+  "name": "Product Card",
+  "blocks": [
+    {
+      "name": "Image",
+      "type": "image",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Image selection"
+        },
+        {
+          "type": "select",
+          "id": "primary_image",
+          "label": "Primary image",
+          "default": "product_image",
+          "options": [
+            {
+              "value": "product_image",
+              "label": "Product"
+            },
+            {
+              "value": "variant_image",
+              "label": "Selected Variant"
+            },
+            {
+              "value": "metafield_image",
+              "label": "Metafield"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "metafield_image",
+          "label": "Metafield image",
+          "default": "[selected_variant.metafields.smart.image]",
+          "info": "Use bracket notation for data access: i.e.[product.image] or [selected_variant.metafields.smart.image]"
+        },
+        {
+          "type": "header",
+          "content": "Hover Effect"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_secondary_image",
+          "label": "Show secondary image",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "link_to_product",
+          "label": "Link to product",
+          "default": true
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Layout Settings"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "width_height_aspect_object_fit",
+          "label": "width | height | aspect | fit | radius",
+          "default": "100% | auto | auto | cover | 0",
+          "info": "Aspect ratio only applies if width or height are set to 'auto'"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius",
+          "label": "border | radius | max-h | max-w | overflow",
+          "default": "0 | 0 |  |  | ",
+          "info": "Border can be set via the border-shorthand for. I.e '0 0 1px 0' sets only the bottom border."
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color_background",
+          "id": "background_gradient",
+          "label": "background gradient"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ],
+      "limit": 1
+    },
+    {
+      "name": "Dynamic Text",
+      "type": "dynamic-text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "title",
+          "label": "Content",
+          "default": "<h3>[product.title]</h3>",
+          "info": "Use bracket notation for data access: i.e.[product.title] or [selected_variant.metafields.smart.short_description]"
+        },
+        {
+          "type": "text",
+          "id": "type_richtext_metafield",
+          "label": "Type richtext metafield",
+          "info": "Use bracket notation as above. This overrides the `Content` field."
+        },
+        {
+          "type": "text",
+          "id": "css_class",
+          "label": "Type CSS class",
+          "default": "richtext-sm"
+        },
+        {
+          "type": "paragraph",
+          "content": "[Available keys](https://shopify.dev/docs/api/liquid/objects/product)"
+        },
+        {
+          "type": "checkbox",
+          "id": "link_to_product",
+          "label": "Link to product",
+          "default": false
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "color",
+          "id": "color_override",
+          "label": "Color override"
+        }
+      ]
+    },
+    {
+      "name": "Price",
+      "type": "price",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "text",
+          "id": "css_class",
+          "label": "CSS class",
+          "default": "richtext-md h5"
+        },
+        {
+          "type": "header",
+          "content": "Discounts"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_compare_as_price",
+          "label": "Show compare as price",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "discount_css_class",
+          "label": "Discount CSS class",
+          "default": "richtext-md h5"
+        },
+        {
+          "type": "select",
+          "id": "price_calculation",
+          "label": "Price calculation",
+          "default": "normal",
+          "options": [
+            {
+              "value": "normal",
+              "label": "Normal"
+            },
+            {
+              "value": "quantity_multiplied",
+              "label": "Quantity Multiplied"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "currency_display",
+          "label": "Currency display",
+          "default": "amount",
+          "options": [
+            {
+              "value": "amount",
+              "label": "Full"
+            },
+            {
+              "value": "amount_no_decimals",
+              "label": "No Decimals"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "with_subscriptions",
+              "label": "Subscription"
+            },
+            {
+              "value": "no_subscriptions",
+              "label": "One-time"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "color",
+          "id": "color_override",
+          "label": "Color override"
+        }
+      ]
+    },
+    {
+      "name": "Price SQFT",
+      "type": "price_sqft",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "text",
+          "id": "css_class",
+          "label": "CSS class",
+          "default": "richtext-md h5"
+        },
+        {
+          "type": "header",
+          "content": "Discounts"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_compare_as_price",
+          "label": "Show compare as price",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "discount_css_class",
+          "label": "Discount CSS class",
+          "default": "richtext-md h5"
+        },
+        {
+          "type": "select",
+          "id": "price_calculation",
+          "label": "Price calculation",
+          "default": "normal",
+          "options": [
+            {
+              "value": "normal",
+              "label": "Normal"
+            },
+            {
+              "value": "quantity_multiplied",
+              "label": "Quantity Multiplied"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "currency_display",
+          "label": "Currency display",
+          "default": "amount",
+          "options": [
+            {
+              "value": "amount",
+              "label": "Full"
+            },
+            {
+              "value": "amount_no_decimals",
+              "label": "No Decimals"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "with_subscriptions",
+              "label": "Subscription"
+            },
+            {
+              "value": "no_subscriptions",
+              "label": "One-time"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "color",
+          "id": "color_override",
+          "label": "Color override"
+        }
+      ]
+    },
+    {
+      "name": "Rating",
+      "type": "rating",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "reviews_heading",
+          "label": "Reviews heading",
+          "default": "[rating] - based on [count] reviews",
+          "info": "Use [count] as a placeholder for the number of reviews, and [rating] for the product rating"
+        },
+        {
+          "type": "text",
+          "id": "css_class",
+          "label": "CSS Class",
+          "default": "richtext-md h5"
+        },
+        {
+          "type": "header",
+          "content": "Rating Icons"
+        },
+        {
+          "type": "text",
+          "id": "icon_size_gap",
+          "label": "Icon handle | Size | Gap",
+          "default": "star | 16px / 14px | 2px"
+        },
+        {
+          "type": "header",
+          "content": "Fallback Colors"
+        },
+        {
+          "type": "color",
+          "id": "icon_active_color",
+          "label": "Icon active color"
+        },
+        {
+          "type": "color",
+          "id": "icon_base_color",
+          "label": "Icon base color"
+        },
+        {
+          "type": "paragraph",
+          "content": "Leave the colors empty to use the Global Theme Setting colors."
+        },
+        {
+          "type": "header",
+          "content": "Hide Reviews"
+        },
+        {
+          "type": "number",
+          "id": "hide_zero_reviews",
+          "label": "Hide reviews if less than:"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "with_subscriptions",
+              "label": "Subscription"
+            },
+            {
+              "value": "no_subscriptions",
+              "label": "One-time"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Accent line",
+      "type": "accent_line",
+      "settings": [
+        {
+          "type": "range",
+          "id": "height",
+          "label": "Height",
+          "default": 1,
+          "min": 1,
+          "max": 6,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Border Color",
+          "default": "#000000"
+        },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Style",
+          "default": "solid",
+          "options": [
+            {
+              "value": "solid",
+              "label": "solid"
+            },
+            {
+              "value": "dashed",
+              "label": "dashed"
+            },
+            {
+              "value": "dotted",
+              "label": "dotted"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "with_subscriptions",
+              "label": "Subscription"
+            },
+            {
+              "value": "no_subscriptions",
+              "label": "One-time"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Variations indicator",
+      "type": "variant_count_indicator",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Content",
+          "default": "Available in [count] options",
+          "info": "Use [count] as a placeholder"
+        },
+        {
+          "type": "text",
+          "id": "css_class",
+          "label": "Type CSS class"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "with_subscriptions",
+              "label": "Subscription"
+            },
+            {
+              "value": "no_subscriptions",
+              "label": "One-time"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Labels",
+      "type": "labels",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Theme Editor Settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "preview",
+          "label": "Preview",
+          "default": false
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Product Content"
+        },
+        {
+          "type": "text",
+          "id": "content_source",
+          "label": "Content source",
+          "default": "product.metafields.smart.labels",
+          "info": "Accepts `single_line_text_field` or `list.single_line_text_field` matching data. (i.e. product.tags, product.metafields.smart.labels) [Learn more](https://shopify.dev/docs/apps/custom-data/metafields/types)"
+        },
+        {
+          "type": "text",
+          "id": "label_class__content",
+          "label": "Label class",
+          "default": "label-primary"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Dynamic - Discounts"
+        },
+        {
+          "type": "paragraph",
+          "content": "Shows when a product has a higher compare at price than the price field."
+        },
+        {
+          "type": "select",
+          "id": "label_type__discounts",
+          "label": "Label type",
+          "default": "value",
+          "options": [
+            {
+              "value": "sale",
+              "label": "Sale"
+            },
+            {
+              "value": "percentage",
+              "label": "% off"
+            },
+            {
+              "value": "value",
+              "label": "Save $"
+            },
+            {
+              "value": "",
+              "label": "Hide"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "label_class__discount",
+          "label": "Label class",
+          "default": "label-sale"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Dynamic - Out of stock"
+        },
+        {
+          "type": "paragraph",
+          "content": "Shows when a product is unavailable."
+        },
+        {
+          "type": "text",
+          "id": "default_content__out_of_stock",
+          "label": "Content",
+          "default": "Sold out"
+        },
+        {
+          "type": "select",
+          "id": "label_type__out_of_stock",
+          "label": "Label type",
+          "default": "show",
+          "options": [
+            {
+              "value": "show",
+              "label": "Default"
+            },
+            {
+              "value": "hide",
+              "label": "Hide"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "label_class__out_of_stock",
+          "label": "Label class",
+          "default": "label-oos"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "text",
+          "id": "flex_row_wrap_align_x_align_y_gap",
+          "label": "justify | align | gap | wrap | dir",
+          "default": "stretch | stretch | 0 | wrap | row",
+          "info": "Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "with_subscriptions",
+              "label": "Subscription"
+            },
+            {
+              "value": "no_subscriptions",
+              "label": "One-time"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "t:sections.product_card.blocks.quick_view_add_to_cart_bundle_action_button.name",
+      "type": "quick_view_button",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Quick View state"
+        },
+        {
+          "type": "select",
+          "id": "quick_view_visibility",
+          "label": "Quick view Visibility",
+          "default": "all",
+          "options": [
+            {
+              "value": "all",
+              "label": "All"
+            },
+            {
+              "value": "only_variants",
+              "label": "Items with variants"
+            },
+            {
+              "value": "never",
+              "label": "Never"
+            }
+          ]
+        },
+        {
+          "type": "inline_richtext",
+          "id": "quick_view_content",
+          "label": "Button content",
+          "default": "View more"
+        },
+        {
+          "type": "text",
+          "id": "quick_view_class",
+          "label": "Button class",
+          "default": "button-primary"
+        },
+        {
+          "type": "header",
+          "content": "Add To Cart state"
+        },
+        {
+          "type": "paragraph",
+          "content": "Applies only when quick view is deactivated"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "add_to_cart_content",
+          "label": "Button content",
+          "default": "[icon.lock] Add To Cart • [price]",
+          "info": "Use the placeholder [price] and [compare_at_price] to display the price of the selected variant."
+        },
+        {
+          "type": "text",
+          "id": "add_to_cart_class",
+          "label": "Button class",
+          "default": "button-primary"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Out of stock state"
+        },
+        {
+          "type": "paragraph",
+          "content": "Applies only when quick view is deactivated or in the bundle section and the selected variant is out of stock. If no variant selector is active, this will default to the full products availability."
+        },
+        {
+          "type": "inline_richtext",
+          "id": "out_of_stock_content",
+          "label": "Button content",
+          "default": "Out of Stock",
+          "info": "Use the placeholder [price] and [compare_at_price] to display the price of the selected variant."
+        },
+        {
+          "type": "text",
+          "id": "out_of_stock_class",
+          "label": "Button class",
+          "default": "button-primary"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_back_in_stock_notifications",
+          "label": "Enable back in stock notifications"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "with_subscriptions",
+              "label": "Subscription"
+            },
+            {
+              "value": "no_subscriptions",
+              "label": "One-time"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Custom liquid",
+      "type": "custom_liquid",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "custom_liquid",
+          "label": "Liquid Code"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "Bundle Action - button",
+      "type": "bundle_button",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Bundle state"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "add_to_bundle_content",
+          "label": "Button content",
+          "default": "Add to Bundle",
+          "info": "Use the placeholder [price] and [compare_at_price] to display the price of the selected variant."
+        },
+        {
+          "type": "text",
+          "id": "add_to_bundle_class",
+          "label": "Button class",
+          "default": "button-primary"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Added Quantity state"
+        },
+        {
+          "type": "paragraph",
+          "content": "Applies once the item has been added to the bundle"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "quantity_content",
+          "label": "Button content",
+          "info": "Leave content empty to spread the quantity selector."
+        },
+        {
+          "type": "text",
+          "id": "quantity_class",
+          "label": "Button class",
+          "default": "button-primary"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Out of stock state"
+        },
+        {
+          "type": "paragraph",
+          "content": "Applies only when quick view is deactivated or in the bundle section and the selected variant is out of stock. If no variant selector is active, this will default to the full products availability."
+        },
+        {
+          "type": "inline_richtext",
+          "id": "out_of_stock_content",
+          "label": "Button content",
+          "default": "Out of Stock",
+          "info": "Use the placeholder [price] and [compare_at_price] to display the price of the selected variant."
+        },
+        {
+          "type": "text",
+          "id": "out_of_stock_class",
+          "label": "Button class",
+          "default": "button-primary"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "with_subscriptions",
+              "label": "Subscription"
+            },
+            {
+              "value": "no_subscriptions",
+              "label": "One-time"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dynamic Button",
+      "type": "dynamic-button",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "label",
+          "label": "Label",
+          "default": "Read More",
+          "info": "Use bracket notation for data access: i.e.[product.title] or [product.metafields.smart.short_description]"
+        },
+        {
+          "type": "text",
+          "id": "url",
+          "label": "Dynamic URL",
+          "info": "Use bracket notation for data access.",
+          "default": "[product.url]"
+        },
+        {
+          "type": "text",
+          "id": "button_class",
+          "label": "Button class",
+          "default": "button-primary"
+        },
+        {
+          "type": "paragraph",
+          "content": "[Available keys](https://shopify.dev/docs/api/liquid/objects/product)"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "Affirm Block",
+      "type": "affirm-block",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "Product Drawer Button",
+      "type": "product-drawer-button",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "label",
+          "label": "Label",
+          "default": "Read More",
+          "info": "Use bracket notation for data access: i.e.[product.title] or [product.metafields.smart.short_description]"
+        },
+        {
+          "type": "text",
+          "id": "button_class",
+          "label": "Button class",
+          "default": "button-primary"
+        },
+        {
+          "type": "paragraph",
+          "content": "[Available keys](https://shopify.dev/docs/api/liquid/objects/product)"
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "variants_only",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "variants_only",
+              "label": "Products with variants only"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "Delivery Range",
+      "type": "delivery_range",
+      "settings": [
+        {
+          "type": "number",
+          "id": "min_days",
+          "label": "Min days",
+          "default": 10
+        },
+        {
+          "type": "number",
+          "id": "max_days",
+          "label": "Max days",
+          "default": 14
+        },
+        {
+          "type": "richtext",
+          "id": "delivery_text",
+          "label": "Delivery Date",
+          "default": "<h5><strong>Get it delivered by [month][min_date]-[max_date]</strong></h5>",
+          "info": "Use [month], [min_date] and [max_date] to get the dynamic data"
+        },
+        {
+          "type": "text",
+          "id": "delivery_class",
+          "label": "Delivery Date class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "richtext",
+          "id": "days_text",
+          "label": "Delivery Days",
+          "default": "<h6>In stock, get it delivered in [min_days]-[max_days] business days.</h6>",
+          "info": "Use [min_days] and [max_days] to get the dynamic data"
+        },
+        {
+          "type": "text",
+          "id": "days_class",
+          "label": "Delivery Days class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "Variant: Select",
+      "type": "variant_selector__select",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "text",
+          "id": "legend_label",
+          "label": "Heading",
+          "default": "Variants"
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "legend",
+          "label": "Heading",
+          "default": "[heading]: [value]",
+          "info": "Use [heading] as a placeholder for the title, and [value] as a placeholder for the current / hover value."
+        },
+        {
+          "type": "text",
+          "id": "legend_class",
+          "label": "Heading class",
+          "default": "richtext-md h5"
+        },
+        {
+          "type": "text",
+          "id": "select_class",
+          "label": "Select class",
+          "default": "input-select"
+        },
+        {
+          "type": "header",
+          "content": "Inline Layout"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_gap",
+          "label": "Heading space | Item Gap",
+          "default": "6px | 6px"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "with_subscriptions",
+              "label": "Subscription"
+            },
+            {
+              "value": "no_subscriptions",
+              "label": "One-time"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Variant: Radio Buttons",
+      "type": "variant_selector__radio",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "text",
+          "id": "legend_label",
+          "label": "Heading",
+          "default": "Variants"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "legend",
+          "label": "Heading",
+          "default": "[heading]: [value]",
+          "info": "Use [heading] as a placeholder for the title, and [value] as a placeholder for the current / hover value."
+        },
+        {
+          "type": "text",
+          "id": "legend_class",
+          "label": "Heading class",
+          "default": "richtext-md h5"
+        },
+        {
+          "type": "text",
+          "id": "radio_button_class",
+          "label": "Radio button class",
+          "default": "button-tabs"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Variant Highlight"
+        },
+        {
+          "type": "text",
+          "id": "label_metafield",
+          "label": "Label metafield",
+          "default": "smart.highlight",
+          "info": "Metafield 'namespace.key'. The metafield needs to be of type 'text' and added to the Variant."
+        },
+        {
+          "type": "text",
+          "id": "label_class",
+          "label": "Custom label class",
+          "default": "label-primary"
+        },
+        {
+          "type": "header",
+          "content": "Inline Layout"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_gap",
+          "label": "Heading space | Item Gap",
+          "default": "6px | 6px"
+        },
+        {
+          "type": "select",
+          "id": "content_flow",
+          "label": "Content flow",
+          "default": "show_all",
+          "options": [
+            {
+              "value": "show_all",
+              "label": "Show all"
+            },
+            {
+              "value": "truncate",
+              "label": "Truncate"
+            },
+            {
+              "value": "overflow",
+              "label": "Slider"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "with_subscriptions",
+              "label": "Subscription"
+            },
+            {
+              "value": "no_subscriptions",
+              "label": "One-time"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "t:sections.product_card.blocks.variant_color_image_swatch.name",
+      "type": "variant_selector__color",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "text",
+          "id": "legend_label",
+          "label": "Heading",
+          "default": "Variants"
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "legend",
+          "label": "Heading",
+          "default": "[heading]: [value]",
+          "info": "Use [heading] as a placeholder for the title, and [value] as a placeholder for the current / hover value."
+        },
+        {
+          "type": "text",
+          "id": "legend_class",
+          "label": "Heading class",
+          "default": "richtext-md h5"
+        },
+        {
+          "type": "header",
+          "content": "Swatches"
+        },
+        {
+          "type": "select",
+          "id": "primary_source",
+          "label": "Primary source: Variant...",
+          "default": "image",
+          "options": [
+            {
+              "value": "title",
+              "label": "Title"
+            },
+            {
+              "value": "image",
+              "label": "Image"
+            },
+            {
+              "value": "metafield",
+              "label": "Metafield"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "fallback_source",
+          "label": "Fallback source:",
+          "default": "metafield",
+          "options": [
+            {
+              "value": "title",
+              "label": "Title"
+            },
+            {
+              "value": "image",
+              "label": "Image"
+            },
+            {
+              "value": "metafield",
+              "label": "Metafield"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "The 'Title' option is setup via the Global Sections for color swatches, this matches the 'title' field of the Metaobject. The setup for the 'Image' is inferred from the selected variant for the option or the product image as a fallback. The 'Metafield' option is inferred from Metaobject data source which can be set to either 'color' or 'image'."
+        },
+        {
+          "type": "text",
+          "id": "size_border_width_radius",
+          "label": "size | border | radius",
+          "default": "38px / 32px | 1px | 999px"
+        },
+        {
+          "type": "color",
+          "id": "hover_border_color",
+          "label": "border color"
+        },
+        {
+          "type": "text",
+          "id": "outline_width_offset",
+          "label": "outline: width | offset",
+          "default": "2px | -2px"
+        },
+        {
+          "type": "color",
+          "id": "hover_outline_color",
+          "label": "outline color",
+          "default": "#000000"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_tooltip",
+          "label": "Show tooltip on hover",
+          "default": true
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Inline Layout"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_gap",
+          "label": "Heading space | Item Gap",
+          "default": "6px | 6px"
+        },
+        {
+          "type": "select",
+          "id": "content_flow",
+          "label": "Content flow",
+          "default": "show_all",
+          "options": [
+            {
+              "value": "show_all",
+              "label": "Show all"
+            },
+            {
+              "value": "truncate",
+              "label": "Truncate"
+            },
+            {
+              "value": "overflow",
+              "label": "Slider"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "with_subscriptions",
+              "label": "Subscription"
+            },
+            {
+              "value": "no_subscriptions",
+              "label": "One-time"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "t:sections.product_card.blocks.option_color_image_swatch.name",
+      "type": "option__color",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "legend",
+          "label": "Heading",
+          "default": "[heading]",
+          "info": "Use [heading] as a placeholder for the option title, and [value] as a placeholder for the current / hover value."
+        },
+        {
+          "type": "text",
+          "id": "legend_class",
+          "label": "Heading class",
+          "default": "richtext-md h5"
+        },
+        {
+          "type": "header",
+          "content": "Swatches"
+        },
+        {
+          "type": "select",
+          "id": "primary_source",
+          "label": "Primary source:",
+          "default": "title",
+          "options": [
+            {
+              "value": "title",
+              "label": "Title"
+            },
+            {
+              "value": "image",
+              "label": "Image"
+            },
+            {
+              "value": "metafield",
+              "label": "Metafield"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "fallback_source",
+          "label": "Fallback source:",
+          "default": "image",
+          "options": [
+            {
+              "value": "title",
+              "label": "Title"
+            },
+            {
+              "value": "image",
+              "label": "Image"
+            },
+            {
+              "value": "metafield",
+              "label": "Metafield"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "The 'Title' option is setup via the Global Sections for color swatches. The setup for the 'Image' is inferred from the first variant for the option. The 'Metafield' option is inferred from the first variant for the option and references the ProductVariant metafield: 'smart.color_swatch' which can be set to either 'color' or 'image'."
+        },
+        {
+          "type": "text",
+          "id": "size_border_width_radius",
+          "label": "size | border | radius",
+          "default": "38px / 32px | 1px | 999px"
+        },
+        {
+          "type": "color",
+          "id": "hover_border_color",
+          "label": "border color"
+        },
+        {
+          "type": "text",
+          "id": "outline_width_offset",
+          "label": "outline: width | offset",
+          "default": "2px | -2px"
+        },
+        {
+          "type": "color",
+          "id": "hover_outline_color",
+          "label": "outline color",
+          "default": "#000000"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_tooltip",
+          "label": "Show tooltip on hover",
+          "default": true
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Inline Layout"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_gap",
+          "label": "Heading space | Item Gap",
+          "default": "6px | 6px"
+        },
+        {
+          "type": "select",
+          "id": "content_flow",
+          "label": "Content flow",
+          "default": "show_all",
+          "options": [
+            {
+              "value": "show_all",
+              "label": "Show all"
+            },
+            {
+              "value": "truncate",
+              "label": "Truncate"
+            },
+            {
+              "value": "overflow",
+              "label": "Slider"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Match Option Titles"
+        },
+        {
+          "type": "text",
+          "id": "match_option_titles",
+          "label": "Match option titles",
+          "info": "Comma separated list of possible titles. Leave this blank to infer the next available variant option."
+        },
+        {
+          "type": "checkbox",
+          "id": "match_exact_word",
+          "label": "Match exact word",
+          "default": false,
+          "info": "Enable this if you want to match the exact titles and make the 'Match option titles' case sensitive."
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "with_subscriptions",
+              "label": "Subscription"
+            },
+            {
+              "value": "no_subscriptions",
+              "label": "One-time"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Option: Radio Buttons",
+      "type": "option__radio",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Option title"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "legend",
+          "label": "Heading",
+          "default": "[heading]",
+          "info": "Use [heading] as a placeholder for the option title, and [value] as a placeholder for the current / hover value."
+        },
+        {
+          "type": "text",
+          "id": "legend_class",
+          "label": "Heading class",
+          "default": "richtext-md h5"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Value"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "radio_button_content",
+          "label": "Radio button content",
+          "default": "[value]",
+          "info": "Use [value] as a placeholder for the value."
+        },
+        {
+          "type": "text",
+          "id": "radio_button_class",
+          "label": "Radio button class",
+          "default": "button-tabs"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Inline Layout"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_gap",
+          "label": "Heading space | Item Gap",
+          "default": "6px | 6px"
+        },
+        {
+          "type": "select",
+          "id": "content_flow",
+          "label": "Content flow",
+          "default": "show_all",
+          "options": [
+            {
+              "value": "show_all",
+              "label": "Show all"
+            },
+            {
+              "value": "truncate",
+              "label": "Truncate"
+            },
+            {
+              "value": "overflow",
+              "label": "Slider"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Match Option Titles"
+        },
+        {
+          "type": "text",
+          "id": "match_option_titles",
+          "label": "Match option titles",
+          "info": "Comma separated list of possible titles. Leave this blank to infer the next available variant option."
+        },
+        {
+          "type": "checkbox",
+          "id": "match_exact_word",
+          "label": "Match exact word",
+          "default": false,
+          "info": "Enable this if you want to match the exact titles and make the 'Match option titles' case sensitive."
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "with_subscriptions",
+              "label": "Subscription"
+            },
+            {
+              "value": "no_subscriptions",
+              "label": "One-time"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "t:sections.product_card.blocks.option_radio_buttons_custom.name",
+      "type": "option__radio_custom",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Option title"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "legend",
+          "label": "Heading",
+          "default": "[heading]",
+          "info": "Use [heading] as a placeholder for the option title, and [value] as a placeholder for the current / hover value."
+        },
+        {
+          "type": "text",
+          "id": "legend_class",
+          "label": "Heading class",
+          "default": "richtext-md h5"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Value"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "radio_button_content",
+          "label": "Radio button content",
+          "default": "[value]",
+          "info": "Use [value] as a placeholder for the value."
+        },
+        {
+          "type": "text",
+          "id": "radio_button_class",
+          "label": "Radio button class",
+          "default": "button-tabs"
+        },
+        {
+          "type": "text",
+          "id": "accordion_class",
+          "label": "Accordion class",
+          "default": "accordion-options"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Inline Layout"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_gap",
+          "label": "Heading space | Item Gap",
+          "default": "6px | 6px"
+        },
+        {
+          "type": "select",
+          "id": "content_flow",
+          "label": "Content flow",
+          "default": "show_all",
+          "options": [
+            {
+              "value": "show_all",
+              "label": "Show all"
+            },
+            {
+              "value": "truncate",
+              "label": "Truncate"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Match Option Titles"
+        },
+        {
+          "type": "text",
+          "id": "match_option_titles",
+          "label": "Match option titles",
+          "info": "Comma separated list of possible titles. Leave this blank to infer the next available variant option."
+        },
+        {
+          "type": "checkbox",
+          "id": "match_exact_word",
+          "label": "Match exact word",
+          "default": false,
+          "info": "Enable this if you want to match the exact titles and make the 'Match option titles' case sensitive."
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "with_subscriptions",
+              "label": "Subscription"
+            },
+            {
+              "value": "no_subscriptions",
+              "label": "One-time"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Option: Select",
+      "type": "option__select",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "legend",
+          "label": "Heading",
+          "default": "[heading]",
+          "info": "Use [heading] as a placeholder for the option title, and [value] as a placeholder for the current / hover value."
+        },
+        {
+          "type": "text",
+          "id": "legend_class",
+          "label": "Heading class",
+          "default": "richtext-md h5"
+        },
+        {
+          "type": "text",
+          "id": "select_class",
+          "label": "Select class",
+          "default": "input-select"
+        },
+        {
+          "type": "header",
+          "content": "Inline Layout"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_gap",
+          "label": "Heading space | Item Gap",
+          "default": "6px | 6px"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Match Option Titles"
+        },
+        {
+          "type": "text",
+          "id": "match_option_titles",
+          "label": "Match option titles",
+          "info": "Comma separated list of possible titles. Leave this blank to infer the next available variant option."
+        },
+        {
+          "type": "checkbox",
+          "id": "match_exact_word",
+          "label": "Match exact word",
+          "default": false,
+          "info": "Enable this if you want to match the exact titles and make the 'Match option titles' case sensitive."
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "with_subscriptions",
+              "label": "Subscription"
+            },
+            {
+              "value": "no_subscriptions",
+              "label": "One-time"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "______ Grid ______",
+      "type": "layout__grid",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "header",
+          "content": "Block Layout Settings"
+        },
+        {
+          "type": "text",
+          "id": "grid_cols_align_x_align_y_gap",
+          "label": "grid-cols | justify | align | gap",
+          "default": "1 | stretch | stretch | 0",
+          "info": "Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius",
+          "label": "border | radius | max-h | max-w | overflow",
+          "default": "0 | 0 |  |  | ",
+          "info": "Border can be set via the border-shorthand for. I.e '0 0 1px 0' sets only the bottom border."
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "______ Flex wrap ______",
+      "type": "layout__flex_wrap",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Block Layout Settings"
+        },
+        {
+          "type": "text",
+          "id": "flex_row_wrap_align_x_align_y_gap",
+          "label": "justify | align | gap | wrap | dir",
+          "default": "stretch | stretch | 0 | wrap | row",
+          "info": "Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius",
+          "label": "border | radius | max-h | max-w | overflow",
+          "default": "0 | 0 |  |  | ",
+          "info": "Border can be set via the border-shorthand for. I.e '0 0 1px 0' sets only the bottom border."
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "______ Flex ______",
+      "type": "layout__flex",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Block Layout Settings"
+        },
+        {
+          "type": "text",
+          "id": "flex_direction_align_x_align_y_gap_wrap",
+          "label": "dir | justify | align | gap | wrap | min-h",
+          "default": "column | stretch | stretch | 16",
+          "info": "Direction accepts: 'row','column'. Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius",
+          "label": "border | radius | max-h | max-w | overflow",
+          "default": "0 | 0 |  |  | ",
+          "info": "Border can be set via the border-shorthand for. I.e '0 0 1px 0' sets only the bottom border."
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "______ Layout End ______",
+      "type": "layout__end",
+      "settings": []
+    },
+    {
+      "name": "t:sections.product_card.blocks.flex_overlay.name",
+      "type": "layout_child__overlay",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Block Layout Settings"
+        },
+        {
+          "type": "text",
+          "id": "flex_direction_align_x_align_y_gap_wrap",
+          "label": "dir | justify | align | gap | wrap | min-h",
+          "default": "column | stretch | stretch | 16",
+          "info": "Direction accepts: 'row','column'. Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius",
+          "label": "border | radius | max-h | max-w | overflow",
+          "default": "0 | 0 |  |  | ",
+          "info": "Border can be set via the border-shorthand for. I.e '0 0 1px 0' sets only the bottom border."
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_on_hover",
+          "label": "Only show on hover",
+          "default": false
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "handle",
+      "label": "Handle",
+      "default": "product-card",
+      "info": "hyphens / lowercase / no-spaces [kebab-case](https://developer.mozilla.org/en-US/docs/Glossary/Kebab_case)"
+    },
+    {
+      "type": "product",
+      "id": "preview_product",
+      "label": "Preview Product",
+      "info": "Fallbacks to the first available product"
+    },
+    {
+      "type": "checkbox",
+      "id": "link_to_product",
+      "label": "Link to product"
+    },
+    {
+      "type": "checkbox",
+      "id": "default_select_selling_plan",
+      "label": "Set Subscription as default",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "default_variant_metafield",
+      "label": "Default variant metafield",
+      "default": "smart.default_variant",
+      "info": "Metafield 'namespace.key'. The metafield needs to be of type 'variant_reference' and added to the Product."
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "header",
+      "content": "Container Layout"
+    },
+    {
+      "type": "text",
+      "id": "flex_direction_align_x_align_y_gap_wrap",
+      "label": "dir | justify | align | gap | wrap | min-h",
+      "default": "column | stretch | stretch | 0 | nowrap",
+      "info": "Direction accepts: 'row','column'. Alignment accepts: 'start, center, end, evenly, between'"
+    },
+    {
+      "type": "text",
+      "id": "padding_top_bottom_left_right",
+      "label": "padding: top | bottom | left | right",
+      "default": "0 | 0 | 0 | 0"
+    },
+    {
+      "type": "text",
+      "id": "max_width_max_height_border_width_radius",
+      "label": "max-w | max-h | border | radius",
+      "default": "unset | unset | 0 | 0"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "text color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "background gradient"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "border color"
+    },
+    {
+      "type": "text",
+      "id": "dynamic_text_color",
+      "label": "Dynamic text color"
+    },
+    {
+      "type": "text",
+      "id": "dynamic_background_color",
+      "label": "Dynamic background color"
+    },
+    {
+      "type": "text",
+      "id": "dynamic_border_color",
+      "label": "Dynamic border color"
+    },
+    {
+      "type": "header",
+      "content": "Hover Colors"
+    },
+    {
+      "type": "color",
+      "id": "hover_text_color",
+      "label": "text color"
+    },
+    {
+      "type": "color",
+      "id": "hover_background_color",
+      "label": "background color"
+    },
+    {
+      "type": "color_background",
+      "id": "hover_background_gradient",
+      "label": "background gradient"
+    },
+    {
+      "type": "color",
+      "id": "hover_border_color",
+      "label": "border color"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "header",
+      "content": "Loading State"
+    },
+    {
+      "type": "text",
+      "id": "loading_width_height_aspect",
+      "label": "width | height | aspect",
+      "default": "100% | auto | 0.75",
+      "info": "Aspect ratio only applies if width or height are set to 'auto'"
+    },
+    {
+      "type": "color_background",
+      "id": "loading_background_gradient",
+      "label": "Background color",
+      "default": "rgba(185,185,185, 0.2)"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "color",
+      "id": "override_preview_background",
+      "label": "Override preview background"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Card"
+    }
+  ],
+  "enabled_on": {
+    "groups": [
+      "custom.card"
+    ]
+  }
+}
+{% endschema %}

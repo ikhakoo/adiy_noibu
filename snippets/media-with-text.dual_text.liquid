@@ -1,0 +1,48 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "dual_text"
+  assign section_type = "media-with-text"
+  assign first_icon = block.settings.first_icon
+  assign heading_primary = block.settings.heading_primary
+  assign heading_primary_class = block.settings.heading_primary_class
+  assign paragraph_primary = block.settings.paragraph_primary
+  assign paragraph_primary_class = block.settings.paragraph_primary_class
+  assign second_icon = block.settings.second_icon
+  assign heading_secondary = block.settings.heading_secondary
+  assign heading_secondary_class = block.settings.heading_secondary_class
+  assign paragraph_secondary = block.settings.paragraph_secondary
+  assign paragraph_secondary_class = block.settings.paragraph_secondary_class
+  assign text_color = block.settings.text_color
+  assign margin_bottom_desktop = block.settings.margin_bottom_desktop
+  assign margin_bottom_mobile = block.settings.margin_bottom_mobile
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "margin_top_bottom_left_right" %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {{ block.shopify_attributes }}
+    class="flex max-md:flex-col gap-4 md:gap-6 {{ margin_bottom_desktop }} {{ margin_bottom_mobile }}"
+    style="color: {{ text_color }};">
+    <div class="flex flex-col gap-2 md:max-w-[250px] w-full">
+      <div class="flex gap-3">
+        {% if first_icon != blank %}
+          {% render '_components.icon', icon: first_icon, class: 'w-6 h-6 md:w-8 md:h-8' %}
+        {% endif %}
+        {% render '_input.richtext', content: heading_primary, class: heading_primary_class, block: block, forloop: forloop %}
+      </div>
+      {% render '_input.richtext', content: paragraph_primary, class: paragraph_primary_class, block: block, forloop: forloop %}
+    </div>
+    <div class="flex flex-col gap-2 md:max-w-[250px] w-full">
+      <div class="flex gap-3">
+        {% if second_icon != blank %}
+          {% render '_components.icon', icon: second_icon, class: 'w-6 h-6 md:w-8 md:h-8' %}
+        {% endif %}
+        {% render '_input.richtext', content: heading_secondary, class: heading_secondary_class, block: block, forloop: forloop %}
+      </div>
+      {% render '_input.richtext', content: paragraph_secondary, class: paragraph_secondary_class, block: block, forloop: forloop %}
+    </div>
+</div>

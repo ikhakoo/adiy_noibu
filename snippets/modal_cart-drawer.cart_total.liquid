@@ -1,0 +1,44 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "cart_total"
+  assign section_type = "modal_cart-drawer"
+  assign show_conditionally = block.settings.show_conditionally
+  assign price_class = block.settings.price_class
+  assign compare_at_price_class = block.settings.compare_at_price_class
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign color_override = block.settings.color_override
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if color_override != blank and color_override.alpha != 0
+    assign color = color_override | default: "inherit"
+  endif
+%}
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,margin_top_bottom_left_right, max_w_flex_col_row_order_align" %}
+
+{% liquid
+  if color_override != blank and color_override.alpha != 0
+    assign color = color_override | default: "inherit"
+  endif
+%}
+
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    style="color: {{ color }}"
+    x-show="_cart.showConditionally(`{{ show_conditionally }}`) || $editor?.select_block_id === `{{ block.id }}`"
+    class="flex gap-2 items-center">
+  <span x-show="`{{ compare_at_price_class | trim }}` && $cart.state.original_pre_selling_plan_total_price > $cart.state.total_price"
+        x-html="utils.formatMoney($cart.state.original_pre_selling_plan_total_price)"
+        class="line-through {{ compare_at_price_class }}"></span>
+  <span x-html="utils.formatMoney($cart.state.total_price)" class="{{ price_class }}"></span>
+</div>

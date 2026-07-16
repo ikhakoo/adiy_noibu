@@ -1,0 +1,74 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.collapsible"
+  assign label = block.settings.label
+  assign content = block.settings.content
+  assign page_content = block.settings.page_content
+  assign accordion_class = block.settings.accordion_class
+  assign default_state = block.settings.default_state
+  assign video = block.settings.video
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  case default_state
+    when 'open'
+      assign open = true
+    when 'closed'
+      assign open = false
+  endcase
+
+  assign content = content | append: page_content.content
+  assign stripped_content = content | strip_html
+
+  if request.design_mode != true
+    if stripped_content == blank or label == blank
+      assign is_empty = true
+    endif
+    if video and is_empty
+      assign is_empty = false
+    endif 
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,margin_top_bottom_left_right, max_w_flex_col_row_order_align" %}
+
+{% capture accordion_content %}
+  {% render '_input.richtext', content: content, block: block, forloop: forloop %}
+{% endcapture %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    class="">
+  {% render '_components.accordion',
+  label: label,
+  content: accordion_content,
+  video: block.settings.video,
+  video_2: block.settings.video_2,
+  video_3: block.settings.video_3,
+  default_open: open,
+  class: accordion_class
+%}
+</div>

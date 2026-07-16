@@ -1,0 +1,266 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "card_blog-card"
+  assign _handle = section.settings.handle
+  assign preview_blog = section.settings.preview_blog
+  assign orientation = section.settings.orientation
+  assign flex_row_wrap_align_x_align_y_gap = section.settings.flex_row_wrap_align_x_align_y_gap
+  assign padding_top_bottom_left_right = section.settings.padding_top_bottom_left_right
+  assign max_width_max_height_border_width_radius = section.settings.max_width_max_height_border_width_radius
+  assign text_color = section.settings.text_color
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign border_color = section.settings.border_color
+  assign loading_width_height_aspect = section.settings.loading_width_height_aspect
+  assign loading_background_gradient = section.settings.loading_background_gradient
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign image_block = section.blocks | where: "type", "image" | first
+  assign svg = 'blog-1' | placeholder_svg_tag
+  assign svgURI = 'data:image/svg+xml;utf8,' | append: svg
+  assign blog = preview_blog | default: blog
+
+  if blog == blank and request.design_mode
+    assign article = linklists | map: 'links' | map: "object" | map: "articles" | sort_natural | first
+    assign blog_handle = article.handle | split: "/" | first
+    assign blog = blogs[blog_handle]
+  endif
+
+  assign padding_top_bottom_left_right = padding_top_bottom_left_right | strip_newlines | replace: ' ', "" | split: '|'
+  assign top = padding_top_bottom_left_right[0] | split: '/'
+  assign bottom = padding_top_bottom_left_right[1] | split: '/'
+  assign left = padding_top_bottom_left_right[2] | split: '/'
+  assign right = padding_top_bottom_left_right[3] | split: '/'
+
+  assign max_width_max_height_border_width_radius = max_width_max_height_border_width_radius | strip_newlines | replace: ' ', "" | split: '|'
+  assign max_width = max_width_max_height_border_width_radius[0] | split: '/'
+  assign max_height = max_width_max_height_border_width_radius[1] | split: '/'
+  assign border = max_width_max_height_border_width_radius[2] | split: '/'
+  assign radius = max_width_max_height_border_width_radius[3] | split: '/'
+
+  assign loading_width_height_aspect = loading_width_height_aspect | strip_newlines | replace: ' ', "" | split: '|'
+  assign loading_width = loading_width_height_aspect[0] | split: '/'
+  assign loading_height = loading_width_height_aspect[1] | split: '/'
+  assign loading_aspect = loading_width_height_aspect[2] | split: '/'
+
+  case orientation
+    when 'vertical'
+      assign flex_flow = "column"
+    when 'horizontal'
+      assign flex_flow = "row"
+  endcase
+
+  assign option_blocks = "" | split: "" | uniq
+  for block in section.blocks
+    if block.type contains "option__"
+      assign blocks = section.blocks | where: "id", block.id
+      assign option_blocks = option_blocks | concat: blocks
+    endif
+  endfor
+
+  assign card_class = _handle | handleize | prepend: "blog-card--"
+%}
+
+
+
+{% capture maxHeightStyles %}
+  --max-h-image-md: calc({{ max_height.first | replace: "inherit", "999999px" | replace: "unset", "999999px" }} - {{ top.first }} - {{ bottom.first }} - {{ border.first }}); --max-h-image: calc({{ max_height.last | replace: "inherit", "999999px" | replace: "unset", "999999px" }} - {{ top.last }} - {{ bottom.last }} - {{ border.last }});
+{% endcapture %}
+{% capture selector %}.blog-card--{{ _handle | handleize }} [data-style-section-container]{% endcapture %}
+{% comment %}{% capture container_selector %}.blog-card--{{ _handle | handleize }} [data-style-section-container]{% endcapture %}{% endcomment %}
+{% render '_utils.dynamic-css', selector: selector, keys: "flex_row_wrap_align_x_align_y_gap,padding_top_bottom_left_right" %}
+
+<style>
+  .blog-card--{{ _handle | handleize }} {
+    width: 100%;
+    border-style: solid;
+    color: {{ text_color }};
+    border-color: {{ border_color }};
+    background-color: {{ background_color }};
+    background: {{ background_gradient }};
+    max-height: {{ max_height.first }};
+    max-width: {{ max_width.first }};
+    border-width: {{ border.first }};
+    border-radius: {{ radius.first }};
+  {{ maxHeightStyles | replace: " 0 ", " 0px " | replace: " 0)", " 0px)" }}
+  }
+
+  .blog-card--{{ _handle | handleize }}.card-loading {
+    height: {{ loading_height.first }};
+    width: {{ loading_width.first }};
+    aspect-ratio: {{ loading_aspect.first }};
+    background: {{ loading_background_gradient }};
+  }
+
+  @media screen and (max-width: 767px) {
+    .blog-card--{{ _handle | handleize }}:has(:not(.\@container *)) {
+      max-height: {{ max_height.last }};
+      max-width: {{ max_width.last }};
+      border-width: {{ border.last }};
+      border-radius: {{ radius.last }};
+    }
+
+    .blog-card--{{ _handle | handleize }}.card-loading:has(:not(.\@container *)) {
+      height: {{ loading_height.last }};
+      width: {{ loading_width.last }};
+    }
+  }
+
+  @container (max-width: 767px) {
+    .blog-card--{{ _handle | handleize }} {
+      max-height: {{ max_height.last }};
+      max-width: {{ max_width.last }};
+      border-width: {{ border.last }};
+      border-radius: {{ radius.last }};
+    }
+
+    .blog-card--{{ _handle | handleize }}.card-loading {
+      height: {{ loading_height.last }};
+      width: {{ loading_width.last }};
+      aspect-ratio: {{ loading_aspect.last }};
+    }
+  }
+</style>
+
+{% capture blog_card %}
+  <section data-blog-card="{{ _handle }}"
+           data-blog-handle="{{ blog.handle }}"
+           x-data="{ ..._sections.initBlogCard($el, $refs, $el.getAttribute('data-blog-handle')) }"
+           class="{{ card_class }} card-loading"
+           x-effect="() => { if (card?.hydrated && $el.classList.contains('card-loading')) $el.classList.remove('card-loading') }"
+           x-intersect.once="async () => { if (barba.timeout === 1) { await utils.delay(350) } barba.prefetch(`${window.location.origin}/blogs/${card?.blog?.handle}`) }"
+           x-init="$nextTick(()=> { $el.querySelectorAll('style').forEach(styleEl => document.head.appendChild(styleEl)); $el.removeAttribute('x-init') })"
+           style="">
+    <div data-style-section-container
+         class="flex"
+         style="flex-flow: {{ flex_flow }}; max-height: calc(var(--max-h) - var(--pt) - var(--pb));">
+      {% liquid
+        for block in section.blocks
+          if block.type == 'layout__flex_wrap' and block.settings.location == 'inline'
+            render 'card_blog-card.layout__flex_wrap', block: block, forloop: forloop
+          endif
+          if block.type == 'image'
+            render 'card_blog-card.image', block: block, forloop: forloop
+          endif
+        endfor
+      %}
+    </div>
+  </section>
+{% endcapture %}
+
+
+<div class="fixed inset-0 z-50 overflow-y-auto text-balance bg-gray-100 py-8 text-black px-container-sm scrollbar-none md:pb-52"
+     x-data=""
+     x-show="$editor?.select_section_id === `{{ section.id }}`"
+     x-cloak>
+  {% unless request.design_mode %}
+    {{ blog_card }}
+  {% endunless %}
+  {% if request.design_mode %}
+    <script type="application/json"
+            data-blog-data="{{ blog.handle }}">{%- render '_json.blog', blog: blog -%}</script>
+  {% endif %}
+  {% if request.design_mode and orientation == 'horizontal' %}
+    <div class="grid gap-6">
+      <section class="grid justify-center items-center gap-6 overflow-x-auto">
+        {{ blog_card }}
+        <div>
+          <section class="@container grid gap-2 max-w-sm h-min mb-auto">
+            {{ blog_card }}
+          </section>
+        </div>
+      </section>
+
+      <h3 class="text-2xl font-bold">Desktop View</h3>
+      <section class="grid auto-cols-min grid-flow-col gap-6 overflow-x-auto rounded-lg border p-8 border-gray-500 [&>*]:!w-screen [&>*]:!h-min [&>*]:!mb-auto">
+        {{ blog_card }}
+        <div class="{{ card_class }} card-loading"></div>
+        <div class="{{ card_class }} card-loading"></div>
+        <div class="{{ card_class }} card-loading"></div>
+      </section>
+      <h3 class="text-2xl font-bold">Desktop View Stacked</h3>
+      <section class="grid gap-3 overflow-y-auto rounded-lg border p-8 border-gray-500 max-h-[500px]">
+        <div>{{ blog_card }}</div>
+        <div class="{{ card_class }} card-loading"></div>
+        <div class="{{ card_class }} card-loading"></div>
+        <div class="{{ card_class }} card-loading"></div>
+      </section>
+      <h3 class="mt-4 text-2xl font-bold">Mobile View</h3>
+      <div class="flex gap-6">
+        <section class="grid scrollbar-none gap-2 max-w-md w-full @container p-8 border border-gray-500 rounded-lg">
+          {{ blog_card }}
+          {{ blog_card }}
+          {{ blog_card }}
+          {{ blog_card }}
+        </section>
+        <section class="grid scrollbar-none gap-2 max-w-md w-full @container p-8 border border-gray-500 [&>*]:max-w-full rounded-lg">
+          <div class="{{ card_class }} card-loading">
+            <div></div>
+          </div>
+          <div class="{{ card_class }} card-loading">
+            <div></div>
+          </div>
+          <div class="{{ card_class }} card-loading">
+            <div></div>
+          </div>
+          <div class="{{ card_class }} card-loading">
+            <div></div>
+          </div>
+        </section>
+      </div>
+    </div>
+  {% endif %}
+  {% if request.design_mode and orientation == 'vertical' %}
+    <div class="grid gap-6"
+         x-effect="()=> { if ($editor?.select_section_id === `{{ section.id }}`) { interval = setInterval(()=>{ desktop_ratio = desktop?.clientWidth / desktop?.clientHeight; mobile_ratio = mobile?.clientWidth / mobile?.clientHeight }, 2000) } else { clearInterval(interval); interval = null }}"
+         x-data="{ desktop: $el.querySelector('[data-blog-card]'), desktop_ratio:0, mobile: $el.querySelector('.\\@container [data-blog-card]'),  mobile_ratio: 0, interval : null}">
+      <div>Aspect Ratios</div>
+      <header class="grid grid-cols-2 gap-6 py-6">
+        <div class="text-2xl font-semibold font-mono" x-html="`Desktop Aspect Ratio ${utils.roundToIndex(desktop_ratio, -3)}`"></div>
+        <div class="text-2xl font-semibold font-mono" x-html="`Mobile Aspect Ratio ${utils.roundToIndex(mobile_ratio, -3)}`"></div>
+      </header>
+      <section class="relative grid auto-cols-min justify-start items-center grid-flow-col gap-6 overflow-x-auto [&>*]:!w-screen">
+        {{ blog_card }}
+        <section class="@container grid grid-cols-2 gap-2 max-w-sm h-min mb-auto">
+          <div>
+            {{ blog_card }}
+          </div>
+          <div class="{{ card_class }} card-loading"></div>
+        </section>
+      </section>
+      <h3 class="text-2xl font-bold">Desktop View</h3>
+      <section class="grid auto-cols-max grid-flow-col gap-6 overflow-x-auto rounded-lg border p-8 border-gray-500 [&>*]:!w-screen">
+        {{ blog_card }}
+        <div class="{{ card_class }} card-loading"></div>
+        <div class="{{ card_class }} card-loading"></div>
+        <div class="{{ card_class }} card-loading"></div>
+      </section>
+      <h3 class="mt-4 text-2xl font-bold">Mobile View</h3>
+      <div class="flex gap-6">
+        <section class="grid grid-cols-2 scrollbar-none gap-2 max-w-md w-full @container p-8 border border-gray-500 rounded-lg mb-auto h-min">
+          {{ blog_card }}
+          {{ blog_card }}
+          {{ blog_card }}
+          {{ blog_card }}
+        </section>
+        <section class="grid grid-cols-2 scrollbar-none gap-2 max-w-md w-full @container p-8 border border-gray-500 [&>*]:max-w-full rounded-lg mb-auto h-min">
+          <div class="{{ card_class }} card-loading">
+            <div></div>
+          </div>
+          <div class="{{ card_class }} card-loading">
+            <div></div>
+          </div>
+          <div class="{{ card_class }} card-loading">
+            <div></div>
+          </div>
+          <div class="{{ card_class }} card-loading">
+            <div></div>
+          </div>
+        </section>
+      </div>
+    </div>
+  {% endif %}
+</div>
+

@@ -1,0 +1,168 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "added_products"
+  assign section_type = "bundle"
+  assign show_conditionally = block.settings.show_conditionally
+  assign show_based_on_bundle_state = block.settings.show_based_on_bundle_state
+  assign add_icon = block.settings.add_icon
+  assign autofill = block.settings.autofill
+  assign border_width_radius = block.settings.border_width_radius
+  assign background_gradient = block.settings.background_gradient
+  assign border_color = block.settings.border_color
+  assign border_style = block.settings.border_style
+  assign subscription_label_class = block.settings.subscription_label_class
+  assign show_product_title = block.settings.show_product_title
+  assign add_skeleton_boxes = block.settings.add_skeleton_boxes
+  assign slider_cols_rows_align_x_align_y_gap = block.settings.slider_cols_rows_align_x_align_y_gap
+  assign slider_scroll_snap = block.settings.slider_scroll_snap
+  assign slider_overflow_container = block.settings.slider_overflow_container
+  assign width_height_aspect = block.settings.width_height_aspect
+  assign scrollbar_class = block.settings.scrollbar_class
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility, margin_top_bottom_left_right, max_w_flex_col_row_order_align" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-bundle-added-products]",
+    keys: "slider_cols_rows_align_x_align_y_gap"
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-item]",
+    keys: "width_height_aspect,background_gradient,border_color,border_width_radius"
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-scrollbar]",
+    keys: "padding_top_bottom_left_right",
+    padding_as_margin: true %}
+{% liquid
+
+  assign slider_cols_rows_align_x_align_y_gap = slider_cols_rows_align_x_align_y_gap | strip_newlines | split: '|'
+  assign grid_cols = slider_cols_rows_align_x_align_y_gap[0] | split: '/'
+
+  assign container_spacing = section.settings.container_spacing
+  case slider_overflow_container
+    when 'all'
+      assign slider_overflow = container_spacing | replace: 'px', '-mx' | append: " scroll-" | append: container_spacing | append: " " | append: container_spacing
+    when 'mobile'
+      assign slider_overflow = container_spacing | replace: 'px', 'max-md:-mx' | append: " max-md:scroll-" | append: container_spacing | append: " max-md:" | append: container_spacing
+    when 'desktop'
+      assign slider_overflow = container_spacing | replace: 'px', 'md:-mx' | append: " md:scroll-" | append: container_spacing | append: " md:" | append: container_spacing
+  endcase
+%}
+
+<style>
+  @media screen and (max-width: {{ responsive_breakpoint | default: "768px" }}) {
+    [data-style-id="{{ section.id }}--{{ block.id }}"] [data-style-bundle-added-products] > :where(*):nth-of-type({{ grid_cols | last | replace: " ", "" | trim }}n+1) {
+      scroll-snap-align: start;
+    }
+  }
+
+  @media screen and (min-width: {{ responsive_breakpoint | default: "768px" }}) {
+    [data-style-id="{{ section.id }}--{{ block.id }}"] [data-style-bundle-added-products] > :where(*):nth-of-type({{ grid_cols | first | replace: " ", "" | trim }}n+1) {
+      scroll-snap-align: start;
+    }
+  }
+</style>
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    class="flex flex-col"
+    x-show="($data.windowWidth >= 1024 || $data.showConditionally(`{{ show_conditionally }}`)) && $data.showBasedOnBundleState(`{{ show_based_on_bundle_state }}`)"
+    data-grid-slider
+    x-data="{
+       ..._sections.initContentSlider($refs.added_products_container),
+       grid_columns: Math.ceil(+getComputedStyle($refs.added_products_container).getPropertyValue('--grid-cols')),
+       max_length: Math.ceil(+getComputedStyle($refs.added_products_container).getPropertyValue('--grid-cols')),
+       overflow_length: Math.ceil(+getComputedStyle($refs.added_products_container).getPropertyValue('--grid-cols')),
+       skeleton_boxes: '{{ add_skeleton_boxes }}' === 'true'
+     }">
+  <div class="relative grid overflow-x-auto scrollbar-none overflow-y-hidden snap-x {{ slider_scroll_snap }} {{ slider_overflow }}"
+       x-ref="added_products_container"
+       x-effect="() => {
+          if ($data.bundle_type === 'item_count' && $data.bundle.item_count >= $data.bundle.bundle_target?.target && `{{ autofill }}` === 'true') {
+            max_length = Math.max($data.bundle.item_count, $data.bundle_type === 'item_count' ? ($data.bundle.bundle_target?.target ?? grid_columns) : grid_columns) + 1;
+          } else {
+            max_length = Math.max($data.bundle.item_count, $data.bundle_type === 'item_count' ? ($data.bundle.bundle_target?.target ?? grid_columns) : grid_columns);
+          }
+          overflow_length = Math.max(max_length, grid_columns);
+       }"
+       @resize.window="() => { content_slider.handleResize(); grid_columns = Math.ceil(+getComputedStyle($refs.added_products_container).getPropertyValue('--grid-cols')) }"
+       @scroll="content_slider.handleScroll"
+       data-style-bundle-added-products>
+    <template x-for="index in [...new Array(Math.max(20, overflow_length))].map((_,i) => i)">
+      <div x-data="{ added_product: $data.bundle.items_added[index]?.product, added_variant: $data.bundle.items_added[index]?.variant }"
+           x-show="added_product || index < max_length || index < overflow_length"
+           x-effect="() => { added_product = $data.bundle.items_added[index]?.product; added_variant = $data.bundle.items_added[index]?.variant}"
+           class="relative flex w-full items-center justify-center">
+        <figure x-show="!added_product && index < max_length"
+                class="relative flex items-center justify-center"
+                data-style-item
+                style="border-style: {{ border_style }} !important; color: {{ border_color }};">{% render '_components.icon', icon: add_icon, class: 'w-5 h-5' %}</figure>
+        {% if add_skeleton_boxes %}
+          <figure x-show="!added_product && index >= max_length"
+                  class="relative flex items-center justify-center !bg-inherit opacity-50"
+                  data-style-item
+                  style="border-style: {{ border_style }} !important; color: {{ border_color }};"></figure>
+        {% endif %}
+        <figure x-show="!!added_product" class="relative">
+          <div class="relative flex items-center justify-center overflow-hidden group"
+               data-style-item
+               style="border-style: solid !important; color: {{ border_color }};">
+            <img src=""
+                 alt=""
+                 srcset=""
+                 :src="added_variant?.featured_media?.src ?? added_product?.featured_media?.src"
+                 :alt="added_variant?.featured_media?.alt ?? added_product?.featured_media?.alt ?? added_product?.title"
+                 :srcset="utils.getImageSrcSet(added_variant?.featured_media?.src ?? added_product?.featured_media?.src ?? '', 384)"
+                 width="384"
+                 height="384"
+                 loading="lazy"
+                 onload="this.classList.remove('!opacity-0')"
+                 class="relative h-full w-full object-cover !opacity-0"
+                 sizes="(max-width: 768px) 33vw, (max-width: 1024px) 20vw, 16vw">
+            <div class="absolute inset-0 p-2">
+              {% if subscription_label_class != blank %}
+                <span class="shrink-0 {{ subscription_label_class }}"
+                      x-show="added_variant?.selling_plan_allocations?.find(plan => plan.selling_plan?.name === $data.bundle.selected_selling_plan)?.selling_plan?.options?.at(-1)?.value"
+                      x-html="added_variant?.selling_plan_allocations?.find(plan => plan.selling_plan?.name === $data.bundle.selected_selling_plan)?.selling_plan?.options?.at(-1)?.value"></span>
+              {% endif %}
+
+            </div>
+            <button type="button"
+                    @click="$data.bundle.items_added.splice(index, 1)"
+                    class="absolute bottom-1 right-1 flex scale-100 items-center justify-center rounded-full bg-theme-text p-1 text-theme-bg transition-all duration-75 sm:opacity-0 hf:scale-105 group-hf:opacity-100 hf:opacity-100"
+                    aria-label="Remove item from bundle">{% render '_components.icon', icon: 'x-mark', class: 'w-3 h-3' %}</button>
+          </div>
+          {% if show_product_title %}
+            <figcaption class="px-1 pt-1 text-center text-sm max-md:hidden"
+                        x-html="`${added_product?.title}${added_variant?.title !== 'Default Title' ? ` - ${added_variant?.title}` : ''}`">
+            </figcaption>
+          {% endif %}
+
+        </figure>
+      </div>
+    </template>
+  </div>
+  {% if scrollbar_class != blank %}
+    {% render "_components.scrollbar",
+        class: scrollbar_class,
+        scroll_container_ref: '$refs.added_products_container',
+        html_attributes: 'data-style-scrollbar' %}
+  {% endif %}
+</div>

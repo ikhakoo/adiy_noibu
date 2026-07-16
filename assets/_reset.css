@@ -1,0 +1,43 @@
+@tailwind base;
+
+[x-cloak] {
+  display: none !important;
+}
+
+* {
+  filter: none !important;
+  min-width: 0;
+}
+
+mark {
+  color: inherit
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  @apply appearance-none;
+}
+
+
+details.appearance-none summary {
+  &::-webkit-details-marker {
+    @apply hidden;
+    content: "";
+  }
+
+  &::marker {
+    @apply hidden;
+    content: "";
+  }
+}
+
+:root {
+  --border-w: 0;
+  --border-w-md: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+img { color: transparent; }

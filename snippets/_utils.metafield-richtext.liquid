@@ -1,0 +1,11 @@
+{% assign richtextStr = "" %}
+{% assign richtext = content | metafield_tag | replace: '<div class="metafield-rich_text_field">', "" | split: "</div>" %}
+{% for htmlBlock in richtext %}
+  {% if forloop.last %}
+    {% assign richtextStr = richtextStr | append: htmlBlock %}
+    {% break %}
+  {% endif %}
+  {% assign richtextStr = richtextStr | append: htmlBlock | append: "</div>" %}
+{% endfor %}
+{{ richtextStr }}
+

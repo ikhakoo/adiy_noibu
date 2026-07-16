@@ -1,0 +1,79 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "product_confirmation_text"
+  assign section_type = "product"
+  assign buy_text_metafield = block.settings.buy_text_metafield
+  assign short_text_metafield = block.settings.short_text_metafield
+  assign css_class = block.settings.css_class
+	assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+	assign border_width_radius = block.settings.border_width_radius
+  assign background_color = block.settings.background_color
+  assign background_gradient = block.settings.background_gradient
+  assign border_color = block.settings.border_color
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign color_override = block.settings.color_override
+  assign hide_if_empty = block.settings.hide_if_empty
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign namespace_key = buy_text_metafield | replace: " ", "" | trim | strip_newlines | split: '.'
+  assign template_text = product.metafields[namespace_key[0]][namespace_key[1]] | metafield_text
+
+  assign short_name_key = short_text_metafield | replace: " ", "" | trim | strip_newlines | split: '.'
+  assign short_name = product.metafields[short_name_key[0]][short_name_key[1]] | metafield_text
+
+  if request.design_mode != true
+    if template_text == blank
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+
+  if is_empty
+    break
+  endif
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,max_w_flex_col_row_order_align,margin_top_bottom_left_right,color_override,border_width_radius,background_color,background_gradient,border_color,padding_top_bottom_left_right" %}
+		
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    x-data="{ 
+			templateText: '{{ template_text | json | escape }}',
+			shortName: '{{ short_name | escape }}',
+			result: ''
+		}"
+		x-init="result = replaceVariantPlaceholders(templateText, $data?.state?.product, $data?.state?.selected_variant, shortName)"
+    x-effect="() => { 
+      if ($data?.state?.selected_variant || $data?.state?.hydrated) { 
+				result = replaceVariantPlaceholders(templateText, $data?.state?.product, $data?.state?.selected_variant, shortName);
+      } 
+    }"
+    x-cloak
+    data-block-type="{{ block.type }}"
+    class="{{ css_class }}">
+  
+		<div x-html="result" 
+				:style="'color: {{ color_override | default: 'inherit' }}; text-wrap-style: balance'">
+		</div>
+</div>

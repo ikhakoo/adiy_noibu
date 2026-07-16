@@ -1,0 +1,177 @@
+{%- render "before-after" -%}
+{% schema %}
+{
+  "name": "Before and After",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "richtext",
+      "id": "preheading",
+      "label": "Preheading"
+    },
+    {
+      "type": "text",
+      "id": "preheading_class",
+      "label": "Preheading class",
+      "default": "richtext-md"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading_class",
+      "label": "Heading class",
+      "default": "richtext-md"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "subheading_class",
+      "label": "Subheading class",
+      "default": "richtext-md"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_primary_text",
+      "label": "Button primary text"
+    },
+    {
+      "type": "url",
+      "id": "button_primary_url",
+      "label": "Button primary Url"
+    },
+    {
+      "type": "text",
+      "id": "button_primary_class",
+      "label": "Button primary class",
+      "default": "button-primary"
+    },
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "before_image",
+      "label": "Before Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "after_image",
+      "label": "After Image"
+    },
+    {
+      "type": "header",
+      "content": "Section Globals"
+    },
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section Id"
+    },
+    {
+      "type": "text",
+      "id": "top_bottom_min_height",
+      "label": "padding: top | bottom | min-h",
+      "default": "0 | 0 | 0"
+    },
+    {
+      "type": "select",
+      "id": "container_spacing",
+      "default": "px-container-md",
+      "options": [
+        {
+          "value": "px-container-xs",
+          "label": "xs"
+        },
+        {
+          "value": "px-container-sm",
+          "label": "sm"
+        },
+        {
+          "value": "px-container-md",
+          "label": "md"
+        },
+        {
+          "value": "px-container-lg",
+          "label": "lg"
+        },
+        {
+          "value": "px-container-fullwidth",
+          "label": "fullwidth"
+        },
+        {
+          "value": "px-container-gutter",
+          "label": "magazine"
+        }
+      ],
+      "label": "Container Spacing"
+    },
+    {
+      "type": "select",
+      "id": "responsive_visibility",
+      "label": "Responsive Visibility",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile"
+        },
+        {
+          "value": "desktop-tablet-only",
+          "label": "Desktop"
+        }
+      ]
+    }
+  ],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "Before and After",
+      "settings": {
+        "preheading": "<p><strong>EASY AND QUICK ASSEMBLY</strong></p>",
+        "preheading_class": "richtext-md",
+        "heading": "<h2><strong>Transform Your<br/>space in 1 hour</strong></h2>",
+        "heading_class": "richtext-md",
+        "subheading": "<p>Elevate your gatherings with our modular design - Connect deck kits for a spacious outdoor experience. Connect with us today to start planning your new deck build.</p>",
+        "subheading_class": "richtext-md",
+        "button_primary_text": "Shop deck kits",
+        "button_primary_url": "",
+        "button_primary_class": "button-secondary",
+        "before_image": "shopify://shop_images/Image_Ratios_6.png",
+        "after_image": "shopify://shop_images/Image_Ratios_28.png",
+        "section_id": "",
+        "top_bottom_min_height": "32/24 | 48 | 0",
+        "container_spacing": "px-container-md",
+        "responsive_visibility": ""
+      }
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "custom.globals",
+      "custom.header",
+      "custom.modal",
+      "custom.card"
+    ]
+  }
+}
+{% endschema %}

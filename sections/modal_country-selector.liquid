@@ -1,0 +1,59 @@
+{%- render "modal_country-selector" -%}
+{% schema %}
+{
+  "name": "Country Selector",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_flag",
+      "label": "Show flag"
+    },
+    {
+      "type": "text",
+      "id": "close_icon",
+      "label": "Close icon",
+      "default": "x-mark"
+    },
+    {
+      "type": "text",
+      "id": "text_class",
+      "label": "Text class",
+      "default": "nav-link"
+    },
+    {
+      "type": "select",
+      "id": "background_blur",
+      "label": "Background Blur",
+      "default": "backdrop-blur-md",
+      "options": [
+        {
+          "value": "",
+          "label": "none"
+        },
+        {
+          "value": "backdrop-blur-sm",
+          "label": "sm"
+        },
+        {
+          "value": "backdrop-blur-md",
+          "label": "md"
+        },
+        {
+          "value": "backdrop-blur-lg",
+          "label": "lg"
+        }
+      ]
+    }
+  ],
+  "limit": 1,
+  "enabled_on": {
+    "groups": [
+      "custom.modal"
+    ]
+  }
+}
+{% endschema %}

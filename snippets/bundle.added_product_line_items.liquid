@@ -1,0 +1,167 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "added_product_line_items"
+  assign section_type = "bundle"
+  assign show_conditionally = block.settings.show_conditionally
+  assign show_based_on_bundle_state = block.settings.show_based_on_bundle_state
+  assign width_height_aspect_object_fit = block.settings.width_height_aspect_object_fit
+  assign border_width_radius = block.settings.border_width_radius
+  assign background_gradient = block.settings.background_gradient
+  assign border_color = block.settings.border_color
+  assign title_class = block.settings.title_class
+  assign variant_title_class = block.settings.variant_title_class
+  assign price_class = block.settings.price_class
+  assign quantity_class = block.settings.quantity_class
+  assign slider_cols_rows_align_x_align_y_gap = block.settings.slider_cols_rows_align_x_align_y_gap
+  assign slider_scroll_snap = block.settings.slider_scroll_snap
+  assign slider_overflow_container = block.settings.slider_overflow_container
+  assign width_height_aspect = block.settings.width_height_aspect
+  assign scrollbar_class = block.settings.scrollbar_class
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility, margin_top_bottom_left_right, max_w_flex_col_row_order_align" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-bundle-line-items]",
+    keys: "slider_cols_rows_align_x_align_y_gap"
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-line-image]",
+    keys: "width_height_aspect_object_fit,background_gradient,border_color,border_width_radius"
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-scrollbar]",
+    keys: "padding_top_bottom_left_right",
+    padding_as_margin: true %}
+{% liquid
+
+  assign slider_cols_rows_align_x_align_y_gap = slider_cols_rows_align_x_align_y_gap | strip_newlines | split: '|'
+  assign grid_cols = slider_cols_rows_align_x_align_y_gap[0] | split: '/'
+
+  assign container_spacing = section.settings.container_spacing
+  case slider_overflow_container
+    when 'all'
+      assign slider_overflow = container_spacing | replace: 'px', '-mx' | append: " scroll-" | append: container_spacing | append: " " | append: container_spacing
+    when 'mobile'
+      assign slider_overflow = container_spacing | replace: 'px', 'max-md:-mx' | append: " max-md:scroll-" | append: container_spacing | append: " max-md:" | append: container_spacing
+    when 'desktop'
+      assign slider_overflow = container_spacing | replace: 'px', 'md:-mx' | append: " md:scroll-" | append: container_spacing | append: " md:" | append: container_spacing
+  endcase
+%}
+
+<style>
+  @media screen and (max-width: {{ responsive_breakpoint | default: "768px" }}) {
+    [data-style-id="{{ section.id }}--{{ block.id }}"] [data-style-bundle-line-items] > :where(*):nth-of-type({{ grid_cols | last | replace: " ", "" | trim }}n+1) {
+      scroll-snap-align: start;
+    }
+  }
+
+  @media screen and (min-width: {{ responsive_breakpoint | default: "768px" }}) {
+    [data-style-id="{{ section.id }}--{{ block.id }}"] [data-style-bundle-line-items] > :where(*):nth-of-type({{ grid_cols | first | replace: " ", "" | trim }}n+1) {
+      scroll-snap-align: start;
+    }
+  }
+</style>
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    class="flex flex-col"
+    x-show="($data.windowWidth >= 1024 || $data.showConditionally(`{{ show_conditionally }}`)) && $data.showBasedOnBundleState(`{{ show_based_on_bundle_state }}`)"
+    data-grid-slider
+    x-data="{ ..._sections.initContentSlider($refs.added_product_line_items_container) }">
+  <div class="relative grid overflow-x-auto scrollbar-none overflow-y-hidden snap-x {{ slider_scroll_snap }} {{ slider_overflow }}"
+       x-ref="added_product_line_items_container"
+       @resize.window="() => { content_slider.handleResize(); }"
+       @scroll="content_slider.handleScroll"
+       data-style-bundle-line-items>
+    <template x-for="item in $data.bundle.items_added?.reduce((acc, item, index) => {
+                const i = acc.findIndex(entry => item.variant?.id === entry?.variant.id);
+                if (i !== -1) {
+                    acc[i].quantity += 1;
+                    acc[i].indexes.push(index)
+                    return acc;
+                }
+                acc.push({ ...item, indexes: [index], quantity: 1 })
+                return acc;
+                }, [])">
+      <section class="flex items-start gap-3 pb-4 border-b border-b-theme-text/30 last-of-type:border-none"
+               x-data="{ variant: item?.variant, product: item?.product }">
+        <picture class="relative" data-style-line-image>
+          <img src=""
+               alt=""
+               srcset=""
+               :src="variant?.featured_media?.src ?? product?.featured_media?.src"
+               :alt="variant?.featured_media?.alt ?? product?.featured_media?.alt ?? product?.title"
+               :srcset="utils.getImageSrcSet(variant?.featured_media?.src ?? product?.featured_media?.src ?? '', 384)"
+               width="384"
+               height="384"
+               loading="lazy"
+               onload="this.classList.remove('!opacity-0')"
+               class="relative h-full w-full object-[inherit] !opacity-0"
+               sizes="(max-width: 768px) 33vw, (max-width: 1024px) 20vw, 16vw">
+        </picture>
+        <main class="flex flex-1 flex-col gap-1">
+          <div class="flex gap-1">
+            <div class="flex" style="{{ icon_styles | strip_newlines }}">
+              <h3 x-html="product?.title" class="flex-1 {{ title_class }}"></h3>
+            </div>
+            <h4 class="mt-1 {{ variant_title_class }}"
+                x-html="variant?.title"
+                x-show="variant?.title && variant?.title !== 'Default Title'"></h4>
+          </div>
+          <div class="mt-1.5 {{ price_class }}"
+               x-html="utils.formatMoney(variant?.price)"></div>
+        </main>
+        <div class="mr-auto mt-2 flex w-min">
+          <label class="flex items-center justify-between {{ quantity_class }}"
+                 @click.prevent.stop="()=>{}">
+            <span class="flex-1" data-quantity-label>Quantity</span>
+            <span class="flex items-center">
+              <button type="button"
+                      class="p-0.5"
+                      aria-label="Decrease quantity"
+                      @click="$data.bundle.items_added.splice(item?.indexes?.at(-1), 1)">
+                {% render '_components.icon', icon: "minus", class: "size-[0.9em]" %}
+              </button>
+              <input type="number"
+                     min="0"
+                     name="value"
+                     class="w-8 min-w-0 appearance-none bg-inherit text-center outline-none disabled:pointer-events-none disabled:select-none"
+                     disabled="disabled"
+                     :value="item?.quantity">
+              <button type="button"
+                      class="p-0.5"
+                      aria-label="Increase quantity"
+                      :disabled="variant?.inventory_management === 'shopify' && variant?.inventory_policy === 'deny' && (variant?.inventory_quantity - item?.quantity) <= 0"
+                      @click="$data.addToBundle({ product, variant })">
+                {% render '_components.icon', icon: "plus", class: "size-[0.9em]" %}
+              </button>
+            </span>
+          </label>
+        </div>
+      </section>
+    </template>
+  </div>
+  {% if scrollbar_class != blank %}
+    {% render "_components.scrollbar",
+        class: scrollbar_class,
+        scroll_container_ref: '$refs.added_product_line_items_container',
+        html_attributes: 'data-style-scrollbar' %}
+  {% endif %}
+</div>

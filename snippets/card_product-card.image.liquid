@@ -1,0 +1,93 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "image"
+  assign section_type = "card_product-card"
+  assign primary_image = block.settings.primary_image
+  assign metafield_image = block.settings.metafield_image
+  assign show_secondary_image = block.settings.show_secondary_image
+  assign link_to_product = block.settings.link_to_product
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign width_height_aspect_object_fit = block.settings.width_height_aspect_object_fit
+  assign border_width_radius = block.settings.border_width_radius
+  assign background_color = block.settings.background_color
+  assign background_gradient = block.settings.background_gradient
+  assign border_color = block.settings.border_color
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,padding_top_bottom_left_right,background_color,background_gradient,border_color,border_width_radius,margin_top_bottom_left_right,max_w_flex_col_row_order_align"
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-image-container]",
+    keys: "width_height_aspect_object_fit",
+    css_variables: true
+%}
+
+<figure
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    class="overflow-hidden shrink-0"
+    x-show="primary_image || secondary_image"
+    x-data="{ primary_image: card?.product?.media?.[0], secondary_image: card?.product?.media?.[1] }">
+  <div data-style-skeleton class="relative isolate" x-show="!card?.hydrated">
+    <div class="h-full w-full animate-pulse rounded-md bg-gray-200/70" {{ block.shopify_attributes }}>
+    </div>
+  </div>
+  <picture x-show="card?.hydrated"
+           class="relative isolate block overflow-hidden group bg-inherit w-dynamic h-dynamic aspect-dynamic"
+           data-style-image-container
+      {% if link_to_product %}
+        :title="`${_stores.router?.pathname?.replace(/^.*?(\/collections\/[^/]*)?.*$/gi,'$1')?.replace(/^\/$/gi,'') ?? ''}/products/${card?.product?.handle}?variant=${card?.selected_variant?.id}`"
+        role="button"
+        tabindex="0"
+        @click.prevent.stop="barba.go(`${_stores.router?.pathname?.replace(/^.*?(\/collections\/[^/]*)?.*$/gi,'$1')?.replace(/^\/$/gi,'') ?? ''}/products/${card?.product?.handle}?variant=${card?.selected_variant?.id}`); $modal.setId('')"
+      {% endif %}
+           x-effect="() => {
+             if (`{{ primary_image }}` === 'variant_image' && card?.selected_variant?.featured_media) {
+                 primary_image = card?.selected_variant?.featured_media;
+             }
+             if (`{{ primary_image }}` === 'metafield_image') {
+                 primary_image = $data.getDynamicValue('{{ metafield_image }}') ?? primary_image
+             }
+             secondary_image = card?.product?.media?.find(media => media.id !== primary_image?.id)
+            }">
+    <img src=""
+         x-show="!!primary_image"
+         alt=""
+         srcset=""
+         :src="primary_image?.src ?? primary_image?.preview_image?.src ?? primary_image"
+         :alt="primary_image?.alt ?? card?.product?.title"
+         :srcset="primary_image ? utils.getImageSrcSet(primary_image?.src ?? primary_image?.preview_image?.src ?? primary_image ?? '', 800) : ''"
+         width="732"
+         height="732"
+         loading="lazy"
+         onload="this.classList.remove('!opacity-0')"
+         class="pointer-events-none relative h-full w-full select-none overflow-hidden object-dynamic !opacity-0"
+         sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw">
+    {% if show_secondary_image %}
+      <img x-show="!!secondary_image?.src"
+           src=""
+           alt=""
+           srcset=""
+           :src="secondary_image?.src ?? secondary_image?.preview_image?.src"
+           :alt="secondary_image?.alt ?? card?.product?.title"
+           :srcset="secondary_image ? utils.getImageSrcSet(secondary_image?.src ?? secondary_image?.preview_image?.src ?? '', 800) : ''"
+           width="732"
+           height="732"
+           loading="lazy"
+           onload="this.classList.remove('!opacity-0')"
+           class="absolute inset-0 h-full w-full select-none overflow-hidden object-dynamic opacity-0 group-hf:opacity-100 bg-inherit !opacity-0"
+           sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw">
+    {% endif %}
+  </picture>
+</figure>

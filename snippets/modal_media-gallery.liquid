@@ -1,0 +1,132 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "modal_media-gallery"
+  assign show_alt_tag_description = section.settings.show_alt_tag_description
+  assign background_blur = section.settings.background_blur
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+<div x-data="{ open: $mediaGallery?.open }"
+     x-effect="open = /*$editor?.select_section_id === '{{ section.id }}' ||*/ $mediaGallery.open"
+     x-cloak>
+  <div class="fixed inset-0 z-[2147483647] flex max-h-full flex-col items-center bg-black text-white transition duration-75 ease-in-out"
+       x-show="open"
+       x-trap.noautofocus="open"
+       x-transition:enter-start="opacity-0"
+       x-transition:enter-end="opacity-100"
+       x-transition:leave-start="opacity-100"
+       x-transition:leave-end="opacity-0">
+    <template x-if="open">
+      <div @keydown.esc.document.prevent="$mediaGallery.open = false"></div>
+    </template>
+    <header class="container grid max-w-none grid-cols-[100px_1fr_100px] gap-2 py-6">
+      <div>
+        <button
+            class="inline-flex items-center gap-2 rounded px-4 py-2 outline-none hf:bg-gray-900/70 hf:outline-none hf:ring-0"
+            type="button"
+            @click="$mediaGallery.open = false">
+          <span class="sr-only">Close Drawer</span>
+          {% render '_components.icon', icon: 'x-mark', class: "h-5 shrink-0" %}
+          Close
+        </button>
+      </div>
+      <div class="flex items-center justify-center" x-html="`${$mediaGallery.scrollIndex + 1} / ${$mediaGallery.media.length}`">
+      </div>
+    </header>
+    <main class="container grid w-full max-w-none flex-1 shrink-0 gap-2 md:grid-cols-[100px_1fr_100px]">
+      <div class="flex h-full items-center justify-center max-md:hidden">
+        <button aria-label="Previous Media"
+                type="button"
+                :class="$mediaGallery.scrollIndex <= 0 ? `opacity-30 pointer-events-none` : ''"
+                :disabled="$mediaGallery.scrollIndex <= 0"
+                @click="$refs.scrollContainer.scrollTo({ left: $refs.scrollContainer.children[$mediaGallery.scrollIndex]?.offsetLeft ?? 0, behavior: 'instant' });"
+                class="rounded-full border border-white p-3 hf:bg-gray-900/70">
+          {% render '_components.icon', icon: 'chevron-left', class: "h-4 w-4 shrink-0" %}
+        </button>
+      </div>
+      <div class="relative flex flex-col h-screen max-h-[calc(100vh-88px-96px)] w-full justify-center items-center overflow-hidden">
+        <div class="scrollbar-none grid max-h-[calc(100vh-88px-96px)] max-md:w-[calc(100vw-32px)] h-full max-w-full snap-x snap-mandatory gap-4 overflow-x-auto md:absolute md:inset-0 auto-cols-[100%] grid-flow-col"
+             @scroll="$mediaGallery.scrollIndex = Math.round(($el.scrollWidth / $el.clientWidth) * ($el.scrollLeft / $el.scrollWidth))"
+             x-ref="scrollContainer"
+             x-effect="if (open && $mediaGallery.index > -1) { $nextTick(()=>{ $el.scrollTo({ left: $el.children[$mediaGallery.index + 1]?.offsetLeft ?? 0, behavior: 'instant' }) })}">
+          <template x-for="(value, i) in $mediaGallery.media">
+            <picture class="relative h-full max-h-[calc(100vh-88px-96px)] w-full snap-center">
+              <template x-if="$mediaGallery.media[i]?.media_type === 'image'">
+                <img class="inset-0 h-full w-full object-contain md:absolute !opacity-0"
+                     src=""
+                     alt=""
+                     onload="this.classList.remove('!opacity-0')"
+                     :src="$mediaGallery.media[i]?.preview_image.src"
+                     :alt="$mediaGallery.media[i]?.alt" />
+              </template>
+              <template x-if="$mediaGallery.media[i]?.media_type === 'video'">
+                <video playsinline="playsinline"
+                       controls="controls"
+                       x-effect="() => {if ($mediaGallery.scrollIndex !== i || !$mediaGallery.open) { $el.pause()} }"
+                       loop="loop"
+                       preload="none"
+                       class="absolute left-0 top-0 h-full w-full bg-inherit object-contain"
+                       :aria-label="$mediaGallery.media[i]?.alt"
+                       :poster="$mediaGallery.media[i]?.preview_image.src">
+                  <source src=""
+                          :src="$mediaGallery.media[i]?.sources?.find((src) => src.format === 'mp4' && src.width <= 852)?.url"
+                          type="video/mp4" />
+                  <img src="" alt="" :src="$mediaGallery.media[i]?.preview_image.src" :alt="$mediaGallery.media[i]?.alt" />
+                </video>
+              </template>
+              <template x-if="$mediaGallery.media[i]?.media_type === 'external_video'">
+                <iframe allow="accelerometer; autoplay; encrypted-$mediaGallery.media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                        class="inset-0 h-full w-full border-0 bg-inherit object-contain js-youtube md:absolute"
+                        loading="lazy"
+                        x-effect="() => {if ($mediaGallery.scrollIndex !== i) { $el.src = $mediaGallery.media[i].host === 'youtube' ? `https://www.youtube.com/embed/${$mediaGallery.media[i].external_id}?autoplay=0&controls=1&muted=1&enablejsapi=1&loop=${1}&modestbranding=1&playsinline=1&rel=0`
+                      : `https://player.vimeo.com/video/${$mediaGallery.media[i].external_id}`  } }"
+                        :src="$mediaGallery.media[i].host === 'youtube' ? `https://www.youtube.com/embed/${$mediaGallery.media[i].external_id}?autoplay=0&controls=1&muted=1&enablejsapi=1&loop=${1}&modestbranding=1&playsinline=1&rel=0`
+                      : `https://player.vimeo.com/video/${$mediaGallery.media[i].external_id}`"
+                        :title="$mediaGallery.media[i].alt"></iframe>
+              </template>
+              <template x-if="$mediaGallery.media[i]?.media_type === 'model'">
+                <div class="relative aspect-1 h-full w-full">
+                  <div x-html="`
+                    <model-viewer
+                      class='inset-0 h-full w-full object-contain md:absolute'
+                      style='--poster-color: transparent; position: absolute;'
+                      src='${$mediaGallery.media[i]?.sources?.find((source) => source.format === 'glb')?.url}'
+                      camera-controls='true'
+                      data-shopify-feature='1.12'
+                      alt='${$mediaGallery.media[i]?.alt}'
+                      poster='${$mediaGallery.media[i]?.preview_image.src}'
+                      data-js-focus-visible='
+                      ar-status='not-presenting'
+                      ></model-viewer>
+                  `"></div>
+                </div>
+              </template>
+            </picture>
+          </template>
+        </div>
+      </div>
+      {% render "_components.scrollbar",
+          class: 'scroll-buttons md:!hidden w-full',
+          scroll_container_ref: '$refs.scrollContainer'
+      %}
+      <div class="flex h-full items-center justify-center max-md:hidden">
+        <button aria-label="Next Media"
+                type="button"
+                :class="$mediaGallery.scrollIndex + 1 >= $mediaGallery.media.length ? `opacity-30 pointer-events-none` : ''"
+                :disabled="$mediaGallery.scrollIndex + 1 >= $mediaGallery.media.length"
+                @click="$refs.scrollContainer.scrollTo({ left: $refs.scrollContainer.children[$mediaGallery.scrollIndex + 2]?.offsetLeft ?? $refs.scrollContainer.scrollWidth, behavior: 'instant' });"
+                class="rounded-full border border-white p-3 hf:bg-gray-900/70">
+          {% render '_components.icon', icon: 'chevron-right', class: "h-4 w-4 shrink-0" %}
+        </button>
+      </div>
+    </main>
+
+    {% if show_alt_tag_description %}
+      <footer class="container flex h-24 max-w-3xl select-none items-center justify-center text-balance"
+              x-html="$mediaGallery.media[$mediaGallery.scrollIndex]?.alt ?? ''">
+      </footer>
+    {% endif %}
+  </div>
+</div>
+

@@ -1,0 +1,155 @@
+{% comment %}
+Variables:
+- content
+- class
+- style
+- html_attributes
+{% endcomment %}
+{% comment %}
+    Shopify Input Type - Richtext
+    The input matches Icons via the `_utils.icon` snippet
+
+    Accepts:
+    - content: {string}
+    - class: {string}
+    - style: {string} Inline CSS style declaration
+    - html_attributes: {string} Stringified html attributes i.e. 'data-variable="id"'
+
+    Usage:
+    {% render "_input.richtext", content: content, class: class, style: style, html_attributes: 'data-variable="id"' %}
+{% endcomment %}
+{%- liquid
+  assign loop_index = forloop.index
+
+  for i in (1..15)
+    if content contains '[gap.'
+      assign split = content | replace_first: '[gap.', '|~|split|~|' | split: '|~|split|~|'
+      assign split_2 = split[1] | replace_first: ']', '|~|split|~|' | split: '|~|split|~|'
+      assign first = split[0]
+      assign size = split_2[0] | trim | split: '.' | first | replace: 'px', ''
+      assign last = split_2[1]
+      if size == 'fill'
+        assign sizeSpan = '<span style="display: inline-block; flex: 1;"></span>'
+      else
+        assign sizeSpan = '<span style="display: inline-block; padding-left:' | append: size | append: 'px;"></span>'
+      endif
+      assign content = first | append: sizeSpan | append: last
+      continue
+    endif
+    break
+  endfor
+
+  for i in (1..15)
+    if content contains '[hr.'
+      assign split = content | replace_first: '[hr.', '|~|split|~|' | split: '|~|split|~|'
+      assign split_2 = split[1] | replace_first: ']', '|~|split|~|' | split: '|~|split|~|'
+      assign first = split[0]
+      assign size = split_2[0] | trim | split: '.' | first | replace: 'px', ''
+      assign last = split_2[1]
+      assign sizeSpan = '<span style="display: block; height:' | append: size | append: 'px;"></span>'
+      assign content = first | append: sizeSpan | append: last
+      continue
+    endif
+    break
+  endfor
+
+  if forloop != blank
+    for i in (1..15)
+      if content contains '[index.'
+        assign split = content | replace_first: '[index.', '|~|split|~|' | split: '|~|split|~|'
+        assign split_2 = split[1] | replace_first: ']', '|~|split|~|' | split: '|~|split|~|'
+        assign first = split[0]
+        assign modifier = split_2[0] | trim | split: '.' | first | times: 1
+        assign last = split_2[1]
+        assign number = loop_index | plus: modifier
+        assign content = first | append: number | append: last
+        continue
+      endif
+      break
+    endfor
+  endif
+
+  for i in (1..15)
+    if content contains '[span.'
+      assign split = content | replace_first: '[span.', '|~|split|~|' | split: '|~|split|~|'
+      assign split_2 = split[1] | replace_first: ']', '|~|split|~|' | split: '|~|split|~|'
+      assign first = split[0]
+      assign class_name = split_2[0] | trim | split: '.' | first | split: '||' | first
+      assign span_content = split_2[0] | trim | split: '||' | last
+      assign last = split_2[1]
+      assign span_item = '<span class="empty:hidden ' | append: class_name | append: '">' | append: span_content | append: '</span>'
+      assign content = first | append: span_item | append: last
+      continue
+    endif
+    break
+  endfor
+
+  for i in (1..15)
+    if content contains '[icon.'
+      assign split = content | replace_first: '[icon.', '|~|split|~|' | split: '|~|split|~|'
+      assign split_2 = split[1] | replace_first: ']', '|~|split|~|' | split: '|~|split|~|'
+      assign prev_content = split[0]
+      assign next_content = split_2[1]
+      assign icon_array = split_2[0] | trim | split: '.'
+      assign icon = icon_array | first
+      assign height = icon_array[1] | replace: ",", "." | default: "1.25em"
+      if height contains 'em' or height contains '%'
+      else
+        assign height = height | replace: 'px', '' | append: 'px'
+      endif
+      assign color = icon_array[2] | default: "currentColor"
+      assign image = icon_array[3] | default: "not_an_image"
+      assign icon_style = "height: " | append: height | append: "; color:" | append: color | append: ";"
+      capture content
+        echo prev_content
+        if height == 'image' or color == 'image' or image == 'image' or height == 'imagepx'
+          if icon_array[1] == 'image'
+            assign height = icon_array[2] | replace: ",", "." | default: "1.25em"
+            if height contains 'em' or height contains '%'
+            else
+              assign height = height | replace: 'px', '' | append: 'px'
+            endif
+            assign color = icon_array[3] | default: "currentColor"
+            assign icon_style = "height: " | append: height | append: "; color:" | append: color | append: ";"
+          endif
+          if icon_array[2] == 'image'
+            assign height = icon_array[1] | replace: ",", "." | default: "1.25em"
+            assign color = icon_array[3] | default: "currentColor"
+            if height contains 'em' or height contains '%'
+            else
+              assign height = height | replace: 'px', '' | append: 'px'
+            endif
+            assign icon_style = "height: " | append: height | append: "; color:" | append: color | append: ";"
+          endif
+          render "_components.icon", icon: icon, class: "inline-flex items-center justify-center align-middle", style: icon_style, no_mask: true
+        else
+          render "_components.icon", icon: icon, class: "inline-flex items-center justify-center align-middle", style: icon_style
+        endif
+        echo next_content
+      endcapture
+      continue
+    endif
+    break
+  endfor
+
+  assign escapedContent = content | strip_html | trim
+  assign containsHtml = false
+  if content contains "<svg" or content contains "<img" or content contains "<video" or content contains "<table" or content contains "<canvas"
+    assign containsHtml = true
+  endif
+  if content == blank or escapedContent == blank and containsHtml != true
+    break
+  endif
+  if add_newlines and containsHtml != true
+    assign content = content | newline_to_br
+  endif
+-%}
+{%- capture result -%}
+  <div class="_input-richtext {{ class }}"
+       {%- if style != blank -%}style="{{ style }}"{%- endif -%} {{ html_attributes }}>{{ content | replace: '®', "<sup style='font-size: 0.7em;'>®</sup>" }}</div>
+{%- endcapture -%}
+{%- if escape -%}
+  {{ result | escape }}
+  {%- break -%}
+{%- endif -%}
+{{ result }}

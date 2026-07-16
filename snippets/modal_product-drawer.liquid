@@ -1,0 +1,145 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "modal_product-drawer"
+  assign close_icon = section.settings.close_icon
+  assign preview_product = section.settings.preview_product
+  assign default_select_selling_plan = section.settings.default_select_selling_plan
+  assign flex_direction_align_x_align_y_gap_wrap = section.settings.flex_direction_align_x_align_y_gap_wrap
+  assign padding_top_bottom_left_right = section.settings.padding_top_bottom_left_right
+  assign width_height_border_width_radius = section.settings.width_height_border_width_radius
+  assign text_color = section.settings.text_color
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign border_color = section.settings.border_color
+  assign background_blur = section.settings.background_blur
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if product == blank
+    assign product = collections.all.products[0]
+  endif
+
+  assign option_blocks = "" | split: "" | uniq
+  for block in section.blocks
+    if block.type contains "option__"
+      assign blocks = section.blocks | where: "id", block.id
+      assign option_blocks = option_blocks | concat: blocks
+    endif
+  endfor
+%}
+
+{% capture option_block_settings %}
+  [
+  {% for block in option_blocks %}
+    {
+    "block_id": "{{ block.id }}",
+    "match_option_titles": {{ block.settings.match_option_titles | json }},
+    "match_exact_word": {{ block.settings.match_exact_word | json }}
+    }{% unless forloop.last %},{% endunless %}{% endfor %}
+  ]
+{% endcapture %}
+
+{% render '_utils.dynamic-css', keys: "text_color,background_color,background_gradient,border_color" %}
+{% render '_utils.dynamic-css', keys: "width_height_border_width_radius", css_variables: true %}
+{% render '_utils.dynamic-css', selector: '& [data-style-section-container]', keys: "flex_direction_align_x_align_y_gap_wrap,padding_top_bottom_left_right" %}
+
+<div x-data="{ open: $productDrawer?.open }"
+     x-effect="open = $editor?.select_section_id === '{{ section.id }}' || $productDrawer.open"
+     x-cloak>
+  <div class="fixed inset-0 z-50 bg-[--color-modal-background] {{ background_blur }} transition duration-300 ease-in-out"
+       x-show="open"
+       @click="$productDrawer.open = false"
+       x-transition:enter-start="opacity-0"
+       x-transition:enter-end="opacity-100"
+       x-transition:leave-start="opacity-100"
+       x-transition:leave-end="opacity-0"></div>
+  <div class="fixed inset-x-0 bottom-0 z-[2147483647] overflow-y-auto rounded-t-xl shadow-invert transition duration-300 ease-in-out border-w-[--border-width] scrollbar-none rounded-[--border-radius] max-h-[--height] max-w-[--width] {{ color_scheme }}"
+       data-style-id="{{ section.id }}"
+       x-show="open"
+       x-trap.noautofocus="open"
+       x-transition:enter-start="opacity-0 translate-y-full"
+       x-transition:enter-end="opacity-100 translate-y-0"
+       x-transition:leave-start="opacity-100 translate-y-0"
+       x-transition:leave-end="opacity-0 translate-y-full"
+       data-product-handle="{{ product.handle }}"
+       data-product-id="{{ product.id }}"
+       data-option-blocks="{{ option_block_settings | strip_newlines | escape }}"
+       data-settings="{{ section.settings | json | escape }}"
+       x-data="{ ..._sections.initProductCard($el, $refs, $el.getAttribute('data-product-handle'), $el.getAttribute('data-product-id'), $el.getAttribute('data-variant-id'), $el.hasAttribute('data-default-subscription')) }"
+       x-effect="()=> {
+         {% if request.design_mode %}
+           if ($editor?.select_section_id === '{{ section.id }}') {
+              const product = _products[`{{ product.handle }}`]
+              updateProductState(product)
+              return;
+           }
+         {% endif %}
+         if ($productDrawer.product && $productDrawer.open) {
+            updateProductState($productDrawer.product)
+         }
+       }"
+  {% if default_select_selling_plan %}
+    data-default-subscription="true"
+      {% endif %}>
+    <div>
+      <form data-style-section-container
+            method="post"
+            action="/cart/add"
+            @submit.prevent.stop="() => {}"
+            class="flex h-full"
+            style="flex-flow: {{ flex_flow }}; max-height: calc(var(--max-h) - var(--pt) - var(--pb));">
+        <input type="hidden" name="id" :value="card?.selected_variant?.id" />
+        <input type="hidden" name="quantity" value="1" />
+        {% liquid
+          assign allow_no_cols = true
+          for block in section.blocks
+
+            if allow_no_cols
+              render 'card_product-card.block', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+
+              if block.type == 'layout_child__overlay'
+                assign allow_no_cols = false
+                render 'card_product-card.layout_child__overlay', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+              endif
+
+            endif
+
+            if block.type == 'layout__end'
+              assign allow_no_cols = true
+            endif
+
+            if block.type == 'layout__grid'
+              assign allow_no_cols = false
+              render 'card_product-card.layout__grid', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+            endif
+
+            if block.type == 'layout__flex'
+              assign allow_no_cols = false
+              render 'card_product-card.layout__flex', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+            endif
+
+            if block.type == 'layout__flex_wrap'
+              assign allow_no_cols = false
+              render 'card_product-card.layout__flex_wrap', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+            endif
+          endfor
+        %}
+      </form>
+    </div>
+
+    {% if close_icon != blank %}
+      <button type="button"
+              class="absolute right-4 top-4 z-10 text-theme-text/60 hf:text-theme-text/90"
+              @click="$productDrawer.open = false">
+        <span class="sr-only">Close Drawer</span>
+        {% render '_components.icon', icon: close_icon, class: "h-5 shrink-0" %}
+      </button>
+    {% endif %}
+
+    <template x-if="open">
+      <div @keydown.esc.document.prevent="$productDrawer.open = false"></div>
+    </template>
+  </div>
+</div>
+

@@ -1,0 +1,328 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "card_product-card"
+  assign _handle = section.settings.handle
+  assign preview_product = section.settings.preview_product
+  assign link_to_product = section.settings.link_to_product
+  assign default_select_selling_plan = section.settings.default_select_selling_plan
+  assign default_variant_metafield = section.settings.default_variant_metafield
+  assign flex_direction_align_x_align_y_gap_wrap = section.settings.flex_direction_align_x_align_y_gap_wrap
+  assign padding_top_bottom_left_right = section.settings.padding_top_bottom_left_right
+  assign max_width_max_height_border_width_radius = section.settings.max_width_max_height_border_width_radius
+  assign text_color = section.settings.text_color
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign border_color = section.settings.border_color
+  assign dynamic_text_color = section.settings.dynamic_text_color
+  assign dynamic_background_color = section.settings.dynamic_background_color
+  assign dynamic_border_color = section.settings.dynamic_border_color
+  assign hover_text_color = section.settings.hover_text_color
+  assign hover_background_color = section.settings.hover_background_color
+  assign hover_background_gradient = section.settings.hover_background_gradient
+  assign hover_border_color = section.settings.hover_border_color
+  assign loading_width_height_aspect = section.settings.loading_width_height_aspect
+  assign loading_background_gradient = section.settings.loading_background_gradient
+  assign override_preview_background = section.settings.override_preview_background
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign image_block = section.blocks | where: "type", "image" | first
+  assign svg = 'product-1' | placeholder_svg_tag
+  assign svgURI = 'data:image/svg+xml;utf8,' | append: svg
+  assign product = preview_product | default: product
+
+  if product == blank and request.design_mode
+    assign product = collections.all.products[0]
+  endif
+
+  assign padding_top_bottom_left_right = padding_top_bottom_left_right | strip_newlines | replace: ' ', "" | split: '|'
+  assign top = padding_top_bottom_left_right[0] | split: '/'
+  assign bottom = padding_top_bottom_left_right[1] | split: '/'
+  assign left = padding_top_bottom_left_right[2] | split: '/'
+  assign right = padding_top_bottom_left_right[3] | split: '/'
+
+  assign max_width_max_height_border_width_radius = max_width_max_height_border_width_radius | strip_newlines | replace: ' ', "" | split: '|'
+  assign max_width = max_width_max_height_border_width_radius[0] | split: '/'
+  assign max_height = max_width_max_height_border_width_radius[1] | split: '/'
+  assign border = max_width_max_height_border_width_radius[2] | split: '/'
+  assign radius = max_width_max_height_border_width_radius[3] | split: '/'
+
+  assign loading_width_height_aspect = loading_width_height_aspect | strip_newlines | replace: ' ', "" | split: '|'
+  assign loading_width = loading_width_height_aspect[0] | split: '/'
+  assign loading_height = loading_width_height_aspect[1] | split: '/'
+  assign loading_aspect = loading_width_height_aspect[2] | split: '/'
+
+  case orientation
+    when 'vertical'
+      assign flex_flow = "column"
+    when 'horizontal'
+      assign flex_flow = "row"
+  endcase
+
+  assign option_blocks = "" | split: "" | uniq
+  for block in section.blocks
+    if block.type contains "option__"
+      assign blocks = section.blocks | where: "id", block.id
+      assign option_blocks = option_blocks | concat: blocks
+    endif
+  endfor
+
+  assign card_class = _handle | handleize | prepend: "product-card--"
+%}
+
+{% capture option_block_settings %}
+  [
+  {% for block in option_blocks %}
+    {
+    "block_id": "{{ block.id }}",
+    "match_option_titles": {{ block.settings.match_option_titles | json }},
+    "match_exact_word": {{ block.settings.match_exact_word | json }}
+    }{% unless forloop.last %},{% endunless %}{% endfor %}
+  ]
+{% endcapture %}
+
+{% capture maxHeightStyles %}
+  --max-h-image-md: calc({{ max_height.first | replace: "inherit", "999999px" | replace: "unset", "999999px" }} - {{ top.first }} - {{ bottom.first }} - {{ border.first }}); --max-h-image: calc({{ max_height.last | replace: "inherit", "999999px" | replace: "unset", "999999px" }} - {{ top.last }} - {{ bottom.last }} - {{ border.last }});
+{% endcapture %}
+{% capture selector %}.product-card--{{ _handle | handleize }} [data-style-section-container]{% endcapture %}
+{% comment %}{% capture container_selector %}.product-card--{{ _handle | handleize }} [data-style-section-container]{% endcapture %}{% endcomment %}
+{% render '_utils.dynamic-css', selector: selector, keys: "flex_direction_align_x_align_y_gap_wrap,padding_top_bottom_left_right" %}
+
+<style>
+  .product-card--{{ _handle | handleize }} {
+    width: 100%;
+    border-style: solid;
+    color: {{ text_color }};
+    border-color: {{ border_color }};
+    background-color: {{ background_color }};
+
+    background: {{ background_gradient }};
+    max-height: {{ max_height.first }};
+    max-width: {{ max_width.first }};
+    border-width: {{ border.first }};
+    border-radius: {{ radius.first }};
+  {{ maxHeightStyles | replace: " 0 ", " 0px " | replace: " 0)", " 0px)" }}
+  }
+
+  .product-card--{{ _handle | handleize }}:hover {
+    color: {{ hover_text_color }};
+    border-color: {{ hover_border_color }};
+    background-color: {{ hover_background_color }};
+    background: {{ hover_background_gradient }};
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .product-card--{{ _handle | handleize }}.card-loading {
+    height: {{ loading_height.first }};
+    width: {{ loading_width.first }};
+    aspect-ratio: {{ loading_aspect.first }};
+    background: {{ loading_background_gradient }};
+  }
+
+  @media screen and (max-width: 767px) {
+    .product-card--{{ _handle | handleize }}:has(:not(.\@container *)) {
+      max-height: {{ max_height.last }};
+      max-width: {{ max_width.last }};
+      border-width: {{ border.last }};
+      border-radius: {{ radius.last }};
+    }
+
+    .product-card--{{ _handle | handleize }}.card-loading:has(:not(.\@container *)) {
+      height: {{ loading_height.last }};
+      width: {{ loading_width.last }};
+    }
+  }
+
+  @container (max-width: 767px) {
+    .product-card--{{ _handle | handleize }} {
+      max-height: {{ max_height.last }};
+      max-width: {{ max_width.last }};
+      border-width: {{ border.last }};
+      border-radius: {{ radius.last }};
+    }
+
+    .product-card--{{ _handle | handleize }}.card-loading {
+      height: {{ loading_height.last }};
+      width: {{ loading_width.last }};
+      aspect-ratio: {{ loading_aspect.last }};
+    }
+  }
+</style>
+
+{% capture product_card %}
+  <section
+      data-product-card="{{ _handle }}"
+      data-product-handle="{{ product.handle }}"
+      data-product-id="{{ product.id }}"
+      data-option-blocks="{{ option_block_settings | strip_newlines | escape }}"
+      data-settings="{{ section.settings | json | escape }}"
+      x-data="{ ..._sections.initProductCard($el, $refs, $el.getAttribute('data-product-handle'), +$el.getAttribute('data-product-id'), +$el.getAttribute('data-variant-id'), $el.hasAttribute('data-default-subscription')) }"
+      {% if default_select_selling_plan %}
+        data-default-subscription="true"
+      {% endif %}
+      {% if link_to_product %}
+        :title="`${_stores.router?.pathname?.replace(/^.*?(\/collections\/[^/]*)?.*$/gi,'$1')?.replace(/^\/$/gi,'') ?? ''}/products/${card?.product?.handle}?variant=${card?.selected_variant?.id}`"
+        role="button"
+        tabindex="0"
+        @click.prevent.stop="barba.go(`${_stores.router?.pathname?.replace(/^.*?(\/collections\/[^/]*)?.*$/gi,'$1')?.replace(/^\/$/gi,'') ?? ''}/products/${card?.product?.handle}?variant=${card?.selected_variant?.id}`); $modal.setId('')"
+      {% endif %}
+      class="{{ card_class }} card-loading overflow-hidden"
+      x-effect="() => { if (card?.hydrated && $el.classList.contains('card-loading')) $el.classList.remove('card-loading') }"
+      x-intersect.once="async () => {
+        if (barba.timeout === 1) {
+          await utils.delay(350);
+        }
+        barba.prefetch(`${window.location.origin}/products/${card?.product_handle}`);
+      }"
+      :style="`color: ${renderDynamicText(`{{ dynamic_text_color }}`)}; background: ${renderDynamicText(`{{ dynamic_background_color }}`)}; border-color: ${renderDynamicText(`{{ dynamic_border_color }}`)};`"
+      style="">
+    <template x-if="card?.hydrated"
+              x-init="$el.innerHTML = $el.innerHTML.replace(/\<style[^>]*>(([^<]|\n)*)\<\/style>/gi, (_, match) => {
+              const styleEl = document.createElement('style')
+              styleEl.innerHTML = match
+              document.head.appendChild(styleEl)
+          return ''
+          }); $el.removeAttribute('x-init')">
+      <form data-x-if
+            data-style-section-container
+            method="post"
+            action="/cart/add"
+            class="flex h-full"
+            @submit.prevent.stop="() => {}"
+            style="flex-flow: {{ flex_flow }}; max-height: calc(var(--max-h) - var(--pt) - var(--pb));">
+        <input type="hidden" name="id" :value="card?.selected_variant?.id" />
+        <input type="hidden" name="quantity" value="1" />
+        {% liquid
+          assign allow_no_cols = true
+          for block in section.blocks
+
+            if allow_no_cols
+              render 'card_product-card.block', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+
+              if block.type == 'layout_child__overlay'
+                assign allow_no_cols = false
+                render 'card_product-card.layout_child__overlay', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+              endif
+
+            endif
+
+            if block.type == 'layout__end'
+              assign allow_no_cols = true
+            endif
+
+            if block.type == 'layout__grid'
+              assign allow_no_cols = false
+              render 'card_product-card.layout__grid', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+            endif
+
+            if block.type == 'layout__flex'
+              assign allow_no_cols = false
+              render 'card_product-card.layout__flex', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+            endif
+
+            if block.type == 'layout__flex_wrap'
+              assign allow_no_cols = false
+              render 'card_product-card.layout__flex_wrap', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+            endif
+          endfor
+        %}
+      </form>
+    </template>
+  </section>
+{% endcapture %}
+
+<div class="fixed inset-0 z-50 overflow-y-auto text-balance bg-gray-100 py-8 text-black px-container-sm scrollbar-none md:pb-52"
+     x-data=""
+     style="background: {{ override_preview_background }};"
+     x-show="$editor?.select_section_id === `{{ section.id }}`"
+     x-cloak>
+  {% if request.design_mode != true %}
+    {{ product_card }}
+  {% endif %}
+  {% if request.design_mode == true %}
+    <script type="application/json"
+            data-product-data="{{ product.handle }}">{%- render '_json.product', product: product, meta_product: true -%}</script>
+  {% endif %}
+  {% if request.design_mode == true %}
+    <div class="grid gap-6"
+         x-effect="()=> { if ($editor?.select_section_id === `{{ section.id }}`) { interval = setInterval(()=>{ desktop_ratio = desktop?.clientWidth / desktop?.clientHeight; mobile_ratio = mobile?.clientWidth / mobile?.clientHeight }, 2000) } else { clearInterval(interval); interval = null }}"
+         x-data="{ desktop: $el.querySelector('[data-product-card]'), desktop_ratio:0, mobile: $el.querySelector('.\\@container [data-product-card]'),  mobile_ratio: 0, interval : null}">
+      <div>Aspect Ratios</div>
+      <header class="grid grid-cols-2 gap-6 py-6">
+        <div class="text-2xl font-semibold font-mono" x-html="`Desktop Aspect Ratio ${utils.roundToIndex(desktop_ratio, -3)}`"></div>
+        <div class="text-2xl font-semibold font-mono" x-html="`Mobile Aspect Ratio ${utils.roundToIndex(mobile_ratio, -3)}`"></div>
+      </header>
+      <section class="relative grid auto-cols-min justify-start items-center grid-flow-col gap-6 overflow-x-auto [&>*]:!w-screen">
+        {{ product_card }}
+        <section class="@container grid grid-cols-2 gap-2 max-w-sm h-min mb-auto">
+          <div>
+            {{ product_card }}
+          </div>
+          <div class="{{ card_class }} card-loading"></div>
+        </section>
+      </section>
+      <h3 class="text-2xl font-bold">Desktop View</h3>
+      <section class="grid auto-cols-max grid-flow-col gap-6 overflow-x-auto rounded-lg border p-8 border-gray-500 [&>*]:!w-screen">
+        {{ product_card }}
+        <div class="{{ card_class }} card-loading"></div>
+        <div class="{{ card_class }} card-loading"></div>
+        <div class="{{ card_class }} card-loading"></div>
+      </section>
+      <h3 class="mt-4 text-2xl font-bold">Mobile View</h3>
+      <div class="flex gap-6">
+        <section class="grid grid-cols-2 scrollbar-none gap-2 max-w-md w-full @container p-8 border border-gray-500 rounded-lg mb-auto h-min">
+          {{ product_card }}
+          {{ product_card }}
+          {{ product_card }}
+          {{ product_card }}
+        </section>
+        <section class="grid grid-cols-2 scrollbar-none gap-2 max-w-md w-full @container p-8 border border-gray-500 [&>*]:max-w-full rounded-lg mb-auto h-min">
+          <div class="{{ card_class }} card-loading">
+            <div></div>
+          </div>
+          <div class="{{ card_class }} card-loading">
+            <div></div>
+          </div>
+          <div class="{{ card_class }} card-loading">
+            <div></div>
+          </div>
+          <div class="{{ card_class }} card-loading">
+            <div></div>
+          </div>
+        </section>
+      </div>
+    </div>
+  {% endif %}
+  {% if request.design_mode == true %}
+    <div class="grid gap-6 mt-8">
+      <section class="grid justify-center items-center gap-6 overflow-x-auto">
+        {{ product_card }}
+        <div>
+          <section class="@container grid gap-2 max-w-sm h-min mb-auto">
+            {{ product_card }}
+          </section>
+        </div>
+      </section>
+
+      <h3 class="text-2xl font-bold">Desktop View</h3>
+      <section class="grid auto-cols-min grid-flow-col gap-6 overflow-x-auto rounded-lg border p-8 border-gray-500 [&>*]:!w-screen [&>*]:!h-min [&>*]:!mb-auto">
+        {{ product_card }}
+        <div class="{{ card_class }} card-loading"></div>
+        <div class="{{ card_class }} card-loading"></div>
+        <div class="{{ card_class }} card-loading"></div>
+      </section>
+      <h3 class="text-2xl font-bold">Desktop View Stacked</h3>
+      <section class="grid gap-3 overflow-y-auto rounded-lg border p-8 border-gray-500 max-h-[500px]">
+        <div>{{ product_card }}</div>
+        <div class="{{ card_class }} card-loading"></div>
+        <div class="{{ card_class }} card-loading"></div>
+        <div class="{{ card_class }} card-loading"></div>
+      </section>
+    </div>
+  {% endif %}
+</div>
+
+
+

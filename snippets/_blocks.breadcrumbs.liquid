@@ -1,0 +1,139 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.breadcrumbs"
+  assign product_vendor_collection = block.settings.product_vendor_collection
+  assign show_all_collections_step = block.settings.show_all_collections_step
+  assign content_class = block.settings.content_class
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{%- capture tag_url -%}{{ collection.url }}/{{ current_tags | join: "+" }}{%- endcapture -%}
+
+{% liquid
+
+  assign templatePrefix = template | split: '.' | first
+
+  assign url_1 = false
+  assign title_1 = false
+  assign url_2 = false
+  assign title_2 = false
+
+  case templatePrefix
+    when 'page'
+      assign url_1 = page.url
+      assign title_1 = page.title
+
+    when 'product'
+      if collection.url
+        assign url_1 = collection.url
+        assign title_1 = collection.title
+      endif
+
+      if product_vendor_collection and url_1 == false
+        for collection in product.collections
+          if collection.title == product.vendor
+            assign url_1 = collection.url
+            assign title_1 = collection.title
+            break
+          endif
+        endfor
+        if url_1 == false
+          assign vendor = product.vendor | escape
+          assign url_1 = "/collections/vendors?q=" | append: vendor
+          assign title_1 = product.vendor
+        endif
+      endif
+
+      assign url_2 = product.url
+      assign title_2 = product.title
+
+      if url_1 == false
+        assign collection_handles = product.collections | map: 'handle'
+        assign collection_titles = product.collections | map: 'title'
+      endif
+
+    when 'collection' and collection.handle
+      assign url_1 = collection.url
+      assign title_1 = collection.title
+
+      if current_tags
+        assign url_2 = tag_url
+        assign title_2 = current_tags | join: " + "
+      endif
+
+    when 'blog'
+      assign url_1 = blog.url
+      assign title_1 = blog.title
+
+      if current_tags
+        assign url_2 = tag_url
+        assign title_2 = current_tags | join: " + "
+      endif
+
+    when 'article'
+      assign url_1 = blog.url
+      assign title_1 = blog.title
+
+      assign url_2 = article.url
+      assign title_2 = article.title
+
+    else
+      assign url_2 = request.path
+      assign title_2 = page_title
+  endcase
+%}
+
+{% render '_utils.dynamic-css', block: block %}
+
+<nav
+    class="grid auto-cols-min grid-flow-col-dense whitespace-nowrap gap-1 items-center select-none overflow-hidden max-w-full {{ content_class }}"
+    data-breadcrumbs-block
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {% if templatePrefix == 'product' and url_1 == false %}
+      x-data="{
+         titles: utils.JSONParse($el.getAttribute('data-collection-titles')),
+         handles: utils.JSONParse($el.getAttribute('data-collection-handles')),
+         index: utils.JSONParse($el.getAttribute('data-collection-handles'))?.findIndex(handle => _stores.router.pathname.includes(`/collections/${handle}`))
+     }"
+      data-collection-handles="{{ collection_handles | json | escape }}"
+      data-collection-titles="{{ collection_titles | json | escape }}"
+    {% endif %}
+    role="navigation"
+    aria-label="breadcrumbs" {{ block.shopify_attributes }}>
+  <a class="hf:underline" href="{{ routes.root_url }}">Home</a>
+  {% if collection.handle and show_all_collections_step %}
+    {% render '_components.icon', icon: 'chevron-right', class: "w-[1em] h-[1em]" %}
+    <a class="hf:underline" href="/collections">Collections</a>
+  {% endif %}
+  {% if url_1 and url_2 %}
+    {% render '_components.icon', icon: 'chevron-right', class: "w-[1em] h-[1em]" %}
+    <a class="hf:underline" href="{{ url_1 }}">{{ title_1 }}</a>
+    {% render '_components.icon', icon: 'chevron-right', class: "w-[1em] h-[1em]" %}
+    <span class="truncate opacity-60">{{ title_2 }}</span>
+  {% elsif templatePrefix == 'product' %}
+    {% render '_components.icon', icon: 'chevron-right', class: "w-[1em] h-[1em]" %}
+    <a class="hf:underline"
+       :href="`/collections/${handles[index]}`"
+       x-cloak
+       x-show="index !== -1"
+       x-html="titles[index]"></a>
+    {% render '_components.icon', icon: 'chevron-right', class: "w-[1em] h-[1em]", html_attributes: ' x-show="index !== -1" x-cloak' %}
+    <span class="truncate opacity-60">{{ title_2 }}</span>
+  {% else %}
+    {% if url_1 %}
+      {% render '_components.icon', icon: 'chevron-right', class: "w-[1em] h-[1em]" %}
+      <span class="truncate opacity-60">{{ title_1 }}</span>
+    {% endif %}
+
+    {% if url_2 %}
+      {% render '_components.icon', icon: 'chevron-right', class: "w-[1em] h-[1em]" %}
+      <span class="truncate opacity-60">{{ title_2 }}</span>
+    {% endif %}
+  {% endif %}
+</nav>

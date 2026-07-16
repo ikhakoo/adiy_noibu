@@ -1,0 +1,37 @@
+{% comment %}
+    Textarea Input
+
+    Accepts:
+    - class: {string}
+    - label: {string}
+    - name: {string}
+    - default_checked: {boolean} default_state
+    - html_attribtues: {string} use this to set autocomplete / autocapitalize attributes.
+    - setState: {function} i.e. `$data.quantity(value)`
+
+    Usage:
+    {% render "_components.checkbox",
+        class: checkbox_class,
+        label: label,
+        name: name,
+        default_checked: true,
+        html_attribtues: "",
+        setState: setState
+    %}
+{% endcomment %}
+<label class="{{ class }}">
+  <span class="relative shrink-0">
+    <input type="checkbox"
+           name="{{ name }}" {{ html_attributes }}
+        {% if default_checked %}
+          checked="checked"
+        {% endif %}
+           value="{{ value }}"
+           @change="value = $el.checked; {{ setState }}"
+           aria-label="{{ label }}">
+    <span class="absolute inset-0 flex items-center justify-center">
+      <svg class=""></svg>
+    </span>
+  </span>
+  <span>{{ label }}</span>
+</label>

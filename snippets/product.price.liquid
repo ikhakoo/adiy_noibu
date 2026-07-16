@@ -1,0 +1,59 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "price"
+  assign section_type = "product"
+  assign css_class = block.settings.css_class
+  assign show_compare_as_price = block.settings.show_compare_as_price
+  assign discount_css_class = block.settings.discount_css_class
+  assign price_calculation = block.settings.price_calculation
+  assign currency_display = block.settings.currency_display
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign show_conditionally = block.settings.show_conditionally
+  assign color_override = block.settings.color_override
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign price = product.selected_or_first_available_variant.price
+  assign compare_at_price = product.selected_or_first_available_variant.compare_at_price
+%}
+
+{% liquid
+  if color_override != blank and color_override.alpha != 0
+    assign color = color_override | default: "inherit"
+  endif
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,max_w_flex_col_row_order_align,padding_top_bottom_left_right,margin_top_bottom_left_right,border_width_radius,background_color,background_gradient,border_color" %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    data-block-type="{{ block.type }}"
+    x-show="$data.showConditionally(`{{ show_conditionally }}`)">
+  <div class="inline-flex gap-2" style="color: {{ color }}">
+    <span class="{{ css_class }}"
+        {% if price_calculation == 'normal' %}
+          x-html="utils.formatMoney($data?.state?.selected_price, window.money_format.replace(/amount[^}]*/gi,`{{ currency_display }}`))"
+        {% endif %}
+        {% if price_calculation == 'quantity_multiplied' %}
+          x-html="utils.formatMoney($data?.state?.selected_price * ($data?.state?.quantity ?? 1), window.money_format.replace(/amount[^}]*/gi,`{{ currency_display }}`))"
+        {% endif %}
+    >{{ price | money }}</span>
+    {% if show_compare_as_price %}
+      <span class="{{ discount_css_class }} line-through"
+            x-cloak
+            x-show="($data?.state?.selected_compare_at_price || 0) > $data?.state?.selected_price"
+            x-html="utils.formatMoney($data?.state?.selected_compare_at_price || 0, window.money_format.replace(/amount[^}]*/gi,`{{ currency_display }}`))">
+        {{ compare_at_price | money }}
+      </span>
+    {% endif %}
+  </div>
+</div>

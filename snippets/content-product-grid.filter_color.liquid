@@ -1,0 +1,92 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "filter_color"
+  assign section_type = "content-product-grid"
+  assign title = block.settings.title
+  assign size_border_width_radius = block.settings.size_border_width_radius
+  assign hover_border_color = block.settings.hover_border_color
+  assign outline_width_offset = block.settings.outline_width_offset
+  assign hover_outline_color = block.settings.hover_outline_color
+  assign show_tooltip = block.settings.show_tooltip
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture selector %}[data-style-color-selector="{{ section.id }}--{{ block.id }}"]{% endcapture %}
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: selector,
+    keys: "flex_direction_align_x_align_y_gap_wrap"
+%}
+ 
+{% capture selector %}[data-style-color-selector="{{ section.id }}--{{ block.id }}"] [data-style-label]{% endcapture %}
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: selector,
+    keys: "size_border_width_radius, hover_outline_color" %}
+
+{% liquid
+  assign outline_classes = "!outline-none border-none ac:border-solid"
+  assign outline_width = outline_width_offset | strip_newlines | split: '|' | first
+  assign outline_width_desktop = outline_width | split: '/' | first
+  assign outline_width_mobile = outline_width | split: '/' | last
+%}
+
+<style>
+  [data-style-color-selector="{{ section.id }}--{{ block.id }}"] [data-style-label].active {
+    border-color: {{ hover_border_color }};
+  }
+  [data-style-color-selector="{{ section.id }}--{{ block.id }}"] [data-style-label].active:after {
+    inset: 0;
+    border-width: {{ outline_width_desktop | rstrip | replace: 'px', '' | append: 'px' }};
+    border-color: {{ hover_outline_color }};
+    border-radius: inherit;
+    position: absolute;
+    content: '';
+  }
+  @media screen and (max-width: {{ responsive_breakpoint | default: "768px" }}) {
+    [data-style-color-selector="{{ section.id }}--{{ block.id }}"] [data-style-label].active:after {
+      border-width: {{ outline_width_mobile | rstrip | replace: 'px', '' | append: 'px' }};
+    }
+  }
+</style>
+
+<fieldset data-filter-param="{{ filter.param_name }}" class="flex"
+          data-style-color-selector="{{ section.id }}--{{ block.id }}">
+  {% for value in filter.values %}
+    {% assign label = value.label %}
+    {% if filters_show_count %}
+      {% assign label = value.label | append: ' (' | append: value.count | append: ')' %}
+    {% endif %}
+    {% assign image_src = '' %}
+    {% if value.swatch.image.src != blank %}
+      {% assign image_src = value.swatch.image.src |  image_url: width: 48, height: 48  %}
+    {% endif %}
+    <label data-style-label
+           x-data="{ checked: $el.firstElementChild.checked, src: `{{ image_src }}`?.split('?')?.[0] ?? '', version: `{{ image_src }}`?.split('?')?.[1] ?? '', color: `{{ value.swatch.color }}`, label: `{{ value.label }}` }"
+           class="flex shrink-0 cursor-pointer border-gray-300 relative {{ outline_classes }}"
+           :class="checked ? 'active' : ''"
+        {% if show_tooltip %}
+          @mouseenter="$tooltip.addTooltip($el, `{{ label }}`)"
+          @mouseleave="$tooltip.removeTooltip($el)"
+        {% endif %}
+           aria-label="{{ label }}"
+           :style="`
+           --primary-swatch: ${src ? ` url(${src}?width=60&height=60&${version}) center center/cover no-repeat` : 'var(--secondary-swatch)'};
+           --secondary-swatch: ${color ? ` ${color}` : 'var(--fallback-swatch)'};
+           --fallback-swatch: var(--swatch-${utils.handlelize(label)}, ${utils.handlelize(label)});
+           background: var(--primary-swatch, ${utils.handlelize(label)})`">
+      <input type="checkbox"
+             class="sr-only"
+             name="{{ value.param_name }}"
+             @change="checked = $el.checked"
+          {% if value.active %}
+            checked="checked"
+          {% endif %}
+          {% if show_tooltip %}
+            @focus="$tooltip.addTooltip($el.parentElement,  `{{ label }}`)"
+            @blur="$tooltip.removeTooltip($el.parentElement)"
+          {% endif %} value="{{ value.value }}">
+    </label>
+  {%- endfor -%}
+</fieldset>

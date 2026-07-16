@@ -1,0 +1,14 @@
+{% comment %}
+    Generates raw r g b values for Tailwind CSS
+
+    Accepts:
+    - color: {Object} Shopify Color Object
+
+    Usage:
+   {%- render '_input.color-rgb', color: color -%}
+{% endcomment %}
+{% if color.alpha > 0 %}
+  {%- if color -%}{%- assign lighten = lighten | default: 0 -%}{%- assign darken = darken | default: 0 -%}{{ color | color_lighten: lighten | color_darken: darken | color_extract: "red" }} {{ color | color_lighten: lighten | color_darken: darken | color_extract: "green" }} {{ color | color_lighten: lighten | color_darken: darken | color_extract: "blue" }}{%- endif -%}
+{% else %}
+  transparent
+{% endif %}

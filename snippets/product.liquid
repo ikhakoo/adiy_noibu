@@ -1,0 +1,214 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "product"
+  assign _product = section.settings.product
+  assign gallery_gap_content_min_width = section.settings.gallery_gap_content_min_width
+  assign section_id = section.settings.section_id
+  assign color_scheme = section.settings.color_scheme
+  assign container_spacing = section.settings.container_spacing
+  assign border_divider = section.settings.border_divider
+  assign top_bottom_min_height = section.settings.top_bottom_min_height
+  assign responsive_visibility = section.settings.responsive_visibility
+  assign responsive_breakpoint = section.settings.responsive_breakpoint
+  assign target_visibility = section.settings.target_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture section_content %}
+  {% liquid
+    assign product = _product | default: product
+
+    unless product
+      break
+    endunless
+
+    assign top_bottom_min_height = top_bottom_min_height | strip_newlines | replace: ' ', "" | split: '|'
+    assign padding_top = top_bottom_min_height[0] | split: '/'
+    assign padding_bottom = top_bottom_min_height[1] | split: '/'
+
+    assign gallery_gap_content_min_width = gallery_gap_content_min_width | strip_newlines | replace: ' ', "" | split: '|'
+    assign gallery_gap = gallery_gap_content_min_width[0] | split: '/'
+    assign content_min_width = gallery_gap_content_min_width[1] | split: '/'
+
+    assign product_form_id = 'product-form-' | append: section.id
+
+    assign gallery = section.blocks | where: "type", "gallery" | first
+    capture optionBlocks
+      render 'product.get_option_block_index'
+    endcapture
+    assign optionBlocks = optionBlocks | trim | strip_newlines | split: ','
+
+    assign selected_variant = product.selected_or_first_available_variant | default: product.variants.first
+
+    assign gallery_settings = section.blocks | where: "type", "gallery" | map: "settings" | first
+    case gallery_settings.desktop_layout
+      when 'col'
+        if product.media.size > 1
+          assign gallery_classes = "sticky-product-section"
+        endif
+      when 'grid'
+        if product.media.size > 5
+          assign gallery_classes = "sticky-product-section"
+        endif
+      when 'hero_grid'
+        if product.media.size > 4
+          assign gallery_classes = "sticky-product-section"
+        endif
+      when 'slider'
+        if media_id_array.size > 12
+          assign gallery_classes = "sticky-product-section"
+        endif
+    endcase
+  %}
+
+  {% render '_utils.dynamic-css', keys: "top_bottom_min_height", css_variables: true %}
+  {% render '_utils.dynamic-css', keys: "responsive_visibility" %}
+
+  {% capture styles %}
+    --section-padding-top-md: {{ padding_top.first }};--section-padding-top: {{ padding_top.last }};
+    --section-padding-bottom-md: {{ padding_bottom.first }};--section-padding-bottom: {{ padding_bottom.last }};
+  {% endcapture %}
+
+  <section {% if section_id != blank %}id="{{ section_id }}"{% endif %}
+           data-style-id="{{ section.id }}"
+           x-data="{ ..._sections.initProduct($el, $refs, $el.getAttribute('data-handle')) }"
+           @scroll.window.passive="$data.handleStickyScroll"
+           data-section-type="product"
+           data-section-location="{{ section.location }}"
+           data-section-index="{{ section.index0 }}"
+           data-section-block-size="{{ section.blocks | size }}"
+           data-handle="{{ product.handle }}"
+           class="section--{{ section_type }} h-full relative bg-theme-bg text-theme-text {{ color_scheme }} {{ border_divider }}">
+    {% form "product", product, id: product_form_id, novalidate: "novalidate", class: "h-full" %}
+      <input type="hidden"
+             name="id"
+             value="{{ selected_variant.id }}"
+             x-init="$el.closest('form')?.addEventListener('submit',(e)=> { e.preventDefault(); e.stopPropagation(); })"
+             :value="$data.state?.selected_variant?.id">
+      <input type="hidden"
+             name="selling_plan"
+             value="{{ product.selected_selling_plan.id }}"
+             :value="$data.state?.selected_selling_plan?.id || ''" />
+
+      <main x-ref="container"
+            class="flex max-lg:flex-col max-lg:py-dynamic h-full {{ container_spacing }}">
+        <header class="lg:hidden">
+          {% liquid
+            for block in section.blocks
+              if block.type == 'layout__mobile_header'
+                render 'product.layout__flex', block: block, forloop: forloop, section_type: section_type, form: form, product: product, variant: variant, class: class, optionBlocks: optionBlocks, product_form_id: product_form_id, form: form, columnIndex: forloop.index0
+              endif
+            endfor
+          %}
+        </header>
+
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when "rating-mob" %}
+              {% render 'product.rating', block: block, forloop: forloop, section_type: section_type, form: form, product: product, variant: variant, class: class %}
+            {% when "dynamic-content-mob" %}
+              {% render '_blocks.dynamic-content', block: block, forloop: forloop, section_type: section_type, form: form, product: product, variant: variant, class: class %}
+            {% when "dynamic-text-mob" %}
+              {% render 'product.dynamic-text', block: block, forloop: forloop, section_type: section_type, form: form, product: product, variant: variant, class: class%}
+            {% when "gallery" %}
+              {% render 'product.gallery', block: block, forloop: forloop, section_type: section_type, form: form, product: product, variant: variant, class: class %}
+            {% when "thumbnails" %}
+              {% if block.settings.position == 'sidebar' %}
+                {% render 'product.thumbnails', block: block, forloop: forloop, section_type: section_type, form: form, product: product, variant: variant, class: class %}
+              {% endif %}
+          {% endcase %}
+        {% endfor %}
+        <section x-ref="content"
+                 class="h-min order-last max-lg:mt-[--gap] xl:pl-[--gap-xl] lg:pl-[--gap] w-min xl:min-w-[--min-width-xl] xl:max-w-[--min-width-xl] lg:min-w-[--min-width] lg:max-w-[--min-width] lg:py-dynamic
+                      max-lg:-mx-[--layout-container-gutter] max-lg:px-[--layout-container-gutter] max-lg:max-w-[--100vw-no-scrollbar] max-lg:w-screen flex flex-wrap {{ gallery_classes }}"
+                 style="--min-width-xl: {{ content_min_width | first }}; --min-width: {{ content_min_width | last }};--gap-xl: {{ gallery_gap | first }};--gap: {{ gallery_gap | last }}">
+          {% liquid
+            assign allow_no_cols = true
+            for block in section.blocks
+
+
+              if block.type == 'layout__end'
+                assign allow_no_cols = true
+              endif
+
+              if block.type == 'layout__mobile_header'
+                assign allow_no_cols = false
+              endif
+
+              if block.type == 'layout__grid'
+                assign allow_no_cols = false
+                render 'product.layout__grid', block: block, forloop: forloop, section_type: section_type, form: form, product: product, variant: variant, class: class, optionBlocks: optionBlocks, product_form_id: product_form_id, form: form, columnIndex: forloop.index0
+              endif
+
+              if block.type == 'layout__flex'
+                assign allow_no_cols = false
+                render 'product.layout__flex', block: block, forloop: forloop, section_type: section_type, form: form, product: product, variant: variant, class: class, optionBlocks: optionBlocks, product_form_id: product_form_id, form: form, columnIndex: forloop.index0
+              endif
+
+              if allow_no_cols
+                if block.type == 'layout_child__collapsible'
+                  render 'content-grid.layout_child__collapsible', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+                  assign allow_no_cols = false
+                  continue
+                endif
+
+                render 'product.block', block: block, forloop: forloop, section_type: section_type, form: form, product: product, variant: variant, class: class, optionBlocks: optionBlocks, product_form_id: product_form_id, form: form
+              endif
+            endfor
+          %}
+        </section>
+      </main>
+    {% endform %}
+  </section>
+{% endcapture %}
+
+{% if section_content contains '/break"></script>' %}
+  {% break %}
+{% endif %}
+{{ section_content }}
+
+<style>
+  #shopify-section-{{ section.id }} span.richtext-md.prod-price {
+    font-size: 42px;
+    font-size: 30px;
+    line-height: normal;
+  }
+  #shopify-section-{{ section.id }} .button-pdp-selector.active{font-weight: 400 !important;}
+  #shopify-section-{{ section.id }} .button-pdp-selector{text-transform: capitalize; !important;}
+  
+  #shopify-section-{{ section.id }} .app-block[data-style-id="template--33532921905174__product--AdTZ5MXYxSEg0YmVJY__affirm_pay_over_time_messaging_product_block_dXPgBp"] {
+    padding: 10px;
+    border-radius: 7.283px;
+    background: rgba(165, 165, 166, 0.12);
+    width: 100%;
+  }
+  #shopify-section-{{ section.id }} a.affirm-modal-trigger {
+    text-decoration: underline;
+    color: #3a6958;
+    font-weight: 500;
+  }
+  #shopify-section-{{ section.id }} .media-four-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin: 20px 0 0;
+  }
+  #shopify-section-{{ section.id }} .media-four-grid img {
+      border-radius: 15px;
+  }
+  
+
+  @media (max-width: 1024px) {
+    #shopify-section-{{ section.id }} .media-four-grid {display: none;}
+  }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    #shopify-section-{{ section.id }} span.richtext-md.prod-price {
+      font-size: 27px;
+    }
+    
+    #shopify-section-{{ section.id }} span.affirm-as-low-as{font-size: 12px;}
+    
+  }
+</style>

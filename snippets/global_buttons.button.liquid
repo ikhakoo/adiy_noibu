@@ -1,0 +1,335 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "button"
+  assign section_type = "global_buttons"
+  assign title = block.settings.title
+  assign background_color = block.settings.background_color
+  assign background_gradient = block.settings.background_gradient
+  assign text_color = block.settings.text_color
+  assign border_color = block.settings.border_color
+  assign hover_background_color = block.settings.hover_background_color
+  assign hover_background_gradient = block.settings.hover_background_gradient
+  assign hover_text_color = block.settings.hover_text_color
+  assign hover_border_color = block.settings.hover_border_color
+  assign transition_duration = block.settings.transition_duration
+  assign font_family = block.settings.font_family
+  assign size_weight_height_opacity = block.settings.size_weight_height_opacity
+  assign spacing_transform_style_whitespace = block.settings.spacing_transform_style_whitespace
+  assign padding_top_bottom_left_right_min_height = block.settings.padding_top_bottom_left_right_min_height
+  assign border_width_radius_shadow_gap_text_align = block.settings.border_width_radius_shadow_gap_text_align
+  assign hover_radius_shadow_scale = block.settings.hover_radius_shadow_scale
+  assign custom_css = block.settings.custom_css
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign apply_container_queries = block.settings.apply_container_queries
+  assign mobile_background_color = block.settings.mobile_background_color
+  assign mobile_background_gradient = block.settings.mobile_background_gradient
+  assign mobile_text_color = block.settings.mobile_text_color
+  assign mobile_border_color = block.settings.mobile_border_color
+  assign mobile_hover_background_color = block.settings.mobile_hover_background_color
+  assign mobile_hover_background_gradient = block.settings.mobile_hover_background_gradient
+  assign mobile_hover_text_color = block.settings.mobile_hover_text_color
+  assign mobile_hover_border_color = block.settings.mobile_hover_border_color
+  assign override_preview_background = block.settings.override_preview_background
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{%- liquid
+  assign first_button_block = section.blocks | where: "type", 'button' | first
+  assign selector = '.' | append: title
+
+  render '_utils.dynamic-css', selector: selector, block: block
+
+  if mobile_hover_background_gradient == blank and mobile_hover_background_color == blank or mobile_hover_background_color.alpha == 0
+    assign mobile_hover_background_gradient = hover_background_gradient
+  endif
+  if mobile_hover_background_color == blank or mobile_hover_background_color.alpha == 0
+    assign mobile_hover_background_color = hover_background_color
+  endif
+  if mobile_hover_text_color == blank or mobile_hover_text_color.alpha == 0
+    assign mobile_hover_text_color = hover_text_color
+  endif
+  if mobile_hover_border_color == blank or mobile_hover_border_color.alpha == 0
+    assign mobile_hover_border_color = hover_border_color
+  endif
+
+  assign hover_radius_shadow_scale = hover_radius_shadow_scale | strip_newlines | replace: ' ', "" | split: '|'
+  assign hover_radius = hover_radius_shadow_scale[0] | split: '/'
+  assign hover_shadow = hover_radius_shadow_scale[1] | split: '/'
+  assign hover_scale = hover_radius_shadow_scale[2] | split: '/'
+
+  assign hover_shadow_desktop = hover_shadow | first | trim
+  assign hover_shadow_mobile = hover_shadow | last | trim
+
+  case hover_shadow_desktop
+    when "1"
+      assign hover_shadow_desktop = "0 1px 2px 0 rgb(0 0 0 / 0.05)"
+    when "2"
+      assign hover_shadow_desktop = "0 4px 6px 1px rgb(0 0 0 / 0.1), 0 2px 4px 2px rgb(0 0 0 / 0.1)"
+    when "3"
+      assign hover_shadow_desktop = "0 10px 15px 3px rgb(0 0 0 / 0.1), 0 4px 6px 4px rgb(0 0 0 / 0.1)"
+    when "4"
+      assign hover_shadow_desktop = "0 20px 25px 5px rgb(0 0 0 / 0.1), 0 8px 10px 6px rgb(0 0 0 / 0.1)"
+    when "5"
+      assign hover_shadow_desktop = "0 25px 50px 12px rgb(0 0 0 / 0.25)"
+    else
+      assign hover_shadow_desktop = " none"
+  endcase
+  case hover_shadow_mobile
+    when "1"
+      assign hover_shadow_mobile = "0 1px 2px 0 rgb(0 0 0 / 0.05)"
+    when "2"
+      assign hover_shadow_mobile = "0 4px 6px 1px rgb(0 0 0 / 0.1), 0 2px 4px 2px rgb(0 0 0 / 0.1)"
+    when "3"
+      assign hover_shadow_mobile = "0 10px 15px 3px rgb(0 0 0 / 0.1), 0 4px 6px 4px rgb(0 0 0 / 0.1)"
+    when "4"
+      assign hover_shadow_mobile = "0 20px 25px 5px rgb(0 0 0 / 0.1), 0 8px 10px 6px rgb(0 0 0 / 0.1)"
+    when "5"
+      assign hover_shadow_mobile = "0 25px 50px 12px rgb(0 0 0 / 0.25)"
+    else
+      assign hover_shadow_mobile = " none"
+  endcase
+%}
+
+{%- capture css_desktop -%}
+  .{{ title }} {
+  position: relative;
+  transition: all {{ transition_duration }}ms;
+  overflow: hidden;
+  transform: translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skew(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  display: inline-flex;
+  height: max-content;
+  width: max-content;
+  align-items: center;
+  user-select: none;
+  border-style: solid;
+  --tw-scale-x: var(--font-{{- selector -}}-hover-scale);
+  --tw-scale-y: var(--font-{{- selector -}}-hover-scale);
+  }
+  .{{ title }}:not(disabled) {
+  cursor: pointer;
+  }
+
+  .{{ title }}:where(:hover,:focus-visible,:active,.active):not(.button-loading) {
+  border-radius: {{ hover_radius | first }};
+  border-color: {{ hover_border_color }};
+  color: {{ hover_text_color }};
+  background: {{ hover_background_gradient | default: hover_background_color }};
+  box-shadow: {{ hover_shadow_desktop }};
+  --tw-scale-x: {{ hover_scale | first }};
+  --tw-scale-y: {{ hover_scale | first }};
+  }
+
+{%- endcapture -%}
+{%- capture css_mobile -%}
+  .{{ title }}:where(:hover,:focus-visible,:active,.active):not(.button-loading) {
+  border-radius: {{ hover_radius | last }};
+  border-color: {{ mobile_hover_border_color }};
+  color: {{ mobile_hover_text_color }};
+  background: {{ mobile_hover_background_gradient | default: mobile_hover_background_color }};
+  box-shadow: {{ hover_shadow_desktop }};
+  --tw-scale-x: {{ hover_scale | last }};
+  --tw-scale-y: {{ hover_scale | last }};
+  }
+{%- endcapture -%}
+
+<style>
+  {{- css_desktop | strip_newlines  -}}
+
+  @media screen and (max-width: 767px) {
+  {{- css_mobile | strip_newlines  -}}
+  }
+
+  @container (max-width: 767px) {
+  {{- css_mobile | strip_newlines  -}}
+  }
+</style>
+
+{% if request.design_mode %}
+  {% if override_preview_background == blank or override_preview_background.alpha == 0 %}
+    {% assign override_preview_background = '#ffffff' %}
+  {% endif %}
+  <section class="fixed inset-0 z-50 flex flex-col gap-16 overflow-y-auto text-balance bg-white py-16 text-black px-container-sm"
+           x-data="{tab: 'single-type'}"
+           style="background: {{ override_preview_background }};"
+           x-show="$editor?.select_block_id === '{{ block.id }}'"
+           x-cloak {{ block.shopify_attributes }}>
+
+    <header class="flex gap-3 font-mono">
+      <button @click="tab='single-type'"
+              type="button"
+              :class="tab === 'single-type' ? 'bg-gray-600 text-gray-50 border-gray-900 hf:bg-gray-700':'border-gray-200/70 bg-gray-100 text-gray-700 hf:text-gray-900 hf:border-gray-300/80 hf:bg-gray-200/90'"
+              class="rounded-sm border px-3 text-sm font-medium py-1.5">{{ selector }}
+      </button>
+    </header>
+
+    <main class="mt-8">
+      <header class="mt-12 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="text-lg font-bold text-gray-600">Desktop</div>
+        <div class="text-lg font-bold text-gray-600">Mobile</div>
+      </header>
+      <section x-show="tab === 'single-type'" class="mt-6 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="{{ title }}">
+          Shop now
+        </div>
+        <div class=" @container max-w-lg">
+          <div class="{{ title }}">Shop now</div>
+        </div>
+      </section>
+      <header class="mt-12 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="text-lg font-bold text-gray-600">Desktop - Long</div>
+        <div class="text-lg font-bold text-gray-600">Mobile - Long</div>
+      </header>
+      <section x-show="tab === 'single-type'" class="mt-6 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="{{ title }}">
+          Learn more about our products
+        </div>
+        <div class="@container max-w-lg">
+          <div class="{{ title }}">Learn more about our products</div>
+        </div>
+      </section>
+    </main>
+    <main class="mt-4">
+      <header class="mt-12 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="text-lg font-bold text-gray-600">Desktop Hover</div>
+        <div class="text-lg font-bold text-gray-600">Mobile Hover</div>
+      </header>
+      <section x-show="tab === 'single-type'" class="mt-6 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="{{ title }} active">
+          Shop now
+        </div>
+        <div class=" @container max-w-lg">
+          <div class="{{ title }} active">Shop now</div>
+        </div>
+      </section>
+      <header class="mt-12 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="text-lg font-bold text-gray-600">Desktop Hover - Long</div>
+        <div class="text-lg font-bold text-gray-600">Mobile Hover - Long</div>
+      </header>
+      <section x-show="tab === 'single-type'" class="mt-6 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="{{ title }} active">
+          Learn more about our products
+        </div>
+        <div class="@container max-w-lg">
+          <div class="{{ title }} active">Learn more about our products</div>
+        </div>
+      </section>
+    </main>
+  </section>
+{% endif %}
+
+
+{% if block.id == first_button_block.id %}
+
+  {%- liquid
+    assign title = 'shopify-challenge__button'
+    assign selector = '.' | append: title
+
+    render '_utils.dynamic-css', selector: selector, block: block
+
+    if mobile_hover_background_gradient == blank and mobile_hover_background_color == blank or mobile_hover_background_color.alpha == 0
+      assign mobile_hover_background_gradient = hover_background_gradient
+    endif
+    if mobile_hover_background_color == blank or mobile_hover_background_color.alpha == 0
+      assign mobile_hover_background_color = hover_background_color
+    endif
+    if mobile_hover_text_color == blank or mobile_hover_text_color.alpha == 0
+      assign mobile_hover_text_color = hover_text_color
+    endif
+    if mobile_hover_border_color == blank or mobile_hover_border_color.alpha == 0
+      assign mobile_hover_border_color = hover_border_color
+    endif
+
+    assign hover_radius_shadow_scale = hover_radius_shadow_scale | strip_newlines | replace: ' ', "" | split: '|'
+    assign hover_radius = hover_radius_shadow_scale[0] | split: '/'
+    assign hover_shadow = hover_radius_shadow_scale[1] | split: '/'
+    assign hover_scale = hover_radius_shadow_scale[2] | split: '/'
+
+    assign hover_shadow_desktop = hover_shadow | first | trim
+    assign hover_shadow_mobile = hover_shadow | last | trim
+
+    case hover_shadow_desktop
+      when "1"
+        assign hover_shadow_desktop = "0 1px 2px 0 rgb(0 0 0 / 0.05)"
+      when "2"
+        assign hover_shadow_desktop = "0 4px 6px 1px rgb(0 0 0 / 0.1), 0 2px 4px 2px rgb(0 0 0 / 0.1)"
+      when "3"
+        assign hover_shadow_desktop = "0 10px 15px 3px rgb(0 0 0 / 0.1), 0 4px 6px 4px rgb(0 0 0 / 0.1)"
+      when "4"
+        assign hover_shadow_desktop = "0 20px 25px 5px rgb(0 0 0 / 0.1), 0 8px 10px 6px rgb(0 0 0 / 0.1)"
+      when "5"
+        assign hover_shadow_desktop = "0 25px 50px 12px rgb(0 0 0 / 0.25)"
+      else
+        assign hover_shadow_desktop = " none"
+    endcase
+    case hover_shadow_mobile
+      when "1"
+        assign hover_shadow_mobile = "0 1px 2px 0 rgb(0 0 0 / 0.05)"
+      when "2"
+        assign hover_shadow_mobile = "0 4px 6px 1px rgb(0 0 0 / 0.1), 0 2px 4px 2px rgb(0 0 0 / 0.1)"
+      when "3"
+        assign hover_shadow_mobile = "0 10px 15px 3px rgb(0 0 0 / 0.1), 0 4px 6px 4px rgb(0 0 0 / 0.1)"
+      when "4"
+        assign hover_shadow_mobile = "0 20px 25px 5px rgb(0 0 0 / 0.1), 0 8px 10px 6px rgb(0 0 0 / 0.1)"
+      when "5"
+        assign hover_shadow_mobile = "0 25px 50px 12px rgb(0 0 0 / 0.25)"
+      else
+        assign hover_shadow_mobile = " none"
+    endcase
+  %}
+
+  {%- capture css_desktop -%}
+    .{{ title }} {
+    position: relative;
+    transition: all {{ transition_duration }}ms;
+    transform: translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skew(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    display: inline-flex;
+    height: max-content;
+    width: max-content;
+    align-items: center;
+    user-select: none;
+    border-style: solid;
+    --tw-scale-x: var(--font-{{- selector -}}-hover-scale);
+    --tw-scale-y: var(--font-{{- selector -}}-hover-scale);
+    }
+    .{{ title }}:not(disabled) {
+    cursor: pointer;
+    }
+
+    .{{ title }}:where(:hover,:focus-visible,:active,.active):not(.button-loading) {
+    border-radius: {{ hover_radius | first }};
+    border-color: {{ hover_border_color }};
+    color: {{ hover_text_color }};
+    background: {{ hover_background_gradient | default: hover_background_color }};
+    box-shadow: {{ hover_shadow_desktop }};
+    --tw-scale-x: {{ hover_scale | first }};
+    --tw-scale-y: {{ hover_scale | first }};
+    }
+
+  {%- endcapture -%}
+  {%- capture css_mobile -%}
+    .{{ title }}:where(:hover,:focus-visible,:active,.active):not(.button-loading) {
+    border-radius: {{ hover_radius | last }};
+    border-color: {{ mobile_hover_border_color }};
+    color: {{ mobile_hover_text_color }};
+    background: {{ mobile_hover_background_gradient | default: mobile_hover_background_color }};
+    box-shadow: {{ hover_shadow_desktop }};
+    --tw-scale-x: {{ hover_scale | last }};
+    --tw-scale-y: {{ hover_scale | last }};
+    }
+  {%- endcapture -%}
+
+  <style>
+    {{- css_desktop | strip_newlines  -}}
+
+    @media screen and (max-width: 767px) {
+    {{- css_mobile | strip_newlines  -}}
+    }
+
+    @container (max-width: 767px) {
+    {{- css_mobile | strip_newlines  -}}
+    }
+  </style>
+
+
+
+{% endif %}

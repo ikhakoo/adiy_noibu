@@ -1,0 +1,51 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "hero-banner"
+  assign top_bottom_min_height = section.settings.top_bottom_min_height
+  assign full_screen = section.settings.full_screen
+  assign section_id = section.settings.section_id
+  assign container_spacing = section.settings.container_spacing
+  assign responsive_visibility = section.settings.responsive_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render "_section.universal-settings", section_type: section_type, insert: "before" %}
+{% liquid
+  if full_screen
+    assign height_screen = "h-[calc(100vh_-_var(--announcement-bar-height))]"
+  endif
+  %}
+
+<div class="flex flex-col {{ height_screen }}"
+     data-grid-slider
+     x-data="{ ..._sections.initContentSlider($refs.container, undefined, false) }"
+     x-defer="intersect">
+  <div class="grid h-full overflow-x-auto snap-x snap-mandatory scrollbar-none overflow-y-hidden grid-flow-col gap-0 auto-cols-[100%]"
+      x-ref="container"
+      @resize.window="content_slider.handleResize"
+      x-init="$nextTick(() => content_slider.handleResize())"
+      @scroll="content_slider.handleScroll"
+      @scrollend="content_slider.handleInfiniteScroll"
+      data-style-content-slider>
+      
+      {% liquid
+        for block in section.blocks
+          case block.type
+            when 'slide'
+              render 'hero-banner.slide', block: block, forloop: forloop, section_type: section_type
+            when 'slide_video'
+              render 'hero-banner.slide_video', block: block, forloop: forloop, section_type: section_type
+          endcase
+        endfor
+      %}
+  </div>
+
+  {% liquid
+      for block in section.blocks
+        if block.type == 'pagination'
+          render 'hero-banner.pagination', block: block, forloop: forloop, section_type: section_type, columnIndex: forloop.index0
+        endif
+      endfor
+    %}
+</div>
+{% render "_section.universal-settings", section_type: section_type, insert: "after" %}

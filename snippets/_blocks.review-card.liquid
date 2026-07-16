@@ -1,0 +1,99 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.review-card"
+  assign initial_load_reviews = block.settings.initial_load_reviews
+  assign reviews_per_load = block.settings.reviews_per_load
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% if page.metafields.smart.review_cards %}
+  {% assign total_reviews = 0 %}
+  {% for review_card in page.metafields.smart.review_cards.value %}
+    {% assign total_reviews = total_reviews | plus: 1 %}
+  {% endfor %}
+  
+  <div 
+    class="review-cards-container grid grid-cols-3 gap-6">
+    
+    {% for review_card in page.metafields.smart.review_cards.value %}
+      {% if review_card.show_image and review_card.image %}
+        <div
+          class="review-card aspect-1 rounded-[30px] bg-[#F6F4F2] overflow-hidden {% if forloop.index > initial_load_reviews %}hidden{% endif %}"
+          data-style-id="{{ section.id }}--{{ block.id }}"
+          {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+          {{ block.shopify_attributes }}>
+          {{ review_card.image | image_url: width: 900 | image_tag: class: "aspect-1 w-full h-full object-cover" }}
+        </div>
+      {% else %}
+        <div
+          class="review-card aspect-1 lg:p-[36px] p-[24px] rounded-[30px] bg-[#F6F4F2] {% if forloop.index > initial_load_reviews %}hidden{% endif %}"
+          data-style-id="{{ section.id }}--{{ block.id }}"
+          {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+          {{ block.shopify_attributes }}>
+          {% if review_card.author %}
+            <div class="flex justify-between items-center gap-2 mb-5">
+              {% render '_input.richtext', content: review_card.author, class: "richtext-md h4 !font-semibold" %}
+              <div class="flex justify-end items-center gap-1">
+                {% render '_components.icon', icon: "check-verified", class: "h-5 !bg-[#3A6958]" %}
+                {% render '_input.richtext', content: "Verified", class: "richtext-md h5 !font-semibold" %}
+              </div>
+            </div>
+          {% endif %}
+          <div class="flex justify-start mb-5">
+            {% render '_components.icon', icon: "5-stars-rating", class: "h-5 !bg-[#3A6958]" %}
+          </div>
+          {% if review_card.title %}
+            {% render '_input.richtext', content: review_card.title, class: "mb-5 richtext-md h3 !font-semibold" %}
+          {% endif %}
+          {% if review_card.review %}
+            {% if responsive_visibility == 'mobile-only' %}
+              {% assign review_text = review_card.review | truncate: 190, '...' %}
+            {% else %}
+              {% assign review_text = review_card.review | truncate: 350, '...' %}
+            {% endif %}
+            {% render '_input.richtext', content: review_text, class: "mb-4 richtext-md h5 !font-medium" %}
+          {% endif %}
+          {% if review_card.read_more_url %}
+            <a href="{{ review_card.read_more_url }}" class="richtext-md h5 underline !font-semibold">Read More</a>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  
+  <div class="load-more-container mt-8 text-center" x-show="{{ total_reviews }} > {{ initial_load_reviews }}">
+    <button
+      type="button"
+      class="button-primary-outline"
+      x-data="{
+        reviewsPerLoad: {{ reviews_per_load }},
+        currentIndex: {{ initial_load_reviews }},
+        totalReviews: {{ total_reviews }},
+        loadMore() {
+          const hiddenCards = document.querySelectorAll('.review-card.hidden');
+          const cardsToShow = Math.min(this.reviewsPerLoad, hiddenCards.length);
+          
+          for (let i = 0; i < cardsToShow; i++) {
+            hiddenCards[i].classList.remove('hidden');
+          }
+          
+          this.currentIndex += cardsToShow;
+          
+          // Hide button if no more hidden cards
+          if (this.currentIndex >= this.totalReviews) {
+            this.$el.style.display = 'none';
+          }
+        }
+      }"
+      @click="loadMore()">
+      Load More
+    </button>
+  </div>
+{% endif %}
+

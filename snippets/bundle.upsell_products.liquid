@@ -1,0 +1,86 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "upsell_products"
+  assign section_type = "bundle"
+  assign block_id = block.settings.block_id
+  assign tab_label = block.settings.tab_label
+  assign title = block.settings.title
+  assign title_class = block.settings.title_class
+  assign margin_top_bottom_left_right_align = block.settings.margin_top_bottom_left_right_align
+  assign product_card_class = block.settings.product_card_class
+  assign limit = block.settings.limit
+  assign target_product = block.settings.target_product
+  assign primary_source = block.settings.primary_source
+  assign fallback_source = block.settings.fallback_source
+  assign fallback_products = block.settings.fallback_products
+  assign grid_cols_align_x_align_y_gap = block.settings.grid_cols_align_x_align_y_gap
+  assign expand_button = block.settings.expand_button
+  assign collapse_button = block.settings.collapse_button
+  assign button_class = block.settings.button_class
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,margin_top_bottom_left_right, max_w_flex_col_row_order_align" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-bundle-upsell-products]",
+    keys: "grid_cols_align_x_align_y_gap"
+%}
+
+{% capture fallback_product_data %}
+  [{% for _product in fallback_products %}
+  {%- render '_json.product', product: _product -%}{% unless forloop.last %},{% endunless %}
+{% endfor %}]
+{% endcapture %}
+
+{% liquid
+  if request.design_mode != true
+    if _products.size <= 0
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+%}
+
+<section
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    id="{{ block_id | default: block.id }}"
+    data-quiz-dynamic-product-group
+    x-show="$data.bundle.upsell_products?.length"
+    x-cloak
+    class="isolate relative">
+  {% if title != blank %}
+    {% render '_utils.dynamic-css', block: block, selector: '& [data-style-title]', keys: "margin_top_bottom_left_right_align" %}
+    <header x-init="$el.classList.remove('before:opacity-0')"
+            class="{{ section.settings.product_scroll }} z-10 lg:top-[calc(var(--header-height-offset)+var(--padding-top))] before:opacity-0 lg:before:absolute before:w-full before:z-10 before:h-[--padding-top] before:bottom-full before:bg-inherit {{ section.settings.color_scheme }}">
+      <div data-style-title>{% render '_input.richtext', content: title, class: title_class, block: block, forloop: forloop %}</div>
+    </header>
+  {% endif %}
+  <main class="grid"
+        data-style-bundle-upsell-products="{{ block.id }}"
+        data-fallback-products="{{ fallback_product_data | escape }}"
+        x-effect="()=> { if ( $data.bundle.quiz_items?.length) $data.renderUpsellProducts($el, `{{ target_product }}`, `{{ primary_source }}`, `{{ fallback_source }}`, `{{ product_card_class }}`, +`{{ limit }}`)}">
+  </main>
+</section>

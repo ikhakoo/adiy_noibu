@@ -1,0 +1,210 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "option__color"
+  assign section_type = "product"
+  assign legend = block.settings.legend
+  assign legend_class = block.settings.legend_class
+  assign primary_source = block.settings.primary_source
+  assign fallback_source = block.settings.fallback_source
+  assign size_border_width_radius = block.settings.size_border_width_radius
+  assign hover_border_color = block.settings.hover_border_color
+  assign outline_width_offset = block.settings.outline_width_offset
+  assign hover_outline_color = block.settings.hover_outline_color
+  assign show_tooltip = block.settings.show_tooltip
+  assign margin_top_gap = block.settings.margin_top_gap
+  assign content_flow = block.settings.content_flow
+  assign match_option_titles = block.settings.match_option_titles
+  assign match_exact_word = block.settings.match_exact_word
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign show_conditionally = block.settings.show_conditionally
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign option = product.options_with_values[optionIndex]
+
+  if request.design_mode != true
+    if option == blank
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+
+  if option == blank
+    break
+  endif
+
+
+  assign current_value = product.selected_or_first_available_variant.options[optionIndex]
+  assign content_legend = legend | replace: "[heading]", option.name
+  assign current_legend = content_legend | replace: "[value]", current_value | default: option.name
+
+  if product.variants.first.title == "Default Title" and product.variants.size == 1
+    break
+  endif
+
+  case content_flow
+    when "show_all"
+      assign container_classes = 'flex-wrap overflow-hidden'
+    when "truncate"
+      assign container_classes = 'overflow-hidden'
+    when "overflow"
+      assign container_classes = 'overflow-x-auto'
+  endcase
+
+  assign outline_classes = "!outline-none border-none ac:border-solid"
+  assign outline_width = outline_width_offset | strip_newlines | split: '|' | first
+  assign outline_width_desktop = outline_width | split: '/' | first
+  assign outline_width_mobile = outline_width | split: '/' | last
+
+%}
+
+<style>
+  [data-style-id="{{ section.id }}--{{ block.id }}"] [data-style-label].active {
+    border-color: {{ hover_border_color }};
+  }
+  [data-style-id="{{ section.id }}--{{ block.id }}"] [data-style-label].active:after {
+    inset: 0;
+    border-width: {{ outline_width_desktop | rstrip | replace: 'px', '' | append: 'px' }};
+    border-color: {{ hover_outline_color }};
+    border-radius: inherit;
+    position: absolute;
+    content: '';
+  }
+  @media screen and (max-width: {{ responsive_breakpoint | default: "768px" }}) {
+    [data-style-id="{{ section.id }}--{{ block.id }}"] [data-style-label].active:after {
+      border-width: {{ outline_width_mobile | rstrip | replace: 'px', '' | append: 'px' }};
+    }
+  }
+</style>
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-container]",
+    keys: "margin_top_gap" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-label]",
+    keys: "size_border_width_radius, hover_outline_color" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,max_w_flex_col_row_order_align,padding_top_bottom_left_right,margin_top_bottom_left_right,border_width_radius,background_color,background_gradient,border_color" %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    x-show="$data.showConditionally('{{ show_conditionally }}')"
+    data-block-type="{{ block.type }}">
+  <fieldset x-data="{ index: +$el.getAttribute('data-index'), hoverValue: '' }"
+            data-index="{{ optionIndex }}">
+    <legend class="flex justify-left bg-[#ECE8E4] text-[#3A6958] py-[6px] px-3 rounded-tl-[15px] rounded-tr-[15px] w-full max-w-full truncate {{ legend_class }}"
+            data-legend="{% render '_input.inline_richtext', content: content_legend, escape: true, block: block, forloop: forloop %}"
+            x-effect="$el.innerHTML = $el.getAttribute('data-legend').replace('[value]', hoverValue || $data.state.options[index])">
+      {% render '_input.inline_richtext', content: current_legend, block: block, forloop: forloop %}
+    </legend>
+    <div class="relative w-full flex flex-wrap gap-2 scrollbar-none bg-[#F6F4F2] rounded-bl-[15px] rounded-br-[15px] p-4 {{ container_classes }} "
+     x-data="{ offset: +`{{ option.values.size }}` }"
+     data-style-container>
+  {% for value in option.values %}
+
+    {% liquid
+      assign optionIndex1 = optionIndex | plus: 1
+      assign option_num = 'option' | append: optionIndex1
+      assign first_option_variant = product.variants | where: option_num, value | first
+      assign _value = value | handleize
+
+      case primary_source
+        when "title"
+          assign primary_swatch = "--primary-swatch: var(--swatch-" | append: _value | append: ")"
+        when "image"
+          assign image = first_option_variant.image | image_url: width: 60, height: 60, crop: 'center' | escape
+          assign primary_swatch = "--primary-swatch: url(" | append: image | append: ") center center/cover no-repeat"
+        when "metafield"
+          if first_option_variant.metafields.smart.color_swatch.type == 'color'
+            assign primary_swatch = "--primary-swatch: " | append: first_option_variant.metafields.smart.color_swatch.value
+          endif
+          if first_option_variant.metafields.smart.color_swatch.type == 'file_reference'
+            assign image = first_option_variant.metafields.smart.color_swatch.value | image_url: width: 60, height: 60, crop: 'center' | escape
+            assign primary_swatch = "--primary-swatch: url(" | append: image | append: ") center center/cover no-repeat"
+          endif
+      endcase
+      case fallback_source
+        when "title"
+          assign fallback_swatch = "--fallback-swatch: var(--swatch-" | append: _value | append: ")"
+        when "image"
+          assign image = first_option_variant.image | image_url: width: 60, height: 60, crop: 'center' | escape
+          assign fallback_swatch = "--fallback-swatch: url(" | append: image | append: ") center center/cover no-repeat"
+        when "metafield"
+          if first_option_variant.metafields.smart.color_swatch.type == 'color'
+            assign fallback_swatch = "--fallback-swatch: " | append: first_option_variant.metafields.smart.color_swatch.value
+          endif
+          if first_option_variant.metafields.smart.color_swatch.type == 'file_reference'
+            assign image = first_option_variant.metafields.smart.color_swatch.value | image_url: width: 60, height: 60, crop: 'center' | escape
+            assign fallback_swatch = "--fallback-swatch: url(" | append: image | append: ") center center/cover no-repeat"
+          endif
+      endcase
+    %}
+
+    <label class="shrink-0 inline-flex items-center gap-2 border border-gray-300 cursor-pointer relative px-3 bg-white {{ outline_classes }} {% if value == current_value %}active{% endif %} "style="width: 48%; height: 60px !important;"
+           x-effect="$el.classList.toggle('active', $data.state.options[index] === $el.getAttribute('aria-label'))"
+           data-style-label
+           x-show="offset >= +`{{ forloop.index0 }}`"
+           :class="$data.hasAvailableVariant(index, `{{ value }}`) ? '' : ''"
+        {% if show_tooltip %}
+          @mouseenter="$tooltip.addTooltip($el, $el.getAttribute('aria-label'))"
+          @mouseleave="$tooltip.removeTooltip($el)"
+        {% endif %}
+           @pointerenter="hoverValue = $el.getAttribute('aria-label')"
+           @pointerleave="hoverValue = ''"
+           aria-label="{{ value }}">
+      
+      {% comment %} Color circle {% endcomment %}
+      <span class="block shrink-0 w-5 h-5 border border-gray-300"
+            style="{{ primary_swatch }};{{ fallback_swatch }};background: var(--primary-swatch, var(--fallback-swatch, {{ _value }})); width:40px ; height: 30px;border-radius:10px;"></span>
+      
+      {% comment %} Color name text {% endcomment %}
+      <span class="text-sm font-medium whitespace-nowrap">{{ value }}</span>
+
+      <input type="radio"
+             class="sr-only"
+          {% if show_tooltip %}
+            @focus="$tooltip.addTooltip($el.parentElement, $el.value)"
+            @blur="$tooltip.removeTooltip($el.parentElement)"
+          {% endif %}
+             name="{{ block.id }}"
+             @change="$data.setProductOption({ index, value: $el.value })"
+             :checked="$data.state.options[index] === $el.value"
+             value="{{ value }}">
+    </label>
+  {% endfor %}
+  {% if content_flow == 'truncate' %}
+    <div class="flex shrink-0 items-center text-sm font-medium"
+         :class="offset < +`{{ option.values.size }}` ? '':'opacity-0 pointer-events-none'"
+         x-init="$nextTick(async ()=> { if (window.design_mode) { await utils.delay(20) } offset = truncateChildren($el, $el.parentElement)})"
+         @resize.window.debounce.200ms="offset = +`{{ option.values.size }}`; await utils.delay(20); offset = truncateChildren($el, $el.parentElement)"
+         x-html="`+ ${+`{{ option.values.size }}` - (offset + 1)} {{ option.name }}`">
+      +10 {{ option.name }}
+    </div>
+  {% endif %}
+</div>
+  </fieldset>
+</div>

@@ -1,0 +1,105 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "option__radio_custom"
+  assign section_type = "card_product-card"
+  assign legend = block.settings.legend
+  assign legend_class = block.settings.legend_class
+  assign radio_button_content = block.settings.radio_button_content
+  assign radio_button_class = block.settings.radio_button_class
+  assign accordion_class = block.settings.accordion_class
+  assign margin_top_gap = block.settings.margin_top_gap
+  assign content_flow = block.settings.content_flow
+  assign match_option_titles = block.settings.match_option_titles
+  assign match_exact_word = block.settings.match_exact_word
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign show_conditionally = block.settings.show_conditionally
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign content_legend = legend | replace: "[heading]", legend_label
+
+  case content_flow
+    when "show_all"
+      assign container_classes = 'flex-wrap overflow-hidden'
+    when "truncate"
+      assign container_classes = 'overflow-hidden'
+  endcase
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-container]",
+    keys: "margin_top_gap" %}
+
+{% render '_utils.dynamic-css', block: block %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    x-show="$data.showConditionally('{{ show_conditionally }}') && !!card?.product?.options_with_values?.[getOptionIndex(`{{ block.id }}`)]">
+  <fieldset x-data="{ hoverValue: '',index: getOptionIndex(`{{ block.id }}`)}"
+            x-effect="() => { if (card?.product?.id) { index = getOptionIndex(`{{ block.id }}`)} }"
+            data-style-id="{{ section.id }}--{{ block.id }}"
+            x-cloak
+            x-show="card?.hydrated && index !== -1 && card?.product?.variants?.length && card?.product?.variants?.[0]?.title !== 'Default Title' && card?.selected_variant?.id">
+    <legend class="flex w-full max-w-full truncate {{ legend_class }}"
+            data-legend="{% render '_input.inline_richtext', content: legend, escape: true, block: block, forloop: forloop %}"
+            x-effect="$el.innerHTML = $el.getAttribute('data-legend').replace('[heading]',card?.product?.options?.[index]).replace('[value]', hoverValue || card?.options?.[index])">
+    </legend>
+    <div class="relative w-full flex scrollbar-none {{ container_classes }}"
+         x-data="{ offset: card?.product?.options_with_values?.[index]?.values?.length }"
+         data-style-container>
+      <template x-for="value in card?.product?.options_with_values?.[index]?.values.slice(0, offset)">
+        <div class="flex flex-col shrink-0">
+          <label data-loop-item class="flex flex-col flex-grow items-center w-full max-w-[72px] md:max-w-[99px] !outline-none {{ radio_button_class }}"
+                 x-data="{ matchedVariant: null }"
+                 x-effect="
+                          let tempOptions = [...card?.options];
+                          tempOptions[index] = value;
+                          matchedVariant = card?.product?.variants.find(variant => 
+                              tempOptions.every((option, idx) => variant[`option${idx + 1}`] === option)
+                          );
+                          $el.classList.toggle('active',card?.options[index] === value)
+                      "
+                 :class="hasAvailableVariant(index, value) ? '' : 'opacity-40'"
+                 @pointerenter="hoverValue = `${value}`"
+                 @pointerleave="hoverValue = ''"
+                 :aria-label="value">
+            <input type="radio"
+                   class="sr-only"
+                   :name="`${card?.random_id}-${card?.product?.id}-${card?.product?.options[index]}-option__radio`"
+                   @change="$data.setProductOption({ index, value })"
+                   :checked="card?.options[index] === value"
+                   :value="value">
+            <span x-text="$el.getAttribute('data-content')?.replaceAll('[value]', value)"
+                  data-content="{% render '_input.inline_richtext', content: radio_button_content %}"></span>
+            <span class="richtext-md h6" x-show="matchedVariant?.metafields?.smart?.seating_capacity"
+              x-html="matchedVariant?.metafields?.smart?.seating_capacity"></span>
+          </label>
+        </div>
+      </template>
+      {% if content_flow == 'truncate' %}
+        <div class="flex flex-col shrink-0 w-full max-w-[72px] md:max-w-[99px]"
+             :class="offset < card?.product?.options_with_values?.[index]?.values?.length ? '':'opacity-0 pointer-events-none'"
+              x-init="$nextTick(async ()=> { if (window.design_mode) { await utils.delay(20) } offset = truncateChildren($el, $el.parentElement)})"
+              @resize.window.debounce.200ms="offset = card?.product?.options_with_values?.[index]?.values?.length; await utils.delay(1); offset = truncateChildren($el, $el.parentElement)"
+              :title="`${_stores.router?.pathname?.replace(/^.*?(\/collections\/[^/]*)?.*$/gi,'$1')?.replace(/^\/$/gi,'') ?? ''}/products/${card?.product?.handle}?variant=${card?.selected_variant?.id}`"
+              role="button"
+              tabindex="0"
+              @click.prevent.stop="barba.go(`${_stores.router?.pathname?.replace(/^.*?(\/collections\/[^/]*)?.*$/gi,'$1')?.replace(/^\/$/gi,'') ?? ''}/products/${card?.product?.handle}?variant=${card?.selected_variant?.id}`); $modal.setId('')">
+          <div class="flex flex-col flex-grow shrink-0 items-center whitespace-nowrap richtext-md h6 !lowercase w-full {{ radio_button_class }}"
+               x-html="`+ more`">
+            +10 placeholder
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </fieldset>
+</div>

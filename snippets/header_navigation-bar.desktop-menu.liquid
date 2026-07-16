@@ -1,0 +1,135 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "desktop-menu"
+  assign section_type = "header_navigation-bar"
+  assign menu = block.settings.menu
+  assign link_class = block.settings.link_class
+  assign padding_x_gap = block.settings.padding_x_gap
+  assign dropdown_icon = block.settings.dropdown_icon
+  assign level_1_link_class = block.settings.level_1_link_class
+  assign level_2_link_class = block.settings.level_2_link_class
+  assign highlight_active_link = block.settings.highlight_active_link
+  assign rotate_dropdown_icon = block.settings.rotate_dropdown_icon
+  assign responsive_visibility = block.settings.responsive_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+
+  assign open_on_click = section.settings.open_on_click
+  assign toggle_area = section.settings.toggle_area
+
+  assign padding_x_gap = padding_x_gap | strip_newlines | replace: ' ', "" | split: '|'
+  assign padding_x = padding_x_gap[0] | split: '/'
+  assign gap = padding_x_gap[1] | split: '/'
+  assign dropdown_class = "rotate-180"
+
+  if settings.layout__style == 'solid'
+    assign container_level_1_classes = 'mt-px'
+    assign container_level_2_classes = 'ml-1'
+  endif
+
+  if settings.layout__style == 'floating'
+    assign container_level_1_classes = 'mt-1.5 rounded-md'
+    assign container_level_2_classes = 'ml-1.5 rounded-md'
+  endif
+  assign highlight = ""
+  if highlight_active_link
+    assign highlight = "true"
+  endif
+%}
+{% capture styles %}
+  --pl-md: {{ padding_x.first }};--pl: {{ padding_x.last }};
+  --pr-md: {{ padding_x.first }};--pr: {{ padding_x.last }};
+  --gap-md: {{ gap.first }};--gap: {{ gap.last }};
+{% endcapture %}
+
+<ul class="flex h-full shrink-0 gap-dynamic {{ class }} {{ responsive_visibility }}" {{ block.shopify_attributes }}
+    role="menu"
+    style="{{ styles | strip_newlines }}">
+  {% for link in menu.links %}
+  <li class="relative flex h-full shrink-0 items-center border-b-2 border-t-2 border-transparent group"
+      role="menuitem"
+      :class="active && '{{ highlight }}' ? 'border-b-gray-900 [.navigation-bar--transparent_&]:border-b-transparent':'' "
+      x-data="{ dropdown: !!+'{{ link.links.size }}', openOnClick: {{ open_on_click }}, isOpen: false, megamenu: !!document.querySelector(`[data-megamenu='{{ link.handle }}']`), active: '{{ link.url }}'?.split(/[#?]/gi)?.[0] === ($router.pathname) }"
+      x-effect="() => {
+        active = '{{ link.url }}'?.split(/[#?]/gi)?.[0] === ($router.pathname);
+        isOpen = $modal.id.includes('megamenu--{{ link.handle | handleize }}');
+          if ($modal.loaded) {
+             megamenu = !!document.querySelector(`[data-megamenu='{{ link.handle }}']`)
+          }
+        }"
+      @editor_load.document="$nextTick(()=> { megamenu = !!document.querySelector(`[data-megamenu='{{ link.handle }}']`) })"
+      @pointerover="if (!openOnClick && megamenu) {
+          $modal.setId('megamenu--{{ link.handle | handleize }}');
+          isOpen = true;
+        }
+        if (!megamenu && $modal.id.includes('megamenu-')) {
+          isOpen = false;
+          $modal.setId('');
+        }"
+      @click="(e) => {
+        if (openOnClick && megamenu) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (isOpen && $modal.id.includes('megamenu-')) {
+            isOpen = !isOpen;
+            $modal.setId('');
+          } else if (megamenu) {
+            isOpen = true;
+            $modal.setId('megamenu--{{ link.handle | handleize }}');
+          }
+        }
+      }">
+    <a href="{{ link.url }}"
+       @keydown="if ($event.key === ' ' || $event.key === 'Enter' || $event.key === 'ArrowDown') { $modal.setId('megamenu--{{ link.handle | handleize }}') }"
+       @pointerover="`{{ toggle_area }}` == 'links' && $data.toggleTransparent"
+       @pointerleave="`{{ toggle_area }}` == 'links' && $data.toggleTransparent"
+       class="px-dynamic flex shrink-0 items-center gap-1.5 border-b-2 border-b-transparent"
+       :class="isOpen && '!border-b-black'">
+      <span class="{{ link_class }}">{{ link.title }}</span>
+      {% if dropdown_icon != blank %}
+        <span class="shrink-0 transition-all duration-300" x-show="dropdown || megamenu" :class="isOpen && {{ rotate_dropdown_icon }} && 'rotate-180'">
+          {% render '_components.icon', icon: dropdown_icon, class: "h-4" %}
+        </span>
+      {% endif %}
+    </a>
+    {% if link.links.size > 0 %}
+    <div class="absolute -left-4 top-full z-50 -mt-2 hidden pt-2.5 group-hfw:block hf:block"
+         :class="megamenu ? '!hidden': ''"
+         @pointerover="$modal.setId('')"
+         x-cloak>
+      <ul class="min-w-56 bg-theme-bg py-3 {{ container_level_1_classes }}">
+        {% for level_1_link in link.links %}
+          <li class="relative px-4 py-1 group/level-1" role="menuitem">
+            <a href="{{ level_1_link.url }}"
+              class="flex h-full items-center justify-between gap-2 text-left">
+              <span class="{{ level_1_link_class }}">{{ level_1_link.title }}</span>
+              {% if dropdown_icon != blank and level_1_link.links.size > 0 %}
+                <span class="shrink-0">
+                  {% render '_components.icon', icon: dropdown_icon, class: "h-4 -rotate-90" %}
+                </span>
+              {% endif %}
+            </a>
+            {% if level_1_link.links.size > 0 %}
+              <div class="absolute -top-2 left-full z-50 -ml-2 hidden pl-2 group-hover/level-1:block group-focus-visible/level-1:block group-focus-within/level-1:block hf:block">
+                <ul class="min-w-56 bg-theme-bg py-2 {{ container_level_2_classes }}">
+                  {% for level_2_link in level_1_link.links %}
+                    <li class="relative px-4 py-1" role="menuitem">
+                      <a href="{{ level_2_link.url }}" class="flex h-full items-center justify-between gap-2 text-left">
+                        <span class="{{ level_2_link_class }}">{{ level_2_link.title }}</span>
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+  </div>
+  {% endif %}
+  </li>
+{% endfor %}
+</ul>
+

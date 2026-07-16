@@ -1,0 +1,40 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.variant-based-text"
+  assign text_class = block.settings.text_class
+  assign variant_metafield = block.settings.variant_metafield
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{%- liquid
+  assign parts = variant_metafield | split: "."
+  assign namespace = parts[0]
+  assign key = parts[1]
+-%}
+
+{% if product and product.selected_or_first_available_variant.metafields[namespace][key] %}
+  {%- assign metafield_content = product.selected_or_first_available_variant.metafields[namespace][key].value | default: "" -%}
+  <div
+    class="flex h-full items-center gap-4 max-sm:mx-auto max-sm:pr-4"
+    x-data="{
+      product: _stores?.main_product?.state?.product,
+      selected_variant: _stores?.main_product?.state?.selected_variant,
+      ns: '{{ namespace }}',
+      key: '{{ key }}',
+      popupText: '{{ metafield_content | metafield_tag }}'
+    }"
+    x-effect="() => {
+      if ($store?.main_product?.state?.product && $store?.main_product?.state?.selected_variant ) {
+        product = $store?.main_product?.state?.product;
+        selected_variant = $store?.main_product?.state?.selected_variant;
+
+        popupText = selected_variant
+          ?.metafields?.[ns]
+          ?.[key];
+      }
+    }"
+  >
+    <div class="{{ text_class }}" x-html="popupText">
+    </div>
+  </div>
+{% endif %}

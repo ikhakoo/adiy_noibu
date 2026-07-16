@@ -1,0 +1,46 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "modal_search"
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign grid_orientation = block.settings.grid_orientation
+  assign grid_auto_cols_width_height_gap = block.settings.grid_auto_cols_width_height_gap
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,flex_direction_align_x_align_y_gap_wrap,grid_orientation,margin_top_bottom_left_right, max_w_flex_col_row_order_align" %}
+
+{% liquid
+  if request.design_mode != true
+    comment
+    if content == blank
+      assign is_empty = true
+    endif
+    endcomment
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+%}
+
+<div data-style-id="{{ section.id }}--{{ block.id }}"
+     data-search-results="{{ block.type }}"
+     data-settings="{{ block.settings | json | escape }}"
+    {{ block.shopify_attributes }}
+     class="overflow-y-auto [&_mark]:bg-transparent [&_mark]:font-bold grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 justify-center gap-6">
+</div>

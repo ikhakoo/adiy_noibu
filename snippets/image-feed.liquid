@@ -1,0 +1,51 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "image-feed"
+  assign columns = section.settings.columns
+  assign title = section.settings.title
+  assign title_class = section.settings.title_class
+  assign scrollbar_class = section.settings.scrollbar_class
+  assign section_id = section.settings.section_id
+  assign top_bottom_min_height = section.settings.top_bottom_min_height
+  assign container_spacing = section.settings.container_spacing
+  assign responsive_visibility = section.settings.responsive_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render "_section.universal-settings", section_type: section_type, insert: "before" %}
+{% comment %} assign slider_overflow = container_spacing | replace: 'px', 'max-md:-mx' | append: " max-md:scroll-" | append: container_spacing | append: " max-md:" | append: container_spacing {% endcomment %}
+{% liquid
+  assign slider_overflow = "-mx-container-md scroll-px-container-md px-container-md"
+  
+
+  assign columns = columns | strip_newlines | replace: ' ', "" | split: '/'
+  assign column_md = columns[0]
+  assign column = columns[1]
+  %}
+
+<div class="flex flex-col gap-6 md:gap-9 justify-center text-center"
+     data-grid-slider
+     x-data="{ ..._sections.initContentSlider($refs.container, undefined, false) }"
+     x-defer="intersect"
+     style="--cols: {{ column }};--cols-md: {{ column_md }};">
+  {% render '_input.richtext', content: title, class: title_class, block: block, forloop: forloop %}
+  <div class="grid h-full overflow-x-auto snap-x snap-mandatory scrollbar-none overflow-y-hidden grid-flow-col gap-3 md:gap-6 max-md:auto-cols-[calc((100%_-_(12px_*_(var(--cols)_-_1)))_/_var(--cols))] md:auto-cols-[calc((100%_-_(24px_*_(var(--cols-md)_-_1)))_/_var(--cols-md))] {{ slider_overflow }}"
+      x-ref="container"
+      @resize.window="content_slider.handleResize"
+      x-init="$nextTick(() => content_slider.handleResize())"
+      @scroll="content_slider.handleScroll"
+      @scrollend="content_slider.handleInfiniteScroll"
+      data-style-content-slider>
+    {% liquid
+      for block in section.blocks
+        if block.type == 'image'
+          render 'image-feed.image', block: block, forloop: forloop, section_type: section_type
+        endif
+      endfor
+    %}
+  </div>
+  {% if scrollbar_class != blank %}
+    {% render "_components.scrollbar", class: scrollbar_class, scroll_container_ref: '$refs.container', html_attributes: 'data-style-scrollbar' %}
+  {% endif %}
+</div>
+{% render "_section.universal-settings", section_type: section_type, insert: "after" %}

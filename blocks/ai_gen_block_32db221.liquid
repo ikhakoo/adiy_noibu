@@ -1,0 +1,541 @@
+{% doc %}
+  @prompt
+    video block to add youtube video, remove the youtube button, make a play button similar to my theme
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-youtube-video-{{ ai_gen_id }} {
+    width: 100%;
+    max-width: {{ block.settings.max_width }}px;
+    margin: 0 auto;
+    background-color: {{ block.settings.background_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    overflow: hidden;
+    box-shadow: {{ block.settings.shadow_intensity | times: 0.1 }}rem {{ block.settings.shadow_intensity | times: 0.2 }}rem {{ block.settings.shadow_intensity | times: 0.4 }}rem rgba(0, 0, 0, 0.1);
+  }
+
+  .ai-youtube-video__content-{{ ai_gen_id }} {
+    padding: {{ block.settings.padding }}px;
+  }
+
+  .ai-youtube-video__header-{{ ai_gen_id }} {
+    margin-bottom: {{ block.settings.content_spacing }}px;
+    text-align: {{ block.settings.text_alignment }};
+  }
+
+  .ai-youtube-video__title-{{ ai_gen_id }} {
+    color: {{ block.settings.title_color }};
+    font-size: {{ block.settings.title_size }}px;
+    margin: 0 0 {{ block.settings.title_spacing }}px 0;
+    line-height: 1.2;
+  }
+
+  .ai-youtube-video__description-{{ ai_gen_id }} {
+    color: {{ block.settings.description_color }};
+    font-size: {{ block.settings.description_size }}px;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .ai-youtube-video__player-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: {{ block.settings.aspect_ratio }}%;
+    background-color: #000;
+    border-radius: {{ block.settings.video_border_radius }}px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .ai-youtube-video__thumbnail-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.3s ease;
+  }
+
+  .ai-youtube-video__player-wrapper-{{ ai_gen_id }}:hover .ai-youtube-video__thumbnail-{{ ai_gen_id }} {
+    transform: scale(1.05);
+  }
+
+  .ai-youtube-video__play-overlay-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+  }
+
+  .ai-youtube-video__player-wrapper-{{ ai_gen_id }}:hover .ai-youtube-video__play-overlay-{{ ai_gen_id }} {
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .ai-youtube-video__play-button-{{ ai_gen_id }} {
+    width: {{ block.settings.play_button_size }}px;
+    height: {{ block.settings.play_button_size }}px;
+    background-color: {{ block.settings.play_button_color }};
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .ai-youtube-video__play-button-{{ ai_gen_id }}:hover {
+    transform: scale(1.1);
+    background-color: {{ block.settings.play_button_hover_color }};
+  }
+
+  .ai-youtube-video__play-icon-{{ ai_gen_id }} {
+    width: calc({{ block.settings.play_button_size }}px * 0.4);
+    height: calc({{ block.settings.play_button_size }}px * 0.4);
+    color: {{ block.settings.play_button_icon_color }};
+    margin-left: 2px;
+  }
+
+  .ai-youtube-video__player-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .ai-youtube-video__player-{{ ai_gen_id }}.loaded {
+    opacity: 1;
+  }
+
+  .ai-youtube-video__placeholder-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .ai-youtube-video__placeholder-icon-{{ ai_gen_id }} {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 16px;
+    opacity: 0.6;
+  }
+
+  .ai-youtube-video__placeholder-text-{{ ai_gen_id }} {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .ai-youtube-video__placeholder-subtext-{{ ai_gen_id }} {
+    font-size: 14px;
+    opacity: 0.8;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-youtube-video__content-{{ ai_gen_id }} {
+      padding: {{ block.settings.padding | times: 0.75 }}px;
+    }
+
+    .ai-youtube-video__title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_size | times: 0.9 }}px;
+    }
+
+    .ai-youtube-video__description-{{ ai_gen_id }} {
+      font-size: {{ block.settings.description_size | times: 0.9 }}px;
+    }
+
+    .ai-youtube-video__play-button-{{ ai_gen_id }} {
+      width: {{ block.settings.play_button_size | times: 0.8 }}px;
+      height: {{ block.settings.play_button_size | times: 0.8 }}px;
+    }
+
+    .ai-youtube-video__play-icon-{{ ai_gen_id }} {
+      width: calc({{ block.settings.play_button_size | times: 0.8 }}px * 0.4);
+      height: calc({{ block.settings.play_button_size | times: 0.8 }}px * 0.4);
+    }
+  }
+{% endstyle %}
+
+<youtube-video-{{ ai_gen_id }}
+  class="ai-youtube-video-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-youtube-video__content-{{ ai_gen_id }}">
+    {% if block.settings.title != blank or block.settings.description != blank %}
+      <div class="ai-youtube-video__header-{{ ai_gen_id }}">
+        {% if block.settings.title != blank %}
+          <h2 class="ai-youtube-video__title-{{ ai_gen_id }}">{{ block.settings.title }}</h2>
+        {% endif %}
+        {% if block.settings.description != blank %}
+          <div class="ai-youtube-video__description-{{ ai_gen_id }}">{{ block.settings.description }}</div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="ai-youtube-video__player-wrapper-{{ ai_gen_id }}" data-youtube-url="{{ block.settings.youtube_url }}">
+      {% if block.settings.youtube_url != blank %}
+        <div class="ai-youtube-video__thumbnail-{{ ai_gen_id }}" data-video-id=""></div>
+        <div class="ai-youtube-video__play-overlay-{{ ai_gen_id }}">
+          <button class="ai-youtube-video__play-button-{{ ai_gen_id }}" aria-label="Play video">
+            <svg class="ai-youtube-video__play-icon-{{ ai_gen_id }}" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </button>
+        </div>
+        <iframe
+          class="ai-youtube-video__player-{{ ai_gen_id }}"
+          src=""
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      {% else %}
+        <div class="ai-youtube-video__placeholder-{{ ai_gen_id }}">
+          <svg class="ai-youtube-video__placeholder-icon-{{ ai_gen_id }}" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+          <div class="ai-youtube-video__placeholder-text-{{ ai_gen_id }}">Add YouTube video</div>
+          <div class="ai-youtube-video__placeholder-subtext-{{ ai_gen_id }}">Enter a YouTube URL in the block settings</div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</youtube-video-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class YouTubeVideo{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.isLoaded = false;
+      }
+
+      connectedCallback() {
+        this.wrapper = this.querySelector('.ai-youtube-video__player-wrapper-{{ ai_gen_id }}');
+        this.thumbnail = this.querySelector('.ai-youtube-video__thumbnail-{{ ai_gen_id }}');
+        this.playButton = this.querySelector('.ai-youtube-video__play-button-{{ ai_gen_id }}');
+        this.iframe = this.querySelector('.ai-youtube-video__player-{{ ai_gen_id }}');
+        this.overlay = this.querySelector('.ai-youtube-video__play-overlay-{{ ai_gen_id }}');
+
+        if (this.wrapper) {
+          this.setupVideo();
+        }
+      }
+
+      setupVideo() {
+        const youtubeUrl = this.wrapper.dataset.youtubeUrl;
+        if (!youtubeUrl) return;
+
+        const videoId = this.extractVideoId(youtubeUrl);
+        if (videoId) {
+          this.videoId = videoId;
+          this.loadThumbnail();
+          this.setupPlayButton();
+        }
+      }
+
+      loadThumbnail() {
+        if (this.thumbnail) {
+          const thumbnailUrl = `https://img.youtube.com/vi/${this.videoId}/maxresdefault.jpg`;
+          this.thumbnail.style.backgroundImage = `url(${thumbnailUrl})`;
+          this.thumbnail.dataset.videoId = this.videoId;
+        }
+      }
+
+      setupPlayButton() {
+        if (this.playButton) {
+          this.playButton.addEventListener('click', () => {
+            this.loadVideo();
+          });
+        }
+
+        if (this.wrapper) {
+          this.wrapper.addEventListener('click', (e) => {
+            if (e.target === this.wrapper || e.target === this.thumbnail) {
+              this.loadVideo();
+            }
+          });
+        }
+      }
+
+      loadVideo() {
+        if (this.isLoaded) return;
+
+        const embedUrl = `https://www.youtube.com/embed/${this.videoId}?autoplay=1&rel=0&modestbranding=1&showinfo=0`;
+        this.iframe.src = embedUrl;
+        
+        this.iframe.addEventListener('load', () => {
+          this.iframe.classList.add('loaded');
+          if (this.overlay) {
+            this.overlay.style.display = 'none';
+          }
+        });
+
+        this.isLoaded = true;
+      }
+
+      extractVideoId(url) {
+        const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+        const match = url.match(regex);
+        return match ? match[1] : null;
+      }
+    }
+
+    customElements.define('youtube-video-{{ ai_gen_id }}', YouTubeVideo{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "YouTube video",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Video"
+    },
+    {
+      "type": "url",
+      "id": "youtube_url",
+      "label": "YouTube URL"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Aspect ratio",
+      "options": [
+        {
+          "value": "56.25",
+          "label": "16:9"
+        },
+        {
+          "value": "75",
+          "label": "4:3"
+        },
+        {
+          "value": "66.67",
+          "label": "3:2"
+        },
+        {
+          "value": "100",
+          "label": "1:1"
+        }
+      ],
+      "default": "56.25"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 400,
+      "max": 1200,
+      "step": 50,
+      "unit": "px",
+      "label": "Maximum width",
+      "default": 800
+    },
+    {
+      "type": "range",
+      "id": "video_border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Video border radius",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Play button"
+    },
+    {
+      "type": "range",
+      "id": "play_button_size",
+      "min": 40,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "label": "Play button size",
+      "default": 80
+    },
+    {
+      "type": "color",
+      "id": "play_button_color",
+      "label": "Play button color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "play_button_hover_color",
+      "label": "Play button hover color",
+      "default": "#f0f0f0"
+    },
+    {
+      "type": "color",
+      "id": "play_button_icon_color",
+      "label": "Play button icon color",
+      "default": "#20221d"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#20221d"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color",
+      "default": "#20221d"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Title size",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Description size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Container border radius",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "shadow_intensity",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "label": "Shadow intensity",
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Container padding",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "content_spacing",
+      "min": 8,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "label": "Content spacing",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "title_spacing",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Title spacing",
+      "default": 12
+    }
+  ],
+  "presets": [
+    {
+      "name": "YouTube video"
+    }
+  ]
+}
+{% endschema %}

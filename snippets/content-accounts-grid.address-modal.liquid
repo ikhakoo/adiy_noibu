@@ -1,0 +1,201 @@
+<template x-teleport="body">
+  <div x-data="{ open:  $modal.id === 'address--{{ address.id }}' }"
+       x-effect="open = $modal.id === 'address--{{ address.id }}'"
+       @keydown.document="(e) => { if (e.key === 'k' && e.ctrlKey) {
+         e.preventDefault();
+         e.stopPropagation();
+         $modal.setId('address--{{ address.id }}');
+     }}"
+       x-cloak>
+    <div class="fixed inset-0 z-20 bg-[--color-modal-background] {{ background_blur }} transition duration-150 ease-in-out"
+         x-show="open"
+         @click="$modal.setId('')"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"></div>
+    <section class="fixed left-1/2 top-32 md:top-1/2 z-20 transition-transform duration-150 ease-in-out -translate-x-1/2 md:-translate-y-1/2 {{ container_classes }}"
+             x-show="open"
+             x-trap.noautofocus="open"
+             x-transition:enter-start="translate-y-full"
+             x-transition:enter-end="md:-translate-y-1/2 translate-y-0"
+             x-transition:leave-start="md:-translate-y-1/2 translate-y-0"
+             x-transition:leave-end="translate-y-full">
+      <div class="relative w-screen max-w-sm overflow-hidden rounded-lg bg-white p-4">
+        <header class="mb-2 flex justify-between gap-2">
+          <div class="richtext-md">
+            <h4><strong>
+                {% if is_new %}
+                  Add New Address
+                {% else %}
+                  Edit Address
+                {% endif %}
+              </strong></h4>
+          </div>
+
+          <button type="button"
+                  class="relative z-10 text-theme-text/60 hf:text-theme-text/90"
+                  @click="$modal.setId(open ? '' : 'address--{{ address.id }}')">
+            <span class="sr-only">Close Drawer</span>
+            {% render '_components.icon', icon: 'x-mark', class: "h-4 shrink-0" %}
+          </button>
+        </header>
+        {% assign input_class = 'input-text' %}
+        {%- form 'customer_address', address, class: 'w-full flex flex-col gap-2' -%}
+          <div x-data="{ country: `{{ form.country }}`, province: `{{ form.province }}`, provinces: window._provinces }"
+               class="flex flex-col gap-2">
+            {%- if form.errors -%}
+              {%- if form.errors -%}
+                {% for error in form.errors %}
+                  <div class="!hidden"
+                       data-error-content="{{ form.errors.translated_fields[error] | capitalize | append: ": " | append: form.errors.messages[error] | escape }}"
+                       x-init="() => _stores.toast.addToast({type: 'error',target: 'cart',title: 'We\'ve encountered a problem.',content: $el.getAttribute('data-error-content'), timestamp: Date.now() + 1000 * 15})"></div>
+                {% endfor %}
+              {%- endif -%}
+              {%- if form.posted_successfully? -%}
+                <div class="!hidden"
+                     x-init="() => _stores.toast.addToast({type: 'success',target: 'cart',title: 'Success',content: '', timestamp: Date.now() + 1000 * 15})"></div>
+              {%- endif -%}
+            {%- endif -%}
+
+            {% render "_components.input",
+                name: 'address[first_name]',
+                type: 'text',
+                label: 'First Name',
+                placeholder: 'First Name',
+                autocomplete: 'given-name',
+                form: form,
+                class: input_class,
+                default_value: form.first_name
+            %}
+
+            {% render "_components.input",
+                name: 'address[last_name]',
+                type: 'text',
+                label: 'Last Name',
+                placeholder: 'Last Name',
+                autocomplete: 'family-name',
+                form: form,
+                class: input_class,
+                default_value: form.last_name
+            %}
+
+            {% render "_components.input",
+                name: 'address[company]',
+                type: 'text',
+                label: 'Company',
+                placeholder: 'Company',
+                autocomplete: 'organization',
+                form: form,
+                class: input_class,
+                default_value: form.company
+            %}
+
+            {% render "_components.input",
+                name: 'address[phone]',
+                type: 'text',
+                label: 'Phone Number',
+                placeholder: 'Phone Number',
+                autocomplete: 'tel',
+                form: form,
+                class: input_class,
+                default_value: form.phone
+            %}
+
+
+            {% render "_components.input",
+                name: 'address[address1]',
+                type: 'text',
+                label: 'Address Line 1',
+                placeholder: 'Address Line 1',
+                autocomplete: 'address-line1',
+                form: form,
+                class: input_class,
+                default_value: form.address1
+            %}
+
+            {% render "_components.input",
+                name: 'address[address2]',
+                type: 'text',
+                label: 'Address Line 2',
+                placeholder: 'Address Line 2',
+                autocomplete: 'address-line2',
+                form: form,
+                class: input_class,
+                default_value: form.address2
+            %}
+
+            {% render "_components.input",
+                name: 'address[city]',
+                type: 'text',
+                label: 'City',
+                placeholder: 'City',
+                autocomplete: 'address-level2',
+                form: form,
+                class: input_class,
+                default_value: form.city
+            %}
+
+            {% render "_components.input",
+                name: 'address[zip]',
+                type: 'text',
+                label: 'Zip',
+                placeholder: 'Zip',
+                autocomplete: 'postal-code',
+                form: form,
+                class: input_class,
+                default_value: form.zip
+            %}
+
+            {% render "_components.select",
+                dynamic: true,
+                values: 'window._countries || []',
+                titles: 'window._countries || []',
+                current_value: '$data.country',
+                current_title: '$data.country',
+                name: 'address[country]',
+                select_class: 'input-select',
+                label: 'Country',
+                setState: "$data.country = value",
+                state: "$data.country"
+            %}
+
+            {% render "_components.select",
+                dynamic: true,
+                values: 'provinces?.[country]?.map(([_,value])=>value) || []',
+                titles: 'provinces?.[country]?.map(([title])=>title) || []',
+                current_value: '$data.province',
+                current_title: '$data.province',
+                name: 'address[province]',
+                select_class: 'input-select',
+                label: 'Province',
+                setState: "$data.province = value",
+                state: "$data.province"
+            %}
+
+            {% if address.id == customer.default_address.id %}
+              {% assign isDefault = true %}
+            {% endif %}
+
+            {% render "_components.checkbox",
+                class: 'input-checkbox-sm',
+                name: 'address[default]',
+                label: 'Set as default address',
+                default_checked: isDefault
+            %}
+
+            <button type="submit"
+                    class="mt-2 w-full button-primary">
+              {% if is_new %}
+                Add New Address
+              {% else %}
+                Edit Address
+              {% endif %}
+            </button>
+          </div>
+        {%- endform -%}
+      </div>
+
+    </section>
+  </div>
+</template>

@@ -1,0 +1,382 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_code_UNAzkg": {
+      "type": "custom-code",
+      "blocks": {
+        "javascript_kPJg9f": {
+          "type": "javascript",
+          "settings": {
+            "javascript": ""
+          }
+        }
+      },
+      "block_order": [
+        "javascript_kPJg9f"
+      ],
+      "settings": {}
+    },
+    "hero_banner_K6jPmq": {
+      "type": "hero-banner",
+      "blocks": {
+        "slide_AFw4fn": {
+          "type": "slide",
+          "settings": {
+            "desktop_image": "shopify://shop_images/slideshow.png",
+            "background_gradient": "rgba(0, 0, 0, 0.60)",
+            "preheading": "",
+            "preheading_class": "richtext-md",
+            "heading": "<h1><strong>Contact Us</strong></h1>",
+            "heading_class": "richtext-md",
+            "subheading": "",
+            "subheading_class": "richtext-md",
+            "button_primary_text": "",
+            "button_primary_url": "",
+            "button_primary_class": "button-secondary",
+            "button_secondary_text": "",
+            "button_secondary_url": "",
+            "button_secondary_class": "button-secondary-outline",
+            "text_color": "#ffffff",
+            "text_align": "text-center",
+            "vertical_align_desktop": "md:justify-center",
+            "vertical_align": "justify-center",
+            "horizontal_align": "items-center mx-auto",
+            "vertical_padding": "0/96px | 0"
+          }
+        }
+      },
+      "block_order": [
+        "slide_AFw4fn"
+      ],
+      "settings": {
+        "top_bottom_min_height": "0 | 0 | 556px/319px",
+        "full_screen": false,
+        "section_id": "",
+        "container_spacing": "px-container-fullwidth",
+        "responsive_visibility": ""
+      }
+    },
+    "text_cards_Uzgmmw": {
+      "type": "text-cards",
+      "blocks": {
+        "card_zr9GBT": {
+          "type": "card",
+          "settings": {
+            "icon_heading": "shopify://shop_images/mail-02.svg",
+            "heading": "<p><strong>Email</strong></p>",
+            "heading_class": "text-20/16-500",
+            "first_text": "<p>Monday-Friday, 9AM - 5 PM EST excluding holidays. Send us an email at [span.underline||<a href=\"mailto:support@a-diy.com\" title=\"mailto:support@a-diy.com\">support@a-diy.com]</a>.</p>",
+            "first_text_class": "richtext-md",
+            "trigger_chatbox": false,
+            "padding": "24px | 16px",
+            "text_align": "text-center",
+            "horizontal_align": "justify-center"
+          }
+        },
+        "card_YichVc": {
+          "type": "card",
+          "settings": {
+            "icon_heading": "shopify://shop_images/phone-outgoing-01.svg",
+            "heading": "<p><strong>Phone</strong></p>",
+            "heading_class": "text-20/16-500",
+            "first_text": "<p>Monday-Friday, 9AM - 5 PM EST excluding holidays. Give us a call [span.underline||<a href=\"tel:1 (786) 358-2872\" title=\"tel:1 (786) 358-2872\">1 (786) 358-2872</a>].</p>",
+            "first_text_class": "richtext-md",
+            "trigger_chatbox": false,
+            "padding": "24px | 16px",
+            "text_align": "text-center",
+            "horizontal_align": "justify-center"
+          }
+        },
+        "card_7RKkUV": {
+          "type": "card",
+          "settings": {
+            "icon_heading": "shopify://shop_images/message-smile-square.svg",
+            "heading": "<p><strong>Chat</strong></p>",
+            "heading_class": "text-20/16-500",
+            "first_text": "<p>Is it after hours? </p><p>[span.underline||<a href=\"#chatwithus\" title=\"#chatwithus\">Launch our chat]</a> to talk with a specialist now.</p>",
+            "first_text_class": "richtext-md",
+            "trigger_chatbox": true,
+            "padding": "24px | 16px",
+            "text_align": "text-center",
+            "horizontal_align": "justify-center"
+          }
+        }
+      },
+      "block_order": [
+        "card_zr9GBT",
+        "card_YichVc",
+        "card_7RKkUV"
+      ],
+      "settings": {
+        "columns": 3,
+        "mobile_layout": "stacked",
+        "gap_content": "24px | 12px",
+        "vertical_padding_section": "64px/48px | 64px/48px",
+        "section_id": "",
+        "container_spacing": "px-container-md",
+        "responsive_visibility": ""
+      }
+    },
+    "custom_code_AJwnNM": {
+      "type": "custom-code",
+      "blocks": {
+        "css_zT7A4w": {
+          "type": "css",
+          "settings": {
+            "css": "h1 {\nposition: relative;\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    margin: 0 auto 40px;\n}\n\np {\nmargin-block-end :16px;\nmargin-block-start :16px;\n}\n\nol, ul {\nmargin-block-end :32px;\nmargin-block-start :16px;\n}\n\np:first-child {\n    -webkit-margin-before: 0;\n    margin-block-start: 0;\n}"
+          }
+        }
+      },
+      "block_order": [
+        "css_zT7A4w"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "content_flex_bxDk3Q": {
+      "type": "content-flex",
+      "blocks": {
+        "richtext_rYW8Bw": {
+          "type": "richtext",
+          "settings": {
+            "title": "<h1>{{ block.settings.page_content.title }}</h1>",
+            "page_content": "{{ page }}",
+            "use_page_content": false,
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 24 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": "",
+            "color_override": "rgba(0,0,0,0)"
+          }
+        }
+      },
+      "block_order": [
+        "richtext_rYW8Bw"
+      ],
+      "disabled": true,
+      "settings": {
+        "flex_row_wrap_align_x_align_y_gap": "start | start | 0",
+        "padding_top_bottom_left_right": "0 | 0 | 0 | 0",
+        "margin_top_bottom_left_right": "0 | 0 | auto/0 | auto/0",
+        "border_width_radius": "0 | 0 | | 1168/unset",
+        "background_color": "",
+        "border_color": "",
+        "section_id": "",
+        "color_scheme": "",
+        "container_spacing": "px-container-md",
+        "border_divider": "border-y-none",
+        "top_bottom_min_height": "48/36 | 48/36 | 0",
+        "responsive_visibility": "",
+        "responsive_breakpoint": "768px",
+        "target_visibility": "",
+        "render_tabs_async": false
+      }
+    },
+    "content_flex_7ttbjg": {
+      "type": "content-flex",
+      "blocks": {
+        "shopify_form_YnVKeM": {
+          "type": "shopify_form",
+          "settings": {
+            "form_type": "contact"
+          }
+        },
+        "richtext_Qf6aiR": {
+          "type": "richtext",
+          "settings": {
+            "title": "<h2><strong>Or Send Us A Message:</strong></h2>",
+            "page_content": "",
+            "use_page_content": false,
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 24/16 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": "",
+            "color_override": ""
+          }
+        },
+        "richtext_bVU4VP": {
+          "type": "richtext",
+          "settings": {
+            "title": "<p>Our customer service team is available via email Monday-Friday, 9AM - 5 PM EST excluding holidays. We generally respond to all inquiries within one business day.</p>",
+            "page_content": "",
+            "use_page_content": false,
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "744px/100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": "",
+            "color_override": ""
+          }
+        },
+        "layout_child_grid_card_DRnFRY": {
+          "type": "layout_child__grid_card",
+          "settings": {
+            "grid_cols_align_x_align_y_gap": "2 | stretch | stretch | 12",
+            "padding_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "border_width_radius": "0 | 0 |  |  |",
+            "background_color": "",
+            "border_color": "",
+            "margin_top_bottom_left_right": "48 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        },
+        "text_input_8RFiJb": {
+          "type": "text-input",
+          "settings": {
+            "placeholder": "Name",
+            "title": "Name",
+            "prefix": "",
+            "suffix": "",
+            "input_class": "input-text-light",
+            "name": "contact[name]",
+            "default_value": "",
+            "type": "text",
+            "autocomplete": "",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1/2 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        },
+        "text_input_8JtHUw": {
+          "type": "text-input",
+          "settings": {
+            "placeholder": "Email",
+            "title": "Email",
+            "prefix": "",
+            "suffix": "",
+            "input_class": "input-text-light",
+            "name": "contact[email]",
+            "default_value": "",
+            "type": "email",
+            "autocomplete": "",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1/2 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        },
+        "text_input_f3yddU": {
+          "type": "text-input",
+          "settings": {
+            "placeholder": "Subject",
+            "title": "Subject",
+            "prefix": "",
+            "suffix": "",
+            "input_class": "input-text-light",
+            "name": "contact[subject]",
+            "default_value": "",
+            "type": "text",
+            "autocomplete": "",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 2 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        },
+        "text_input_zAbWKG": {
+          "type": "text-input",
+          "settings": {
+            "placeholder": "Message",
+            "title": "Message",
+            "prefix": "",
+            "suffix": "",
+            "input_class": "input-textarea-light",
+            "name": "",
+            "default_value": "",
+            "type": "textarea",
+            "autocomplete": "",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 2 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        },
+        "button_FYjd4f": {
+          "type": "button",
+          "settings": {
+            "label": "Send",
+            "url": "",
+            "button_class": "button-primary",
+            "type": "submit",
+            "show_active_state": false,
+            "margin_top_bottom_left_right": "36px/12 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 2 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        },
+        "layout_child_end_64cqkt": {
+          "type": "layout_child__end",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "shopify_form_YnVKeM",
+        "richtext_Qf6aiR",
+        "richtext_bVU4VP",
+        "layout_child_grid_card_DRnFRY",
+        "text_input_8RFiJb",
+        "text_input_8JtHUw",
+        "text_input_f3yddU",
+        "text_input_zAbWKG",
+        "button_FYjd4f",
+        "layout_child_end_64cqkt"
+      ],
+      "settings": {
+        "flex_row_wrap_align_x_align_y_gap": "center| stretch | 0 | wrap | row",
+        "padding_top_bottom_left_right": "0 | 0 | 0 | 0",
+        "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+        "border_width_radius": "0 | 0 |  |  |",
+        "background_color": "",
+        "border_color": "",
+        "section_id": "",
+        "color_scheme": "",
+        "container_spacing": "px-container-sm",
+        "border_divider": "border-y-none",
+        "top_bottom_min_height": "0 | 80/56 | 0",
+        "responsive_visibility": "",
+        "responsive_breakpoint": "768px",
+        "target_visibility": "",
+        "render_tabs_async": false
+      }
+    }
+  },
+  "order": [
+    "custom_code_UNAzkg",
+    "hero_banner_K6jPmq",
+    "text_cards_Uzgmmw",
+    "custom_code_AJwnNM",
+    "content_flex_bxDk3Q",
+    "content_flex_7ttbjg"
+  ]
+}

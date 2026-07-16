@@ -1,0 +1,56 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.background"
+  assign desktop_image = block.settings.desktop_image
+  assign mobile_image = block.settings.mobile_image
+  assign background_color = block.settings.background_color
+  assign background_gradient = block.settings.background_gradient
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign z_index = block.settings.z_index
+  assign object_fit = block.settings.object_fit
+  assign force_image_preload = block.settings.force_image_preload
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if request.design_mode != true
+    if desktop_image == blank and mobile_image == blank
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+%}
+
+{% liquid
+  assign desktop_image = desktop_image
+  assign mobile_image = mobile_image | default: desktop_image
+
+  assign preload = false
+
+  if section.index0 < 1 or force_image_preload
+    assign preload = true
+  endif
+
+  assign media_classes_sm = "w-full h-full max-md:hidden " | append: object_fit
+  assign media_classes_md = "w-full h-full md:hidden " | append: object_fit
+%}
+
+<picture class="absolute inset-0 pointer-events-none block {{ responsive_visibility }} {{ block.shopify_attributes }}"
+         style="z-index: {{ z_index }};">
+  {% render '_object.image', image: desktop_image, sizes: "100vw", class: media_classes_sm, preload: preload %}
+  {% render '_object.image', image: mobile_image, sizes: "100vw", class: media_classes_md, preload: preload %}
+  <div class="absolute inset-0" style="background-color: {{ background_color }}; background: {{ background_gradient }}"></div>
+</picture>
+ 

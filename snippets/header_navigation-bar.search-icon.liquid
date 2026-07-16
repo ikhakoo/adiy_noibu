@@ -1,0 +1,17 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign icon = block.settings.icon
+  assign url = block.settings.url
+  assign responsive_visibility = block.settings.responsive_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign url = url | default: '/#modal--search'
+%}
+
+<a href="{{ url }}"
+   title="Open Search modal"
+   class="relative flex items-center justify-center h-6 w-6 {{ responsive_visibility }} {{ class }}" {{ block.shopify_attributes }}>
+  {% render '_components.icon', icon: icon, class: "h-5 shrink-0" %}
+</a>

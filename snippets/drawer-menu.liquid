@@ -1,0 +1,133 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "drawer-menu"
+  assign _handle = section.settings.handle
+  assign close_icon = section.settings.close_icon
+  assign logo = section.settings.logo
+  assign color_scheme = section.settings.color_scheme
+  assign background_blur = section.settings.background_blur
+  assign responsive_visibility = section.settings.responsive_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture section_content %}
+  {% assign hide_section = section.blocks | where: "type", "hide-section" | first %}
+  {% capture hide_condition %}{% render '_blocks.hide-section', block: hide_section %}{% endcapture %}
+  {% if hide_condition contains 'section/break' %}{% break %}{% endif %}
+
+  {% liquid
+    assign header_height_logo_height_align = header_height_logo_height_align | strip_newlines | replace: ' ', "" | split: '|'
+    assign header_height = header_height_logo_height_align[0] | split: '/'
+    assign logo_height = header_height_logo_height_align[1] | split: '/'
+    assign align = header_height_logo_height_align[2] | split: '/'
+
+    if settings.layout__style == 'solid'
+      assign container_classes = 'border-r border-r-theme-border inset-0'
+    endif
+
+    if settings.layout__style == 'floating'
+      assign container_classes = 'inset-1.5 rounded-md'
+    endif
+
+    assign footer_block = section.blocks | where: "type", "sticky-footer" | first
+    assign announcements_block = section.blocks | where: "type", "announcements" | first
+  %}
+
+  {% capture styles %}
+    --h-md: {{ header_height.first }};
+    --h: {{ header_height.last }};
+    --justify: {{ align.last | replace: "around", "center" | replace: "between", "center" | replace: "evenly", "center" | replace: "left", "start" | replace: "right", "end" | default: "center" }};
+    --justify-md: {{ align.first | replace: "around", "center" | replace: "between", "center" | replace: "evenly", "center" | replace: "left", "start" | replace: "right", "end" | default: "center" }};
+  {% endcapture %}
+
+  {% capture logoStyles %}
+    --h-md: {{ logo_height.first }};
+    --h: {{ logo_height.last }};
+  {% endcapture %}
+
+  <div x-data="{ open:  $modal.id === '{{ _handle }}' }"
+       x-effect="open = $editor?.select_section_id === '{{ section.id }}' || $modal.id === '{{ _handle }}'"
+       x-cloak>
+    <div class="fixed inset-0 bg-[--color-modal-background] {{ background_blur }} transition duration-150 ease-in-out"
+         x-show="open"
+         :class="clsx(open ? 'z-[2147483646]' : 'z-40')"
+         @click="$modal.setId('')"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"></div>
+    <section class="fixed inset-y-0 left-0 w-full transition-all duration-150 ease-in-out"
+             :class="clsx(open ? 'z-[2147483647]' : 'z-50')"
+             x-effect="() => {
+                if (!open) {
+                  $el.querySelectorAll('details').forEach(dropdown => {
+                    if (dropdown.getAttribute('data-default-open') !== 'true' && dropdown.open) {
+                      dropdown.querySelector('summary')?.click();
+                    }
+                  })
+                }
+              }"
+             style="{{ styles | strip_newlines }}; max-width: 480px;"
+             x-show="open"
+             x-trap.noautofocus="open"
+             x-transition:enter-start="-translate-x-full"
+             x-transition:enter-end="translate-x-0"
+             x-transition:leave-start="translate-x-0"
+             x-transition:leave-end="-translate-x-full">
+      <main class="absolute overflow-hidden flex flex-col {{ color_scheme }} {{ container_classes }} ">
+        {% if announcements_block %}
+          {% render 'drawer-menu.announcements', block: announcements_block, section_type: section_type %}
+        {% endif %}
+        <nav x-ref="header"
+             class="h-[60px] shrink-0 px-4 mx-4 flex items-center justify-between bg-[#F6F4F2] inset-x-1.5 top-0 bottom-0 rounded-[20px] mt-4 ">
+             <div class="flex gap-3 items-center">
+               <button type="button"
+                       class="relative z-10 text-theme-text hf:text-theme-text/90"
+                       @click="$modal.setId(open ? '' : 'cart-drawer')">
+                 <span class="sr-only">Close Drawer</span>
+                 {% render '_components.icon', icon: close_icon, class: "h-6 shrink-0" %}
+               </button>
+               <a href="{{ routes.root }}"
+                  class="inline-flex relative"
+                  style="{{ logoStyles | strip_newlines }}">
+                 {% render '_object.image', image: logo, height: 200, class: "w-full h-7 object-contain", default_alt: shop.name %}
+               </a>
+             </div>
+             <div class="flex gap-3">
+              {% liquid
+                  for block in section.blocks
+                    case block.type
+                      when "search-icon"
+                        render "header_navigation-bar.search-icon", block: block, forloop: forloop, section_type: section_type, form: form, class: class
+                      when "cart-icon"
+                      render "header_navigation-bar.cart-icon", block: block, forloop: forloop, section_type: section_type, form: form, class: "[&>div]:-right-1"
+                    endcase 
+                  endfor
+              %}
+             </div>
+        </nav>
+        <div @scroll="$refs.header.classList.toggle('shadow', $el.scrollTop)"
+             class="overflow-y-auto overflow-x-hidden scrollbar-none max-h-full w-full px-4 py-6">
+          {% liquid
+            for block in section.blocks
+              case block.type
+                when "menu_drawer"
+                  render 'drawer-menu.menu_drawer', block: block, forloop: forloop, section_type: section_type
+                when "image-with-content-drawer"
+                  render 'drawer-menu.image-with-content-drawer', block: block, forloop: forloop, section_type: section_type
+              endcase 
+            endfor
+          %}
+          {% if footer_block %}
+            {% render 'drawer-menu.sticky-footer', block: footer_block, section_type: section_type %}
+          {% endif %}
+        </div>
+      </main>
+    </section>
+  </div>
+{% endcapture %}
+
+{% if section_content contains '/break"></script>' %}
+  {% break %}
+{% endif %}
+{{ section_content }}

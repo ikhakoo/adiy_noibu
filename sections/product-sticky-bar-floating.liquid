@@ -1,0 +1,293 @@
+{%- render "product-sticky-bar-floating" -%}
+{% schema %}
+{
+  "name": "t:sections.product_add_to_cart_bar_floating.name",
+  "settings": [
+    {
+      "type": "select",
+      "id": "sticky",
+      "label": "Sticky",
+      "default": "bottom",
+      "options": [
+        {
+          "value": "",
+          "label": "Off"
+        },
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Menu Layout"
+    },
+    {
+      "type": "text",
+      "id": "flex_direction_align_x_align_y_gap_wrap",
+      "label": "dir | justify | align | gap | wrap | min-h",
+      "default": "row | start | center | 32/24 | nowrap",
+      "info": "Direction accepts: 'row','column'. Alignment accepts: 'start, center, end, evenly, between'"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "header",
+      "content": "Section Globals"
+    },
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section Id"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "1",
+      "label": "Color scheme"
+    },
+    {
+      "type": "select",
+      "id": "container_spacing",
+      "default": "px-container-md",
+      "options": [
+        {
+          "value": "px-container-xs",
+          "label": "xs"
+        },
+        {
+          "value": "px-container-sm",
+          "label": "sm"
+        },
+        {
+          "value": "px-container-md",
+          "label": "md"
+        },
+        {
+          "value": "px-container-lg",
+          "label": "lg"
+        },
+        {
+          "value": "px-container-fullwidth",
+          "label": "fullwidth"
+        },
+        {
+          "value": "px-container-gutter",
+          "label": "magazine"
+        }
+      ],
+      "label": "Container Spacing"
+    },
+    {
+      "type": "select",
+      "id": "border_divider",
+      "label": "Border Divider",
+      "default": "border-y-none",
+      "options": [
+        {
+          "value": "border-y-none",
+          "label": "None"
+        },
+        {
+          "value": "border-t border-t-theme-border",
+          "label": "Top"
+        },
+        {
+          "value": "border-b border-b-theme-border",
+          "label": "Bottom"
+        },
+        {
+          "value": "border-y border-y-theme-border",
+          "label": "Both"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "top_bottom_min_height",
+      "label": "padding: top | bottom | min-h",
+      "default": "0 | 0 | 0"
+    },
+    {
+      "type": "select",
+      "id": "responsive_visibility",
+      "label": "Responsive Visibility",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile"
+        },
+        {
+          "value": "desktop-tablet-only",
+          "label": "Desktop"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "responsive_breakpoint",
+      "label": "Responsive breakpoint",
+      "default": "768px",
+      "info": "Only adjust this for rare instances on large screen designs"
+    },
+    {
+      "type": "select",
+      "id": "target_visibility",
+      "label": "Target visibility",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "Always"
+        },
+        {
+          "value": "targeted",
+          "label": "Targeted"
+        },
+        {
+          "value": "no_target",
+          "label": "No target"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Link",
+      "type": "link",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "content_class",
+          "label": "Content class",
+          "default": "nav-link"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Url"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty or no target, hide:",
+          "default": "block",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        }
+      ]
+    },
+    {
+      "name": "Product",
+      "type": "product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "title_class",
+          "label": "Title class",
+          "default": "richtext-md h4"
+        },
+        {
+          "type": "text",
+          "id": "variant_title_class",
+          "label": "Variant Title class",
+          "default": "richtext-md h6"
+        },
+        {
+          "type": "text",
+          "id": "button_class",
+          "label": "Button class",
+          "default": "button-secondary"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.product_add_to_cart_bar_floating.presets.product_add_to_cart_bar_floating.name"
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "custom.globals",
+      "custom.header",
+      "custom.modal",
+      "custom.card"
+    ]
+  }
+}
+{% endschema %}

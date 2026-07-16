@@ -1,0 +1,58 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "layout_child__tab_content"
+  assign section_type = "content-grid"
+  assign label = block.settings.label
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign border_width_radius = block.settings.border_width_radius
+  assign background_color = block.settings.background_color
+  assign border_color = block.settings.border_color
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture container_content %}
+  {% render '_utils.dynamic-css', block: block %}
+
+  <div
+      data-style-id="{{ section.id }}--{{ block.id }}"
+      {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+      {{ block.shopify_attributes }}
+      class="block relative"
+      data-tab-id="{{ label }}"
+    {% if first_tab != true %}x-cloak{% endif %}
+      x-show="$data.current_tab === '{{ label }}'">
+    {% if first_tab == true or section.settings.render_tabs_async != true %}
+      {% liquid
+        assign count = 0
+
+        for block in section.blocks
+          if forloop.index0 <= columnIndex
+            continue
+          endif
+          if block.type contains 'layout__' or block.type contains 'layout_child__'
+            break
+          endif
+
+          render 'content-grid.render-blocks', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+
+          assign count = count | plus: 1
+        endfor
+
+        if count == 0
+          assign no_dynamic_content = true
+        endif
+      %}
+    {% endif %}
+  </div>
+{% endcapture %}
+
+{% if container_content contains '<script type="container/break"></script>' %}
+  {% break %}
+{% endif %}
+{{ container_content }}
+

@@ -1,0 +1,80 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "cart"
+  assign flex_row_wrap_align_x_align_y_gap = section.settings.flex_row_wrap_align_x_align_y_gap
+  assign section_id = section.settings.section_id
+  assign color_scheme = section.settings.color_scheme
+  assign container_spacing = section.settings.container_spacing
+  assign border_divider = section.settings.border_divider
+  assign top_bottom_min_height = section.settings.top_bottom_min_height
+  assign responsive_visibility = section.settings.responsive_visibility
+  assign responsive_breakpoint = section.settings.responsive_breakpoint
+  assign target_visibility = section.settings.target_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render "_section.universal-settings", section_type: section_type, insert: "before" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-content-flex]",
+    keys: "flex_row_wrap_align_x_align_y_gap"
+%}
+
+<style>
+  [data-cart-progress-bar] section {
+    background-color: transparent;
+    padding: 0;
+  }
+</style>
+
+<main x-ref="container"
+  class="flex max-lg:flex-col max-lg:py-dynamic h-full w-full">
+  <form data-style-content-flex
+        action="{{ routes.cart_url }}"
+        method="post"
+        class="flex w-full">
+      {% liquid
+        assign allow_no_cols = true
+        for block in section.blocks
+          if allow_no_cols
+            render 'modal_cart-drawer.block', block: block, forloop: forloop, section_type: section_type, form: form, height: section.settings.height, columnIndex: forloop.index0
+
+            if block.type == 'layout_child__flex_card'
+              assign allow_no_cols = false
+              render 'modal_cart-drawer.layout_child__flex_card', block: block, forloop: forloop, section_type: section_type, form: form, height: section.settings.height, columnIndex: forloop.index0
+            endif
+          endif
+
+          if block.type == 'layout__end'
+            assign allow_no_cols = true
+          endif
+
+          if block.type == "layout__checkout-block"
+            assign allow_no_cols = true
+            break
+          endif
+
+          if block.type == 'layout__flex'
+            assign allow_no_cols = false
+            render 'modal_cart-drawer.layout__flex', block: block, forloop: forloop, section_type: section_type, form: form, height: section.settings.height, columnIndex: forloop.index0
+          endif
+
+          if block.type == 'layout__grid'
+            assign allow_no_cols = false
+            render 'modal_cart-drawer.layout__grid', block: block, forloop: forloop, section_type: section_type, form: form, height: section.settings.height, columnIndex: forloop.index0
+          endif
+
+          if block.type == 'layout__grid_slider'
+            assign allow_no_cols = false
+            render 'modal_cart-drawer.layout__grid_slider', block: block, forloop: forloop, section_type: section_type, form: form, height: section.settings.height, columnIndex: forloop.index0
+          endif
+
+
+        endfor
+      %}
+
+  </form>
+</main>
+
+{% render "_section.universal-settings", insert: "after" %}

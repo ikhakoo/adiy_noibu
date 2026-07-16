@@ -1,0 +1,70 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "dynamic-image-w-caption"
+  assign section_type = "card_article-card"
+  assign image_source = block.settings.image_source
+  assign width_height_aspect_object_fit = block.settings.width_height_aspect_object_fit
+  assign border_width_radius = block.settings.border_width_radius
+  assign border_color = block.settings.border_color
+  assign background_gradient = block.settings.background_gradient
+  assign url = block.settings.url
+  assign title = block.settings.title
+  assign content_class = block.settings.content_class
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-image]",
+    keys: "width_height_aspect_object_fit, border_width_radius, border_color, background_gradient" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: '&[data-style-column]',
+    keys: "flex_direction_align_x_align_y_gap_wrap" %}
+
+<figure
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    {% if url != blank %}
+      :title="url"
+      role="button"
+      tabindex="0"
+      @click.prevent.stop="barba.go(url); $modal.setId('')"
+    {% endif %}
+    x-data="{ image: getDynamicValue($el.getAttribute('data-image-key')), url: renderDynamicText($el.getAttribute('data-url')), caption: renderDynamicText($el.getAttribute('data-content')) }"
+    x-cloak
+    x-show="!!image"
+    data-image-key="[{{ image_source | replace: ']', '' | replace: '[', '' }}]"
+    data-url="{{ url }}"
+    data-content="{% render '_input.richtext', content: title, escape: true, class: content_class, block: block, forloop: forloop %}"
+    data-style-column>
+  <picture data-style-image class="relative overflow-hidden shrink-0">
+    <img src=""
+         x-show="!!image"
+         alt=""
+         srcset=""
+         :src="image?.src ?? image?.url ?? image"
+         :alt="image?.alt ?? ''"
+         :srcset="utils.getImageSrcSet(image?.src ?? image?.url ?? image ?? '', 640)"
+         width="640"
+         height="640"
+         loading="lazy"
+         onload="this.classList.remove('!opacity-0')"
+         class="w-full h-full object-[inherit] !opacity-0"
+         sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw">
+  </picture>
+  <figcaption x-html="caption">
+  </figcaption>
+</figure>

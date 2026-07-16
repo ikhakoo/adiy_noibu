@@ -1,0 +1,150 @@
+{%- render "modal_back-in-stock-notification" -%}
+{% schema %}
+{
+  "name": "t:sections.back_in_stock_notification.name",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Modal Content"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<h3>Notify me when available</h3>"
+    },
+    {
+      "type": "text",
+      "id": "heading_class",
+      "label": "Heading class",
+      "default": "richtext-md"
+    },
+    {
+      "type": "text",
+      "id": "select_class",
+      "label": "Select class",
+      "default": "input-select"
+    },
+    {
+      "type": "text",
+      "id": "input_class",
+      "label": "Input class",
+      "default": "input-text"
+    },
+    {
+      "type": "text",
+      "id": "input_label",
+      "label": "Input label",
+      "default": "Email"
+    },
+    {
+      "type": "text",
+      "id": "input_placeholder",
+      "label": "Input placeholder",
+      "default": "Enter your email"
+    },
+    {
+      "type": "text",
+      "id": "button_class",
+      "label": "Button class",
+      "default": "button-primary"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "button_content",
+      "label": "Button content",
+      "default": "Notify me"
+    },
+    {
+      "type": "richtext",
+      "id": "footer",
+      "label": "Footer",
+      "default": "<h6>We'll notify you when this product arrives.</h6>"
+    },
+    {
+      "type": "text",
+      "id": "footer_class",
+      "label": "Footer class",
+      "default": "richtext-md"
+    },
+    {
+      "type": "header",
+      "content": "API Settings"
+    },
+    {
+      "type": "textarea",
+      "id": "notification_api_endpoint",
+      "label": "API Endpoint",
+      "default": "https://a.klaviyo.com/client/back-in-stock-subscriptions/?company_id=PUBLIC_API_KEY"
+    },
+    {
+      "type": "select",
+      "id": "notification_api_method",
+      "label": "API method",
+      "default": "POST",
+      "options": [
+        {
+          "value": "POST",
+          "label": "POST"
+        },
+        {
+          "value": "GET",
+          "label": "GET"
+        },
+        {
+          "value": "PUT",
+          "label": "PUT"
+        }
+      ]
+    },
+    {
+      "type": "textarea",
+      "id": "notification_api_payload",
+      "label": "API Payload",
+      "info": "Use [email] and [variant_id] as placeholders",
+      "default": "{\n        \"data\": {\n          \"type\": \"back-in-stock-subscription\",\n          \"attributes\": {\n            \"profile\": {\n              \"data\": {\n                  \"type\": \"profile\",\n                  \"attributes\": {\n                      \"email\": \"[email]\"\n                  }\n              }\n            },\n            \"channels\": [\"EMAIL\"]\n          },\n          \"relationships\": {\n            \"variant\": {\n              \"data\": {\n                \"type\": \"catalog-variant\",\n                \"id\": \"$shopify:::$default:::[variant_id]\"\n              }\n            }\n          }\n        }\n      }"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "1",
+      "label": "Color scheme"
+    },
+    {
+      "type": "select",
+      "id": "background_blur",
+      "label": "Background Blur",
+      "default": "backdrop-blur-md",
+      "options": [
+        {
+          "value": "",
+          "label": "none"
+        },
+        {
+          "value": "backdrop-blur-sm",
+          "label": "sm"
+        },
+        {
+          "value": "backdrop-blur-md",
+          "label": "md"
+        },
+        {
+          "value": "backdrop-blur-lg",
+          "label": "lg"
+        }
+      ]
+    }
+  ],
+  "limit": 1,
+  "presets": [
+    {
+      "name": "t:sections.back_in_stock_notification.presets.back_in_stock_notification.name"
+    }
+  ],
+  "enabled_on": {
+    "groups": [
+      "custom.modal"
+    ]
+  }
+}
+{% endschema %}

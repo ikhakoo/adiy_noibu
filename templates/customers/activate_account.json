@@ -1,0 +1,118 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
+{
+  "sections": {
+    "main": {
+      "type": "content-flex",
+      "blocks": {
+        "shopify_form_jHc8BH": {
+          "type": "shopify_form",
+          "settings": {
+            "form_type": "activate_customer_password"
+          }
+        },
+        "layout_flex_kTyBQr": {
+          "type": "layout__flex",
+          "settings": {
+            "flex_direction_align_x_align_y_gap_wrap": "column | start | start | 16",
+            "padding_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "560 | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "responsive_breakpoint": "768px"
+          }
+        },
+        "richtext_M3dcim": {
+          "type": "richtext",
+          "settings": {
+            "title": "<h2><strong>Activate Account</strong></h2><h4>Enter a password to create your account.</h4>",
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 12 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "color_override": ""
+          }
+        },
+        "text_input_wrTTd4": {
+          "type": "text-input",
+          "settings": {
+            "placeholder": "Password",
+            "title": "Password",
+            "input_class": "input-text",
+            "name": "customer[password]",
+            "default_value": "",
+            "type": "password",
+            "autocomplete": "new-password",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px"
+          }
+        },
+        "text_input_M4jii3": {
+          "type": "text-input",
+          "settings": {
+            "placeholder": "Confirm Password",
+            "title": "Confirm Password",
+            "input_class": "input-text",
+            "name": "customer[password_confirmation]",
+            "default_value": "",
+            "type": "password",
+            "autocomplete": "new-password",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px"
+          }
+        },
+        "button_9BHraH": {
+          "type": "button",
+          "settings": {
+            "label": "Activate account",
+            "url": "",
+            "button_class": "button-primary",
+            "type": "submit",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px"
+          }
+        }
+      },
+      "block_order": [
+        "shopify_form_jHc8BH",
+        "layout_flex_kTyBQr",
+        "richtext_M3dcim",
+        "text_input_wrTTd4",
+        "text_input_M4jii3",
+        "button_9BHraH"
+      ],
+      "settings": {
+        "flex_row_wrap_align_x_align_y_gap": "center | center | 0",
+        "section_id": "",
+        "color_scheme": "",
+        "container_spacing": "px-container-md",
+        "border_divider": "border-y-none",
+        "top_bottom_min_height": "100/48 | 64/32 | 0",
+        "responsive_visibility": "",
+        "responsive_breakpoint": "768px",
+        "target_visibility": ""
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

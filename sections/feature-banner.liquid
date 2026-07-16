@@ -1,0 +1,195 @@
+{%- render "feature-banner" -%}
+{% schema %}
+{
+  "name": "Feature Banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "Desktop image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile image"
+    },
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "background gradient",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading_class",
+      "label": "Heading class",
+      "default": "richtext-md"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "subheading_class",
+      "label": "Subheading class",
+      "default": "richtext-md"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "button_primary_text",
+      "label": "Button primary text"
+    },
+    {
+      "type": "url",
+      "id": "button_primary_url",
+      "label": "Button primary Url"
+    },
+    {
+      "type": "text",
+      "id": "button_primary_class",
+      "label": "Button primary class",
+      "default": "button-primary"
+    },
+    {
+      "type": "text",
+      "id": "button_secondary_text",
+      "label": "Button secondary text"
+    },
+    {
+      "type": "url",
+      "id": "button_secondary_url",
+      "label": "Button secondary Url"
+    },
+    {
+      "type": "text",
+      "id": "button_secondary_class",
+      "label": "Button secondary class",
+      "default": "button-secondary"
+    },
+    {
+      "type": "header",
+      "content": "Settings"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "text color"
+    },
+    {
+      "type": "header",
+      "content": "Section Globals"
+    },
+    {
+      "type": "text",
+      "id": "vertical_padding",
+      "label": "Top padding | Bottom Padding | Min Height",
+      "default": "0 | 0 "
+    },
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section Id"
+    },
+    {
+      "type": "select",
+      "id": "container_spacing",
+      "default": "px-container-md",
+      "options": [
+        {
+          "value": "px-container-xs",
+          "label": "xs"
+        },
+        {
+          "value": "px-container-sm",
+          "label": "sm"
+        },
+        {
+          "value": "px-container-md",
+          "label": "md"
+        },
+        {
+          "value": "px-container-lg",
+          "label": "lg"
+        },
+        {
+          "value": "px-container-fullwidth",
+          "label": "fullwidth"
+        },
+        {
+          "value": "px-container-gutter",
+          "label": "magazine"
+        }
+      ],
+      "label": "Container Spacing"
+    },
+    {
+      "type": "select",
+      "id": "responsive_visibility",
+      "label": "Responsive Visibility",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile"
+        },
+        {
+          "value": "desktop-tablet-only",
+          "label": "Desktop"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feature Banner",
+      "settings": {
+        "desktop_image": "shopify://shop_images/video_banner_1.png",
+        "background_gradient": "rgba(0, 0, 0, 0.60)",
+        "heading": "<h1><strong>Anyone Can Do It</strong></h1>",
+        "heading_class": "richtext-md",
+        "subheading": "<p>Laccoo's DIY deck kits include All lumber parts, Screws, Drill bit, Deck blocks. The only additional item you need is a residential power drill for securing the screws​.</p>",
+        "subheading_class": "richtext-md",
+        "button_primary_text": "Watch Video",
+        "button_primary_url": "https://www.youtube.com/watch?v=QxYzaWFjDmM",
+        "button_primary_class": "button-primary",
+        "button_secondary_text": "Instruction Manual",
+        "button_secondary_url": "",
+        "button_secondary_class": "button-secondary-outline",
+        "text_color": "#ffffff",
+        "vertical_padding": "64px | 64px | 700px",
+        "section_id": "",
+        "container_spacing": "px-container-fullwidth",
+        "responsive_visibility": ""
+      }
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "*"
+    ]
+  }
+}
+{% endschema %}

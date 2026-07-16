@@ -1,0 +1,51 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "link"
+  assign section_type = "product-add-to-cart-floating"
+  assign title = block.settings.title
+  assign content_class = block.settings.content_class
+  assign url = block.settings.url
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if request.design_mode != true
+    if title == blank or url == blank
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+%}
+{% render '_utils.dynamic-css', block: block %}
+
+<a data-style-id="{{ section.id }}--{{ block.id }}"
+    x-data="{ targetElement: $el.href ? document.querySelector(`#${$el.href?.split('#')?.[1]?.split('?')?.[0]}`) : null, isExternal: utils.isExternalURL($el.href), highlight: false }"
+    x-init="if (targetElement) {
+      const observer = new IntersectionObserver(([entry]) => {
+        highlight = entry.isIntersecting
+      }, { rootMargin: '100px 0px 0px 0px', threshold: 0.5 });
+      observer.observe(targetElement);
+    }"
+    {% if hide_if_empty != 'none' and request.design_mode != true %}
+      x-show="isExternal || targetElement"
+      x-cloak
+    {% endif %}
+    href="{{ url }}"
+    class="shrink-0 flex h-full items-center justify-center border-b-2 pt-7 pb-6 uppercase {{ content_class }}" {{ block.shopify_attributes }}
+    :class="highlight ? 'border-b-theme-accent' : 'border-b-transparent'">
+  {% render '_input.inline_richtext', content: title, block: block, forloop: forloop %}
+</a>

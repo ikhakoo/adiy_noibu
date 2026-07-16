@@ -1,0 +1,121 @@
+{% liquid
+
+  if autoplay == null
+    assign autoplay = true
+  endif
+
+  if controls == null
+    assign controls = true
+  endif
+
+  if loop == null
+    assign loop = true
+  endif
+
+  if muted == null
+    assign muted = true
+  endif
+%}
+
+
+{% if media %}
+  {% case media.media_type %}
+    {% when 'image' %}
+      {% render '_object.image', image: media, class: class, id: id, sizes: sizes, preload: preload %}
+    {% when 'video' %}
+      <video
+          {% if controls %}
+            controls="controls"
+          {% endif %}
+          {% if autoplay %}
+            playsinline="playsinline"
+            autoplay="autoplay"
+          {% endif %}
+          {% if loop %}
+            loop="loop"
+          {% endif %}
+          {% if preload != true %}
+            preload="none"
+            x-intersect.once="() => {
+               $el.querySelectorAll('source')?.forEach(child => { child.src = child.getAttribute('data-src'); })
+               $el.load();
+             }"
+          {% endif %}
+          {% if muted %}
+            muted="muted"
+          {% endif %}
+          class="lazy {{ class }}"
+          aria-label="{{ media.alt }}"
+          poster="{{ media.preview_image.src | image_url }}">
+        {% for source in media.sources %}
+          <source
+              {% if preload %}
+                data-src="{{ source.url }}"
+              {% else %}
+                src=""
+                data-src="{{ source.url }}"
+              {% endif %}
+              type="{{ source.mime_type }}" />
+        {% endfor %}
+      </video>
+
+      {% comment %}{{ media | media_tag: image_size: "2048x", autoplay: autoplay, muted: muted, loop: loop, controls: controls, preload: "none", class: class, id: id }}{% endcomment %}
+    {% when 'external_video' %}
+      {%- assign video_class = class | append: ' js-' | append: media.host -%}
+      {% if muted %}
+        {% assign muted = '1' %}
+      {% endif %}
+      {{ media | external_video_url: autoplay: autoplay, mute: muted, loop: loop | external_video_tag: class: video_class, loading: "lazy" }}
+    {% when 'model' %}
+      <span class="absolute w-full h-full top-0 left-0 block"
+            {% if id %}id="{{ id }}"{% endif %}
+            style="padding-bottom: calc(100% * {{ media.preview_image.aspect_ratio }})">
+        {{ media | model_viewer_tag: class: class, id: id, style: "position: absolute; top: 0; left: 0;" }}
+      </span>
+  {% endcase %}
+  {% if media.media_type == blank and media contains 'vimeo' or media contains 'youtube' %}
+    {%- assign video_class = class | append: ' js-' | append: media.host -%}
+    {% if muted %}
+      {% assign muted = '1' %}
+    {% endif %}
+    <iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            class="h-full w-full border-0 bg-inherit object-contain js-youtube"
+            loading="lazy"
+        {% if media.type == 'youtube' %}
+          src="https://www.youtube.com/embed/{{ media.id }}?autoplay={% if autoplay %}1{% else %}0{% endif %}&controls={% if controls %}1{% else %}0{% endif %}&muted={% if muted %}1{% else %}0{% endif %}&enablejsapi=1&loop={% if loop %}1{% else %}0{% endif %}&modestbranding=1&playsinline=1&rel=0"
+        {% endif %}
+        {% if media.type == 'vimeo' %}
+          src="https://player.vimeo.com/video/{{ media.id }}"
+        {% endif %}
+            title="{{ media.alt | default: media.url }}"></iframe>
+  {% endif %}
+{% endif %}
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+ let lazyVideos = [...document.querySelectorAll("video.lazy")]
+
+ if ("IntersectionObserver" in window) {
+   let lazyVideoObserver = new IntersectionObserver(function(entries) {
+     entries.forEach(function(video) {
+       if (video.isIntersecting) {
+         for (let source in video.target.children) {
+           let videoSource = video.target.children[source];
+           if (typeof videoSource.tagName === "string" && videoSource.tagName === "SOURCE") {
+             videoSource.src = videoSource.dataset.src;
+           }
+         }
+
+         video.target.load();
+         video.target.classList.remove("lazy");
+         lazyVideoObserver.unobserve(video.target);
+       }
+     });
+   });
+
+   lazyVideos.forEach(function(lazyVideo) {
+     lazyVideoObserver.observe(lazyVideo);
+   });
+ }
+});
+</script>

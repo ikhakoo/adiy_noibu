@@ -1,0 +1,40 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "row"
+  assign section_type = "comparison-table"
+  assign category = block.settings.category
+  assign icon_first_column = block.settings.icon_first_column
+  assign first_column = block.settings.first_column
+  assign first_column_class = block.settings.first_column_class
+  assign second_column = block.settings.second_column
+  assign second_column_class = block.settings.second_column_class
+  assign third_column = block.settings.third_column
+  assign third_column_class = block.settings.third_column_class
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% if forloop.first %}
+  {% assign border_top = "" %}
+{% elsif forloop.last %}
+  {% assign border_top = " border-t-w-[1.5px]" %}
+{% else %}
+  {% assign border_top = "border-t-w-[1.5px]" %}
+{% endif %}
+
+<tr class="grid grid-cols-[repeat(var(--content-cols-mobile),_85px)] md:grid-cols-[252px_360px_repeat(var(--content-cols-desktop),_252px)]">
+  <td class="py-6 px-1.5 md:px-6 flex items-center max-md:text-center h-[72px] border-white {{ border_top }}">
+    {% render '_input.richtext', content: category, class: section.settings.category_class, block: block, forloop: forloop %}
+  </td>
+  <td class="py-6 px-1.5 md:px-6 flex items-center max-md:text-center h-[72px] max-md:justify-center md:place-content-center border-[#4077AD] bg-[#4077AD] z-[1] text-white">
+    <div class="flex max-md:flex-col max-md:justify-center gap-2.5 items-center max-md:[&>div]:max-w-[94px]">
+      {% render '_object.image', image: icon_first_column, class: "w-6 h-6 md:w-8 md:h-8" %}
+      {% render '_input.richtext', content: first_column, class: first_column_class, block: block, forloop: forloop %}
+    </div>
+  </td>
+  <td class="py-6 px-1.5 md:px-6 flex items-center max-md:justify-center max-md:text-center place-content-center border-white h-[72px] {{ border_top }}">
+    {% render '_input.richtext', content: second_column, class: second_column_class, block: block, forloop: forloop %}
+  </td>
+  <td class="py-6 px-1.5 md:px-6 flex items-center max-md:justify-center max-md:text-center place-content-center border-white h-[72px] {{ border_top }}">
+    {% render '_input.richtext', content: third_column, class: third_column_class, block: block, forloop: forloop %}
+  </td>
+</tr>

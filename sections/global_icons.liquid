@@ -1,0 +1,58 @@
+{%- render "global_icons" -%}
+{% schema %}
+{
+  "name": "Icons",
+  "settings": [],
+  "blocks": [
+    {
+      "name": "Icon",
+      "type": "icon",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Handle"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Url",
+          "info": "Use this for Social Icons links."
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon",
+          "info": "Image takes precedence over the SVG code."
+        },
+        {
+          "type": "textarea",
+          "id": "svg_code",
+          "label": "SVG code"
+        },
+        {
+          "type": "range",
+          "id": "aspect_ratio",
+          "label": "Aspect ratio",
+          "default": 1,
+          "min": 0.1,
+          "max": 5,
+          "step": 0.1,
+          "unit": "/ 1"
+        }
+      ]
+    }
+  ],
+  "limit": 2,
+  "enabled_on": {
+    "groups": [
+      "custom.global"
+    ]
+  },
+  "presets": [
+    {
+      "name": "Icons"
+    }
+  ]
+}
+{% endschema %}

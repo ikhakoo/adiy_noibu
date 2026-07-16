@@ -1,0 +1,93 @@
+{% comment %}
+    Accordion Element
+
+    Accepts:
+    - class: {string}
+    - default_open: {boolean}
+    - no_richtext_content: {boolean}
+    - no_dynamic_content: {boolean}
+    - label: {string}
+    - content: {string}
+    - open_dynamic: {string} - Variable to dynamically set the dropdown to open / close for multi accordion effect
+
+    Usage:
+    {% render "_components.accordion",
+        class: 'accordion',
+        default_open: false',
+        label: 'Accordion Title',
+        content: 'Accordion content',
+        open_dynamic: '$data.state.open',
+        no_richtext_content: true,
+        no_dynamic_content: false
+    %}
+{% endcomment %}
+
+{% liquid
+  assign richtext_classes = "richtext richtext-margins"
+  if no_richtext_content
+    assign richtext_classes = ""
+  endif
+%}
+
+{% capture label %}{% render '_input.inline_richtext', content: label, block: block, forloop: forloop %}{% endcapture %}
+
+{% if no_dynamic_content %}
+  <div class="flex appearance-none {{ class }}">
+    <div class="accordion-summary cursor-pointer select-none">
+      <span class="accordion-title w-full flex-1 flex flex-col items-stretch">{{ label }}</span>
+    </div>
+  </div>
+  {% break %}
+{% endif %}
+
+<details x-data="{ open: $el.getAttribute('data-default-open') === 'true', transitioning: false, maxHeight: 'unset' }"
+    {% unless no_richtext_content %}
+      x-init="$refs?.content?.classList?.add(getComputedStyle($el)?.getPropertyValue('--richtext-class')?.split(' ')?.join(','));"
+    {% endunless %}
+         class="block appearance-none {{ class }}"
+         :open="open || transitioning"
+         data-default-open="{{ default_open | default: false }}">
+  <summary class="accordion-summary cursor-pointer select-none"
+           @click.prevent.stop="maxHeight = $refs.content.scrollHeight; $nextTick(()=>{ open  = !open; transitioning = true })"
+           tabIndex="0">
+    <span class="flex w-full flex-1 items-center justify-between gap-2">
+      <span class="accordion-title">{{ label }}</span>
+      <i class="relative flex shrink-0 items-center justify-center animated-icon h-2.5 w-2.5">
+        <span class="absolute rounded-full bg-current transition-all duration-200 h-0.5 w-2.5" :class="open ? 'rotate-0' : '-rotate-180'">
+        </span>
+        <span class="absolute origin-center rounded-full bg-current transition-all h-0.5 w-2.5" :class="open ? 'rotate-0' : '-rotate-90'">
+        </span>
+      </i>
+      <svg data-style-accordion-icon
+           class="bg-current transition-all duration-300 ease-linear simple-icon"
+           :class="open ? 'rotate-[--accordion-icon-rotate]' : 'rotate-0'"
+           style="mask: var(--accordion-icon); -webkit-mask: var(--accordion-icon); aspect-ratio: var(--accordion-icon-aspect-ratio, 1);">
+      </svg>
+    </span>
+  </summary>
+
+  <div class="overflow-hidden transition-all duration-150 ease-linear"
+       :class="open ? '': 'select-none'"
+       x-ref="content"
+       @transitionend="transitioning = false; maxHeight = 'unset'"
+       :style="`max-height: ${open ? maxHeight || 99999 : 0}px`"
+       x-init="$el.querySelector('.richtext-margins :where(h1,h2,h3,h4,h5,h6,p,img,ul,ol)')?.classList?.add('mt-0')">
+    <div class="{{ richtext_classes }} accordion-content">
+      {{ content }}
+
+      {% if video or video_2 or video_3 %}
+        <div class="accordion-videos flex flex-row gap-2 mt-4">
+          {% if video %}
+            {% render '_object.media', media: video, autoplay: false, class: "w-full h-full transition-all rounded-[15px] object-[inherit]" %}
+          {% endif %}
+          {% if video_2 %}
+            {% render '_object.media', media: video_2, autoplay: false, class: "w-full h-full transition-all rounded-[15px] object-[inherit]" %}
+          {% endif %}
+          {% if video_3 %}
+            {% render '_object.media', media: video_3, autoplay: false, class: "w-full h-full transition-all rounded-[15px] object-[inherit]" %}
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</details>

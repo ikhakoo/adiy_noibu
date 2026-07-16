@@ -1,0 +1,11 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "announcements"
+  assign section_type = "drawer-menu"
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+<div class="w-full relative @container"
+    {{ block.shopify_attributes }}
+     x-init="()=>{ const node = document.querySelector('[data-announcement-bar]')?.cloneNode(true); if (!node) return; node?.removeAttribute('data-announcement-bar'); node?.classList.add('!px-0'); $el.appendChild(node)}">
+</div>

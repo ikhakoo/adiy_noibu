@@ -1,0 +1,26 @@
+{% liquid
+  for block in section.blocks
+    case block.type
+      when 'select'
+        render "global_design-elements.select", block: block
+      when 'quantity'
+        render "global_design-elements.quantity", block: block
+      when 'accordion'
+        render "global_design-elements.accordion", block: block
+      when 'scrollbar'
+        render "global_design-elements.scrollbar", block: block
+      when 'textarea'
+        render "global_design-elements.textarea", block: block
+      when 'checkbox'
+        render "global_design-elements.checkbox", block: block
+      when 'radio'
+        render "global_design-elements.radio", block: block
+      when 'switch'
+        render "global_design-elements.switch", block: block
+      when 'input'
+        render "global_design-elements.input", block: block
+      when 'pagination'
+        render "global_design-elements.pagination", block: block
+    endcase
+  endfor
+%}

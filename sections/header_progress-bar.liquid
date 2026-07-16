@@ -1,0 +1,182 @@
+{%- render "header_progress-bar" -%}
+{% schema %}
+{
+  "name": "Progress bar",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Incentive Targets"
+    },
+    {
+      "type": "paragraph",
+      "content": "Important. This section does not create actual discounts. All discounts need to be created in the Shopify Admin Dashboard to match the settings here."
+    },
+    {
+      "type": "select",
+      "id": "incentive_type",
+      "label": "Incentive Targets",
+      "default": "total_price",
+      "options": [
+        {
+          "value": "total_price",
+          "label": "Amount based"
+        },
+        {
+          "value": "item_count",
+          "label": "Quantity based"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Styling Settings"
+    },
+    {
+      "type": "color",
+      "id": "success_bg_color",
+      "label": "Success color",
+      "default": "#4fd351"
+    },
+    {
+      "type": "color",
+      "id": "success_border_color",
+      "label": "Success Border color",
+      "default": "#4fd351"
+    },
+    {
+      "type": "color",
+      "id": "base_bg_color",
+      "label": "Base color",
+      "default": "#cacacc"
+    },
+    {
+      "type": "color",
+      "id": "base_border_color",
+      "label": "Base Border color",
+      "default": "#d3d3d3"
+    },
+    {
+      "type": "text",
+      "id": "bar_height_border_width_radius",
+      "label": "bar height | border | radius | gap",
+      "default": "6px / 4px | 1px | 12px | 6px"
+    },
+    {
+      "type": "text",
+      "id": "section_height",
+      "label": "Section height",
+      "default": "40px / 30px"
+    },
+    {
+      "type": "select",
+      "id": "container_spacing",
+      "default": "px-container-md",
+      "options": [
+        {
+          "value": "px-container-xs",
+          "label": "xs"
+        },
+        {
+          "value": "px-container-sm",
+          "label": "sm"
+        },
+        {
+          "value": "px-container-md",
+          "label": "md"
+        },
+        {
+          "value": "px-container-lg",
+          "label": "lg"
+        },
+        {
+          "value": "px-container-fullwidth",
+          "label": "fullwidth"
+        },
+        {
+          "value": "px-container-gutter",
+          "label": "magazine"
+        }
+      ],
+      "label": "Container Spacing"
+    },
+    {
+      "type": "select",
+      "id": "responsive_visibility_cart",
+      "label": "Responsive Visibility",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile"
+        },
+        {
+          "value": "cart-only",
+          "label": "Cart"
+        },
+        {
+          "value": "desktop-tablet-only",
+          "label": "Desktop"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "1",
+      "label": "Color scheme"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Incentive Target",
+      "type": "target",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "number",
+          "id": "target",
+          "label": "Target",
+          "default": 10000,
+          "info": "Use cents for target calculation based on amount (i.e. For a target of $39,40 set this to 3940)"
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "paragraph",
+          "content": "Use [difference] as a placeholder for the calculated difference amount based on the current cart total and the target."
+        },
+        {
+          "type": "richtext",
+          "id": "incentive_message",
+          "label": "Incentive message",
+          "default": "<h6>You are [difference] from <strong>Free Shipping</strong></h6>"
+        },
+        {
+          "type": "richtext",
+          "id": "success_message",
+          "label": "Success message",
+          "default": "<h6><strong>You've unlocked Free Shipping</strong></h6>",
+          "info": "This will only show for the last / highest target."
+        },
+        {
+          "type": "text",
+          "id": "content_class",
+          "label": "Content class",
+          "default": "richtext-md"
+        }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "groups": [
+      "custom.header"
+    ]
+  }
+}
+{% endschema %}

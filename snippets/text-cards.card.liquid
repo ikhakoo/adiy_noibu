@@ -1,0 +1,61 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "card"
+  assign section_type = "text-cards"
+  assign icon_heading = block.settings.icon_heading
+  assign heading = block.settings.heading
+  assign heading_class = block.settings.heading_class
+  assign first_text = block.settings.first_text
+  assign first_text_class = block.settings.first_text_class
+  assign trigger_chatbox = block.settings.trigger_chatbox
+  assign padding = block.settings.padding
+  assign text_align = block.settings.text_align
+  assign horizontal_align = block.settings.horizontal_align
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign padding = padding | strip_newlines | replace: ' ', "" | split: '|'
+  assign p_desktop = padding[0]
+  assign p_mobile = padding[1]
+  assign padding_content = "--p:" | append: p_mobile | append: "; --p-md:" | append: p_desktop | append: ";"
+
+  if section.settings.mobile_layout == "slider"
+    assign icon_class = "w-9 h-9 md:w-12 md:h-12"
+  else
+    assign icon_class = "w-6 h-6 md:w-8 md:h-8"
+  endif
+%}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {{ block.shopify_attributes }}
+    class="grid w-full max-md:snap-center shrink-0 relative h-full text-theme-text bg-[#F6F4F2] rounded-[20px] p-[var(--p)] md:p-[var(--p-md)] {{ text_align }} {{ horizontal_align }}"
+    style="{{ padding_content }};"
+    x-data
+    {% if trigger_chatbox %}
+    x-init="
+        $nextTick(() => {
+            const chatLink = $el.querySelector('a[href=\'#chatwithus\']');
+            if (chatLink) {
+                chatLink.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    if (typeof GorgiasChat !== 'undefined' && typeof GorgiasChat.open === 'function') {
+                        GorgiasChat.open();
+                    }
+                });
+            }
+        });
+    "
+    {% endif %}
+>
+  <div class="relative flex flex-col w-full gap-2 md:gap-3">
+      <div class="flex items-center {{ horizontal_align }} {% if section.settings.mobile_layout == "slider" %} flex-col gap-3 md:gap-6 {% else %}gap-3{% endif %}">
+          {% if icon_heading != blank %} 
+              {% render '_object.image', image: icon_heading, class: icon_class %} 
+          {% endif %}
+          {% render '_input.richtext', content: heading, class: heading_class, block: block, forloop: forloop %}
+      </div>
+      {% render '_input.richtext', content: first_text, class: first_text_class, block: block, forloop: forloop %}
+  </div>
+</div>

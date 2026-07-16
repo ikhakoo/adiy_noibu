@@ -1,0 +1,664 @@
+{% comment %}
+  Hero Split Section - Image Right, Content Left
+  Supports video popup with multiple instances via snippet.
+{% endcomment %}
+
+{{ 'hero-split-section.css' | asset_url | stylesheet_tag }}
+{%- assign video_source = section.settings.video_file | default: section.settings.video_url -%}
+
+{%- comment -%} 
+Logic to get the final embed URL 
+{%- endcomment -%}
+{%- if section.settings.video_file != blank -%}
+  {%- assign final_video_url = section.settings.video_file.sources[1].url -%}
+{%- else -%}
+  {%- assign final_video_url = section.settings.video_url -%}
+{%- endif -%}
+
+<section
+  class="hss-section"
+  id="hss-{{ section.id }}"
+  style="
+    --hss-bg: {{ section.settings.bg_color }};
+    --hss-label-color: {{ section.settings.label_color }};
+    --hss-heading-color: {{ section.settings.heading_color }};
+    --hss-text-color: {{ section.settings.text_color }};
+    --hss-bullet-color: {{ section.settings.bullet_color }};
+    --hss-btn1-bg: {{ section.settings.btn1_bg }};
+    --hss-btn1-text: {{ section.settings.btn1_text_color }};
+    --hss-btn1-border: {{ section.settings.btn1_border_color }};
+    --hss-btn2-bg: {{ section.settings.btn2_bg }};
+    --hss-btn2-text: {{ section.settings.btn2_text_color }};
+    --hss-btn2-border: {{ section.settings.btn2_border_color }};
+    --hss-content-padding: {{ section.settings.content_padding }}px;
+    --hss-image-height: {{ section.settings.image_height }}px;
+  "
+>
+  <div class="hss-wrapper">
+
+    {%- comment -%} LEFT CONTENT SIDE {%- endcomment -%}
+    <div class="hss-content">
+
+      {%- if section.settings.label != blank -%}
+        <p class="hss-label">{{ section.settings.label }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <{{ section.settings.heading_tag }} class="hss-heading">
+          {{ section.settings.heading }}
+        </{{ section.settings.heading_tag }}>
+      {%- endif -%}
+
+      {%- if section.settings.description != blank -%}
+        <div class="hss-description">{{ section.settings.description }}</div>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <ul class="hss-bullets">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'bullet_item' -%}
+              <li {{ block.shopify_attributes }}>
+                <span class="hss-bullet-icon">•</span>
+                <span>{{ block.settings.text }}</span>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      <div class="hss-buttons">
+        {%- if section.settings.btn1_label != blank -%}
+          <a
+            href="{{ section.settings.btn1_url }}"
+            class="hss-btn hss-btn--primary"
+            {% if section.settings.btn1_new_tab %}target="_blank" rel="noopener"{% endif %}
+          >
+            {{ section.settings.btn1_label }}
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.btn2_label != blank -%}
+          {%- comment -%} Determine which video URL to use {%- endcomment -%}
+          {%- assign video_url = section.settings.video_url -%}
+          {%- if section.settings.video_file != blank -%}
+            {%- assign video_url = section.settings.video_file.sources[0].url -%}
+          {%- endif -%}
+
+          {%- if section.settings.btn2_open_in_popup -%}
+            <a
+              href="javascript:void(0)"
+              class="hss-btn hss-btn--outline js-video-trigger"
+              data-video-url="{{ video_url }}"
+            >
+              {%- if section.settings.btn2_show_play_icon -%}
+                <span class="hss-play-icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="5 3 19 12 5 21 5 3"/>
+                  </svg>
+                </span>
+              {%- endif -%}
+              {{ section.settings.btn2_label }}
+            </a>
+          {%- else -%}
+            <a href="{{ section.settings.btn2_url }}" class="hss-btn hss-btn--outline" {% if section.settings.btn2_new_tab %}target="_blank"{% endif %}>
+              {{ section.settings.btn2_label }}
+            </a>
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+
+    </div>
+
+    {%- comment -%} RIGHT IMAGE SIDE {%- endcomment -%}
+    {% comment %} <div class="hss-image-wrap">
+      {%- if section.settings.image != blank -%}
+        <img
+          src="{{ section.settings.image | image_url: width: 1200 }}"
+          alt="{{ section.settings.image.alt | escape | default: section.settings.heading }}"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}"
+          class="hss-image"
+          loading="lazy"
+        >
+      {%- else -%}
+        <div class="hss-image-placeholder">
+          {{ 'image' | placeholder_svg_tag: 'hss-placeholder-svg' }}
+        </div>
+      {%- endif -%}
+    </div> {% endcomment %}
+
+    <div class="hss-image-wrap img-video">
+
+      {%- if section.settings.video_file != blank -%}
+        {{
+          section.settings.video_file
+          | video_tag:
+            autoplay: true,
+            loop: true,
+            muted: true,
+            controls: false,
+            playsinline: true,
+            class: 'hss-video'
+        }}
+
+      {%- elsif section.settings.image != blank -%}
+        <img
+          src="{{ section.settings.image | image_url: width: 1200 }}"
+          alt="{{ section.settings.image.alt | escape | default: section.settings.heading }}"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}"
+          class="hss-image"
+          loading="lazy"
+        >
+
+      {%- else -%}
+        <div class="hss-image-placeholder">
+          {{ 'image' | placeholder_svg_tag: 'hss-placeholder-svg' }}
+        </div>
+
+      {%- endif -%}
+
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .hss-image-wrap.img-video {
+    display:flex;
+  }
+  .img-video video{
+    width: 56%;
+    height: 85%;
+    display: block;
+    object-fit: cover;
+    margin:auto;
+    border-radius: 24px;
+  }
+  #shopify-section-{{ section.id }}.hero-split-section{
+    max-width: 1440px;
+    margin: auto;
+  }
+  #shopify-section-{{ section.id }}.hero-split-section #hss-{{ section.id }}{
+    border-radius:30px;
+  }
+  #hss-{{ section.id }} {
+    background-color: var(--hss-bg);
+  }
+
+  #hss-{{ section.id }} .hss-wrapper {
+    display: flex;
+    align-items: stretch;
+    min-height: var(--hss-image-height);
+  }
+
+  #hss-{{ section.id }} .hss-content {
+    width: 50%;
+    padding: var(--hss-content-padding);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  #hss-{{ section.id }} .hss-label {
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Poppins';
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--hss-label-color);
+    margin: 0 0 20px 0;
+    line-height: 1;
+  }
+
+  #hss-{{ section.id }} .hss-heading {
+    font-size: clamp(26px, 3vw, 40px);
+    font-weight: 500;
+    font-family: 'Poppins';
+    {% comment %} line-height: 1.18; {% endcomment %}
+    color: var(--hss-heading-color);
+    margin: 0 0 18px 0;
+    {% comment %} letter-spacing: -0.02em; {% endcomment %}
+    max-width: 80%;
+  }
+
+  #hss-{{ section.id }} .hss-description {
+    font-size: 16px;
+    max-width: 80%;
+    font-weight: 400;
+    font-family: 'Poppins';
+    line-height: 1.65;
+    color: var(--hss-text-color);
+    margin: 0 0 16px 0;
+  }
+
+  #hss-{{ section.id }} .hss-description p {
+    margin: 0;
+  }
+
+  #hss-{{ section.id }} .hss-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 28px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 75%;
+  }
+
+  #hss-{{ section.id }} .hss-bullets li {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: 'Poppins';
+    line-height: 1.55;
+    color: var(--hss-text-color);
+  }
+
+  #hss-{{ section.id }} .hss-bullet-icon {
+    color: var(--hss-bullet-color);
+    flex-shrink: 0;
+    font-size: 18px;
+    line-height: 1.3;
+  }
+
+  #hss-{{ section.id }} .hss-buttons {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  #hss-{{ section.id }} .hss-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 15px 60px;
+    border-radius: 60px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Poppins';
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.15s ease, background-color 0.2s ease;
+    white-space: nowrap;
+  }
+
+  #hss-{{ section.id }} .hss-btn:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+  }
+
+  #hss-{{ section.id }} .hss-btn--primary {
+    background-color: var(--hss-btn1-bg);
+    color: var(--hss-btn1-text);
+    border: 2px solid var(--hss-btn1-border);
+  }
+
+  #hss-{{ section.id }} .hss-btn--outline {
+    background-color: var(--hss-btn2-bg);
+    color: var(--hss-btn2-text);
+    border: 2px solid var(--hss-btn2-border);
+  }
+
+  #hss-{{ section.id }} .hss-play-icon {
+    display: flex;
+    align-items: center;
+  }
+
+  #hss-{{ section.id }} .hss-image-wrap {
+    width: 50%;
+    position: relative;
+    overflow: hidden;
+    min-height: var(--hss-image-height);
+  }
+
+  #hss-{{ section.id }} .hss-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    border-radius: 0 30px 30px 0;
+  }
+
+  #hss-{{ section.id }} .hss-image-placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: var(--hss-image-height);
+    background: #e8e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #hss-{{ section.id }} .hss-placeholder-svg {
+    width: 100%;
+    height: 100%;
+    min-height: var(--hss-image-height);
+  }
+
+  /* ── Responsive ── */
+  @media screen and (max-width: 991px) {
+    #shopify-section-{{ section.id }} {
+      padding: 20px 20px;
+    }
+    #hss-{{ section.id }} {
+      background-color: var(--hss-bg);
+      padding: 20px;
+      border-radius: 30px;
+    }
+    #hss-{{ section.id }} .hss-wrapper {
+      flex-direction: column-reverse;
+    }
+    #hss-{{ section.id }} .hss-content,
+    #hss-{{ section.id }} .hss-image-wrap {
+      width: 100%;
+    }
+    #hss-{{ section.id }} .hss-label {
+      margin: 0 0 10px 0;
+    }
+    #hss-{{ section.id }} .hss-image {
+      border-radius: 24px;
+    }
+    #hss-{{ section.id }} .hss-image-wrap {
+      min-height: 320px;
+    }
+    #hss-{{ section.id }} .hss-content {
+      padding: 40px 0px 10px;
+    }
+    #hss-{{ section.id }} .hss-description {
+      font-size: 13px;
+      max-width: 100%;
+    }
+    #hss-{{ section.id }} .hss-bullets {
+      max-width: 100%;
+    }
+    #hss-{{ section.id }} .hss-bullets li {
+      font-size: 14px;
+    }
+  }
+
+  @media screen and (max-width: 575px) {
+    .img-video video{
+      width:100%;
+    }
+    #hss-{{ section.id }} .hss-heading {
+      font-size: 24px;
+      max-width: 100%;
+    }
+    #hss-{{ section.id }} .hss-content {
+      padding: 20px 0px 10px;
+    }
+    #hss-{{ section.id }} .hss-image-wrap {
+      min-height: 250px;
+    }
+    #hss-{{ section.id }} .hss-btn {
+      padding: 12px 20px;
+      font-size: 13.5px;
+    }
+    #hss-{{ section.id }} .hss-buttons {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+    #hss-{{ section.id }} .hss-label{
+      font-size: 11px;
+    }
+    #hss-{{ section.id }} .hss-bullets li{
+      font-size: 13px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hero Split Section",
+  "tag": "section",
+  "class": "hero-split-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout & Background"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "label": "Content Padding (px)",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "label": "Min Section Height (px)",
+      "min": 300,
+      "max": 800,
+      "step": 20,
+      "default": 480
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label Text",
+      "default": "Easier Than Traditional DIY"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label Color",
+      "default": "#4a7c59"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>It's Not Just Lumber. It's a Professionally Engineered System.</p>"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading HTML Tag",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "header",
+      "content": "Description & Text"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>It's built for strength, speed, and peace of mind and still costs 30–50% less than hiring a contractor. You're getting:</p>"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#444444"
+    },
+    {
+      "type": "color",
+      "id": "bullet_color",
+      "label": "Bullet Icon Color",
+      "default": "#4a7c59"
+    },
+    {
+      "type": "header",
+      "content": "Primary Button"
+    },
+    {
+      "type": "text",
+      "id": "btn1_label",
+      "label": "Button 1 Label",
+      "default": "Explore Kits"
+    },
+    {
+      "type": "url",
+      "id": "btn1_url",
+      "label": "Button 1 URL"
+    },
+    {
+      "type": "checkbox",
+      "id": "btn1_new_tab",
+      "label": "Open in new tab",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "btn1_bg",
+      "label": "Button 1 Background",
+      "default": "#2d4a35"
+    },
+    {
+      "type": "color",
+      "id": "btn1_text_color",
+      "label": "Button 1 Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "btn1_border_color",
+      "label": "Button 1 Border Color",
+      "default": "#2d4a35"
+    },
+    {
+      "type": "header",
+      "content": "Outline Button"
+    },
+    {
+      "type": "text",
+      "id": "btn2_label",
+      "label": "Button 2 Label",
+      "default": "Watch the Video"
+    },
+    {
+      "type": "url",
+      "id": "btn2_url",
+      "label": "Button 2 URL"
+    },
+    {
+      "type": "checkbox",
+      "id": "btn2_open_in_popup",
+      "label": "Open video in popup modal",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "btn2_new_tab",
+      "label": "Open in new tab (if not in popup)",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "btn2_show_play_icon",
+      "label": "Show play icon",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "btn2_bg",
+      "label": "Button 2 Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "btn2_text_color",
+      "label": "Button 2 Text Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "btn2_border_color",
+      "label": "Button 2 Border Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "header",
+      "content": "Video Settings"
+    },
+    {
+      "type": "video",
+      "id": "video_file",
+      "label": "Shopify Hosted Video"
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "label": "External Video URL",
+      "accept": ["youtube", "vimeo"]
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Right Side Image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "bullet_item",
+      "name": "Bullet Point",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Bullet Text",
+          "default": "Grade 1 kiln-dried & pressure treated wood, not store-grade lumber"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Split Section",
+      "blocks": [
+        {
+          "type": "bullet_item",
+          "settings": {
+            "text": "Grade 1 kiln-dried & pressure treated wood, not store-grade lumber"
+          }
+        },
+        {
+          "type": "bullet_item",
+          "settings": {
+            "text": "A precision cut kit that fits together perfectly"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

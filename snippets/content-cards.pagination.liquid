@@ -1,0 +1,36 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "pagination"
+  assign section_type = "content-cards"
+  assign width_height_border_width_radius = block.settings.width_height_border_width_radius
+  assign background_color = block.settings.background_color
+  assign border_color = block.settings.border_color
+  assign hover_border_color = block.settings.hover_border_color
+  assign hover_background_color = block.settings.hover_background_color
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css', block: block, selector: '& button span', keys: 'background_color,border_color' %}
+
+<nav aria-label="Slider Pagination" 
+     data-style-id="{{ section.id }}--{{ block.id }}"
+     x-cloak
+     class="lg:hidden absolute bottom-9 left-1/2 -translate-x-1/2"
+     x-show="content_slider?.state?.slide_count > 1">
+  <ol class="relative flex justify-center items-center gap-2 md:gap-3">
+    <template x-for="index in [...new Array(content_slider?.state?.slide_count ?? 0)].map((_, i) => i)">
+      <li>
+        <button type="button"
+                :aria-label="`Scroll to slide ${index + 1}`"
+                :aria-current="content_slider?.state?.slide_index === index ? 'true' : undefined"
+                x-show="index <= content_slider?.state?.slide_count"
+                class="-m-1.5 p-1.5 hf:opacity-80"
+                @click="content_slider?.scrollToIndex(index)">
+          <span class="block hfaa:bg-[--hover-bg] hfaa:border-[--hover-border] w-2 h-2 rounded-full"
+                style="--hover-bg: {{ hover_background_color }}; --hover-border: {{ hover_border_color }};"
+                :class="content_slider?.state?.slide_index === index ? 'active' : ''"></span>
+        </button>
+      </li>
+    </template>
+  </ol>
+</nav>

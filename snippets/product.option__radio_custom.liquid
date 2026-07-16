@@ -1,0 +1,203 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "option__radio_custom"
+  assign section_type = "product"
+  assign legend = block.settings.legend
+  assign legend_class = block.settings.legend_class
+  assign radio_button_content = block.settings.radio_button_content
+  assign radio_button_class = block.settings.radio_button_class
+  assign accordion_class = block.settings.accordion_class
+  assign margin_top_gap = block.settings.margin_top_gap
+  assign content_flow = block.settings.content_flow
+  assign match_option_titles = block.settings.match_option_titles
+  assign match_exact_word = block.settings.match_exact_word
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign show_conditionally = block.settings.show_conditionally
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign option = product.options_with_values[optionIndex]
+
+  if request.design_mode != true
+    if option == blank
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+
+  if option == blank
+    break
+  endif
+
+  assign current_value = product.selected_or_first_available_variant.options[optionIndex]
+  assign content_legend = legend | replace: "[heading]", option.name
+  assign current_legend = content_legend | replace: "[value]", current_value | default: option.name
+
+  if product.variants.first.title == "Default Title" and product.variants.size == 1
+    break
+  endif
+
+  case content_flow
+    when "show_all"
+      assign container_classes = 'flex-wrap overflow-hidden'
+    when "truncate"
+      assign container_classes = 'overflow-hidden'
+  endcase
+
+  comment
+    Group options by category
+  endcomment
+  assign categories = ''
+  
+  for value in option.values
+    assign category = value.variant.metafields.smart.size_series
+    if category != blank
+      unless categories contains category
+        assign categories = categories | append: category | append: ','
+      endunless
+    endif
+  endfor
+  
+  assign categories = categories | split: ','
+  assign categories = categories | uniq
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-container]",
+    keys: "margin_top_gap" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,max_w_flex_col_row_order_align,padding_top_bottom_left_right,margin_top_bottom_left_right,border_width_radius,background_color,background_gradient,border_color" %}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    x-show="$data.showConditionally('{{ show_conditionally }}')"
+    data-block-type="{{ block.type }}">
+  <fieldset x-data="{ index: +$el.getAttribute('data-index'), hoverValue: '' }"
+            data-index="{{ optionIndex }}"
+  >
+    <legend class="flex justify-left bg-[#ECE8E4] text-[#3A6958] py-[6px] px-3 rounded-tl-[15px] rounded-tr-[15px] w-full max-w-full truncate {{ legend_class }}"
+            data-legend="{% render '_input.inline_richtext', content: content_legend, escape: true, block: block, forloop: forloop %}"
+            x-effect="$el.innerHTML = $el.getAttribute('data-legend').replace('[value]', hoverValue || ` ${$data.state.options[index]} (${$data.state?.selected_variant?.metafields?.custom?.sqfootage} sqft.)`)">
+      {% render '_input.inline_richtext', content: current_legend, block: block, forloop: forloop %}
+    </legend>
+    <div class="relative w-full scrollbar-none bg-[#F6F4F2] rounded-bl-[15px] rounded-br-[15px] p-4 {{ container_classes }}"
+        x-data="{ 
+          offset: +`{{ option.values.size }}`
+        }"
+        data-style-container>
+      
+      {% for category in categories %}
+        {% if category != blank %}
+          {% capture accordion_content %}
+            <div class="relative w-full grid grid-cols-4 md:grid-cols-5 scrollbar-none gap-x-2 gap-y-4">
+              {% for value in option.values %}
+                {% if value.variant.metafields.smart.size_series == category %}
+                  <div class="flex flex-col shrink-0">
+                    <label class="flex flex-col flex-grow items-center !w-full !outline-none {{ radio_button_class }} {% if value == current_value %}active{% endif %}"
+                            x-data="{ matchedVariant: null }"
+                            x-effect="
+                                let tempOptions = [...$data.state.options];
+                                tempOptions[index] = $el.getAttribute('aria-label');
+                                matchedVariant = $data.state.product.variants.find(variant => 
+                                    tempOptions.every((option, idx) => variant[`option${idx + 1}`] === option)
+                                );
+                                $el.classList.toggle('active', $data.state.options[index] === $el.getAttribute('aria-label'));
+                            "
+                            x-show="offset >= +`{{ forloop.index0 }}`"
+                            @pointerenter="if (window.matchMedia('(min-width: 768px)').matches) { hoverValue = ` ${$el.getAttribute('aria-label')} (${matchedVariant?.metafields?.custom?.sqfootage}sqft).`}"
+                            @pointerleave="if (window.matchMedia('(min-width: 768px)').matches) { hoverValue = '' }"
+                            :class="$data.hasAvailableVariant(index, `{{ value }}`) ? '' : ''"
+                            aria-label="{{ value }}">
+                      <input type="radio"
+                              class="sr-only"
+                              name="{{ block.id }}"
+                              @change="$data.setProductOption({ index, value: $el.value })"
+                              :checked="$data.state.options[index] === $el.value"
+                              value="{{ value }}">
+                      {% assign value_content = radio_button_content | replace: "[value]", value %}
+                      {% render '_input.inline_richtext', content: value_content %}
+                      <span class="richtext-md h6" x-show="matchedVariant?.metafields?.smart?.seating_capacity"
+                            x-html="matchedVariant?.metafields?.smart?.seating_capacity"></span>
+                    </label>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endcapture %}
+          {% assign final_accordion_class = accordion_class %}
+          {% if forloop.last %}
+            {% assign final_accordion_class = accordion_class | append: ' border-b-0 !important' %}
+          {% endif %}
+          {% render '_components.accordion', label: category, content: accordion_content, default_open: forloop.first, class: final_accordion_class %}
+        {% endif %}
+      {% endfor %}
+
+      <div class="relative w-full grid grid-cols-5 scrollbar-none gap-x-2 gap-y-4">
+        {% for value in option.values %}
+          {% if value.variant.metafields.smart.size_series == blank %}
+            <div class="flex flex-col shrink-0">
+              <label class="flex flex-col flex-grow items-center !w-full !outline-none {{ radio_button_class }} {% if value == current_value %}active{% endif %}"
+                      x-data="{ matchedVariant: null }"
+                      x-effect="
+                          let tempOptions = [...$data.state.options];
+                          tempOptions[index] = $el.getAttribute('aria-label');
+                          matchedVariant = $data.state.product.variants.find(variant => 
+                              tempOptions.every((option, idx) => variant[`option${idx + 1}`] === option)
+                          );
+                          $el.classList.toggle('active', $data.state.options[index] === $el.getAttribute('aria-label'));
+                      "
+                      x-show="offset >= +`{{ forloop.index0 }}`"
+                      @pointerenter="if (window.matchMedia('(min-width: 768px)').matches) { hoverValue = ` ${$el.getAttribute('aria-label')} (${matchedVariant?.metafields?.custom?.sqfootage}sqft).`}"
+                      @pointerleave="if (window.matchMedia('(min-width: 768px)').matches) { hoverValue = '' }"
+                      :class="$data.hasAvailableVariant(index, `{{ value }}`) ? '' : ''"
+                      aria-label="{{ value }}">
+                <input type="radio"
+                        class="sr-only"
+                        name="{{ block.id }}"
+                        @change="$data.setProductOption({ index, value: $el.value })"
+                        :checked="$data.state.options[index] === $el.value"
+                        value="{{ value }}">
+                {% assign value_content = radio_button_content | replace: "[value]", value %}
+                {% render '_input.inline_richtext', content: value_content %}
+                <span class="richtext-md h6" x-show="matchedVariant?.metafields?.smart?.seating_capacity"
+                      x-html="matchedVariant?.metafields?.smart?.seating_capacity"></span>
+              </label>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      
+      {% if content_flow == 'truncate' %}
+        <div class="flex shrink-0 items-center text-sm font-medium"
+             :class="offset < +`{{ option.values.size }}` ? '':'opacity-0 pointer-events-none'"
+             x-init="$nextTick(async ()=> { if (window.design_mode) { await utils.delay(20) } offset = truncateChildren($el, $el.parentElement)})"
+             @resize.window.debounce.200ms="offset = +`{{ option.values.size }}`; await utils.delay(20); offset = truncateChildren($el, $el.parentElement)"
+             x-html="`+ ${+`{{ option.values.size }}` - (offset + 1)} {{ option.name }}`">
+          +10 {{ option.name }}
+        </div>
+      {% endif %}
+    </div>
+  </fieldset>
+</div>

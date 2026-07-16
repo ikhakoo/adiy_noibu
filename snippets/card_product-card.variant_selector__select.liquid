@@ -1,0 +1,55 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "variant_selector__select"
+  assign section_type = "card_product-card"
+  assign legend_label = block.settings.legend_label
+  assign legend = block.settings.legend
+  assign legend_class = block.settings.legend_class
+  assign select_class = block.settings.select_class
+  assign margin_top_gap = block.settings.margin_top_gap
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign show_conditionally = block.settings.show_conditionally
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign content_legend = legend | replace: "[heading]", legend_label
+%}
+{% render '_utils.dynamic-css', block: block, keys: "margin_top_bottom_left_right,max_w_flex_col_row_order_align,responsive_visibility" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-select]",
+    keys: "margin_top_gap" %}
+
+<fieldset
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    x-show="card?.product?.variants?.length && card?.product?.variants?.[0]?.title !== 'Default Title' && $data.showConditionally('{{ show_conditionally }}')"
+    x-cloak>
+  <legend class="flex w-full max-w-full truncate {{ legend_class }}"
+          data-legend="{% render '_input.inline_richtext', content: content_legend, escape: true, block: block, forloop: forloop %}"
+          x-effect="$el.innerHTML = $el.getAttribute('data-legend').replace('[value]', card?.selected_variant?.title)">
+  </legend>
+  {% render "_components.select",
+      dynamic: true,
+      values: 'card?.product?.variants?.map(v => v.id) || []',
+      titles: 'card?.product?.variants?.map(v => v.title) || []',
+      select_class: select_class,
+      label: legend_label,
+      setState: "$data.setSelectedVariant(value);",
+      state: "card?.selected_variant?.id",
+      current_value: 'card?.selected_variant?.id',
+      current_title: 'card?.selected_variant?.title',
+      html_attributes: "data-style-select"
+  %}
+</fieldset>
+
+
+

@@ -1,0 +1,40 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "announcement"
+  assign section_type = "header_announcement-bar"
+  assign content_mobile = block.settings.content_mobile
+  assign align_horizontal__mobile = block.settings.align_horizontal__mobile
+  assign marquee_animation_mobile = block.settings.marquee_animation_mobile
+  assign content_mobile_class = block.settings.content_mobile_class
+  assign content_desktop = block.settings.content_desktop
+  assign align_horizontal__desktop = block.settings.align_horizontal__desktop
+  assign marquee_animation_desktop = block.settings.marquee_animation_desktop
+  assign content_desktop_class = block.settings.content_desktop_class
+  assign background_image = block.settings.background_image
+  assign container_spacing = block.settings.container_spacing
+  assign color_scheme = block.settings.color_scheme
+  assign responsive_visibility_cart = block.settings.responsive_visibility_cart
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+<section x-data
+         x-init="initMarqueeAnimationBlock($el)"
+         x-effect="()=> { if ($modal.id === 'cart-drawer') { $nextTick(() => initMarqueeAnimationBlock($el)) } }"
+         data-block-id="{{ block.id }}"
+         data-block-index="{{ forloop.index0 }}"
+         class="relative z-0 overflow-hidden snap-center {{ color_scheme }} {{ responsive_visibility_cart }}"
+    {{ block.shopify_attributes }} {{ marquee_attributes }}>
+  <div class="md:opacity-0 @max-md:opacity-100 md:pointer-events-none flex flex-col justify-center absolute inset-0 px-[--layout-container-gutter] {{ align_horizontal__desktop }} {{ align_horizontal__mobile }}"
+       {% if marquee_animation_mobile %}data-marquee-animation{% endif %}>
+    <div>{% render '_input.richtext', content: content_mobile, class: content_mobile_class, block: block, forloop: forloop %}</div>
+  </div>
+  <div class="max-md:opacity-0 @max-md:opacity-0 max-md:pointer-events-none flex flex-col justify-center absolute inset-0 {{ container_spacing }} {{ align_horizontal__desktop }} {{ align_horizontal__mobile }}"
+       {% if marquee_animation_desktop %}data-marquee-animation{% endif %}>
+    <div>{% render '_input.richtext', content: content_desktop, class: content_desktop_class, block: block, forloop: forloop %}</div>
+  </div>
+  {% if background_image %}
+    <div class="absolute inset-0 pointer-events-none transition-all duration-300 -z-10" x-ref="navigation_bar_background_image">
+      {% render '_object.image', image: background_image, preload: forloop.first, width: background_image.width, height: height, class: "size-full object-cover" %}
+    </div>
+  {% endif %}
+</section>

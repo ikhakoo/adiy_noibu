@@ -1,0 +1,4288 @@
+{%- render "modal_cart-drawer" -%}
+{% schema %}
+{
+  "name": "Cart Drawer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Settings"
+    },
+    {
+      "type": "text",
+      "id": "icon_size",
+      "label": "Close icon | Size",
+      "default": "x-mark | 16px"
+    },
+    {
+      "type": "text",
+      "id": "drawer_max_width",
+      "label": "Drawer max width",
+      "default": "410px"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "header",
+      "content": "Announcement Bar Settings"
+    },
+    {
+      "type": "range",
+      "id": "display_duration",
+      "label": "Display duration",
+      "info": "Only applicable if multiple announcements are active. Set to 0 to disable auto changing.",
+      "default": 10,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "s"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "header",
+      "content": "Section settings"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "1",
+      "label": "Color scheme"
+    },
+    {
+      "type": "select",
+      "id": "background_blur",
+      "label": "Background Blur",
+      "default": "backdrop-blur-md",
+      "options": [
+        {
+          "value": "",
+          "label": "none"
+        },
+        {
+          "value": "backdrop-blur-sm",
+          "label": "sm"
+        },
+        {
+          "value": "backdrop-blur-md",
+          "label": "md"
+        },
+        {
+          "value": "backdrop-blur-lg",
+          "label": "lg"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "top_bottom_min_height",
+      "label": "padding: top | bottom | min-h",
+      "default": "0 | 0 | 0"
+    },
+    {
+      "type": "select",
+      "id": "responsive_visibility",
+      "label": "Responsive Visibility",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile"
+        },
+        {
+          "value": "desktop-tablet-only",
+          "label": "Desktop"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Announcements",
+      "type": "announcements",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Header announcement settings are applied automatically based on the mobile styling."
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "cart_empty",
+              "label": "Cart Empty"
+            },
+            {
+              "value": "items_added",
+              "label": "Items Added"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Progress bar",
+      "type": "progress-bar",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Header announcement settings are applied automatically based on the mobile styling."
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "cart_empty",
+              "label": "Cart Empty"
+            },
+            {
+              "value": "items_added",
+              "label": "Items Added"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Upsell products",
+      "type": "upsell-products",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "richtext",
+          "id": "legend",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "legend_class",
+          "label": "Heading class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Products"
+        },
+        {
+          "type": "text",
+          "id": "product_card_class",
+          "label": "Product card class",
+          "default": "product-card"
+        },
+        {
+          "type": "range",
+          "id": "limit",
+          "label": "Limit",
+          "default": 3,
+          "min": 1,
+          "max": 10,
+          "step": 1
+        },
+        {
+          "type": "select",
+          "id": "target_product",
+          "label": "Targeting Algorithm",
+          "default": "ai",
+          "options": [
+            {
+              "value": "ai",
+              "label": "AI"
+            },
+            {
+              "value": "most_expensive",
+              "label": "$ highest"
+            },
+            {
+              "value": "least_expensive",
+              "label": "$ lowest"
+            },
+            {
+              "value": "recently_added",
+              "label": "Recent"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "primary_source",
+          "label": "Primary source",
+          "default": "complementary",
+          "options": [
+            {
+              "value": "complementary",
+              "label": "Complementary"
+            },
+            {
+              "value": "related",
+              "label": "Related"
+            },
+            {
+              "value": "manual",
+              "label": "Manual"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "fallback_source",
+          "label": "Fallback source",
+          "default": "related",
+          "options": [
+            {
+              "value": "complementary",
+              "label": "Complementary"
+            },
+            {
+              "value": "related",
+              "label": "Related"
+            },
+            {
+              "value": "manual",
+              "label": "Manual"
+            }
+          ]
+        },
+        {
+          "type": "product_list",
+          "id": "fallback_products",
+          "label": "Fallback products"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Layout Settings"
+        },
+        {
+          "type": "select",
+          "id": "orientation",
+          "label": "Orientation",
+          "default": "horizontal",
+          "options": [
+            {
+              "value": "vertical",
+              "label": "Vertical"
+            },
+            {
+              "value": "horizontal",
+              "label": "Horizontal"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "width_height_gap",
+          "label": "Width | Height | Gap",
+          "default": "unset | unset | 6px"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius",
+          "label": "border | radius | max-h | max-w | overflow",
+          "default": "0 | 0 |  |  | ",
+          "info": "Border can be set via the border-shorthand for. I.e '0 0 1px 0' sets only the bottom border."
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        },
+        {
+          "type": "text",
+          "id": "flex_dividers_height_width_align",
+          "label": "dividers: height | width | align",
+          "default": "0 | 0 | center",
+          "info": "Alignment accepts: 'start, center, end'"
+        },
+        {
+          "type": "color",
+          "id": "divider_background_color",
+          "label": "divider color"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Settings"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "border_divider",
+          "label": "Border Divider",
+          "default": "border-y-none",
+          "options": [
+            {
+              "value": "border-y-none",
+              "label": "None"
+            },
+            {
+              "value": "border-t border-t-theme-border",
+              "label": "Top"
+            },
+            {
+              "value": "border-b border-b-theme-border",
+              "label": "Bottom"
+            },
+            {
+              "value": "border-y border-y-theme-border",
+              "label": "Both"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "cart_empty",
+              "label": "Cart Empty"
+            },
+            {
+              "value": "items_added",
+              "label": "Items Added"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Cart Navigation",
+      "type": "cart-navigation",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Cart Quantity Display"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "label",
+          "label": "Label",
+          "default": "Your Cart ([quantity])"
+        },
+        {
+          "type": "text",
+          "id": "label_class",
+          "label": "Label class",
+          "default": "cart-drawer-heading"
+        },
+        {
+          "type": "header",
+          "content": "Close Button"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "close_button",
+          "label": "Label",
+          "default": "Close [icon.arrow-right]"
+        },
+        {
+          "type": "text",
+          "id": "close_button_class",
+          "label": "Close button class",
+          "default": "cart-drawer-heading"
+        },
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "cart_empty",
+              "label": "Cart Empty"
+            },
+            {
+              "value": "items_added",
+              "label": "Items Added"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dynamic Richtext",
+      "type": "dynamic-richtext",
+      "settings": [
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "cart_empty",
+              "label": "Cart Empty"
+            },
+            {
+              "value": "items_added",
+              "label": "Items Added"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "Content accepts 'cart' object access via the bracket notation. i.e.'[cart.total_price]' "
+        },
+        {
+          "type": "richtext",
+          "id": "title",
+          "label": "Content"
+        },
+        {
+          "type": "page",
+          "id": "page_content",
+          "label": "Page content"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_page_content",
+          "label": "Use Page dynamic content"
+        },
+        {
+          "type": "text",
+          "id": "content_class",
+          "label": "Content Class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "color",
+          "id": "color_override",
+          "label": "Color override"
+        }
+      ]
+    },
+    {
+      "name": "Cart Total",
+      "type": "cart_total",
+      "settings": [
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "cart_empty",
+              "label": "Cart Empty"
+            },
+            {
+              "value": "items_added",
+              "label": "Items Added"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "price_class",
+          "label": "Price class",
+          "default": "richtext-md h4"
+        },
+        {
+          "type": "text",
+          "id": "compare_at_price_class",
+          "label": "Compare at price class",
+          "default": "richtext-md h4 !opacity-50",
+          "info": "Leave blank to hide compare as prices"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "color",
+          "id": "color_override",
+          "label": "Color override"
+        }
+      ]
+    },
+    {
+      "name": "Cart Discount Lines",
+      "type": "cart_discount_lines",
+      "settings": [
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "cart_empty",
+              "label": "Cart Empty"
+            },
+            {
+              "value": "items_added",
+              "label": "Items Added"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "text_class",
+          "label": "Text class",
+          "default": "richtext-md h5 !opacity-50"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "color",
+          "id": "color_override",
+          "label": "Color override"
+        }
+      ]
+    },
+    {
+      "name": "Image",
+      "type": "image",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "width_height_aspect_object_fit",
+          "label": "width | height | aspect | fit | radius",
+          "default": "440px | 440px | auto | cover",
+          "info": "Aspect ratio only applies if width or height are set to 'auto'"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Url"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius",
+          "label": "border | radius | max-h | max-w | overflow",
+          "default": "0 | 0 |  |  | ",
+          "info": "Border can be set via the border-shorthand for. I.e '0 0 1px 0' sets only the bottom border."
+        },
+        {
+          "type": "color_background",
+          "id": "background_gradient",
+          "label": "background gradient",
+          "default": "rgba(0,0,0,0)"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "Delivery Range",
+      "type": "delivery-range",
+      "settings": [
+        {
+          "type": "number",
+          "id": "min_days",
+          "label": "Min days",
+          "default": 10
+        },
+        {
+          "type": "number",
+          "id": "max_days",
+          "label": "Max days",
+          "default": 14
+        },
+        {
+          "type": "richtext",
+          "id": "delivery_text",
+          "label": "Delivery Date",
+          "default": "<h5><strong>Get it delivered by [month][min_date]-[max_date]</strong></h5>",
+          "info": "Use [month], [min_date] and [max_date] to get the dynamic data"
+        },
+        {
+          "type": "text",
+          "id": "delivery_class",
+          "label": "Delivery Date class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "richtext",
+          "id": "days_text",
+          "label": "Delivery Days",
+          "default": "<h6>In stock, get it delivered in [min_days]-[max_days] business days.</h6>",
+          "info": "Use [min_days] and [max_days] to get the dynamic data"
+        },
+        {
+          "type": "text",
+          "id": "days_class",
+          "label": "Delivery Days class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "Divider",
+      "type": "divider",
+      "settings": [
+        {
+          "type": "range",
+          "id": "height",
+          "label": "Height",
+          "default": 1,
+          "min": 1,
+          "max": 6,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Border Color",
+          "default": "#000000"
+        },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Style",
+          "default": "solid",
+          "options": [
+            {
+              "value": "solid",
+              "label": "solid"
+            },
+            {
+              "value": "dashed",
+              "label": "dashed"
+            },
+            {
+              "value": "dotted",
+              "label": "dotted"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "Image with content",
+      "type": "image-with-content",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "width_height_aspect_object_fit",
+          "label": "width | height | aspect | fit | radius",
+          "default": "440px | 440px | auto | cover",
+          "info": "Aspect ratio only applies if width or height are set to 'auto'"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Url"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Text Content"
+        },
+        {
+          "type": "richtext",
+          "id": "title",
+          "label": "Content"
+        },
+        {
+          "type": "text",
+          "id": "content_class",
+          "label": "Content class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "text",
+          "id": "flex_row_wrap_align_x_align_y_gap",
+          "label": "justify | align | gap | wrap | dir",
+          "default": "stretch | stretch | 0 | wrap | row",
+          "info": "Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius",
+          "label": "border | radius | max-h | max-w | overflow",
+          "default": "0 | 0 |  |  | ",
+          "info": "Border can be set via the border-shorthand for. I.e '0 0 1px 0' sets only the bottom border."
+        },
+        {
+          "type": "color_background",
+          "id": "background_gradient",
+          "label": "background gradient",
+          "default": "rgba(0,0,0,0)"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Additional Content"
+        },
+        {
+          "type": "richtext",
+          "id": "additional_content",
+          "label": "Content"
+        },
+        {
+          "type": "text",
+          "id": "additional_content_class",
+          "label": "Content class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "text",
+          "id": "flex_direction_align_x_align_y_gap_wrap",
+          "label": "dir | justify | align | gap | wrap | min-h",
+          "default": "row/column | stretch | stretch | 0 | nowrap | ",
+          "info": "Direction accepts: 'row','column'. Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right_align",
+          "label": "top | bottom | left | right | align",
+          "default": "0 | 0 | 0 | 0 | inherit"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "color",
+          "id": "color_override",
+          "label": "Color override"
+        }
+      ]
+    },
+    {
+      "name": "Image with caption",
+      "type": "image-with-caption",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "width_height_aspect_object_fit",
+          "label": "width | height | aspect | fit | radius",
+          "default": "48 | 48 | auto | cover",
+          "info": "Aspect ratio only applies if width or height are set to 'auto'"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius",
+          "label": "border | radius | max-h | max-w | overflow",
+          "default": "0 | 0 |  |  | ",
+          "info": "Border can be set via the border-shorthand for. I.e '0 0 1px 0' sets only the bottom border."
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        },
+        {
+          "type": "color_background",
+          "id": "background_gradient",
+          "label": "background gradient",
+          "default": "rgba(0,0,0,0)"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Url"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Caption Content"
+        },
+        {
+          "type": "richtext",
+          "id": "title",
+          "label": "Content"
+        },
+        {
+          "type": "text",
+          "id": "content_class",
+          "label": "Content class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "text",
+          "id": "flex_direction_align_x_align_y_gap_wrap",
+          "label": "dir | justify | align | gap | wrap | min-h",
+          "default": "row | start | center | 16",
+          "info": "Direction accepts: 'row','column'. Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Text over image"
+        },
+        {
+          "type": "richtext",
+          "id": "text_over_image",
+          "label": "Content"
+        },
+        {
+          "type": "text",
+          "id": "text_over_image_class",
+          "label": "Content class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "text",
+          "id": "flex_row_wrap_align_x_align_y_gap",
+          "label": "justify | align | gap | wrap | dir",
+          "default": "stretch | stretch | 0 | wrap | row",
+          "info": "Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right_align",
+          "label": "top | bottom | left | right | align",
+          "default": "0 | 0 | 0 | 0 | inherit"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Card Styling (optional)"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right_min_height",
+          "label": "top | bottom | left | right | min-h",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius_shadow_gap_text_align",
+          "label": "border | radius | shadow | gap|align",
+          "default": "0 | 0 | 0 | 0 | inherit",
+          "info": "Use 0-5 for Shadows"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "color",
+          "id": "color_override",
+          "label": "Color override"
+        }
+      ]
+    },
+    {
+      "name": "Button",
+      "type": "button",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "label",
+          "label": "Label",
+          "default": "[icon.play-circle] Watch Video"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Url"
+        },
+        {
+          "type": "text",
+          "id": "button_class",
+          "label": "Button class",
+          "default": "button-primary"
+        },
+        {
+          "type": "select",
+          "id": "type",
+          "label": "Type",
+          "default": "button",
+          "options": [
+            {
+              "value": "button",
+              "label": "Button"
+            },
+            {
+              "value": "submit",
+              "label": "Submit"
+            },
+            {
+              "value": "reset",
+              "label": "Reset"
+            }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "show_active_state",
+          "label": "Show active state",
+          "info": "Show button as active if the url matches the current path",
+          "default": false
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "Collapsible",
+      "type": "collapsible",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "label",
+          "label": "Label",
+          "default": "Accordion Title"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        },
+        {
+          "type": "page",
+          "id": "page_content",
+          "label": "Page content"
+        },
+        {
+          "type": "text",
+          "id": "accordion_class",
+          "label": "Accordion class",
+          "default": "accordion"
+        },
+        {
+          "type": "select",
+          "id": "default_state",
+          "label": "Default state",
+          "default": "closed",
+          "options": [
+            {
+              "value": "open",
+              "label": "Open"
+            },
+            {
+              "value": "closed",
+              "label": "Closed"
+            }
+          ]
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video",
+          "info": "optional"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "Collection Cards",
+      "type": "collection-cards",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "collection_list",
+          "id": "collections",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "display_limit",
+          "label": "Display limit",
+          "default": "12 / 4"
+        },
+        {
+          "type": "text",
+          "id": "collection_card_class",
+          "label": "Collection card class",
+          "default": "collection-card"
+        },
+        {
+          "type": "header",
+          "content": "Layout Settings"
+        },
+        {
+          "type": "text",
+          "id": "slider_cols_rows_align_x_align_y_gap",
+          "label": "cols | rows | justify | align | gap",
+          "default": "1 | 1 | stretch | stretch | 0"
+        },
+        {
+          "type": "select",
+          "id": "slider_scroll_snap",
+          "label": "Scroll snap",
+          "default": "snap-mandatory",
+          "options": [
+            {
+              "value": "",
+              "label": "Disabled"
+            },
+            {
+              "value": "snap-mandatory",
+              "label": "To slide"
+            },
+            {
+              "value": "snap-mandatory [&>*]:snap-start",
+              "label": "To item"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "slider_overflow_container",
+          "label": "Overflow container",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "Off"
+            },
+            {
+              "value": "desktop",
+              "label": "Desktop"
+            },
+            {
+              "value": "mobile",
+              "label": "Mobile"
+            },
+            {
+              "value": "all",
+              "label": "All"
+            }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "infinite_scroll",
+          "label": "Enable Infinite scroll"
+        },
+        {
+          "type": "header",
+          "content": "Scrollbar"
+        },
+        {
+          "type": "text",
+          "id": "scrollbar_class",
+          "label": "Scrollbar class",
+          "default": "scrollbar-no-buttons"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "Product Cards",
+      "type": "product-cards",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "product_list",
+          "id": "products",
+          "label": "Products"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "display_limit",
+          "label": "Display limit",
+          "default": "12 / 4"
+        },
+        {
+          "type": "text",
+          "id": "product_card_class",
+          "label": "Product card class",
+          "default": "product-card"
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_out_of_stock",
+          "label": "Hide out of stock",
+          "default": false
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Layout Settings"
+        },
+        {
+          "type": "text",
+          "id": "slider_cols_rows_align_x_align_y_gap",
+          "label": "cols | rows | justify | align | gap",
+          "default": "1 | 1 | stretch | stretch | 0"
+        },
+        {
+          "type": "select",
+          "id": "slider_scroll_snap",
+          "label": "Scroll snap",
+          "default": "snap-mandatory",
+          "options": [
+            {
+              "value": "",
+              "label": "Disabled"
+            },
+            {
+              "value": "snap-mandatory",
+              "label": "To slide"
+            },
+            {
+              "value": "snap-mandatory [&>*]:snap-start",
+              "label": "To item"
+            }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "snap_center",
+          "label": "Center items on scroll",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "slider_overflow_container",
+          "label": "Overflow container",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "Off"
+            },
+            {
+              "value": "desktop",
+              "label": "Desktop"
+            },
+            {
+              "value": "mobile",
+              "label": "Mobile"
+            },
+            {
+              "value": "all",
+              "label": "All"
+            }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "infinite_scroll",
+          "label": "Enable Infinite scroll"
+        },
+        {
+          "type": "header",
+          "content": "Scrollbar"
+        },
+        {
+          "type": "text",
+          "id": "scrollbar_class",
+          "label": "Scrollbar class",
+          "default": "scrollbar-no-buttons"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        },
+        {
+          "type": "textarea",
+          "id": "metafield_keys",
+          "label": "Metafield keys",
+          "info": "Comma seperated list of namespaces & keys to include.  Format for product level: 'namespace.key' or variant level: 'variant.namespace.key'. Leaving this blank will load all keys in the registered namespaces which can affect performance negatively."
+        }
+      ]
+    },
+    {
+      "name": "Payment Types",
+      "type": "payment-types",
+      "settings": [
+        {
+          "type": "text",
+          "id": "flex_direction_align_x_align_y_gap_wrap",
+          "label": "dir | justify | align | gap | wrap | min-h",
+          "default": "row | stretch | stretch | 2",
+          "info": "Direction accepts: 'row','column'. Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "Line Items",
+      "type": "line-items",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Image Layout"
+        },
+        {
+          "type": "text",
+          "id": "width_height_aspect_gap",
+          "label": "Width | Height | Aspect | Gap",
+          "info": "Aspect ratio only applies if width or height are set to 'auto'",
+          "default": "96px | auto | 0.76 | 16px"
+        },
+        {
+          "type": "header",
+          "content": "Content Settings"
+        },
+        {
+          "type": "text",
+          "id": "title_class",
+          "label": "Title class",
+          "default": "richtext-md h5"
+        },
+        {
+          "type": "text",
+          "id": "variant_title_class",
+          "label": "Variant title class",
+          "default": "line-item-small"
+        },
+        {
+          "type": "text",
+          "id": "price_class",
+          "label": "Price class",
+          "default": "richtext-md h5"
+        },
+        {
+          "type": "text",
+          "id": "compare_at_price_class",
+          "label": "Compare at price class",
+          "default": "richtext-md h5 !opacity-50",
+          "info": "Leave blank to hide compare as prices"
+        },
+        {
+          "type": "header",
+          "content": "Remove Button"
+        },
+        {
+          "type": "select",
+          "id": "remove_button_type",
+          "label": "Type",
+          "default": "icon",
+          "options": [
+            {
+              "label": "Icon",
+              "value": "icon"
+            },
+            {
+              "label": "Text",
+              "value": "text"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "remove_button_class",
+          "label": "Remove button label class"
+        },
+        {
+          "type": "text",
+          "id": "icon_size_gap",
+          "label": "icon | size | gap",
+          "default": "trash | 18px | 4px"
+        },
+        {
+          "type": "header",
+          "content": "Quantity Stepper"
+        },
+        {
+          "type": "text",
+          "id": "quantity_class",
+          "label": "Quantity Stepper class",
+          "default": "input-quantity-stepper-cart"
+        },
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "select",
+          "id": "border_divider",
+          "label": "Border Divider",
+          "default": "border-y-none",
+          "options": [
+            {
+              "value": "border-y-none",
+              "label": "None"
+            },
+            {
+              "value": "border-t border-t-theme-border",
+              "label": "Top"
+            },
+            {
+              "value": "border-b border-b-theme-border",
+              "label": "Bottom"
+            },
+            {
+              "value": "border-y border-y-theme-border",
+              "label": "Both"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "t:sections.cart_drawer.blocks.line_items_with_upsell_items.name",
+      "type": "line-items-with-upsells",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Image Layout"
+        },
+        {
+          "type": "text",
+          "id": "width_height_aspect_gap",
+          "label": "Width | Height | Aspect | Gap",
+          "info": "Aspect ratio only applies if width or height are set to 'auto'",
+          "default": "96px | auto | 0.76 | 16px"
+        },
+        {
+          "type": "header",
+          "content": "Content Settings"
+        },
+        {
+          "type": "text",
+          "id": "title_class",
+          "label": "Title class",
+          "default": "richtext-md h5"
+        },
+        {
+          "type": "text",
+          "id": "variant_title_class",
+          "label": "Variant title class",
+          "default": "line-item-small"
+        },
+        {
+          "type": "text",
+          "id": "price_class",
+          "label": "Price class",
+          "default": "richtext-md h5"
+        },
+        {
+          "type": "text",
+          "id": "compare_at_price_class",
+          "label": "Compare at price class",
+          "default": "richtext-md h5 !opacity-50",
+          "info": "Leave blank to hide compare as prices"
+        },
+        {
+          "type": "text",
+          "id": "discount_lines_class",
+          "label": "Discount lines class",
+          "default": "richtext-md h5 !opacity-50",
+          "info": "Leave blank to hide compare as prices"
+        },
+        {
+          "type": "header",
+          "content": "Remove Button"
+        },
+        {
+          "type": "select",
+          "id": "remove_button_type",
+          "label": "Type",
+          "default": "icon",
+          "options": [
+            {
+              "label": "Icon",
+              "value": "icon"
+            },
+            {
+              "label": "Text",
+              "value": "text"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "remove_button_class",
+          "label": "Remove button label class"
+        },
+        {
+          "type": "text",
+          "id": "icon_size_gap",
+          "label": "icon | size | gap",
+          "default": "trash | 18px | 4px"
+        },
+        {
+          "type": "header",
+          "content": "Quantity Stepper"
+        },
+        {
+          "type": "text",
+          "id": "quantity_class",
+          "label": "Quantity Stepper class",
+          "default": "input-quantity-stepper-cart"
+        },
+        {
+          "type": "header",
+          "content": "Upsell Item Settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "removeable_upsell_items",
+          "label": "Removeable"
+        },
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "select",
+          "id": "border_divider",
+          "label": "Border Divider",
+          "default": "border-y-none",
+          "options": [
+            {
+              "value": "border-y-none",
+              "label": "None"
+            },
+            {
+              "value": "border-t border-t-theme-border",
+              "label": "Top"
+            },
+            {
+              "value": "border-b border-b-theme-border",
+              "label": "Bottom"
+            },
+            {
+              "value": "border-y border-y-theme-border",
+              "label": "Both"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Line Items Flat",
+      "type": "line-items-flat",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Image Layout"
+        },
+        {
+          "type": "text",
+          "id": "width_height_aspect_gap",
+          "label": "Width | Height | Aspect | Gap",
+          "info": "Aspect ratio only applies if width or height are set to 'auto'",
+          "default": "96px | auto | 0.76 | 16px"
+        },
+        {
+          "type": "header",
+          "content": "Content Settings"
+        },
+        {
+          "type": "text",
+          "id": "title_class",
+          "label": "Title class",
+          "default": "richtext-md h5"
+        },
+        {
+          "type": "text",
+          "id": "variant_title_class",
+          "label": "Variant title class",
+          "default": "line-item-small"
+        },
+        {
+          "type": "text",
+          "id": "price_class",
+          "label": "Price class",
+          "default": "richtext-md h5"
+        },
+        {
+          "type": "text",
+          "id": "compare_at_price_class",
+          "label": "Compare at price class",
+          "default": "richtext-md h5 !opacity-50",
+          "info": "Leave blank to hide compare as prices"
+        },
+        {
+          "type": "header",
+          "content": "Remove Button"
+        },
+        {
+          "type": "select",
+          "id": "remove_button_type",
+          "label": "Type",
+          "default": "icon",
+          "options": [
+            {
+              "label": "Icon",
+              "value": "icon"
+            },
+            {
+              "label": "Text",
+              "value": "text"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "remove_button_class",
+          "label": "Remove button label class"
+        },
+        {
+          "type": "text",
+          "id": "icon_size_gap",
+          "label": "icon | size | gap",
+          "default": "trash | 18px | 4px"
+        },
+        {
+          "type": "header",
+          "content": "Quantity Stepper"
+        },
+        {
+          "type": "text",
+          "id": "quantity_class",
+          "label": "Quantity Stepper class",
+          "default": "input-quantity-stepper-cart"
+        },
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "select",
+          "id": "border_divider",
+          "label": "Border Divider",
+          "default": "border-y-none",
+          "options": [
+            {
+              "value": "border-y-none",
+              "label": "None"
+            },
+            {
+              "value": "border-t border-t-theme-border",
+              "label": "Top"
+            },
+            {
+              "value": "border-b border-b-theme-border",
+              "label": "Bottom"
+            },
+            {
+              "value": "border-y border-y-theme-border",
+              "label": "Both"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "t:sections.cart_drawer.blocks.line_items_flat_with_upsell_items.name",
+      "type": "line-items-flat-upsells",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Image Layout"
+        },
+        {
+          "type": "text",
+          "id": "width_height_aspect_gap",
+          "label": "Width | Height | Aspect | Gap",
+          "info": "Aspect ratio only applies if width or height are set to 'auto'",
+          "default": "96px | auto | 0.76 | 16px"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius",
+          "label": "border | radius | max-h | max-w | overflow",
+          "default": "0 | 0 |  |  | ",
+          "info": "Border can be set via the border-shorthand for. I.e '0 0 1px 0' sets only the bottom border."
+        },
+        {
+          "type": "header",
+          "content": "Content Settings"
+        },
+        {
+          "type": "text",
+          "id": "title_class",
+          "label": "Title class",
+          "default": "richtext-md h5"
+        },
+        {
+          "type": "text",
+          "id": "variant_title_class",
+          "label": "Variant title class",
+          "default": "line-item-small"
+        },
+        {
+          "type": "text",
+          "id": "price_class",
+          "label": "Price class",
+          "default": "richtext-md h5"
+        },
+        {
+          "type": "color",
+          "id": "color_override_price",
+          "label": "Price color override"
+        },
+        {
+          "type": "text",
+          "id": "compare_at_price_class",
+          "label": "Compare at price class",
+          "default": "richtext-md h5 !opacity-50",
+          "info": "Leave blank to hide compare as prices"
+        },
+        {
+          "type": "color",
+          "id": "color_override_compare",
+          "label": "Compare at price color override"
+        },
+        {
+          "type": "text",
+          "id": "discount_lines_class",
+          "label": "Discount lines class",
+          "default": "richtext-md h5 !opacity-50",
+          "info": "Leave blank to hide compare as prices"
+        },
+        {
+          "type": "header",
+          "content": "Remove Button"
+        },
+        {
+          "type": "select",
+          "id": "remove_button_type",
+          "label": "Type",
+          "default": "icon",
+          "options": [
+            {
+              "label": "Icon",
+              "value": "icon"
+            },
+            {
+              "label": "Text",
+              "value": "text"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "remove_button_class",
+          "label": "Remove button label class"
+        },
+        {
+          "type": "text",
+          "id": "icon_size_gap",
+          "label": "icon | size | gap",
+          "default": "trash | 18px | 4px"
+        },
+        {
+          "type": "header",
+          "content": "Quantity Stepper"
+        },
+        {
+          "type": "text",
+          "id": "quantity_class",
+          "label": "Quantity Stepper class",
+          "default": "input-quantity-stepper-cart"
+        },
+        {
+          "type": "header",
+          "content": "Upsell Item Settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "removeable_upsell_items",
+          "label": "Removeable"
+        },
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "select",
+          "id": "border_divider",
+          "label": "Border Divider",
+          "default": "border-y-none",
+          "options": [
+            {
+              "value": "border-y-none",
+              "label": "None"
+            },
+            {
+              "value": "border-t border-t-theme-border",
+              "label": "Top"
+            },
+            {
+              "value": "border-b border-b-theme-border",
+              "label": "Bottom"
+            },
+            {
+              "value": "border-y border-y-theme-border",
+              "label": "Both"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Checkout Button",
+      "type": "checkout-button",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "label",
+          "label": "Label",
+          "default": "[icon.lock] Checkout [cart.total_price]"
+        },
+        {
+          "type": "text",
+          "id": "button_class",
+          "label": "Button class",
+          "default": "button-primary"
+        },
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "cart_empty",
+              "label": "Cart Empty"
+            },
+            {
+              "value": "items_added",
+              "label": "Items Added"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "select",
+          "id": "border_divider",
+          "label": "Border Divider",
+          "default": "border-y-none",
+          "options": [
+            {
+              "value": "border-y-none",
+              "label": "None"
+            },
+            {
+              "value": "border-t border-t-theme-border",
+              "label": "Top"
+            },
+            {
+              "value": "border-b border-b-theme-border",
+              "label": "Bottom"
+            },
+            {
+              "value": "border-y border-y-theme-border",
+              "label": "Both"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dynamic Checkout Button",
+      "type": "dynamic-checkout-button",
+      "settings": [
+        {
+          "type": "range",
+          "id": "button_height",
+          "label": "Buttons Height",
+          "min": 42,
+          "max": 60,
+          "step": 2,
+          "default": 42
+        },
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "cart_empty",
+              "label": "Cart Empty"
+            },
+            {
+              "value": "items_added",
+              "label": "Items Added"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "select",
+          "id": "border_divider",
+          "label": "Border Divider",
+          "default": "border-y-none",
+          "options": [
+            {
+              "value": "border-y-none",
+              "label": "None"
+            },
+            {
+              "value": "border-t border-t-theme-border",
+              "label": "Top"
+            },
+            {
+              "value": "border-b border-b-theme-border",
+              "label": "Bottom"
+            },
+            {
+              "value": "border-y border-y-theme-border",
+              "label": "Both"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Cart Note",
+      "type": "cart-note",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Checkbox"
+        },
+        {
+          "type": "checkbox",
+          "id": "checkbox_enabled",
+          "label": "Enabled",
+          "default": true
+        },
+        {
+          "type": "inline_richtext",
+          "id": "checkbox_label",
+          "label": "Label",
+          "default": "This is a gift"
+        },
+        {
+          "type": "text",
+          "id": "checkbox_class",
+          "label": "Checkbox class"
+        },
+        {
+          "type": "text",
+          "id": "checkbox_name",
+          "label": "Checkbox property name",
+          "default": "Cart-note",
+          "info": "This shows in the checkout and in the final order."
+        },
+        {
+          "type": "select",
+          "id": "checkbox_default_state",
+          "label": "Checkbox default state",
+          "default": "unchecked",
+          "options": [
+            {
+              "value": "unchecked",
+              "label": "Not checked"
+            },
+            {
+              "value": "checked",
+              "label": "checked"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Textarea"
+        },
+        {
+          "type": "text",
+          "id": "textarea_placeholder",
+          "label": "Placeholder",
+          "default": "Write you gift note here"
+        },
+        {
+          "type": "text",
+          "id": "textarea_label",
+          "label": "Label",
+          "default": "Cart note"
+        },
+        {
+          "type": "text",
+          "id": "textarea_class",
+          "label": "Textarea class",
+          "default": "input-textarea"
+        },
+        {
+          "type": "select",
+          "id": "dynamic_display",
+          "label": "Show dynamically:",
+          "default": "show_checkbox_checked",
+          "options": [
+            {
+              "value": "show_always",
+              "label": "Always"
+            },
+            {
+              "value": "show_checkbox_checked",
+              "label": "If checkbox checked"
+            }
+          ]
+        },
+        {
+          "type": "number",
+          "id": "limit_characters",
+          "label": "Limit characters"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "cart_empty",
+              "label": "Cart Empty"
+            },
+            {
+              "value": "items_added",
+              "label": "Items Added"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "select",
+          "id": "border_divider",
+          "label": "Border Divider",
+          "default": "border-y-none",
+          "options": [
+            {
+              "value": "border-y-none",
+              "label": "None"
+            },
+            {
+              "value": "border-t border-t-theme-border",
+              "label": "Top"
+            },
+            {
+              "value": "border-b border-b-theme-border",
+              "label": "Bottom"
+            },
+            {
+              "value": "border-y border-y-theme-border",
+              "label": "Both"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Gift with purchase",
+      "type": "gift_with_purchase",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Gift Settings"
+        },
+        {
+          "type": "paragraph",
+          "content": "Important. This section does not create actual discounts. All discounts need to be created in the Shopify Admin Dashboard to match the settings here."
+        },
+        {
+          "type": "select",
+          "id": "target_type",
+          "label": "Target Type",
+          "default": "item_count",
+          "options": [
+            {
+              "value": "total_price",
+              "label": "Amount based"
+            },
+            {
+              "value": "item_count",
+              "label": "Quantity based"
+            }
+          ]
+        },
+        {
+          "type": "number",
+          "id": "target",
+          "label": "Target",
+          "default": 4,
+          "info": "Use cents for target calculation based on amount (i.e. For a target of $39,40 set this to 3940)"
+        },
+        {
+          "type": "product_list",
+          "id": "products",
+          "label": "Products"
+        },
+        {
+          "type": "range",
+          "id": "receives_quantity",
+          "label": "Receives Quantity",
+          "default": 1,
+          "min": 1,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "type": "checkbox",
+          "id": "allow_duplicates",
+          "label": "Allow duplicates"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "richtext",
+          "id": "legend",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "accordion_class",
+          "label": "Accordion class",
+          "default": "accordion"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Products"
+        },
+        {
+          "type": "text",
+          "id": "product_card_class",
+          "label": "Product card class",
+          "default": "product-card-flat"
+        },
+        {
+          "type": "header",
+          "content": "Block Layout Settings"
+        },
+        {
+          "type": "select",
+          "id": "orientation",
+          "label": "Orientation",
+          "default": "horizontal",
+          "options": [
+            {
+              "value": "vertical",
+              "label": "Vertical"
+            },
+            {
+              "value": "horizontal",
+              "label": "Horizontal"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "width_height_gap",
+          "label": "Width | Height | Gap",
+          "default": "unset | unset | 6px"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius",
+          "label": "border | radius | max-h | max-w | overflow",
+          "default": "0 | 0 |  |  | ",
+          "info": "Border can be set via the border-shorthand for. I.e '0 0 1px 0' sets only the bottom border."
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        },
+        {
+          "type": "text",
+          "id": "flex_dividers_height_width_align",
+          "label": "dividers: height | width | align",
+          "default": "0 | 0 | center",
+          "info": "Alignment accepts: 'start, center, end'"
+        },
+        {
+          "type": "color",
+          "id": "divider_background_color",
+          "label": "divider color"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Settings"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "border_divider",
+          "label": "Border Divider",
+          "default": "border-y-none",
+          "options": [
+            {
+              "value": "border-y-none",
+              "label": "None"
+            },
+            {
+              "value": "border-t border-t-theme-border",
+              "label": "Top"
+            },
+            {
+              "value": "border-b border-b-theme-border",
+              "label": "Bottom"
+            },
+            {
+              "value": "border-y border-y-theme-border",
+              "label": "Both"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "______ Grid ______",
+      "type": "layout__grid",
+      "settings": [
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "cart_empty",
+              "label": "Cart Empty"
+            },
+            {
+              "value": "items_added",
+              "label": "Items Added"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Layout Settings"
+        },
+        {
+          "type": "text",
+          "id": "grid_cols_align_x_align_y_gap",
+          "label": "grid-cols | justify | align | gap",
+          "default": "1 | stretch | stretch | 0",
+          "info": "Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "______ Flex ______",
+      "type": "layout__flex",
+      "settings": [
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "cart_empty",
+              "label": "Cart Empty"
+            },
+            {
+              "value": "items_added",
+              "label": "Items Added"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Layout Settings"
+        },
+        {
+          "type": "text",
+          "id": "flex_direction_align_x_align_y_gap_wrap",
+          "label": "dir | justify | align | gap | wrap | min-h",
+          "default": "row/column | stretch | stretch | 0 | nowrap | ",
+          "info": "Direction accepts: 'row','column'. Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "______ Grid Slider ______",
+      "type": "layout__grid_slider",
+      "settings": [
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "cart_empty",
+              "label": "Cart Empty"
+            },
+            {
+              "value": "items_added",
+              "label": "Items Added"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Layout Settings"
+        },
+        {
+          "type": "text",
+          "id": "slider_cols_rows_align_x_align_y_gap",
+          "label": "cols | rows | justify | align | gap",
+          "default": "1 | 1 | stretch | stretch | 0"
+        },
+        {
+          "type": "select",
+          "id": "slider_scroll_snap",
+          "label": "Scroll snap",
+          "default": "snap-mandatory",
+          "options": [
+            {
+              "value": "",
+              "label": "Disabled"
+            },
+            {
+              "value": "snap-mandatory",
+              "label": "To slide"
+            },
+            {
+              "value": "snap-mandatory [&>*]:snap-start",
+              "label": "To item"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "slider_overflow_container",
+          "label": "Overflow container",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "Off"
+            },
+            {
+              "value": "desktop",
+              "label": "Desktop"
+            },
+            {
+              "value": "mobile",
+              "label": "Mobile"
+            },
+            {
+              "value": "all",
+              "label": "All"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Card Layout Settings"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right_min_height",
+          "label": "top | bottom | left | right | min-h",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius_shadow_gap_text_align",
+          "label": "border | radius | shadow | gap|align",
+          "default": "0 | 0 | 0 | 0 | inherit",
+          "info": "Use 0-5 for Shadows"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Scroll Navigation"
+        },
+        {
+          "type": "select",
+          "id": "scroll_navigation_style",
+          "label": "Style",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "Off"
+            },
+            {
+              "value": "scrollbar",
+              "label": "Scrollbar"
+            },
+            {
+              "value": "pagination",
+              "label": "Pagination"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "header",
+          "content": "Scrollbar Settings"
+        },
+        {
+          "type": "text",
+          "id": "scrollbar_class",
+          "label": "Scrollbar class",
+          "default": "scrollbar"
+        },
+        {
+          "type": "header",
+          "content": "Pagination Settings"
+        },
+        {
+          "type": "text",
+          "id": "size_border_width_radius",
+          "label": "size | border | radius",
+          "default": "12 | 0 | 999px"
+        },
+        {
+          "type": "text",
+          "id": "flex_direction_align_x_align_y_gap_wrap",
+          "label": "dir | justify | align | gap | wrap | min-h",
+          "default": "column | stretch | stretch | 16",
+          "info": "Direction accepts: 'row','column'. Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "color",
+          "id": "pagination_background_color",
+          "label": "background color",
+          "default": "#CCCCCC"
+        },
+        {
+          "type": "color",
+          "id": "pagination_border_color",
+          "label": "border color"
+        },
+        {
+          "type": "color",
+          "id": "pagination_hover_border_color",
+          "label": "border color"
+        },
+        {
+          "type": "color",
+          "id": "pagination_hover_background_color",
+          "label": "background color",
+          "default": "#000000"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "t:sections.cart_drawer.blocks.inline_flex_card.name",
+      "type": "layout_child__flex_card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "cart_empty",
+              "label": "Cart Empty"
+            },
+            {
+              "value": "items_added",
+              "label": "Items Added"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Layout Settings"
+        },
+        {
+          "type": "text",
+          "id": "flex_direction_align_x_align_y_gap_wrap",
+          "label": "dir | justify | align | gap | wrap | min-h",
+          "default": "row/column | stretch | stretch | 0 | nowrap | ",
+          "info": "Direction accepts: 'row','column'. Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius",
+          "label": "border | radius | max-h | max-w | overflow",
+          "default": "0 | 0 |  |  | ",
+          "info": "Border can be set via the border-shorthand for. I.e '0 0 1px 0' sets only the bottom border."
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "t:sections.cart_drawer.blocks.sticky_header.name",
+      "type": "layout__sticky-header",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "cart_empty",
+              "label": "Cart Empty"
+            },
+            {
+              "value": "items_added",
+              "label": "Items Added"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "border_divider",
+          "label": "Border Divider",
+          "default": "border-b border-b-theme-border",
+          "options": [
+            {
+              "value": "border-y-none",
+              "label": "None"
+            },
+            {
+              "value": "border-t border-t-theme-border",
+              "label": "Top"
+            },
+            {
+              "value": "border-b border-b-theme-border",
+              "label": "Bottom"
+            },
+            {
+              "value": "border-y border-y-theme-border",
+              "label": "Both"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        }
+      ]
+    },
+    {
+      "name": "t:sections.cart_drawer.blocks.sticky_footer.name",
+      "type": "layout__sticky-footer",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "show_conditionally",
+          "label": "Show conditionally",
+          "default": "always",
+          "options": [
+            {
+              "value": "always",
+              "label": "Always"
+            },
+            {
+              "value": "cart_empty",
+              "label": "Cart Empty"
+            },
+            {
+              "value": "items_added",
+              "label": "Items Added"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "border_divider",
+          "label": "Border Divider",
+          "default": "border-t border-t-theme-border",
+          "options": [
+            {
+              "value": "border-y-none",
+              "label": "None"
+            },
+            {
+              "value": "border-t border-t-theme-border",
+              "label": "Top"
+            },
+            {
+              "value": "border-b border-b-theme-border",
+              "label": "Bottom"
+            },
+            {
+              "value": "border-y border-y-theme-border",
+              "label": "Both"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        }
+      ]
+    },
+    {
+      "name": "______ Layout End ______",
+      "type": "layout__end",
+      "settings": []
+    },
+    {
+      "name": "t:sections.cart_drawer.blocks.inline_layout_end.name",
+      "type": "layout_child__end",
+      "settings": []
+    }
+  ],
+  "limit": 1,
+  "enabled_on": {
+    "groups": [
+      "custom.modal"
+    ]
+  }
+}
+{% endschema %}

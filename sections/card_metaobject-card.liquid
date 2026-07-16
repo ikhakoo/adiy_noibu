@@ -1,0 +1,500 @@
+{%- render "card_metaobject-card" -%}
+{% schema %}
+{
+  "name": "Metaobject Card",
+  "blocks": [
+    {
+      "name": "______ Flex wrap ______",
+      "type": "layout__flex_wrap",
+      "settings": [
+        {
+          "type": "select",
+          "id": "location",
+          "label": "Location",
+          "default": "inline",
+          "options": [
+            {
+              "value": "inline",
+              "label": "Inline"
+            },
+            {
+              "value": "over_image",
+              "label": "Over Image"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Block Layout Settings"
+        },
+        {
+          "type": "text",
+          "id": "flex_row_wrap_align_x_align_y_gap",
+          "label": "justify | align | gap | wrap | dir",
+          "default": "stretch | stretch | 0 | wrap | row",
+          "info": "Alignment accepts: 'start, center, end, evenly, between'"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "header",
+          "content": "Block Settings"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "header",
+          "content": "Color Settings"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius",
+          "label": "border | radius | max-h | max-w | overflow",
+          "default": "0 | 0 |  |  | ",
+          "info": "Border can be set via the border-shorthand for. I.e '0 0 1px 0' sets only the bottom border."
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color_background",
+          "id": "background_gradient",
+          "label": "background gradient"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        }
+      ]
+    },
+    {
+      "name": "Image",
+      "type": "image",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Image selection"
+        },
+        {
+          "type": "text",
+          "id": "primary_image",
+          "label": "Primary image",
+          "default": "[metaobject.image]",
+          "info": "Use bracket notation for data access: i.e.[metaobject.image]"
+        },
+        {
+          "type": "header",
+          "content": "Hover Effect"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_secondary_image",
+          "label": "Show secondary image",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "secondary_image",
+          "label": "Secondary image",
+          "default": "[metaobject.secondary_image]",
+          "info": "Use bracket notation for data access: i.e.[metaobject.image]"
+        },
+        {
+          "type": "paragraph",
+          "content": "[Available keys](/admin/settings/custom_data)"
+        },
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "text",
+          "id": "padding_top_bottom_left_right",
+          "label": "padding: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "width_height_aspect_object_fit",
+          "label": "width | height | aspect | fit | radius",
+          "default": "100% | auto | auto | cover | 0",
+          "info": "Aspect ratio only applies if width or height are set to 'auto'"
+        },
+        {
+          "type": "text",
+          "id": "border_width_radius",
+          "label": "border | radius | max-h | max-w | overflow",
+          "default": "0 | 0 |  |  | ",
+          "info": "Border can be set via the border-shorthand for. I.e '0 0 1px 0' sets only the bottom border."
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color"
+        },
+        {
+          "type": "color_background",
+          "id": "background_gradient",
+          "label": "background gradient"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        }
+      ],
+      "limit": 1
+    },
+    {
+      "name": "Dynamic Text",
+      "type": "dynamic-text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "title",
+          "label": "Content",
+          "default": "<h3>[metaobject.title]</h3>",
+          "info": "Use bracket notation for data access: i.e.[metaobject.title] or [metaobject.metafields.smart.short_description]"
+        },
+        {
+          "type": "text",
+          "id": "css_class",
+          "label": "Type CSS class",
+          "default": "richtext-sm"
+        },
+        {
+          "type": "paragraph",
+          "content": "[Available keys](/admin/settings/custom_data)"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    },
+    {
+      "name": "Dynamic Button",
+      "type": "dynamic-button",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "label",
+          "label": "Label",
+          "default": "Read More",
+          "info": "Use bracket notation for data access: i.e.[metaobject.title] or [metaobject.metafields.smart.short_description]"
+        },
+        {
+          "type": "text",
+          "id": "url",
+          "label": "Dynamic URL",
+          "info": "Use bracket notation for data access.",
+          "default": "[metaobject.url]"
+        },
+        {
+          "type": "text",
+          "id": "button_class",
+          "label": "Button class",
+          "default": "button-primary"
+        },
+        {
+          "type": "paragraph",
+          "content": "[Available keys](/admin/settings/custom_data)"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:all.empty_char"
+        },
+        {
+          "type": "header",
+          "content": "Block Globals"
+        },
+        {
+          "type": "text",
+          "id": "margin_top_bottom_left_right",
+          "label": "margin: top | bottom | left | right",
+          "default": "0 | 0 | 0 | 0"
+        },
+        {
+          "type": "text",
+          "id": "max_w_flex_col_row_order_align",
+          "label": "max-w | flex | cols | rows | order | align",
+          "default": "100% | unset | 1 | 1 | unset | inherit",
+          "info": "Max width accepts 'fit', 'max' and 'min' to fit in flex layouts."
+        },
+        {
+          "type": "select",
+          "id": "responsive_visibility",
+          "label": "Responsive Visibility",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile"
+            },
+            {
+              "value": "desktop-tablet-only",
+              "label": "Desktop"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "hide_if_empty",
+          "label": "If empty, hide:",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "section",
+              "label": "Section"
+            },
+            {
+              "value": "container",
+              "label": "Container"
+            },
+            {
+              "value": "block",
+              "label": "Block"
+            }
+          ],
+          "info": "Always shows in the Theme Editor."
+        },
+        {
+          "type": "text",
+          "id": "responsive_breakpoint",
+          "label": "Responsive breakpoint",
+          "default": "768px",
+          "info": "Only adjust this for rare instances on large screen designs"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "handle",
+      "label": "Handle",
+      "default": "metaobject-card",
+      "info": "hyphens / lowercase / no-spaces [kebab-case](https://developer.mozilla.org/en-US/docs/Glossary/Kebab_case)"
+    },
+    {
+      "type": "text",
+      "id": "preview_metaobject",
+      "label": "Metaobject namespace",
+      "info": "Fallbacks to the first available metaobject"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "header",
+      "content": "Container Layout"
+    },
+    {
+      "type": "select",
+      "id": "orientation",
+      "label": "Orientation",
+      "default": "vertical",
+      "options": [
+        {
+          "value": "vertical",
+          "label": "Vertical"
+        },
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "flex_row_wrap_align_x_align_y_gap",
+      "label": "justify | align | gap | wrap | dir",
+      "default": "stretch | stretch | 0 | wrap | row",
+      "info": "Alignment accepts: 'start, center, end, evenly, between'"
+    },
+    {
+      "type": "text",
+      "id": "padding_top_bottom_left_right",
+      "label": "padding: top | bottom | left | right",
+      "default": "0 | 0 | 0 | 0"
+    },
+    {
+      "type": "text",
+      "id": "max_width_max_height_border_width_radius",
+      "label": "max-w | max-h | border | radius",
+      "default": "unset | unset | 0 | 0"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "text color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "background gradient"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "border color"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:all.empty_char"
+    },
+    {
+      "type": "header",
+      "content": "Loading State"
+    },
+    {
+      "type": "text",
+      "id": "loading_width_height_aspect",
+      "label": "width | height | aspect",
+      "default": "100% | auto | 0.75",
+      "info": "Aspect ratio only applies if width or height are set to 'auto'"
+    },
+    {
+      "type": "color_background",
+      "id": "loading_background_gradient",
+      "label": "Background color",
+      "default": "rgba(185,185,185, 0.2)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Metaobject Card"
+    }
+  ],
+  "enabled_on": {
+    "groups": [
+      "custom.card"
+    ]
+  }
+}
+{% endschema %}

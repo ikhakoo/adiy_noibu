@@ -1,0 +1,386 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "cart_fJmfb4": {
+      "type": "cart",
+      "blocks": {
+        "layout_grid_qrd9Bm": {
+          "type": "layout__grid",
+          "settings": {
+            "show_conditionally": "always",
+            "grid_cols_align_x_align_y_gap": "1 | start | start | 0",
+            "padding_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "unset/100% | 1 | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        },
+        "cart_navigation_RNEDDn": {
+          "type": "cart-navigation",
+          "settings": {
+            "label": "<strong>Your Cart ([quantity])</strong>",
+            "label_class": "richtext-md h3",
+            "close_button": "",
+            "close_button_class": "",
+            "padding_top_bottom_left_right": "0 | 16 | 0 | 0",
+            "show_conditionally": "items_added"
+          }
+        },
+        "cart_navigation_NXRWgk": {
+          "type": "cart-navigation",
+          "settings": {
+            "label": "<strong>Your Cart is Empty</strong>",
+            "label_class": "richtext-md h3",
+            "close_button": "",
+            "close_button_class": "",
+            "padding_top_bottom_left_right": "0 | 16 | 0 | 0",
+            "show_conditionally": "cart_empty"
+          }
+        },
+        "divider_cJCRnW": {
+          "type": "divider",
+          "settings": {
+            "height": 1,
+            "border_color": "#e4e4e3",
+            "style": "solid",
+            "margin_top_bottom_left_right": "0 | 8px | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        },
+        "layout_child_flex_card_y8dyw6": {
+          "type": "layout_child__flex_card",
+          "settings": {
+            "show_conditionally": "cart_empty",
+            "flex_direction_align_x_align_y_gap_wrap": "column | stretch | stretch | 0 | nowrap |",
+            "padding_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "border_width_radius": "0 | 0 |  |  |",
+            "background_color": "",
+            "border_color": "",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        },
+        "dynamic_richtext_ePXtzT": {
+          "type": "dynamic-richtext",
+          "settings": {
+            "show_conditionally": "cart_empty",
+            "title": "<p>Looks like your cart is empty! Feel free to browse our selection and add some items you love.</p>",
+            "page_content": "",
+            "use_page_content": false,
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "450px/100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": "",
+            "color_override": ""
+          }
+        },
+        "button_XgDmVG": {
+          "type": "button",
+          "settings": {
+            "label": "Start Shopping [icon.arrow-right]",
+            "url": "shopify://collections/all",
+            "button_class": "button-primary",
+            "type": "button",
+            "show_active_state": false,
+            "margin_top_bottom_left_right": "32 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "fit/100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        },
+        "layout_child_end_9838qn": {
+          "type": "layout_child__end",
+          "settings": {}
+        },
+        "line_items_flat_upsells_mPFWTm": {
+          "type": "line-items-flat-upsells",
+          "settings": {
+            "width_height_aspect_gap": "100px/80px | 80px/64px | auto | 16px",
+            "border_width_radius": "0 | 10px |  |  |",
+            "title_class": "richtext-md h5 !font-semibold",
+            "variant_title_class": "richtext-md h6",
+            "price_class": "richtext-md h5 !font-semibold",
+            "color_override_price": "#3a6958",
+            "compare_at_price_class": "richtext-md h6 !opacity-50",
+            "color_override_compare": "",
+            "discount_lines_class": "richtext-md h6 !opacity-50",
+            "remove_button_type": "icon",
+            "remove_button_class": "",
+            "icon_size_gap": "trash | 18px | 12px",
+            "quantity_class": "input-quantity-stepper-cart",
+            "removeable_upsell_items": false,
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "padding_top_bottom_left_right": "16 | 24/16 | 0 | 0",
+            "border_divider": "border-b border-b-theme-border"
+          }
+        },
+        "layout_child_flex_card_nyMhcL": {
+          "type": "layout_child__flex_card",
+          "settings": {
+            "show_conditionally": "items_added",
+            "flex_direction_align_x_align_y_gap_wrap": "column | stretch | stretch | 0 | nowrap |",
+            "padding_top_bottom_left_right": "24/16 | 24/16 | 24/16 | 24/16",
+            "border_width_radius": "1 | 4 |  |  |",
+            "background_color": "",
+            "border_color": "#e4e4e3",
+            "margin_top_bottom_left_right": "32 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        },
+        "upsell_products_MzmWyX": {
+          "type": "upsell-products",
+          "settings": {
+            "legend": "<p><strong>Complete Your Cart</strong></p>",
+            "legend_class": "richtext-md h3",
+            "product_card_class": "product-card-flat",
+            "limit": 3,
+            "target_product": "ai",
+            "primary_source": "complementary",
+            "fallback_source": "related",
+            "fallback_products": [],
+            "orientation": "vertical",
+            "padding_top_bottom_left_right": "0 | 0 | 24px | 24px",
+            "width_height_gap": "100% | unset | 24px",
+            "border_width_radius": "0 | 0 |  |  |",
+            "background_color": "",
+            "border_color": "",
+            "flex_dividers_height_width_align": "1px | 100% | center",
+            "divider_background_color": "#e4e4e3",
+            "margin_top_bottom_left_right": "0 | 0 |-24px | -24px",
+            "max_w_flex_col_row_order_align": "100% | initial | 1 | 1 | unset | inherit",
+            "border_divider": "border-y-none",
+            "show_conditionally": "always"
+          }
+        },
+        "layout_grid_BiwyF6": {
+          "type": "layout__grid",
+          "settings": {
+            "show_conditionally": "always",
+            "grid_cols_align_x_align_y_gap": "1 | stretch | start | 0",
+            "padding_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "420px/100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        },
+        "layout_child_flex_card_ihdQgg": {
+          "type": "layout_child__flex_card",
+          "settings": {
+            "show_conditionally": "always",
+            "flex_direction_align_x_align_y_gap_wrap": "row | stretch | stretch | 0 | wrap |",
+            "padding_top_bottom_left_right": "32 | 32 | 32 | 32",
+            "border_width_radius": "0 | 0 |  |  |",
+            "background_color": "#f2f2f2",
+            "border_color": "",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "responsive_breakpoint": "768px",
+            "anchor_id": ""
+          }
+        },
+        "progress_bar_firdUt": {
+          "type": "progress-bar",
+          "settings": {
+            "show_conditionally": "always"
+          }
+        },
+        "dynamic_richtext_E7Ph4Q": {
+          "type": "dynamic-richtext",
+          "settings": {
+            "show_conditionally": "always",
+            "title": "<h4><strong>Subtotal</strong></h4>",
+            "page_content": "",
+            "use_page_content": false,
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 4 | 0 | 0",
+            "max_w_flex_col_row_order_align": "fit | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": "",
+            "color_override": ""
+          }
+        },
+        "dynamic_richtext_JXw4bW": {
+          "type": "dynamic-richtext",
+          "settings": {
+            "show_conditionally": "always",
+            "title": "<h4><strong>[cart.total_price]</strong></h4>",
+            "page_content": "",
+            "use_page_content": false,
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | 1 | 1 | 1 | unset | right",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": "",
+            "color_override": ""
+          }
+        },
+        "dynamic_richtext_kH4XbC": {
+          "type": "dynamic-richtext",
+          "settings": {
+            "show_conditionally": "always",
+            "title": "<h6>Shipping and taxes calculated at checkout.</h6>",
+            "page_content": "",
+            "use_page_content": false,
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": "",
+            "color_override": ""
+          }
+        },
+        "checkout_button_LipBVg": {
+          "type": "checkout-button",
+          "settings": {
+            "label": "[icon.lock] Checkout",
+            "button_class": "button-primary",
+            "show_conditionally": "always",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "padding_top_bottom_left_right": "32 | 0 | 0 | 0",
+            "border_divider": "border-y-none"
+          }
+        }
+      },
+      "block_order": [
+        "layout_grid_qrd9Bm",
+        "cart_navigation_RNEDDn",
+        "cart_navigation_NXRWgk",
+        "divider_cJCRnW",
+        "layout_child_flex_card_y8dyw6",
+        "dynamic_richtext_ePXtzT",
+        "button_XgDmVG",
+        "layout_child_end_9838qn",
+        "line_items_flat_upsells_mPFWTm",
+        "layout_child_flex_card_nyMhcL",
+        "upsell_products_MzmWyX",
+        "layout_grid_BiwyF6",
+        "layout_child_flex_card_ihdQgg",
+        "progress_bar_firdUt",
+        "dynamic_richtext_E7Ph4Q",
+        "dynamic_richtext_JXw4bW",
+        "dynamic_richtext_kH4XbC",
+        "checkout_button_LipBVg"
+      ],
+      "settings": {
+        "flex_row_wrap_align_x_align_y_gap": "stretch | stretch | 80px / 32px | nowrap | row/column",
+        "section_id": "",
+        "color_scheme": "scheme-f2533934-76e0-4e86-b684-a221de7f1053",
+        "container_spacing": "px-container-md",
+        "border_divider": "border-y-none",
+        "top_bottom_min_height": "140/ 100 | 0 | 0",
+        "responsive_visibility": "",
+        "responsive_breakpoint": "768px",
+        "target_visibility": ""
+      }
+    },
+    "preset_product_slider_DKC86U": {
+      "type": "preset__product_slider",
+      "blocks": {
+        "richtext_bFqgHF": {
+          "type": "richtext",
+          "settings": {
+            "title": "<h2><strong>You May Also Like</strong></h2>",
+            "page_content": "",
+            "use_page_content": false,
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | unset | left",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": "",
+            "color_override": ""
+          }
+        },
+        "product_cards_JMMBfx": {
+          "type": "product-cards",
+          "settings": {
+            "products": [
+              "a-diy-composite-deck-kit",
+              "pressure-treated-kiln-dried-wood-deck-kit"
+            ],
+            "collection": "",
+            "display_limit": "12 / 4",
+            "product_card_class": "product-card",
+            "hide_out_of_stock": false,
+            "slider_cols_rows_align_x_align_y_gap": "4 /2 |  1 | stretch | stretch | 24",
+            "slider_scroll_snap": "",
+            "snap_center": false,
+            "slider_overflow_container": "all",
+            "infinite_scroll": false,
+            "scrollbar_class": "scrollbar",
+            "padding_top_bottom_left_right": "24 | 0 | 0 | 0",
+            "margin_top_bottom_left_right": "32/24 | 0 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "960px",
+            "anchor_id": "",
+            "metafield_keys": ""
+          }
+        }
+      },
+      "block_order": [
+        "richtext_bFqgHF",
+        "product_cards_JMMBfx"
+      ],
+      "settings": {
+        "grid_cols_align_x_align_y_gap": "1 | stretch | stretch | 0",
+        "padding_top_bottom_left_right": "0 | 0 | 0 | 0",
+        "margin_top_bottom_left_right": "0 | 0 | 0 | 0",
+        "border_width_radius": "0 | 0 |  |  |",
+        "background_color": "",
+        "border_color": "",
+        "section_id": "",
+        "color_scheme": "scheme-f2533934-76e0-4e86-b684-a221de7f1053",
+        "container_spacing": "px-container-md",
+        "border_divider": "border-y-none",
+        "top_bottom_min_height": "64/48 | 60/32 | 0",
+        "responsive_visibility": "",
+        "responsive_breakpoint": "768px",
+        "target_visibility": "",
+        "render_tabs_async": false
+      }
+    }
+  },
+  "order": [
+    "cart_fJmfb4",
+    "preset_product_slider_DKC86U"
+  ]
+}

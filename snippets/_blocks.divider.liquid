@@ -1,0 +1,26 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.divider"
+  assign height = block.settings.height
+  assign border_color = block.settings.border_color
+  assign style = block.settings.style
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,margin_top_bottom_left_right, max_w_flex_col_row_order_align" %}
+
+<div data-style-id="{{ section.id }}--{{ block.id }}"
+     {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+     role="separator"
+     class=""
+     style="border-top: {{ height }}px {{ style }} {{ border_color }};">
+  <div></div>
+</div>

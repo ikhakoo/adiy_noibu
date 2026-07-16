@@ -1,0 +1,93 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "before-after"
+  assign preheading = section.settings.preheading
+  assign preheading_class = section.settings.preheading_class
+  assign heading = section.settings.heading
+  assign heading_class = section.settings.heading_class
+  assign subheading = section.settings.subheading
+  assign subheading_class = section.settings.subheading_class
+  assign button_primary_text = section.settings.button_primary_text
+  assign button_primary_url = section.settings.button_primary_url
+  assign button_primary_class = section.settings.button_primary_class
+  assign before_image = section.settings.before_image
+  assign after_image = section.settings.after_image
+  assign section_id = section.settings.section_id
+  assign top_bottom_min_height = section.settings.top_bottom_min_height
+  assign container_spacing = section.settings.container_spacing
+  assign responsive_visibility = section.settings.responsive_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if preheading == blank and heading == blank and subheading == blank and button_primary_text == blank
+    assign content_empty = true
+  endif
+%}
+
+{% render "_section.universal-settings", section_type: section_type, insert: "before" %}
+  <section class="grid h-full gap-6 md:gap-9 grid-cols-1 lg:grid-cols-[500px_1fr] xl:grid-cols-[684px_1fr]">
+    {% unless content_empty %}
+      <div
+          class="flex flex-col w-full h-full px-4 md:px-9 py-4 gap-3 text-theme-text justify-center max-w-[648px]">
+          {% render '_input.richtext', content: preheading, class: preheading_class, block: block, forloop: forloop %}
+          {% render '_input.richtext', content: heading, class: heading_class, block: block, forloop: forloop %}
+          {% render '_input.richtext', content: subheading, class: subheading_class, block: block, forloop: forloop %}
+          {% if button_primary_text != blank %}
+            <a href="{{ button_primary_url }}"
+                class="max-md:w-full {{ button_primary_class }} mt-3 md:mt-9"> 
+                {% render '_input.inline_richtext', content: button_primary_text, block: block, forloop: forloop %}
+            </a>
+          {% endif %}
+      </div>
+    {% endunless %}
+    <div 
+      x-data="{
+        sliderValue: 50,
+        updateClip() {
+          const afterImg = this.$el.querySelector(`[data-before-image='data-before-value']`); 
+          if (afterImg) {
+            afterImg.style.clipPath = `polygon(
+              0 0, 
+              ${this.sliderValue}% 0, 
+              ${this.sliderValue}% 100%, 
+              0 100%
+            )`;
+          }
+        }
+      }"
+      x-init="updateClip()"
+      x-effect="updateClip()"
+      class="relative mx-auto w-full h-full max-lg:-order-1 max-w-[720px] aspect-[1.33]"
+      :style="`--position: ${sliderValue}%`"
+    >
+      <div class="relative w-full h-full rounded-[30px] overflow-hidden">
+        {% render '_object.image', 
+          image: after_image, 
+          sizes: "100vw", 
+          class: "absolute top-0 left-0 w-full h-full object-cover rounded-[30px]", 
+          preload: false 
+        %}
+        {% render '_object.image', 
+          image: before_image, 
+          sizes: "100vw", 
+          class: "absolute top-0 left-0 w-full h-full object-cover rounded-[30px]", 
+          data-before-image: "data-before-value", 
+          preload: false 
+        %}
+        <input 
+          type="range" 
+          min="0" 
+          max="100" 
+          x-model="sliderValue" 
+          class="absolute inset-0 opacity-0 w-full h-full border-2 border-black cursor-ew-resize z-10"
+        />
+        <span class="w-0.5 h-full -translate-x-1/2 left-[var(--position)] absolute bg-black pointer-events-none"></span>
+        <div class="flex justify-center rounded-full items-center absolute w-11 h-11 text-theme-text bg-white -translate-x-1/2 -translate-y-1/2 top-1/2 left-[var(--position)]">
+          {% render '_components.icon', icon: 'chevron-right-left', class: "w-6 h-6" %}
+        </div>
+      </div>
+    
+    </div>
+  </section>
+  {% render "_section.universal-settings", section_type: section_type, insert: "after" %}

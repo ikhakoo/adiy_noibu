@@ -1,0 +1,112 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_code_AJwnNM": {
+      "type": "custom-code",
+      "blocks": {
+        "css_zT7A4w": {
+          "type": "css",
+          "settings": {
+            "css": "h1 {\nposition: relative;\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    margin: 0 auto 40px;\n}\n\np {\nmargin-block-end :16px;\nmargin-block-start :16px;\n}\n\nol, ul {\nmargin-block-end :32px;\nmargin-block-start :16px;\n}\n\np:first-child {\n    -webkit-margin-before: 0;\n    margin-block-start: 0;\n}"
+          }
+        }
+      },
+      "block_order": [
+        "css_zT7A4w"
+      ],
+      "settings": {}
+    },
+    "content_flex_bxDk3Q": {
+      "type": "content-flex",
+      "blocks": {
+        "richtext_rYW8Bw": {
+          "type": "richtext",
+          "settings": {
+            "title": "<h1>{{ block.settings.page_content.title }}</h1>",
+            "page_content": "{{ page }}",
+            "use_page_content": false,
+            "content_class": "richtext-md",
+            "margin_top_bottom_left_right": "0 | 24 | 0 | 0",
+            "max_w_flex_col_row_order_align": "100% | unset | 1 | 1 | unset | inherit",
+            "responsive_visibility": "",
+            "hide_if_empty": "none",
+            "responsive_breakpoint": "768px",
+            "anchor_id": "",
+            "color_override": "rgba(0,0,0,0)"
+          }
+        }
+      },
+      "block_order": [
+        "richtext_rYW8Bw"
+      ],
+      "disabled": true,
+      "settings": {
+        "flex_row_wrap_align_x_align_y_gap": "start | start | 0",
+        "padding_top_bottom_left_right": "0 | 0 | 0 | 0",
+        "margin_top_bottom_left_right": "0 | 0 | auto/0 | auto/0",
+        "border_width_radius": "0 | 0 | | 1168/unset",
+        "background_color": "",
+        "border_color": "",
+        "section_id": "",
+        "color_scheme": "",
+        "container_spacing": "px-container-md",
+        "border_divider": "border-y-none",
+        "top_bottom_min_height": "48/36 | 48/36 | 0",
+        "responsive_visibility": "",
+        "responsive_breakpoint": "768px",
+        "target_visibility": "",
+        "render_tabs_async": false
+      }
+    },
+    "image_banner_cyNMP9": {
+      "type": "image-banner",
+      "blocks": {
+        "image_6TU6NV": {
+          "type": "image",
+          "settings": {
+            "desktop_image": "shopify://shop_images/Image_fx_26.png",
+            "mobile_image": "shopify://shop_images/Image_fx_26.png"
+          }
+        },
+        "richtext_kQjkNz": {
+          "type": "richtext",
+          "settings": {
+            "preheading": "<p><strong>BUY NOW, PAY LATransform Your RV Living with a-diy.comTER </strong></p>",
+            "preheading_class": "richtext-md",
+            "heading": "<h2><strong>Transform Your RV Living with a-diy.com<br/></strong></h2>",
+            "heading_class": "richtext-md",
+            "subheading": "<p>Upgrade your seasonal RV lifestyle with a-diy.com’s modular RV deck kits. Perfectly crafted for RVs and fifth wheels, our lightweight and durable decks offer a fully modular design to create a practical yet stylish outdoor space.</p><p>Whether you enjoy weekend getaways or plan to stay for the long term, a well-designed RV deck adds comfort, convenience, and visual appeal. Our decks are simple to assemble, weather-resistant, and ideal for snowbirds, full-time RV travelers, and seasonal campers who want to make the most of their home on the road.</p>",
+            "subheading_class": "richtext-md",
+            "text_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_6TU6NV",
+        "richtext_kQjkNz"
+      ],
+      "name": "Image Banner",
+      "settings": {
+        "media_position": "right",
+        "background_color": "#ffffff",
+        "vertical_padding_section": "48px | 48px",
+        "section_id": "",
+        "container_spacing": "px-container-lg",
+        "responsive_visibility": ""
+      }
+    }
+  },
+  "order": [
+    "custom_code_AJwnNM",
+    "content_flex_bxDk3Q",
+    "image_banner_cyNMP9"
+  ]
+}

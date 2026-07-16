@@ -1,0 +1,142 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "filter_sidebar"
+  assign section_type = "content-product-grid"
+  assign legend_class = block.settings.legend_class
+  assign filter_label = block.settings.filter_label
+  assign submit_button_class = block.settings.submit_button_class
+  assign view_state = block.settings.view_state
+  assign filters_show_count = block.settings.filters_show_count
+  assign checkbox_class = block.settings.checkbox_class
+  assign size_border_width_radius = block.settings.size_border_width_radius
+  assign hover_border_color = block.settings.hover_border_color
+  assign outline_width_offset = block.settings.outline_width_offset
+  assign hover_outline_color = block.settings.hover_outline_color
+  assign background_blur = block.settings.background_blur
+  assign show_tooltip = block.settings.show_tooltip
+  assign accordion_class = block.settings.accordion_class
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign filter_sort_bar_block = section.blocks | where: "type", "filter_sort_bar" | first
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: '& [data-style-header]',
+    keys: "padding_top_bottom_left_right"
+%}
+
+<div x-data="{ open: show_filter_sidebar }"
+    {{ block.shopify_attributes }}
+     class="lg:sticky lg:top-[--header-offset] lg:max-h-min lg:mb-auto"
+     :style="`--header-offset: calc(${$refs?.filter_nav_bar?.offsetHeight ?? 0}px + var(--header-height-offset))`"
+     data-style-id="{{ section.id }}--{{ block.id }}"
+     x-effect="()  => {
+        open = $editor?.select_block_id === '{{ block.id }}' || show_filter_sidebar
+        document.body.classList.toggle('!overflow-hidden', open && $data.windowWidth < 1024);
+        document.querySelector('[data-footer-section]')?.classList.toggle('-z-10', open && $data.windowWidth < 1024)
+     }"
+     @keydown.esc.document="if (open && $data.windowWidth < 1024) { show_filter_sidebar = false }">
+  {% if filter_sort_bar_block == blank %}
+    <div data-style-header>
+      <button type="button"
+              class="flex items-center gap-1 whitespace-nowrap {{ legend_class }}"
+              @click.prevent.stop="show_filter_sidebar = !show_filter_sidebar">
+        {% comment %}<span>Filters</span>
+        {% render '_components.icon', icon: filter_icon, class: "size-[0.9em]" %}{% endcomment %}
+        {% render '_input.inline_richtext', content: filter_label, block: block, forloop: forloop %}
+      </button>
+    </div>
+  {% endif %}
+  <div class="fixed inset-0 z-40 bg-[--color-modal-background] {{ background_blur }} transition duration-150 ease-in-out lg:hidden"
+       x-show="open"
+       x-cloak
+       @click="show_filter_sidebar = false"
+       x-transition:enter-start="opacity-0"
+       x-transition:enter-end="opacity-100"
+       x-transition:leave-start="opacity-100"
+       x-transition:leave-end="opacity-0"></div>
+  <section class="z-50 transition-all duration-150 ease-in-out max-lg:fixed max-lg:inset-y-0 max-lg:left-0 max-lg:w-full max-lg:max-w-sm"
+           style="{{ styles | strip_newlines }}"
+           x-show="open"
+           x-cloak
+           x-trap.noautofocus="window.innerWidth < 1024 && open"
+           x-transition:enter-start="-translate-x-full"
+           x-transition:enter-end="translate-x-0"
+           x-transition:leave-start="translate-x-0"
+           x-transition:leave-end="-translate-x-full">
+    <main class="max-lg:absolute max-lg:overflow-hidden flex flex-col max-lg:border-r max-lg:border-r-theme-border max-lg:inset-0 max-lg:top-[--header-height-offset] {{ section.settings.color_scheme }}">
+      <div class="lg:hidden px-4 flex items-center justify-between py-4 border-b border-b-theme-border">
+        <button type="button"
+                class="flex items-center gap-1 whitespace-nowrap {{ legend_class }}"
+                @click.prevent.stop="show_filter_sidebar = !show_filter_sidebar">
+          {% comment %}<span>Filters</span>
+          {% render '_components.icon', icon: filter_icon, class: "size-[0.9em]" %}{% endcomment %}
+          {% render '_input.inline_richtext', content: filter_label, block: block, forloop: forloop %}
+
+        </button>
+        <button type="button"
+                class="lg:hidden text-theme-text/60 hf:text-theme-text/90"
+                @click="show_filter_sidebar = false">
+          <span class="sr-only">Close Filters</span>
+          {% render '_components.icon', icon: 'x-mark', class: "h-5 shrink-0" %}
+        </button>
+      </div>
+      <div class="max-h-[600px] w-full overflow-y-auto overflow-x-hidden scrollbar-none">
+
+        <aside class="flex flex-col gap-4 max-lg:px-4 max-lg:py-6" x-cloak x-show="open">
+
+          {%- for filter in object.filters -%}
+            {% capture filter_content %}
+              {% if filter.type == 'list' or filter.type == 'boolean' %}
+                {% assign _filter_block = block %}
+                {% for _block in section.blocks %}
+                  {% if _block.type != 'filter_checkboxes' and _block.type != 'filter_radio_buttons' and _block.type != 'filter_color' %}
+                    {% continue %}
+                  {% endif %}
+                  {% assign _handle = _block.settings.title | downcase | trim %}
+                  {% assign _label = filter.label | downcase | trim %}
+                  {% if _handle == _label %}
+                    {% assign _filter_block = _block %}
+                    {% break %}
+                  {% endif %}
+                {% endfor %}
+                {% if _filter_block.type == 'filter_checkboxes' %}
+                  {% render 'content-product-grid.filter_checkboxes', block: _filter_block, object: object, filter: filter %}
+                {% endif %}
+                {% if _filter_block.type == 'filter_radio_buttons' %}
+                  {% render 'content-product-grid.filter_radio_buttons', block: _filter_block, object: object, filter: filter %}
+                {% endif %}
+                {% if _filter_block.type == 'filter_color' %}
+                  {% render 'content-product-grid.filter_color', block: _filter_block, object: object, filter: filter %}
+                {% endif %}
+                {% if _filter_block.type == 'filter_sidebar' or _filter_block.type == 'filter_sort_bar' %}
+                  {% if filter.presentation == 'image' or filter.presentation == 'swatch' %}
+                    {% render 'content-product-grid.filter_color', block: _filter_block, object: object, filter: filter %}
+                  {% else %}
+                    {% render 'content-product-grid.filter_checkboxes', block: _filter_block, object: object, filter: filter %}
+                  {% endif %}
+                {% endif %}
+              {% endif %}
+              {% if filter.type == 'price_range' %}
+                {% render 'content-product-grid.filter_price', filter: filter %}
+              {% endif %}
+            {% endcapture %}
+
+            {% render '_components.accordion', label: filter.label, content: filter_content, default_open: forloop.first, class: accordion_class %}
+          {% endfor %}
+          <button type="submit"
+                  class="w-full mt-3 {{ submit_button_class }}"
+                  :class="loading ? 'button-loading': ''">
+            {{ "content_product_grid.apply_filter" | t }}
+          </button>
+        </aside>
+      </div>
+    </main>
+
+  </section>
+</div>

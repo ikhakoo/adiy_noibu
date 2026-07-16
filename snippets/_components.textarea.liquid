@@ -1,0 +1,47 @@
+{% comment %}
+    Textarea Input
+
+    Accepts:
+    - class: {string}
+    - label: {string}
+    - placeholder: {string}
+    - name: {string}
+    - form {liquid_form_object}
+    - default_value: {string} default_state
+    - html_attribtues: {string} use this to set autocomplete / autocapitalize attributes.
+    - setState: {function} i.e. `$data.quantity(value)`
+
+    Usage:
+    {% render "_components.textarea",
+        class: textarea_class,
+        label: label,
+        placeholder: placeholder,
+        name: name,
+        form: form,
+        default_value: default_value,
+        html_attribtues: "",
+        setState: setState
+    %}
+{% endcomment %}
+
+{% liquid
+  assign form_block = section.blocks | where: "type", "shopify_form" | first
+%}
+
+<label class="relative {{ class }}"
+       x-data="{ active: !!$el.children[0].value && !!$el.children[1]?.textContent, label: $el }"
+       :class="active ? 'active' : ''">
+  <textarea
+      name="{{ name }}"
+      aria-label="{{ label | default: placeholder }}"
+      placeholder="{{- placeholder -}}"
+      {% if form_block %}
+        form="{{ form_block.id }}"
+      {% endif %}
+      {% if maxlength > 0 %}
+        maxlength="{{ maxlength }}"
+      {% endif %}
+      class="relative w-full bg-transparent" {{ html_attribtues }}
+      @input="active = !!$el.value && !!label.children[1]?.textContent; value = $el.value; {{ setState }}">{{- default_value -}}</textarea>
+  <span class="absolute opacity-0">{{- label -}}</span>
+</label>

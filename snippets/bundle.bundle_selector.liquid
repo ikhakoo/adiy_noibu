@@ -1,0 +1,75 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "bundle_selector"
+  assign section_type = "bundle"
+  assign show_conditionally = block.settings.show_conditionally
+  assign show_based_on_bundle_state = block.settings.show_based_on_bundle_state
+  assign select_class = block.settings.select_class
+  assign discount_label = block.settings.discount_label
+  assign price_content = block.settings.price_content
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign bundle_blocks = section.blocks | where: "type", 'bundle_target'
+  assign values = bundle_blocks | map: "id"
+  assign titles = '' | split: '' | uniq
+%}
+
+
+{% if bundle_blocks.size > 1 %}
+
+  {% render '_utils.dynamic-css',
+      block: block,
+      keys: "responsive_visibility,margin_top_bottom_left_right, max_w_flex_col_row_order_align" %}
+
+  <div
+      data-style-id="{{ section.id }}--{{ block.id }}"
+      {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+      {{ block.shopify_attributes }}
+      x-data="{ state: `{{ values[0] }}`}"
+      x-show="($data.windowWidth >= 1024 || $data.showConditionally(`{{ show_conditionally }}`)) && $data.showBasedOnBundleState(`{{ show_based_on_bundle_state }}`)">
+    {% for bundle_block in bundle_blocks %}
+      {% capture target %}
+        <span class="flex items-center gap-2">
+          {% if section.settings.bundle_target_type == 'total_price' %}
+            <span>Spend {{ bundle_block.settings.target | money }}</span>
+          {% endif %}
+          {% if section.settings.bundle_target_type == 'item_count' and bundle_block.settings.target != 1 %}
+            <span>{{ bundle_block.settings.target }} {% if bundle_block.settings.target == 1 %}item{% else %}items{% endif %}</span>
+          {% endif %}
+          {% if bundle_block.settings.discount_percentage > 0 %}
+            <span class="{{ block.settings.discount_label }}">{{ bundle_block.settings.discount_percentage }}% off</span>
+          {% endif %}
+          {% if bundle_block.settings.discount_amount > 0 %}
+            <span class="{{ block.settings.discount_label }}">{{ bundle_block.settings.discount_amount | money }} off</span>
+          {% endif %}
+        </span>
+
+      {% endcapture %}
+      {% assign target = target | strip_newlines | split: '|%|%|%' %}
+      {% assign titles = titles | concat: target %}
+    {% endfor %}
+
+    {% render "_components.select",
+        dynamic: true,
+        values: 'bundle_targets?.map(item => item?.id)',
+        titles: 'bundle.bundle_target_titles',
+        disabled_items: '[...bundle_targets].sort((a,b) => a?.settings?.target - b?.settings?.target)?.map((item, i, arr) => item?.settings?.target < bundle?.items_added?.length && i !== arr.length -1)',
+        select_class: select_class,
+        label: 'Bundle Targets',
+        setState: "updateBundleById(value);",
+        state: "bundle.bundle_target_id",
+        current_value: 'bundle.bundle_target_id',
+        current_title: 'bundle.bundle_target_titles?.[bundle_targets?.findIndex(item => item.id === bundle?.bundle_target_id)]',
+        server_rendered_title: titles[0]
+    %}
+  </div>
+{% endif %}
+
+

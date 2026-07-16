@@ -1,0 +1,68 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.video-button"
+  assign label = block.settings.label
+  assign button_class = block.settings.button_class
+  assign video = block.settings.video
+  assign video_url = block.settings.video_url
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if request.design_mode != true
+    if video == blank and video_url == blank or label == blank
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,margin_top_bottom_left_right, max_w_flex_col_row_order_align" %}
+
+{% liquid
+  assign media_object = video | json
+%}
+{% if video == blank and video_url != blank %}
+  {%- capture media_object -%}
+    {
+    "media_type": "external_video",
+    "external_id": {{ video_url.id | json }},
+    "host": {{ video_url.type | json }},
+    "alt": {{ video_url.alt | json }},
+    "src": {{ video_url | json }}
+    }
+  {%- endcapture -%}
+{% endif %}
+
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}>
+  <button type="button"
+          x-data=""
+          data-media="{{ media_object | escape }}"
+          @click.prevent.stop="$mediaGallery.openGallery({ media: [utils.JSONParse($el.getAttribute('data-media'))], index: 0 })"
+          class="w-full {{ button_class }} {{ class }}">
+    {% render '_input.inline_richtext', content: label, block: block, forloop: forloop %}
+  </button>
+</div>

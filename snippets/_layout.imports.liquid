@@ -1,0 +1,14 @@
+<link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+<link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+<link rel="preload" as="style" href="{{ 'reset.css' | asset_url }}">
+<link rel="preload" as="style" href="{{ 'tailwind.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'reset.css' | asset_url }}">
+<link rel="preload" as="style" href="{{ 'custom.css' | asset_url }}">
+{%- if request.design_mode -%}
+  <link rel="preload" as="script" href="{{ 'editor.js' | asset_url }}">
+  <script type="module" src="{{ 'editor.js' | asset_url }}"></script>
+{%- endif -%}
+<link rel="preload" as="script" href="{{ 'theme.js' | asset_url }}">
+<script type="module" src="{{ 'theme.js' | asset_url }}" defer></script>
+<link rel="preload" as="script" href="{{ 'custom.js' | asset_url }}">
+<script type="module" src="{{ 'custom.js' | asset_url }}" defer></script>

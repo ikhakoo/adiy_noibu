@@ -1,0 +1,121 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "product_group"
+  assign section_type = "bundle"
+  assign block_id = block.settings.block_id
+  assign tab_label = block.settings.tab_label
+  assign title = block.settings.title
+  assign title_class = block.settings.title_class
+  assign margin_top_bottom_left_right_align = block.settings.margin_top_bottom_left_right_align
+  assign products = block.settings.products
+  assign _collection = block.settings.collection
+  assign product_card_class = block.settings.product_card_class
+  assign grid_cols_align_x_align_y_gap = block.settings.grid_cols_align_x_align_y_gap
+  assign show_more_limit_display_limit = block.settings.show_more_limit_display_limit
+  assign expand_button = block.settings.expand_button
+  assign collapse_button = block.settings.collapse_button
+  assign button_class = block.settings.button_class
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility,margin_top_bottom_left_right, max_w_flex_col_row_order_align" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-bundle-product-group]",
+    keys: "grid_cols_align_x_align_y_gap"
+%}
+
+{% liquid
+  assign show_more_limit_display_limit = show_more_limit_display_limit | strip_newlines | replace: ' ', "" | split: '|'
+  assign show_more_limit = show_more_limit_display_limit[0] | split: '/'
+  assign display_limit = show_more_limit_display_limit[1] | split: '/'
+
+  assign desktop_display_limit = display_limit.first | abs
+  assign mobile_display_limit = display_limit.last | abs
+
+  assign max_display_limit = desktop_display_limit | at_least: mobile_display_limit | default: 12
+  assign collection_iteration_limit = max_display_limit | at_most: 50
+
+  assign _products = products | uniq
+
+  if _products == blank and request.visual_preview_mode
+    assign _products = collections.all.products
+  endif
+
+  for _prod in _collection.products limit: collection_iteration_limit
+    assign _product = _prod | uniq
+    assign _products = _products | concat: _product | uniq
+  endfor
+%}
+
+{% liquid
+  if request.design_mode != true
+    if _products.size <= 0
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+%}
+
+<section
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    id="{{ block_id | default: block.id }}"
+    data-product-group
+    class="isolate relative">
+  {% if title != blank %}
+    {% render '_utils.dynamic-css', block: block, selector: '& [data-style-title]', keys: "margin_top_bottom_left_right_align" %}
+    <header x-init="$el.classList.remove('before:opacity-0')"
+            class="{{ section.settings.product_scroll }} z-10 lg:top-[calc(var(--header-height-offset)+var(--padding-top))] before:opacity-0 lg:before:absolute before:w-full before:z-10 before:h-[--padding-top] before:bottom-full before:bg-inherit {{ section.settings.color_scheme }}">
+      <div data-style-title>{% render '_input.richtext', content: title, class: title_class, block: block, forloop: forloop %}</div>
+    </header>
+  {% endif %}
+  <main class="grid"
+        data-style-bundle-product-group="{{ block.id }}"
+        data-next-url="{{ _paginate.next.url }}">
+    {% for product in _products limit: max_display_limit %}
+      {% assign product_visibility = "" %}
+      {% if forloop.index > desktop_display_limit %}
+        {% assign product_visibility = "mobile-only" %}
+      {% endif %}
+      {% if forloop.index > mobile_display_limit %}
+        {% assign product_visibility = "desktop-tablet-only" %}
+      {% endif %}
+      <div class="{{ product_visibility }} shrink-0 max-w-full w-full h-full"
+           data-bundle-product-handle="{{ product.handle }}">
+        <section
+            class="card-loading product-card--{{ product_card_class }}"
+            data-product-handle="{{ product.handle }}"
+            data-product-id="{{ product.id }}"
+            x-data="{}"
+            {% if request.visual_preview_mode %}
+              data-intersected
+            {% endif %}
+            x-init="() => $nextTick(() => _sections.hydrateProductCard($el, '{{ product_card_class }}', $el.getAttribute('data-product-handle'), $el.getAttribute('data-product-id'), ['h-full']))"></section>
+        <script type="application/json"
+                data-product-data="{{ product.handle }}">{%- render '_json.product', product: product, meta_product: true -%}</script>
+      </div>
+    {% endfor %}
+  </main>
+</section>

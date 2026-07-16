@@ -1,0 +1,162 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "content-marquee"
+  assign auto_rotate = section.settings.auto_rotate
+  assign duration = section.settings.duration
+  assign auto_pause = section.settings.auto_pause
+  assign animation_direction = section.settings.animation_direction
+  assign grid_auto_cols_width_height_gap = section.settings.grid_auto_cols_width_height_gap
+  assign padding_top_bottom_left_right = section.settings.padding_top_bottom_left_right
+  assign section_id = section.settings.section_id
+  assign color_scheme = section.settings.color_scheme
+  assign container_spacing = section.settings.container_spacing
+  assign border_divider = section.settings.border_divider
+  assign top_bottom_min_height = section.settings.top_bottom_min_height
+  assign responsive_visibility = section.settings.responsive_visibility
+  assign responsive_breakpoint = section.settings.responsive_breakpoint
+  assign target_visibility = section.settings.target_visibility
+  assign text_color = section.settings.text_color
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+  assign border_color = section.settings.border_color
+  assign image_fit = section.settings.image_fit
+  assign flex_direction_align_x_align_y_gap_wrap = section.settings.flex_direction_align_x_align_y_gap_wrap
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if auto_pause
+    assign pause_class = "group-hfw:animation-pause"
+  endif
+
+  assign scrollable_class = "overflow-hidden"
+  if auto_rotate == false
+    assign scrollable_class = "overflow-x-auto"
+    assign section_gap = "gap-[--gap]"
+  else
+    assign list_padding = "pr-[--gap]"
+  endif
+%}
+
+{% render '_utils.dynamic-css',
+    selector: "& [data-style-marquee-item]",
+    keys: "text_color,background_color,background_gradient,border_color, padding_top_bottom_left_right, flex_direction_align_x_align_y_gap_wrap" %}
+
+{% render '_utils.dynamic-css',
+    selector: "& [data-style-marquee]",
+    keys: "grid_auto_cols_width_height_gap",
+    css_variables: true
+%}
+
+{% render '_utils.dynamic-css',
+    selector: "& [data-style-marquee-slider]",
+    keys: "grid_auto_cols_width_height_gap"
+%}
+
+{% render "_section.universal-settings", section_type: section_type, insert: "before" %}
+
+<div class="group relative grid auto-cols-max grid-flow-col-dense {{ section_gap }} scrollbar-none {{ scrollable_class }}"
+     data-style-marquee
+    {% if auto_rotate %}
+      style="--animate-duration: {{ duration }}"
+      x-data="{ ..._sections.initMarqueeBar($el, +`{{ section.blocks.size }}`, +`{{ duration }}`) }"
+      x-defer="intersect"
+      @resize.window="handleMarqueeResize"
+      x-init="$nextTick(()=> {handleMarqueeResize(); setTimeout(()=> {handleMarqueeResize() }, 350)})"
+    {% endif %}
+>
+  <ul class="logo-slider relative overflow-hidden w-max animate-marquee1 {{ pause_class }} {{ list_padding }}"
+      data-style-marquee-slider
+      style="animation-duration: calc(var(--animate-duration, 0) * 1s); animation-direction: {{ animation_direction }}">
+    {% capture block_content %}
+      {% liquid
+        assign allow_no_cols = true
+        assign first_tab = true
+        assign child_layout = false
+        for block in section.blocks
+
+          if child_layout and block.type == 'layout_child__end'
+            assign allow_no_cols = true
+            assign child_layout = false
+          endif
+
+          if allow_no_cols
+
+            render 'content-grid.render-blocks', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+            
+            if block.type == 'item'
+              render 'content-marquee.item', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+            endif
+
+            if block.type == 'layout_child__tab_content'
+              render 'content-grid.layout_child__tab_content', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+              assign allow_no_cols = false
+              assign child_layout = true
+            endif
+            if block.type == 'layout_child__flex_card'
+              render 'content-grid.layout_child__flex_card', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+              assign allow_no_cols = false
+              assign child_layout = true
+            endif
+            if block.type == 'layout_child__grid_card'
+              render 'content-grid.layout_child__grid_card', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+              assign allow_no_cols = false
+              assign child_layout = true
+            endif
+            if block.type == 'layout_child__collapsible'
+              render 'content-grid.layout_child__collapsible', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+              assign allow_no_cols = false
+              assign child_layout = true
+            endif
+          endif
+
+          if block.type == 'layout__end'
+            assign allow_no_cols = true
+          endif
+
+          if block.type == 'layout__grid'
+            assign allow_no_cols = false
+            render 'content-grid.layout__grid', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+          endif
+
+          if block.type == 'layout__flex'
+            assign allow_no_cols = false
+            render 'content-grid.layout__flex', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+          endif
+
+          if block.type == 'layout__collapsible'
+            assign allow_no_cols = false
+            render 'content-grid.layout__collapsible', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+          endif
+
+          if block.type == 'layout__flex_wrap'
+            assign allow_no_cols = false
+            render 'content-grid.layout__flex_wrap', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+          endif
+
+          if block.type == 'layout__grid_slider'
+            assign allow_no_cols = false
+            render 'content-grid.layout__grid_slider', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+          endif
+
+          if block.type == 'layout__tab_content'
+            assign allow_no_cols = false
+            render 'content-grid.layout__tab_content', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0, first_tab: first_tab
+            assign first_tab = false
+          endif
+        endfor
+      %}
+    {% endcapture %}
+    {{ block_content }}
+  </ul>
+  {% if auto_rotate %}
+    <ul class="logo-slider relative overflow-hidden w-max animate-marquee1 {{ pause_class }} {{ list_padding }}"
+        data-style-marquee-slider
+        aria-hidden="true"
+        style="animation-duration: calc(var(--animate-duration) * 1s); animation-direction: {{ animation_direction }}">
+      {{ block_content }}
+    </ul>
+  {% endif %}
+</div>
+
+{% render "_section.universal-settings", insert: "after" %}

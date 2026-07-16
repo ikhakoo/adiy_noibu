@@ -1,0 +1,73 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "price_sqft"
+  assign section_type = "card_product-card"
+  assign css_class = block.settings.css_class
+  assign show_compare_as_price = block.settings.show_compare_as_price
+  assign discount_css_class = block.settings.discount_css_class
+  assign price_calculation = block.settings.price_calculation
+  assign currency_display = block.settings.currency_display
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign show_conditionally = block.settings.show_conditionally
+  assign color_override = block.settings.color_override
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css', block: block %}
+{% liquid
+  if color_override != blank and color_override.alpha != 0
+    assign color = color_override | default: "inherit"
+  endif
+%}
+
+<div
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    x-show="$data.showConditionally('{{ show_conditionally }}')"
+    style="color: {{ color }}">
+  <div class="inline-flex gap-2">
+    <span class="{{ css_class }}"
+        {% if price_calculation == 'normal' %}
+          x-html="(() => {
+            const price = card?.selected_variant?.price ?? 0;
+            const sqft = card?.selected_variant?.metafields?.custom?.sqfootage ?? 1;
+            const moneyFormat = window.money_format.replace(/amount[^}]*/gi, `{{ currency_display }}`);
+            
+            const formattedPrice = utils.formatMoney(price, moneyFormat);
+            const formattedPricePerSqft = utils.formatMoney(price / sqft, moneyFormat);
+          
+            return `from ${formattedPrice} (${formattedPricePerSqft}/sfqt)`;
+          })()"
+        {% endif %}
+        {% if price_calculation == 'quantity_multiplied' %}
+          x-html="(() => {
+            const price = card?.selected_variant?.price * (card?.quantity ?? 1) ?? 0;
+            const moneyFormat = window.money_format.replace(/amount[^}]*/gi, `{{ currency_display }}`);
+            const sqft = card?.selected_variant?.metafields?.custom?.sqfootage ?? 1;
+            const formattedPrice = utils.formatMoney(price, moneyFormat);
+            const formattedPricePerSqft = utils.formatMoney($data?.state?.selected_price / sqft, moneyFormat);
+          
+            return `from ${formattedPrice} (${formattedPricePerSqft}/sfqt)`;
+          })()"
+        {% endif %} 
+    ></span>{% comment %}from ${formattedPrice}{% endcomment %}
+    {% if show_compare_as_price %}
+      <span class="{{ discount_css_class }} line-through"
+            x-cloak
+            x-show="(card?.selected_variant?.compare_at_price || 0) > card?.selected_variant?.price"
+            x-html="utils.formatMoney(card?.selected_variant?.compare_at_price || 0, window.money_format.replace(/amount[^}]*/gi,`{{ currency_display }}`))"
+          {% if price_calculation == 'normal' %}
+            x-html="utils.formatMoney(card?.selected_variant?.compare_at_price || 0, window.money_format.replace(/amount[^}]*/gi,`{{ currency_display }}`))"
+          {% endif %}
+          {% if price_calculation == 'quantity_multiplied' %}
+            x-html="utils.formatMoney((card?.selected_variant?.compare_at_price || 0) * (card?.quantity ?? 1), window.money_format.replace(/amount[^}]*/gi,`{{ currency_display }}`))"
+          {% endif %}
+      ></span>
+    {% endif %}
+  </div>
+</div>

@@ -1,0 +1,96 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "global_swatches"
+  assign preview_options = section.settings.preview_options
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture swatches %}
+  {% for block in section.blocks %}
+    {% assign titles = block.settings.title | trim | strip_newlines | split: "," %}
+    {% if block.type == 'image_swatch' %}
+      {% for title in titles %}
+        --swatch-{{ title | handleize }}: url({{ block.settings.image | image_url: width: 60, height: 60, crop: 'center' | escape }}) center center/cover no-repeat;
+      {% endfor %}
+    {% else %}
+      {% for title in titles %}
+        --swatch-{{ title | handleize }}: {{ block.settings.swatch }} center center/cover no-repeat;
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+{% endcapture %}
+<style>
+  :root {
+  {{ swatches }}
+  }
+</style>
+
+{% if request.design_mode %}
+
+  {% liquid
+
+    if preview_options != blank
+      assign options = preview_options | trim | strip_newlines | split: ","
+    endif
+
+    assign _collection = collections['all']
+    assign all_product_options = "" | split: "" | uniq
+    assign all_titles = "" | split: "" | uniq
+
+    paginate _collection.products by 1000
+      for product in _collection.products
+        assign product_options = product.options_with_values
+        for option in options
+          assign _option = option | handleize
+          for product_option in product_options
+            assign _product_option = product_option.name | handleize
+            if _product_option contains _option
+              assign values = product_option.values | join: "-qq-qq-qq-" | handleize | split: "-qq-qq-qq-"
+              assign all_product_options = all_product_options | concat: values | uniq
+            endif
+          endfor
+        endfor
+      endfor
+    endpaginate
+  %}
+
+  <div class="fixed inset-0 z-50 flex flex-col items-center gap-6 overflow-y-auto bg-gray-100 py-16 text-black px-container-sm md:pb-52"
+       x-data="{}"
+       x-show="$editor?.select_section_id === `{{ section.id }}`"
+       x-cloak>
+    <div class="flex min-w-64 flex-col flex-wrap gap-2 my-auto">
+      {% for block in section.blocks %}
+        {% assign titles = block.settings.title | trim | strip_newlines | split: "," %}
+
+        <div class="flex min-w-64 flex-col gap-2" {{ block.shopify_attributes }}>
+          {% for title in titles %}
+            {% assign _title = title | handleize %}
+            {% assign arrayTitle = _title | split: "-qq-qq-qq-" %}
+            {% assign all_titles = all_titles | concat: arrayTitle %}
+            <div class="flex w-full items-center justify-between gap-3">
+              <div class="text-sm font-semibold text-gray-600">{{ _title }}</div>
+              <div class="size-10 border border-gray-300 rounded bg-cover bg-center"
+                   style="background: var(--swatch-{{ _title }}, {{ _title }})"></div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+      <section class="mt-8">
+        <h3 class="text-xl font-bold mb-3">Option Titles without Swatches or default CSS colors</h3>
+        <div class="flex min-w-64 flex-col gap-2">
+          {% for option in all_product_options %}
+            {% if all_titles contains option %}
+              {% continue %}
+            {% endif %}
+            <div class="flex w-full items-center justify-between gap-3">
+              <div class="text-sm font-semibold text-gray-600">{{ option }}</div>
+              <div class="size-10 border border-gray-300 rounded bg-cover bg-center"
+                   style="background: var(--swatch-{{ option }}, {{ option }})"></div>
+            </div>
+          {% endfor %}
+
+        </div>
+      </section>
+    </div>
+  </div>
+{% endif %}

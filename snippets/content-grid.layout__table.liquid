@@ -1,0 +1,104 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "layout__table"
+  assign section_type = "content-grid"
+  assign cols_min_width_gap_border_radius = block.settings.cols_min_width_gap_border_radius
+  assign margin_top_bottom_left_right_align = block.settings.margin_top_bottom_left_right_align
+  assign background_color = block.settings.background_color
+  assign border_color = block.settings.border_color
+  assign scrollbar_class = block.settings.scrollbar_class
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign slider_overflow_container = block.settings.slider_overflow_container
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture container_content %}
+  {% render '_utils.dynamic-css', block: block, keys: 'responsive_visibility,max_w_flex_col_row_order_align,margin_top_bottom_left_right' %}
+  {% render '_utils.dynamic-css', block: block, keys: 'cols_min_width_gap_border_radius, background_color, border_color, margin_top_bottom_left_right_align', css_variables: true %}
+
+  {% render '_utils.dynamic-css',
+      block: block,
+      selector: "& [data-style-scrollbar]",
+      keys: "padding_top_bottom_left_right",
+      padding_as_margin: true %}
+
+  <style>
+    [data-style-id="{{ section.id }}--{{ block.id }}"] {
+      --br: var(--border-radius)
+    }
+
+    [data-style-id="{{ section.id }}--{{ block.id }}"] tr {
+      display: grid;
+      gap: var(--gap);
+      grid-template-columns: var(--grid-template-columns);
+    }
+
+    [data-style-id="{{ section.id }}--{{ block.id }}"] tr:first-of-type :where(td,th):first-of-type {
+      border-top-left-radius: var(--br);
+    }
+
+    [data-style-id="{{ section.id }}--{{ block.id }}"] tr:first-of-type :where(td,th):last-of-type {
+      border-top-right-radius: var(--br);
+    }
+
+    [data-style-id="{{ section.id }}--{{ block.id }}"] tr:last-of-type :where(td,th):first-of-type {
+      border-bottom-left-radius: var(--br);
+    }
+
+    [data-style-id="{{ section.id }}--{{ block.id }}"] tr:last-of-type :where(td,th):last-of-type {
+      border-bottom-right-radius: var(--br);
+    }
+
+  </style>
+
+  <div
+      data-style-id="{{ section.id }}--{{ block.id }}"
+      {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+      {{ block.shopify_attributes }}
+      data-grid-slider
+      x-data="{ ..._sections.initContentSlider($refs.container) }"
+      class="flex flex-col">
+    <table class="block relative overflow-x-auto scrollbar-none"
+           x-ref="container"
+           @resize.window="content_slider.handleResize"
+           x-init="$nextTick(() => content_slider.handleResize())"
+           @scroll="content_slider.handleScroll">
+
+      <tbody class="grid gap-[--gap] w-full">
+        {% liquid
+          assign count = 0
+          assign allow_no_cols = true
+          for block in section.blocks
+            if forloop.index0 <= columnIndex
+              continue
+            endif
+
+            if block.type contains "layout__"
+              break
+            endif
+
+            if block.type == 'layout_child__table_row'
+              render 'content-grid.layout_child__table_row', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+              assign allow_no_cols = false
+            endif
+          endfor
+        %}
+    </table>
+    {% if scrollbar_class != blank %}
+      {% render "_components.scrollbar",
+          class: scrollbar_class,
+          scroll_container_ref: '$refs.container',
+          html_attributes: 'data-style-scrollbar' %}
+    {% endif %}
+  </div>
+{% endcapture %}
+
+{% if container_content contains '<script type="container/break"></script>' %}
+  {% break %}
+{% endif %}
+{{ container_content }}

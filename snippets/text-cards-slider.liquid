@@ -1,0 +1,68 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "text-cards-slider"
+  assign gap_content = section.settings.gap_content
+  assign background_color = section.settings.background_color
+  assign vertical_padding_section = section.settings.vertical_padding_section
+  assign section_id = section.settings.section_id
+  assign container_spacing = section.settings.container_spacing
+  assign responsive_visibility = section.settings.responsive_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+ 
+{% liquid
+    assign grid_cols = "max-md:auto-cols-[calc((100%_-_(12px_*_(1.2_-_1)))_/_1.2)] md:auto-cols-[calc((100%_-_(24px_*_(3_-_1)))_/_3)]"
+    assign slider_overflow = container_spacing | replace: 'px', 'max-md:-mx' | append: " max-md:scroll-" | append: container_spacing | append: " max-md:" | append: container_spacing
+    assign gap_content = gap_content | strip_newlines | replace: ' ', "" | split: '|'
+    assign gap_desktop = gap_content[0]
+    assign gap_mobile = gap_content[1]
+    assign gap_content = "--gap:" | append: gap_mobile | append: "; --gap-md:" | append: gap_desktop | append: ";"
+
+    assign vertical_padding_section = vertical_padding_section | strip_newlines | replace: ' ', "" | split: '|'
+    assign pt = vertical_padding_section[0] | split: '/'
+    assign pb = vertical_padding_section[1] | split: '/'
+%}
+
+<style>
+  #{{ section.id }} {
+    padding-top: {{ pt.first }};
+    padding-bottom: {{ pb.first }};
+  }
+  @media (max-width: 768px) {
+    #{{ section.id }} {
+      padding-top: {{ pt.last }};
+      padding-bottom: {{ pb.last }};
+    }
+  }
+</style>
+
+{% render "_section.universal-settings", section_type: section_type, section_id: section.id, insert: "before" %}
+<section class="grid"
+    style="background-color: {{ background_color}}; {{ gap_content }};"
+    x-defer="intersect"
+    data-grid-slider
+    x-data="{ ..._sections.initContentSlider($refs.container, undefined, false) }">
+    <div class="relative grid grid-flow-col-dense {{ grid_cols }} gap-3 md:gap-6 place-content-center overflow-x-auto scrollbar-none overflow-y-hidden snap-x snap-mandatory scrollbar-none {{ slider_overflow }}"
+         x-ref="container"
+         @resize.window="content_slider.handleResize"
+         x-init="$nextTick(() => content_slider.handleResize())"
+         @scroll="content_slider.handleScroll"
+         data-style-content-slider>
+      {% liquid
+        for block in section.blocks
+          case block.type
+            when "card"
+              render 'text-cards-slider.card', block: block, forloop: forloop, section_type: section_type
+          endcase 
+        endfor
+        %}
+    </div>
+    {% liquid
+      for block in section.blocks
+        if block.type == 'pagination'
+          render 'text-cards-slider.pagination', block: block, forloop: forloop, section_type: section_type
+        endif
+      endfor
+    %}
+</section>
+{% render "_section.universal-settings", section_type: section_type, insert: "after" %}

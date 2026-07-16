@@ -1,0 +1,100 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "modal_back-in-stock-notification"
+  assign heading = section.settings.heading
+  assign heading_class = section.settings.heading_class
+  assign select_class = section.settings.select_class
+  assign input_class = section.settings.input_class
+  assign input_label = section.settings.input_label
+  assign input_placeholder = section.settings.input_placeholder
+  assign button_class = section.settings.button_class
+  assign button_content = section.settings.button_content
+  assign footer = section.settings.footer
+  assign footer_class = section.settings.footer_class
+  assign notification_api_endpoint = section.settings.notification_api_endpoint
+  assign notification_api_method = section.settings.notification_api_method
+  assign notification_api_payload = section.settings.notification_api_payload
+  assign color_scheme = section.settings.color_scheme
+  assign background_blur = section.settings.background_blur
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+<div x-data="{ open: $backInStockNotification?.open }"
+     x-effect="open = $editor?.select_section_id === '{{ section.id }}' || $backInStockNotification.open"
+     x-cloak>
+  <div class="fixed inset-0 z-[2147483647] bg-[--color-modal-background] {{ background_blur }} transition-all duration-150 ease-in-out"
+       x-show="open"
+       x-data="{email: ''}"
+       x-trap.noautofocus="open"
+       x-transition:enter-start="opacity-0"
+       x-transition:enter-end="opacity-100"
+       x-transition:leave-start="opacity-100"
+       x-transition:leave-end="opacity-0">
+    <main class="absolute grid w-full max-w-lg p-8 m-auto h-fit inset-0 max-h-[420px] bg-theme-bg text-theme-text {{ color_scheme }}">
+      <div class="absolute right-6 top-6">
+        <button type="button"
+          @click="$backInStockNotification.open = false"
+          class="w-fit">
+          {% render '_input.inline_richtext', content: '[icon.x-mark]', block: block, forloop: forloop %}
+        </button>
+      </div>
+      <form class="grid h-fit gap-4"
+        @submit.stop.prevent="async (e) => {
+          const res = await fetch(`{{ notification_api_endpoint }}`, {
+            method: `{{ notification_api_method }}`,
+            headers: {
+              'Content-Type': 'application/json',
+              revision: `{{ notification_api_endpoint }}`.includes(
+                'a.klaviyo.com/client/back-in-stock-subscriptions/'
+              )
+                ? '2023-10-15'
+                : undefined,
+            },
+            body:`{{ notification_api_payload | escape }}`.replace(/\[email\]/gi, email).replace(/\[variant_id\]/gi, $backInStockNotification?.selected_variant?.id)
+          });
+          if (res?.status >= 200 && res?.status < 300) {
+            _stores.toast.addToast({type: 'success', title: 'You will receive an email when this item is back in stock.',content: '', timestamp: Date.now() + 1000 * 15});
+            $backInStockNotification.open = false;
+            return;
+          }
+
+          _stores.toast.addToast({type: 'error', title: 'Error',content: 'Please try again later.', timestamp: Date.now() + 1000 * 15});
+        }">
+        {% render '_input.richtext', content: heading, class: heading_class %}
+        <div x-show="$backInStockNotification?.product?.variants?.length && $backInStockNotification?.product?.variants?.[0]?.title !== 'Default Title'">
+          <h4 class="text-lg font-bold" x-text="$backInStockNotification?.product?.title"></h4>
+          {% render "_components.select",
+            dynamic: true,
+            values: "$backInStockNotification?.product?.variants?.map(variant => variant.id) ?? []",
+            titles: "$backInStockNotification?.product?.variants?.map(variant => variant.title) ?? []",
+            disabled_items: '$backInStockNotification?.product?.variants?.map(variant => variant.available) ?? []',
+            select_class: select_class,
+            setState: "$backInStockNotification.setSelectedVariant(value);",
+            state: "$backInStockNotification?.selected_variant?.id",
+            current_value: "$backInStockNotification?.product?.selected_or_first_available_variant?.id || '' ",
+            current_title: "$backInStockNotification?.product?.selected_or_first_available_variant?.title || '' ",
+          %}
+        </div>
+        {% render "_components.input",
+            name: 'email',
+            type: 'email',
+            label: input_label,
+            placeholder: input_placeholder,
+            autocomplete: 'email',
+            required: true,
+            form: form,
+            inline_button: false,
+            button_content: '',
+            class: input_class,
+            html_attribtues: '',
+            setState: 'email = value'
+        %}
+        <button type="submit" class="w-full {{ button_class }}">
+          {% render '_input.inline_richtext', content: button_content, block: block, forloop: forloop %}
+        </button>
+        {% render '_input.richtext', content: footer, class: footer_class %}
+      </form>
+    </main>
+  </div>
+</div>
+

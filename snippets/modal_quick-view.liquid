@@ -1,0 +1,83 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign section_type = "modal_quick-view"
+  assign close_icon = section.settings.close_icon
+  assign border_width_radius = section.settings.border_width_radius
+  assign padding_top_bottom_left_right = section.settings.padding_top_bottom_left_right
+  assign border_color = section.settings.border_color
+  assign background_color = section.settings.background_color
+  assign background_blur = section.settings.background_blur
+  assign responsive_breakpoint = section.settings.responsive_breakpoint
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if settings.layout__style == 'solid'
+    assign container_classes = 'inset-x-0 bottom-0 lg:top-0'
+  endif
+
+  if settings.layout__style == 'floating'
+    assign container_classes = 'inset-x-1.5 lg:inset-0 rounded-md'
+  endif
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: '& [data-style-popup]',
+    keys: "border_width_radius,padding_top_bottom_left_right,border_color,background_color"
+%}
+
+<div x-data="{ open: $quickView.open }"
+     data-style-id="{{ section.id }}"
+     x-effect="() => {
+       open = $editor?.select_section_id === '{{ section.id }}' || $quickView.open;
+       if ($editor?.select_section_id === '{{ section.id }}') {
+          $quickView.renderQuickView(Object.values(_products)?.[0]?.handle)
+       }
+       if (open && $editor?.deselect_section_id === `{{ section.id }}`) {
+          $quickView.open = false
+          open = false
+       }
+     }"
+     x-cloak>
+  <div class="fixed inset-0 bg-[--color-modal-background] {{ background_blur }} transition duration-300 ease-in-out"
+       :class="clsx(open ? 'z-[2147483647]' : 'z-50')"
+       x-show="open"
+       @click="$quickView.open = false"
+       x-transition:enter-start="opacity-0"
+       x-transition:enter-end="opacity-100"
+       x-transition:leave-start="opacity-100"
+       x-transition:leave-end="opacity-0"></div>
+  <section class="fixed max-lg:inset-x-0 max-lg:bottom-0 lg:inset-x-[--layout-container-padding-md] lg:inset-y-[--layout-y-container] transition-[transform,opacity] duration-300 ease-in-out"
+           :class="clsx(open ? 'z-[2147483647]' : 'z-50')"
+           style="--100vw-no-scrollbar: 100vw"
+           x-show="open"
+           x-trap.noautofocus="open"
+           x-transition:enter-start="translate-y-1/2 opacity-0"
+           x-transition:enter-end="translate-y-0 opacity-100"
+           x-transition:leave-start="translate-y-0 opacity-100"
+           x-transition:leave-end="translate-y-1/2 opacity-0">
+
+    <main data-style-popup
+          class="absolute overflow-hidden {{ container_classes }}">
+      <button type="button"
+              class="absolute right-4 lg:top-4 top-3 z-10 text-theme-text/60 hf:text-theme-text/90"
+              @click="$quickView.open = false">
+        <span class="sr-only">Close Drawer</span>
+        {% render '_components.icon', icon: close_icon, class: "h-5 shrink-0" %}
+      </button>
+
+      <div class="h-full overflow-hidden relative min-h-[min(40vh,878px)] max-h-[75vh] max-lg:overflow-y-auto scrollbar-none"
+           data-quick-view-container>
+
+      </div>
+      <div class="text-center lg:text-right max-lg:px-gutter pt-3 text-sm font-semibold hf:underline"
+           data-quick-view-show-more>Show full details
+      </div>
+      <div class="absolute inset-0 z-10 flex items-center justify-center bg-inherit opacity-0 pointer-events-none transition-all duration-75"
+           data-quick-view-loading>
+        <div class="h-36 w-full button-loading " style="--button-loading-border-w: 8px"></div>
+      </div>
+    </main>
+  </section>
+</div>

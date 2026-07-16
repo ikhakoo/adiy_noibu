@@ -1,0 +1,169 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "label"
+  assign section_type = "global_buttons"
+  assign title = block.settings.title
+  assign background_color = block.settings.background_color
+  assign background_gradient = block.settings.background_gradient
+  assign text_color = block.settings.text_color
+  assign border_color = block.settings.border_color
+  assign font_family = block.settings.font_family
+  assign size_weight_height_opacity = block.settings.size_weight_height_opacity
+  assign spacing_transform_style_whitespace = block.settings.spacing_transform_style_whitespace
+  assign padding_top_bottom_left_right_min_height = block.settings.padding_top_bottom_left_right_min_height
+  assign border_width_radius_shadow_gap_text_align = block.settings.border_width_radius_shadow_gap_text_align
+  assign custom_css = block.settings.custom_css
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign apply_container_queries = block.settings.apply_container_queries
+  assign mobile_background_color = block.settings.mobile_background_color
+  assign mobile_background_gradient = block.settings.mobile_background_gradient
+  assign mobile_text_color = block.settings.mobile_text_color
+  assign mobile_border_color = block.settings.mobile_border_color
+  assign override_preview_background = block.settings.override_preview_background
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{%- liquid
+
+  assign border_width_radius_shadow_gap_text_align = border_width_radius_shadow_gap_text_align | strip_newlines | replace: ' ', "" | split: '|'
+  assign shadow = border_width_radius_shadow_gap_text_align[2] | split: '/'
+
+  assign shadow_desktop = shadow | first | trim
+  assign shadow_mobile = shadow | last | trim
+
+  case shadow_desktop
+    when "1"
+      assign shadow_desktop = "0 3px 5px 1px rgb(0 0 0 / 0.06), 0 1.5px 3px 2px rgb(0 0 0 / 0.06)"
+    when "2"
+      assign shadow_desktop = "0 4px 6px 1px rgb(0 0 0 / 0.1), 0 2px 4px 2px rgb(0 0 0 / 0.1)"
+    when "3"
+      assign shadow_desktop = "0 10px 15px 3px rgb(0 0 0 / 0.1), 0 4px 6px 4px rgb(0 0 0 / 0.1)"
+    when "4"
+      assign shadow_desktop = "0 20px 25px 5px rgb(0 0 0 / 0.1), 0 8px 10px 6px rgb(0 0 0 / 0.1)"
+    when "5"
+      assign shadow_desktop = "0 25px 50px 12px rgb(0 0 0 / 0.25)"
+    else
+      assign shadow_desktop = " none"
+  endcase
+  case shadow_mobile
+    when "1"
+      assign shadow_mobile = "0 3px 5px 1px rgb(0 0 0 / 0.6), 0 1.5px 3px 2px rgb(0 0 0 / 0.6)"
+    when "2"
+      assign shadow_mobile = "0 4px 6px 1px rgb(0 0 0 / 0.1), 0 2px 4px 2px rgb(0 0 0 / 0.1)"
+    when "3"
+      assign shadow_mobile = "0 10px 15px 3px rgb(0 0 0 / 0.1), 0 4px 6px 4px rgb(0 0 0 / 0.1)"
+    when "4"
+      assign shadow_mobile = "0 20px 25px 5px rgb(0 0 0 / 0.1), 0 8px 10px 6px rgb(0 0 0 / 0.1)"
+    when "5"
+      assign shadow_mobile = "0 25px 50px 12px rgb(0 0 0 / 0.25)"
+    else
+      assign shadow_mobile = " none"
+  endcase
+%}
+
+{%- liquid
+  assign selector = '.' | append: title
+  render '_utils.dynamic-css', selector: selector, block: block
+%}
+
+{%- capture css_desktop -%}
+
+  .{{ title }} {
+  transition: all 150ms;
+  transform: translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skew(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  display: inline-flex;
+  height: max-content;
+  width: max-content;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  box-shadow: {{ shadow_desktop }};
+  }
+
+
+{%- endcapture -%}
+
+
+<style>
+  @media screen and (max-width: {{ responsive_breakpoint }}) {
+    .{{ title }} {
+      box-shadow: {{ shadow_mobile }};
+    }
+  }
+
+  {{- css_desktop | strip_newlines  -}}
+</style>
+
+{% if request.design_mode %}
+  {% if override_preview_background == blank or override_preview_background.alpha == 0 %}
+    {% assign override_preview_background = '#ffffff' %}
+  {% endif %}
+  <section class="fixed inset-0 z-50 flex flex-col gap-16 overflow-y-auto text-balance bg-white py-16 text-black px-container-sm"
+           x-data="{tab: 'single-type'}"
+           style="background: {{ override_preview_background }};"
+           x-show="$editor?.select_block_id === '{{ block.id }}'"
+           x-cloak {{ block.shopify_attributes }}>
+
+    <header class="flex gap-3 font-mono">
+      <button @click="tab='single-type'"
+              type="button"
+              :class="tab === 'single-type' ? 'bg-gray-600 text-gray-50 border-gray-900 hf:bg-gray-700':'border-gray-200/70 bg-gray-100 text-gray-700 hf:text-gray-900 hf:border-gray-300/80 hf:bg-gray-200/90'"
+              class="rounded-sm border px-3 text-sm font-medium py-1.5">{{ selector }}
+      </button>
+    </header>
+
+    <main class="mt-8">
+      <header class="mt-12 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="text-lg font-bold text-gray-600">Desktop</div>
+        <div class="text-lg font-bold text-gray-600">Mobile</div>
+      </header>
+      <section x-show="tab === 'single-type'" class="mt-6 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="{{ title }}">
+          Shop now
+        </div>
+        <div class=" @container max-w-lg">
+          <div class="{{ title }}">Shop now</div>
+        </div>
+      </section>
+      <header class="mt-12 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="text-lg font-bold text-gray-600">Desktop - Long</div>
+        <div class="text-lg font-bold text-gray-600">Mobile - Long</div>
+      </header>
+      <section x-show="tab === 'single-type'" class="mt-6 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="{{ title }}">
+          Learn more about our products
+        </div>
+        <div class="@container max-w-lg">
+          <div class="{{ title }}">Learn more about our products</div>
+        </div>
+      </section>
+    </main>
+    <main class="mt-4">
+      <header class="mt-12 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="text-lg font-bold text-gray-600">Desktop Hover</div>
+        <div class="text-lg font-bold text-gray-600">Mobile Hover</div>
+      </header>
+      <section x-show="tab === 'single-type'" class="mt-6 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="{{ title }} active">
+          Shop now
+        </div>
+        <div class=" @container max-w-lg">
+          <div class="{{ title }} active">Shop now</div>
+        </div>
+      </section>
+      <header class="mt-12 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="text-lg font-bold text-gray-600">Desktop Hover - Long</div>
+        <div class="text-lg font-bold text-gray-600">Mobile Hover - Long</div>
+      </header>
+      <section x-show="tab === 'single-type'" class="mt-6 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="{{ title }} active">
+          Learn more about our products
+        </div>
+        <div class="@container max-w-lg">
+          <div class="{{ title }} active">Learn more about our products</div>
+        </div>
+      </section>
+    </main>
+  </section>
+{% endif %}
+

@@ -1,0 +1,29 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "image-with-content-drawer"
+  assign section_type = "drawer-menu"
+  assign image = block.settings.image
+  assign title = block.settings.title
+  assign title_class = block.settings.title_class
+  assign icon = block.settings.icon
+  assign url = block.settings.url
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+<div data-style-id="{{ section.id }}--{{ block.id }}"
+     class="grid w-full relative rounded-[15px] overflow-hidden{% unless forloop.last %} mb-4{% endunless %}"
+     {% if url != blank %}
+      title="{{ url }}"
+      role="button"
+      tabindex="0"
+      @click.prevent.stop="barba.go('{{ url }}'); $modal.setId('')"
+    {% endif %}
+     {{ block.shopify_attributes }}>
+  <figure class="relative inset-0 pointer-events-none block aspect-[1.99]">
+    {% render '_object.image', image: image, sizes: "100vw", class: "w-full h-full object-cover select-none", preload: false %}
+    <figcaption class="absolute inset-0 p-4 flex flex-col w-full h-full justify-between">
+      {% render '_input.richtext', content: title, class: title_class, block: block, forloop: forloop %}
+      {% render '_object.image', image: icon, sizes: "100vw", class: "w-8 h-8", preload: false %}
+    </figcaption>
+  </figure>
+</div>

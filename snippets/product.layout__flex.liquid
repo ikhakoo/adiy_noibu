@@ -1,0 +1,76 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "layout__flex"
+  assign section_type = "product"
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign border_width_radius = block.settings.border_width_radius
+  assign background_color = block.settings.background_color
+  assign border_color = block.settings.border_color
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture container_content %}
+  {% render '_utils.dynamic-css', block: block %}
+
+  <div
+      data-style-id="{{ section.id }}--{{ block.id }}"
+      {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+      {{ block.shopify_attributes }}
+      class="relative" id="{{ block.settings.custom_id }}">
+    {% liquid
+      assign count = 0
+      assign allow_no_cols = true
+      for block in section.blocks
+        if forloop.index0 <= columnIndex
+          continue
+        endif
+
+        if block.type contains "layout__"
+          break
+        endif
+
+        if block.type == 'layout_child__end'
+          assign allow_no_cols = true
+        endif
+
+        if block.type == 'layout_child__tab_content'
+          render 'content-grid.layout_child__tab_content', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+          assign allow_no_cols = false
+        endif
+        if block.type == 'layout_child__flex_card'
+          render 'content-grid.layout_child__flex_card', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+          assign allow_no_cols = false
+        endif
+        if block.type == 'layout_child__grid_card'
+          render 'content-grid.layout_child__grid_card', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+          assign allow_no_cols = false
+        endif
+        if block.type == 'layout_child__collapsible'
+          render 'content-grid.layout_child__collapsible', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+          assign allow_no_cols = false
+        endif
+
+        if allow_no_cols
+          render 'product.block', block: block, forloop: forloop, section_type: section_type, form: form, product: product, variant: variant, class: class, optionBlocks: optionBlocks, product_form_id: product_form_id, form: form
+        endif
+
+        assign count = count | plus: 1
+      endfor
+
+      if count == 0
+        assign no_dynamic_content = true
+      endif
+    %}
+  </div>
+{% endcapture %}
+
+{% if container_content contains '<script type="container/break"></script>' %}
+  {% break %}
+{% endif %}
+{{ container_content }}

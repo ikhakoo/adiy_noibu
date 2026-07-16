@@ -1,0 +1,94 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "active_filters_bar"
+  assign section_type = "content-product-grid"
+  assign button_class = block.settings.button_class
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css', block: block %}
+{% liquid
+  assign current_sort = object.sort_by | default: object.default_sort_by
+  assign current_sort = object.sort_options | where: 'value', current_sort | first
+%}
+{% capture active_filters %}
+  {% assign firstColorValue = null %}
+  {% assign url_to_remove_filters = false %}
+  {% for filter in object.filters %}
+    {% case filter.type %}
+      {% when 'price_range' %}
+        {% if filter.max_value.value < filter.range_max or filter.min_value.value > 0 %}
+          {% assign url_to_remove_filters = filter.url_to_remove | split: "?" | first %}
+          <button class="{{ button_class }}"
+                  type="button"
+                  x-data="{ clicked: false }"
+                  :class="clicked ? 'button-loading': ''"
+                  @click="async () => {
+                    const url = new URL(`${window.location.origin}{{ filter.url_to_remove }}`)
+                    url.searchParams.set('barba_prefetch', 'true')
+                    loading = true
+                    clicked = true
+                    await update_filters(url)
+                    loading = false
+                    clicked = false
+                  }"
+                  :disabled="loading">
+            {{ filter.min_value.value | money }} - {{ filter.max_value.value | money }}
+            {% render '_components.icon', icon: 'x-mark', class: 'size-[0.9em]' %}
+          </button>
+        {% endif %}
+      {% when 'boolean' or 'list' %}
+        {% for value in filter.active_values %}
+          {% assign url_to_remove_filters = filter.url_to_remove | split: "?" | first %}
+          {% assign downcaseLabel = filter.label | downcase %}
+          <button class="{{ button_class }}"
+                  type="button"
+                  x-data="{ clicked: false }"
+                  :class="clicked ? 'button-loading': ''"
+                  @click="async () => {
+                    const url = new URL(`${window.location.origin}{{ value.url_to_remove }}`)
+                    url.searchParams.set('barba_prefetch', 'true')
+                    loading = true
+                    clicked = true
+                    await update_filters(url)
+                    loading = false
+                    clicked = false
+                  }"
+                  :disabled="loading">
+            {{ value.label }}
+            {% render '_components.icon', icon: 'x-mark', class: 'size-[0.9em]' %}
+          </button>
+        {% endfor %}
+    {% endcase %}
+  {% endfor %}
+
+  {% if url_to_remove_filters %}
+    {% if search.terms %}
+      {% capture search_query_params %}q={{ search.terms }}&type={{ search.types | join: "," }}&{% endcapture %}
+    {% endif %}
+    <button type="button"
+            x-data="{ clicked: false }"
+            :class="clicked ? 'button-loading': ''"
+            @click="async () => {
+              const url = new URL(`${window.location.origin}{{ url_to_remove_filters }}?{{ search_query_params }}sort_by={{ current_sort.value }}`)
+              url.searchParams.set('barba_prefetch', 'true')
+              loading = true
+              clicked = true
+              await update_filters(url)
+              loading = false
+              clicked = false
+            }"
+            :disabled="loading"
+            class="{{ button_class }}">
+      {{ "content_product_grid.clear_all" | t }} {% render '_components.icon', icon: 'x-mark', class: 'size-[0.9em]' %}
+    </button>
+  {% endif %}
+{% endcapture %}
+
+{% if url_to_remove_filters %}
+  <section {{ block.shopify_attributes }} data-style-id="{{ section.id }}--{{ block.id }}">
+    {{ active_filters }}
+  </section>
+{% endif %}

@@ -1,0 +1,254 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "input"
+  assign section_type = "global_design-elements"
+  assign title = block.settings.title
+  assign background_color = block.settings.background_color
+  assign background_gradient = block.settings.background_gradient
+  assign text_color = block.settings.text_color
+  assign placeholder_color = block.settings.placeholder_color
+  assign border_color = block.settings.border_color
+  assign font_family = block.settings.font_family
+  assign size_weight_height_opacity = block.settings.size_weight_height_opacity
+  assign spacing_transform_style_whitespace = block.settings.spacing_transform_style_whitespace
+  assign padding_top_bottom_left_right_min_height = block.settings.padding_top_bottom_left_right_min_height
+  assign border_width_radius_shadow_gap_text_align = block.settings.border_width_radius_shadow_gap_text_align
+  assign resizable = block.settings.resizable
+  assign custom_css = block.settings.custom_css
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign apply_container_queries = block.settings.apply_container_queries
+  assign mobile_background_color = block.settings.mobile_background_color
+  assign mobile_background_gradient = block.settings.mobile_background_gradient
+  assign mobile_text_color = block.settings.mobile_text_color
+  assign mobile_placeholder_color = block.settings.mobile_placeholder_color
+  assign mobile_border_color = block.settings.mobile_border_color
+  assign override_preview_background = block.settings.override_preview_background
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{%- liquid
+  assign selector = '.' | append: title
+  assign input_selector = selector | append: " input"
+  render '_utils.dynamic-css', selector: selector, block: block, keys: "text_color,font_family,size_weight_height_opacity,spacing_transform_style_whitespace,border_width_radius_shadow_gap_text_align,background_color,background_gradient,border_color"
+  render '_utils.dynamic-css', selector: input_selector, block: block, keys: "padding_top_bottom_left_right_min_height"
+
+  if mobile_placeholder_color == blank or mobile_placeholder_color.alpha == 0
+    assign mobile_placeholder_color = placeholder_color
+  endif
+
+  if padding_top_bottom_left_right_min_height
+    assign padding_top_bottom_left_right_min_height = padding_top_bottom_left_right_min_height | strip_newlines | split: '|'
+    assign padding_top = padding_top_bottom_left_right_min_height[0] | split: '/'
+    assign padding_bottom = padding_top_bottom_left_right_min_height[1] | split: '/'
+    assign padding_left = padding_top_bottom_left_right_min_height[2] | split: '/'
+    assign padding_right = padding_top_bottom_left_right_min_height[3] | split: '/'
+    assign min_height = padding_top_bottom_left_right_min_height[4] | split: '/'
+
+    if padding_top
+      assign v = padding_top.first
+      assign v_num = v | abs
+      unless v contains 'p' or v contains 'm' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+        assign v = v_num | append: "px"
+      endunless
+      assign padding_top_desktop = v
+
+      assign v = padding_top.last
+      assign v_num = v | abs
+      unless v contains 'p' or v contains 'm' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+        assign v = v_num | append: "px"
+      endunless
+      assign padding_top_mobile = v
+    endif
+
+    if padding_bottom
+      assign v = padding_bottom.first
+      assign v_num = v | abs
+      unless v contains 'p' or v contains 'm' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+        assign v = v_num | append: "px"
+      endunless
+      assign padding_bottom_desktop = v
+
+      assign v = padding_bottom.last
+      assign v_num = v | abs
+      unless v contains 'p' or v contains 'm' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+        assign v = v_num | append: "px"
+      endunless
+      assign padding_bottom_mobile = v
+    endif
+
+    if padding_left
+      assign v = padding_left.first
+      assign v_num = v | abs
+      unless v contains 'p' or v contains 'm' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+        assign v = v_num | append: "px"
+      endunless
+      assign padding_left_desktop = v
+
+      assign v = padding_left.last
+      assign v_num = v | abs
+      unless v contains 'p' or v contains 'm' or v contains 'c' or v contains 's' or v contains '%' or v contains 'a' or v contains '#' or v_num == 0
+        assign v = v_num | append: "px"
+      endunless
+      assign padding_left_mobile = v
+    endif
+
+  endif
+
+%}
+
+{%- capture css_desktop -%}
+  .{{ title }} {
+  display: block;
+  user-select: none;
+  }
+  .{{ title }} input {
+  resize: {{ resizable }};
+  }
+  .{{ title }} input::-ms-input-placeholder {
+  color: {{ placeholder_color }};
+  }
+  .{{ title }} input::placeholder {
+  color: {{ placeholder_color }};
+  }
+  .{{ title }} [x-ref="label"] {
+  left: {{ padding_left_desktop }};
+  top: max(({{ padding_top_desktop }} / 2), 5px);
+  font-size: 11.5px;
+  font-weight: 500
+  }
+  .{{ title }}.active input {
+  padding-top: calc(({{ padding_top_desktop }} / 2) + 13px);
+  padding-bottom: max(4px, calc({{ padding_bottom_desktop }} - ((({{ padding_top_desktop }} / 2) + 13px) - {{ padding_top_desktop }})));
+  }
+  .{{ title }}.active [x-ref="label"] {
+  opacity: 0.5;
+  }
+
+{%- endcapture -%}
+{%- capture css_mobile -%}
+  .{{ title }} [x-ref="label"] {
+  left: {{ padding_left_mobile }};
+  top: max(({{ padding_top_mobile }} / 2), 5px);
+  }
+  .{{ title }}.active input {
+  padding-top: calc(({{ padding_top_mobile }} / 2) + 14px);
+  padding-bottom: max(4px, calc({{ padding_top_mobile }} - ((({{ padding_top_mobile }} / 2) + 13px) - {{ padding_top_mobile }})));
+  }
+  .{{ title }} input::-ms-input-placeholder {
+  color: {{ mobile_placeholder_color }};
+  }
+  .{{ title }} input::placeholder {
+  color: {{ mobile_placeholder_color }};
+  }
+{%- endcapture -%}
+
+<style>
+  {{- css_desktop | strip_newlines  -}}
+
+  @media screen and (max-width: 767px) {
+  {{- css_mobile | strip_newlines  -}}
+  }
+
+  {% if apply_container_queries %}
+  @container (max-width: 767px) {
+  {{- css_mobile | strip_newlines  -}}
+  }
+
+  {% endif %}
+
+</style>
+
+{% if request.design_mode %}
+  {% if override_preview_background == blank or override_preview_background.alpha == 0 %}
+    {% assign override_preview_background = '#ffffff' %}
+  {% endif %}
+  <section class="fixed inset-0 z-50 flex flex-col gap-16 overflow-y-auto text-balance bg-white py-16 text-black px-container-sm"
+           x-data="{tab: 'single-type'}"
+           style="background: {{ override_preview_background }};"
+           x-show="$editor?.select_block_id === '{{ block.id }}'"
+           x-cloak {{ block.shopify_attributes }}>
+
+    <header class="flex gap-3 font-mono">
+      <button @click="tab='single-type'"
+              type="button"
+              :class="tab === 'single-type' ? 'bg-gray-600 text-gray-50 border-gray-900 hf:bg-gray-700':'border-gray-200/70 bg-gray-100 text-gray-700 hf:text-gray-900 hf:border-gray-300/80 hf:bg-gray-200/90'"
+              class="rounded-sm border px-3 text-sm font-medium py-1.5">{{ selector }}
+      </button>
+    </header>
+
+    <main class="mt-8">
+      <header class="mt-12 grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div class="text-lg font-bold text-gray-600">Desktop</div>
+        <div class="text-lg font-bold text-gray-600">Mobile</div>
+      </header>
+      <section x-show="tab === 'single-type'" class="mt-6 grid gap-8 lg:grid-cols-[1fr_320px]">
+        {% render "_components.input",
+            name: 'contact[email]',
+            type: 'email',
+            label: 'Email',
+            placeholder: 'Enter your email',
+            autocomplete: 'email',
+            required: true,
+            form: form,
+            inline_button: true,
+            button_content: '',
+            class: title,
+            default_value: form.email,
+            html_attribtues: '',
+            setState: ''
+        %}
+        <div class=" @container max-w-lg">
+          {% render "_components.input",
+              name: 'contact[email]',
+              type: 'email',
+              label: 'Email',
+              placeholder: 'Enter your email',
+              autocomplete: 'email',
+              required: true,
+              form: form,
+              inline_button: false,
+              button_content: '',
+              class: title,
+              default_value: form.email,
+              html_attribtues: '',
+              setState: ''
+          %}
+        </div>
+      </section>
+      <section x-show="tab === 'single-type'" class="mt-6 grid gap-8 lg:grid-cols-[1fr_320px]">
+        {% render "_components.input",
+            name: 'contact[email]',
+            type: 'email',
+            label: 'Email',
+            placeholder: 'Enter your email',
+            autocomplete: 'email',
+            required: true,
+            form: form,
+            inline_button: false,
+            button_content: '',
+            class: title,
+            default_value: "Some default content loaded",
+            html_attribtues: '',
+            setState: ''
+        %}
+        <div class=" @container max-w-lg">
+          {% render "_components.input",
+              name: 'contact[email]',
+              type: 'email',
+              label: 'Email',
+              placeholder: 'Enter your email',
+              autocomplete: 'email',
+              required: true,
+              form: form,
+              inline_button: true,
+              button_content: '',
+              class: title,
+              default_value: "Some default content loaded",
+              html_attribtues: '',
+              setState: ''
+          %}
+        </div>
+      </section>
+    </main>
+  </section>
+{% endif %}

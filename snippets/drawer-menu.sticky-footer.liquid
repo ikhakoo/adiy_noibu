@@ -1,0 +1,62 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "sticky-footer"
+  assign section_type = "drawer-menu"
+  assign icon_first = block.settings.icon_first
+  assign first_link_text = block.settings.first_link_text
+  assign url_first = block.settings.url_first
+  assign first_link_class = block.settings.first_link_class
+  assign icon_second = block.settings.icon_second
+  assign second_link_text = block.settings.second_link_text
+  assign url_second = block.settings.url_second
+  assign second_link_class = block.settings.second_link_class
+  assign button_text = block.settings.button_text
+  assign button_url = block.settings.button_url
+  assign button_class = block.settings.button_class
+  assign divider = block.settings.divider
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+<div data-style-id="{{ section.id }}--{{ block.id }}"
+    x-effect="open ? $nextTick(() => { $el.parentElement.style.paddingBottom = $el.offsetHeight + 12 + 'px' }) : ''"
+    class="absolute bottom-0 py-6 px-4 gap-5 inset-x-0 shadow-invert flex flex-col bg-[#F6F4F2]">
+    {% if url_first != blank and first_link_text != blank %}
+      <a class="flex w-full items-center justify-between"
+        {% if url_first != blank %}
+          title="{{ url_first }}"
+          role="button"
+          tabindex="0"
+          @click.prevent.stop="barba.go('{{ url_first }}'); $modal.setId('')"
+        {% endif %}
+      >
+        <div class="flex gap-1.5">
+          {% render '_components.icon', icon: icon_first, class: "w-4 h-4" %}
+          {% render '_input.richtext', content: first_link_text, class: first_link_class, block: block, forloop: forloop %}
+        </div>
+        {% render '_components.icon', icon: 'chevron-right', class: "h-4 w-4 shrink-0" %}
+      </a>
+    {% endif %}
+    {% if divider %}
+      <hr class="border-none w-full h-[1px] bg-[#DEDEDE]" role="separator">
+    {% endif %}
+    {% if url_second != blank and second_link_text != blank %}
+      <a class="flex w-full items-center justify-between"
+          title="{{ url_second }}"
+          role="button"
+          tabindex="0"
+          @click.prevent.stop="barba.go('{{ url_second }}'); $modal.setId('')"
+      >
+        <div class="flex gap-1.5">
+          {% render '_components.icon', icon: icon_second, class: "w-4 h-4" %}
+          {% render '_input.richtext', content: second_link_text, class: second_link_class, block: block, forloop: forloop %}
+        </div>
+        {% render '_components.icon', icon: 'chevron-right', class: "h-4 w-4 shrink-0" %}
+      </a>
+    {% endif %}
+    {% if button_text != blank %}
+      <a href="{{ button_url }}"
+          class="w-full {{ button_class }} mt-1">
+          {% render '_input.inline_richtext', content: button_text, block: block, forloop: forloop %}
+      </a>
+    {% endif %}
+</div>

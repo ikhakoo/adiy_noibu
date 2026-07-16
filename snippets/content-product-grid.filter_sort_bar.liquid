@@ -1,0 +1,193 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "filter_sort_bar"
+  assign section_type = "content-product-grid"
+  assign sticky = block.settings.sticky
+  assign filter_heading = block.settings.filter_heading
+  assign filter_heading_class = block.settings.filter_heading_class
+  assign legend_class = block.settings.legend_class
+  assign dropdown_icon = block.settings.dropdown_icon
+  assign filter_label = block.settings.filter_label
+  assign submit_button_class = block.settings.submit_button_class
+  assign sort_show = block.settings.sort_show
+  assign radio_button_class = block.settings.radio_button_class
+  assign filters_show = block.settings.filters_show
+  assign filters_show_count = block.settings.filters_show_count
+  assign checkbox_class = block.settings.checkbox_class
+  assign size_border_width_radius = block.settings.size_border_width_radius
+  assign hover_border_color = block.settings.hover_border_color
+  assign outline_width_offset = block.settings.outline_width_offset
+  assign hover_outline_color = block.settings.hover_outline_color
+  assign show_tooltip = block.settings.show_tooltip
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% comment %}
+padding
+legend_class
+icon
+radio_button_class
+submit_button_class
+{% endcomment %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "padding_top_bottom_left_right"
+%}
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "padding_top_bottom_left_right",
+    css_variables: true
+%}
+
+{% liquid
+  assign filter_sidebar_block = section.blocks | where: "type", "filter_sidebar" | first
+
+  assign current_sort = object.sort_by | default: object.default_sort_by
+  assign current_sort = object.sort_options | where: 'value', current_sort | first
+%}
+
+<header
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {{ block.shopify_attributes }}
+    class="z-30 col-span-2 flex items-center justify-between gap-4 {% if sticky %}sticky top-[--header-height-offset] border-b-theme-border{% endif %} {{ section.settings.color_scheme }}"
+    x-ref="filter_nav_bar">
+  {% if filter_sidebar_block %}
+    <button type="button"
+            class="flex items-center gap-1 whitespace-nowrap {{ legend_class }}"
+            @click.prevent.stop="show_filter_sidebar = !show_filter_sidebar">
+      {% comment %}<span>Filters</span>
+      {% render '_components.icon', icon: filter_icon, class: "size-[0.9em]" %}{% endcomment %}
+      {% render '_input.inline_richtext', content: filter_label, block: block, forloop: forloop %}
+    </button>
+  {% elsif filters_show %}
+    {%- for filter in object.filters -%}
+      {% if filter.type == 'list' or filter.type == 'boolean' %}
+        <div class="relative" x-data="{ show_filter: false }">
+          <button type="button"
+                  class="flex items-center gap-1 whitespace-nowrap {{ legend_class }}"
+                  @click.prevent.stop="show_filter = !show_filter">
+            <span>{{ filter.label }}</span>
+            {% render '_components.icon', icon: dropdown_icon, class: "size-[0.9em]" %}
+          </button>
+          <div class="absolute w-screen max-w-[min(90vw,320px)] top-[max(100%,calc(100%+var(--padding-bottom)-8px))] z-10 rounded-md border bg-theme-bg px-4 py-3 -left-3 border-gray-200 shadow-md"
+               x-cloak
+               x-trap.noautofocus="show_filter"
+               @click.outside.capture="$nextTick(()=>{ show_filter = false })"
+               @keydown.esc="show_filter = false"
+               x-show="show_filter">
+            {% assign _filter_block = block %}
+            {% for _block in section.blocks %}
+              {% if _block.type != 'filter_checkboxes' and _block.type != 'filter_radio_buttons' and _block.type != 'filter_color' %}
+                {% continue %}
+              {% endif %}
+              {% assign _handle = _block.settings.title | downcase | trim %}
+              {% assign _label = filter.label | downcase | trim %}
+              {% if _handle == _label %}
+                {% assign _filter_block = _block %}
+                {% break %}
+              {% endif %}
+            {% endfor %}
+
+            {% if _filter_block.type == 'filter_checkboxes' %}
+              {% render 'content-product-grid.filter_checkboxes', block: _filter_block, object: object, filter: filter %}
+            {% endif %}
+            {% if _filter_block.type == 'filter_radio_buttons' %}
+              {% render 'content-product-grid.filter_radio_buttons', block: _filter_block, object: object, filter: filter %}
+            {% endif %}
+            {% if _filter_block.type == 'filter_color' %}
+              {% render 'content-product-grid.filter_color', block: _filter_block, object: object, filter: filter %}
+            {% endif %}
+            {% if _filter_block.type == 'filter_sidebar' or _filter_block.type == 'filter_sort_bar' %}
+              {% if filter.presentation == 'image' or filter.presentation == 'swatch' %}
+                {% render 'content-product-grid.filter_color', block: _filter_block, object: object, filter: filter %}
+              {% else %}
+                {% render 'content-product-grid.filter_checkboxes', block: _filter_block, object: object, filter: filter %}
+              {% endif %}
+            {% endif %}
+            <button type="submit"
+                    class="w-full mt-3 {{ submit_button_class }}"
+                    :class="loading ? 'button-loading': ''"
+                    :disabled="loading"
+                    @click="show_filter = false">
+              {{ "content_product_grid.apply_filter" | t }}
+            </button>
+          </div>
+        </div>
+      {% endif %}
+      {% if filter.type == 'price_range' %}
+        <div class="relative"
+             x-data="{ show_filter: false }">
+          <button type="button"
+                  class="flex items-center gap-1 whitespace-nowrap {{ legend_class }}"
+                  @click.prevent.stop="show_filter = !show_filter">
+            <span>{{ filter.label }}</span>
+            {% render '_components.icon', icon: dropdown_icon, class: "size-[0.9em]" %}
+          </button>
+          <div class="absolute w-screen max-w-[min(90vw,320px)] top-[max(100%,calc(100%+var(--padding-bottom)-8px))] z-10 flex flex-col gap-2 rounded-md border bg-theme-bg px-4 py-3 -left-3 border-gray-200 shadow-md"
+               x-cloak
+               x-trap.noautofocus="show_filter"
+               @click.outside.capture="$nextTick(()=>{ show_filter = false })"
+               @keydown.esc="show_filter = false"
+               x-show="show_filter">
+            {% render 'content-product-grid.filter_price', filter: filter %}
+            <button type="submit"
+                    class="w-full mt-3 {{ submit_button_class }}"
+                    :class="loading ? 'button-loading': ''"
+                    :disabled="loading"
+                    @click="show_filter = false">
+              {{ "content_product_grid.apply_filter" | t }}
+            </button>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+  <div class="flex-1"
+       x-data="{ handleScroll: ()  => $nextTick(() => {
+          const show_border = $refs.filter_nav_bar.getBoundingClientRect().top === document.querySelector('.header-sections-container').getBoundingClientRect().bottom
+          $refs.filter_nav_bar.classList.toggle('border-b', show_border);
+        }) }"
+       x-init="handleScroll"
+       @scroll.window="handleScroll"></div>
+  {% if sort_show %}
+    <div class="relative" x-data="{ show_sort: false }">
+      <button type="button"
+              class="flex items-center gap-1 whitespace-nowrap {{ legend_class }}"
+              @click.prevent.stop="show_sort = !show_sort">
+        <span class="md:hidden">Sort</span>
+        <span class="max-md:hidden">Sort by: {{ current_sort.name }}</span>
+        {% render '_components.icon', icon: dropdown_icon, class: "size-[0.9em]" %}
+      </button>
+      <div class="absolute w-screen max-w-[min(90vw,320px)] top-[max(100%,calc(100%+var(--padding-bottom)-8px))] z-10 rounded-md border bg-theme-bg px-4 py-3 -right-3 border-gray-200 shadow-md"
+           x-cloak
+           x-trap.noautofocus="show_sort"
+           @click.outside.capture="$nextTick(()=>{ show_sort = false })"
+           @keydown.esc="show_sort = false"
+           x-show="show_sort">
+        <fieldset class="flex flex-col gap-2">
+          {% for option in object.sort_options %}
+            {% assign default_checked = false %}
+            {% if option.value == current_sort.value %}{% assign default_checked = true %}{% endif %}
+            {% render "_components.radio-button",
+                class: radio_button_class,
+                label: option.name,
+                value: option.value,
+                name: "sort_by",
+                default_checked: default_checked
+            %}
+          {%- endfor -%}
+        </fieldset>
+        <button type="submit"
+                class="w-full mt-3 {{ submit_button_class }}"
+                :class="loading ? 'button-loading': ''"
+                :disabled="loading"
+                @click="show_sort = false">
+          {{ "content_product_grid.apply_sort" | t }}
+        </button>
+      </div>
+    </div>
+  {% endif %}
+</header>

@@ -1,0 +1,37 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "logo"
+  assign section_type = "header_navigation-bar"
+  assign logo = block.settings.logo
+  assign logo_transparent = block.settings.logo_transparent
+  assign max_height = block.settings.max_height
+  assign responsive_visibility = block.settings.responsive_visibility
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign transprarent_logo = logo_transparent | default: logo
+  unless transprarent_logo
+    break
+  endunless
+%}
+
+
+<a href="{{ routes.root_url }}"
+   class="flex items-center {{ responsive_visibility }} {{ class }}" {{ block.shopify_attributes }}>
+  <picture class="flex relative">
+    {% render '_object.image',
+        image: logo,
+        height: max_height,
+        default_alt: shop.name,
+        preload: true,
+        class: "[.navigation-bar--transparent_&]:opacity-0" %}
+    {% render '_object.image',
+        image: transprarent_logo,
+        height: max_height,
+        default_alt: shop.name,
+        preload: true,
+        class: "absolute inset-0 opacity-0 [.navigation-bar--transparent_&]:opacity-100",
+        aria-hidden: true %}
+  </picture>
+</a>

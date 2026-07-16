@@ -1,0 +1,205 @@
+{% comment %}
+    Select Element
+
+    Accepts:
+    - values: {Array}
+    - titles: {Array} Optional, defaults to value
+    - select_class: {string}
+    - label: {string}
+    - setState: {string} i.e. `$data.setProductOption({ index, value: value })`
+    - state: {string} i.e. `$data.state.options[index]`
+    - current_value: {string} default_state
+    - current_title: {string} default_title
+
+    Usage:
+    {% render "_components.select",
+        values: option.values,
+        select_class: select_class,
+        label: option.name,
+        setState: "$data.setProductOption({ index, value: value })",
+        state: "$data.state.options[index]",
+        current_value: current_value
+        current_title: current_title
+    %}
+{% endcomment %}
+
+{% if values == blank or state == blank or setState == blank %}
+  {% break %}
+{% endif %}
+
+{% liquid
+  assign form_block = section.blocks | where: "type", "shopify_form" | first
+%}
+
+{% if dynamic != true %}
+  <div x-data="{ open: false,
+               focusIndex: 0,
+               values: utils.JSONParse($el.getAttribute('data-values')),
+               titles: utils.JSONParse($el.getAttribute('data-titles')),
+               disabledItems: {{ disabled_items | default: '[]' }},
+               value: $el.getAttribute('data-value'),
+               title: $el.getAttribute('data-title'),
+               pos: { top: 0, left:0, width: 0, height:0 },
+               select: $refs.select }"
+       x-show="!!values.length"
+       x-effect="focusIndex = values.findIndex(val=> val === {{ state }})"
+       x-init="pos = select.getBoundingClientRect()"
+       data-value="{{ current_value }}"
+       data-title="{{ current_title | default: current_value }}"
+       data-titles="{{ titles | default: values | escape }}"
+       data-values="{{ values | escape }}" {{ html_attributes }}>
+    <button class="w-full {{ select_class }} {{ select_class | append: "--font" }}"
+            type="button"
+            x-ref="select"
+            aria-label="{{ label }}"
+            @click.prevent.stop="open = !open"
+            @keydown.space.prevent="open = !open"
+            @keydown.enter.prevent="open = !open"
+            aria-haspopup="listbox"
+            style="anchor-name: --{{ section.id }}--{{ block.id }}--select"
+            aria-expanded="false">
+      <span class="w-full truncate text-left"
+            x-html="titles[focusIndex]">{{ current_title | default: current_value | default: "Loading" }}</span>
+    </button>
+    <input type="hidden"
+        {% if form_block %}
+          form="{{ form_block.id }}"
+        {% endif %}
+           name="{{ name }}"
+           :disabled="!values.length"
+           :value="value">
+    <template x-teleport="body">
+      <template x-if="open">
+        <ul x-data="{ show: false }"
+            x-init="$nextTick(() => { show = true }); pos = select.getBoundingClientRect()"
+            x-effect="value = values[focusIndex], title = titles[focusIndex]"
+            x-trap="open || show"
+            :style="`top: ${pos.top + pos.height + 2}px; width: ${pos.width}px; left: ${pos.left}px;`"
+            @click.outside.capture="() => { ;if (!select?.contains($event.target) && select !== $event.target) { open = false } }"
+            @scroll.window="pos = select.getBoundingClientRect()"
+            @resize.window="pos = select.getBoundingClientRect()"
+            @keydown.esc="open = false"
+            @keydown.left.prevent.stop="focusIndex = focusIndex > 0 ? focusIndex -1 : values.length - 1"
+            @keydown.up.prevent.stop="focusIndex = focusIndex > 0 ? focusIndex -1 : values.length - 1"
+            @keydown.down.prevent.stop="focusIndex = focusIndex + 1 < values.length ? focusIndex + 1 : 0"
+            @keydown.right.prevent.stop="focusIndex = focusIndex + 1 < values.length ? focusIndex + 1 : 0"
+            @keydown.space.prevent.stop="{{ setState }}"
+            @keydown.enter.prevent.stop="{{ setState }}; open = false"
+            class="fixed z-[2147483647] mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg outline-none ring-1 ring-black/5 transition-opacity duration-75 focus:outline-none sm:text-sm"
+            aria-label="{{ label }}"
+            aria-orientation="vertical"
+            role="listbox"
+            tabindex="0"
+            x-show="show"
+            x-cloak
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+        >
+          <template x-for="(value, i) in values">
+            <li class="relative cursor-default select-none py-2 pl-10 pr-4 text-gray-900 ac:bg-gray-100 hf:bg-gray-100"
+                @click.prevent.stop="open = false; {{ setState }}; focusIndex = i"
+                :class="i === focusIndex ? 'active' : disabledItems[i] ? 'opacity-40' :''"
+                x-effect="i === focusIndex && $el.parentElement ? $el.parentElement.scrollTop = $el.offsetTop - 120 : null"
+                role="option"
+                tabindex="-1"
+                :aria-selected="i === focusIndex">
+              <span class="block truncate {{ select_class | append: "--font" }}"
+                    x-html="titles[i]"></span>
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-theme-accent"
+                    :class="value === {{ state }} ? 'opacity-100':'opacity-0'">
+                {% render '_components.icon', icon: 'check-mark', class: "size-5 opacity-60" %}
+              </span>
+            </li>
+          </template>
+        </ul>
+      </template>
+    </template>
+  </div>
+  {% break %}
+{% endif %}
+
+<div x-data="{ open: false,
+               focusIndex: 0,
+               values: {{ values }},
+               titles: {{ titles | default: values }},
+               disabledItems: {{ disabled_items | default: '[]' }},
+               value: {{ current_value }},
+               title: {{ current_title | default: current_value }},
+               pos: { top: 0, left:0, width: 0, height:0 },
+               select: $refs.select }"
+     x-effect="()=> { values = {{ values }}; focusIndex = values.findIndex(val=> val === {{ state }}); titles = {{ titles }}; disabledItems = {{ disabled_items | default: '[]' }}; }"
+     x-show="!!values.length"
+     x-init="pos = select.getBoundingClientRect()">
+  <button class="w-full  {{ select_class }} {{ select_class | append: "--font" }}"
+          :class="{{ loading | default: 'false' }} ? 'button-loading' : ''"
+          :disabled="{{ disabled | default: 'false' }}"
+          type="button"
+          x-ref="select"
+          aria-label="{{ label }}"
+          @click.prevent.stop="open = !open"
+          @keydown.space.prevent="open = !open"
+          @keydown.enter.prevent="open = !open"
+          aria-haspopup="listbox"
+          aria-expanded="false">
+    <span class="w-full truncate text-left"
+          x-html="titles[focusIndex] || '{{ label }}' || 'Choose an option'">{{ server_rendered_title | default: current_title | default: current_value | default: "Loading" }}</span>
+  </button>
+  <input type="hidden"
+      {% if form_block %}
+        form="{{ form_block.id }}"
+      {% endif %}
+         name="{{ name }}"
+         :disabled="!values.length"
+         :value="value">
+  <template x-teleport="body">
+    <template x-if="open">
+      <ul x-data="{ show: false }"
+          x-init="$nextTick(() => { show = true }); pos = select.getBoundingClientRect()"
+          x-effect="value = values[focusIndex], title = titles[focusIndex]"
+          x-trap="open || show"
+          :style="`top: ${pos.top + pos.height + 2}px; width: ${pos.width}px; left: ${pos.left}px;`"
+          @click.outside.capture="() => { ;if (!select?.contains($event.target) && select !== $event.target) { open = false } }"
+          @scroll.window="pos = select.getBoundingClientRect()"
+          @resize.window="pos = select.getBoundingClientRect()"
+          @keydown.esc="open = false"
+          @keydown.left.prevent.stop="focusIndex = focusIndex > 0 ? focusIndex -1 : values.length - 1"
+          @keydown.up.prevent.stop="focusIndex = focusIndex > 0 ? focusIndex -1 : values.length - 1"
+          @keydown.down.prevent.stop="focusIndex = focusIndex + 1 < values.length ? focusIndex + 1 : 0"
+          @keydown.right.prevent.stop="focusIndex = focusIndex + 1 < values.length ? focusIndex + 1 : 0"
+          @keydown.space.prevent.stop="{{ setState }}"
+          @keydown.enter.prevent.stop="{{ setState }}; open = false"
+          class="fixed z-[2147483647] mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg outline-none ring-1 ring-black/5 transition-opacity duration-75 focus:outline-none sm:text-sm"
+          aria-label="{{ label }}"
+          aria-orientation="vertical"
+          role="listbox"
+          tabindex="0"
+          x-show="show"
+          x-cloak
+          x-transition:enter-start="opacity-0"
+          x-transition:enter-end="opacity-100"
+          x-transition:leave-start="opacity-100"
+          x-transition:leave-end="opacity-0"
+      >
+        <template x-for="(value, i) in values">
+          <li class="relative cursor-default select-none py-2 pl-10 pr-4 text-gray-900 ac:bg-gray-100 hf:bg-gray-100"
+              @click.prevent.stop="{{ setState }}; focusIndex = i; open = false"
+              :disabled="!!disabledItems[i]"
+              :class="i === focusIndex ? 'active' : disabledItems[i] ? 'opacity-40' :''"
+              x-effect="i === focusIndex && $el.parentElement ? $el.parentElement.scrollTop = $el.offsetTop - 120 : null"
+              role="option"
+              tabindex="-1"
+              :aria-selected="i === focusIndex">
+            <span class="block truncate {{ select_class | append: "--font" }}"
+                  x-html="titles[i]"></span>
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-theme-accent"
+                  :class="value === {{ state }} ? 'opacity-100':'opacity-0'">
+              {% render '_components.icon', icon: 'check-mark', class: "size-5 opacity-60" %}
+            </span>
+          </li>
+        </template>
+      </ul>
+    </template>
+  </template>
+</div>

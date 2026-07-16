@@ -1,0 +1,72 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "gift_with_purchase"
+  assign section_type = "modal_cart-drawer"
+  assign target_type = block.settings.target_type
+  assign target = block.settings.target
+  assign products = block.settings.products
+  assign receives_quantity = block.settings.receives_quantity
+  assign allow_duplicates = block.settings.allow_duplicates
+  assign legend = block.settings.legend
+  assign accordion_class = block.settings.accordion_class
+  assign product_card_class = block.settings.product_card_class
+  assign orientation = block.settings.orientation
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign width_height_gap = block.settings.width_height_gap
+  assign border_width_radius = block.settings.border_width_radius
+  assign background_color = block.settings.background_color
+  assign border_color = block.settings.border_color
+  assign flex_dividers_height_width_align = block.settings.flex_dividers_height_width_align
+  assign divider_background_color = block.settings.divider_background_color
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign border_divider = block.settings.border_divider
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign width_height_gap = width_height_gap | strip_newlines | replace: ' ', "" | split: '|'
+  assign width = width_height_gap[0] | split: '/'
+  assign height = width_height_gap[1] | split: '/'
+  assign gap = width_height_gap[2] | split: '/'
+
+
+  case orientation
+    when 'horizontal'
+      assign container_classes = "grid-flow-col-dense auto-cols-auto"
+    when 'vertical'
+      assign container_classes = ""
+  endcase
+
+%}
+
+{% capture styles %}
+  --w-md: {{ width.first }};--w: {{ width.last }};
+  --h-md: {{ height.first }};--h: {{ height.last }};
+  --gap-md: {{ gap.first }};--gap: {{ gap.last }};
+{% endcapture %}
+
+{% capture product_data %}
+  [{% for _product in products %}
+  {%- render '_json.product', product: _product -%}{% unless forloop.last %},{% endunless %}
+{% endfor %}]
+{% endcapture %}
+
+{% render '_utils.dynamic-css', block: block, keys: "max_w_flex_col_row_order_align" %}
+{% render '_utils.dynamic-css', block: block, selector: '& [data-style-divider]', keys: 'flex_dividers_height_width_align,divider_background_color' %}
+{% render '_utils.dynamic-css', block: block, selector: '& [data-style-container]', keys: 'border_width_radius,background_color,border_color, padding_top_bottom_left_right, margin_top_bottom_left_right' %}
+
+{% capture accordion_content %}
+  <main class="grid gap-[calc(var(--gap)/2)] md:gap-[calc(var(--gap-md)/2)] overflow-x-auto overflow-y-none scrollbar-none {{ container_classes }} {{ border_divider }}"
+        style="{{ styles | strip_newlines }}"
+        data-style-container
+        data-gift-products="{{ product_data | escape }}"
+        x-effect="()=> { if ($cart.state.item_count && open) _cart.renderGiftProducts($el, `{{ target_type }}`, +`{{ target }}`, +`{{ receives_quantity }}`, `{{ allow_duplicates }}` === 'true', `{{ product_card_class }}`)}">
+  </main>
+{% endcapture %}
+
+<section data-style-id="{{ section.id }}--{{ block.id }}" {{ block.shopify_attributes }}
+         class="@container"
+         x-show="$cart.state.item_count && $cart.gift_products?.length">
+  {% render '_components.accordion', label: legend, content: accordion_content, default_open: true, class: accordion_class, no_richtext_content: true, no_dynamic_content: no_dynamic_content %}
+</section>

@@ -1,0 +1,54 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "product_cards"
+  assign section_type = "product"
+  assign legend_label = block.settings.legend_label
+  assign legend_class = block.settings.legend_class
+  assign margin_top_gap = block.settings.margin_top_gap
+  assign products = block.settings.products
+  assign _collection = block.settings.collection
+  assign display_limit = block.settings.display_limit
+  assign product_card_class = block.settings.product_card_class
+  assign hide_out_of_stock = block.settings.hide_out_of_stock
+  assign slider_cols_rows_align_x_align_y_gap = block.settings.slider_cols_rows_align_x_align_y_gap
+  assign slider_scroll_snap = block.settings.slider_scroll_snap
+  assign snap_center = block.settings.snap_center
+  assign slider_overflow_container = block.settings.slider_overflow_container
+  assign infinite_scroll = block.settings.infinite_scroll
+  assign scrollbar_class = block.settings.scrollbar_class
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign metafield_keys = block.settings.metafield_keys
+  assign show_conditionally = block.settings.show_conditionally
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% if products == blank or products.size <= 0 %}
+  {% break %}
+{% endif %}
+
+{% render '_utils.dynamic-css', block: block, keys: "margin_top_gap", css_variables: true %}
+
+{% render '_utils.dynamic-css', block: block, keys: "responsive_visibility,max_w_flex_col_row_order_align,margin_top_bottom_left_right" %}
+
+<section
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    x-show="$data.state?.show_complementary_products && $data.showConditionally('{{ show_conditionally }}')"
+    {% if products.size <= 0 %}
+      x-cloak
+    {% endif %}
+    data-block-type="{{ block.type }}">
+  {% if legend_label != blank %}
+    <header class="mb-[--margin-top] flex w-full max-w-full truncate {{ legend_class }}">
+      {% render '_input.inline_richtext', content: legend_label, block: block, forloop: forloop %}
+    </header>
+  {% endif %}
+  {% render '_blocks.product-cards', block: block, forloop: forloop, no_block_styles: true %}
+</section>

@@ -1,0 +1,71 @@
+<div data-filter-param="{{ filter.param_name }}" class="w-full py-3">
+  <div class="w-full"
+       x-data="{ from: +`{{ filter.min_value.value | default: 0 }}`, to: +`{{ filter.max_value.value | default: filter.range_max }}`, max: +`{{ filter.range_max }}` }">
+    <input type="hidden" class="hidden" name="filter.v.price.gte" :value="from / 100">
+    <input type="hidden" class="hidden" name="filter.v.price.lte" :value="to / 100">
+    <div class="flex justify-between text-13 font-medium tracking-tight">
+      <span x-html="window.formatMoney(from)">
+        {{ filter.min_value.value | money | default: 0 | money }}
+      </span>
+      <span x-html="window.formatMoney(to)">
+        {{ filter.max_value.value | money | default: filter.range_max | money }}
+      </span>
+    </div>
+    <div class="relative mt-1 flex h-5 cursor-pointer touch-none items-center"
+         x-data="{ originalFrom: from, originalTo: to }"
+         x-effect="() => { if (from !== originalFrom || to !== originalTo) { debounce_update_filters() } }"
+         x-ref="slider"
+         @pointerdown="(e) => {
+                      const target  = Math.max(0, Math.min(max, Math.round(((e.clientX - $refs.slider.getBoundingClientRect().left) / $refs.slider.clientWidth) * max)));
+                      to = Math.abs(target - to) <= Math.abs(target - from) ? target : to
+                      from = Math.abs(target - from) <= Math.abs(target - to) ? target : from
+                   }">
+      <div class="h-1 w-full rounded-full bg-gray-300"></div>
+      <div class="absolute h-1 w-auto rounded-full bg-gray-700"
+           :style="`width: ${(to / max) * 100 - (from / max) * 100}%; left: ${(from / max) * 100}%`"></div>
+      <div class="absolute inset-y-0 left-0 right-3">
+        <button type="button"
+                :style="`left: ${(from / max) * 100}%`"
+                @pointerdown.stop.prevent="(e) => {
+                          document.body.classList.add('[&_*]:!cursor-grabbing');
+                          const handleMove = (e) => {
+                            from = Math.max(0, Math.min(to - 1, Math.round(((e.clientX - $refs.slider.getBoundingClientRect().left) / $refs.slider.clientWidth) * max)))
+                          }
+
+                          const handleExit = (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            document.body.classList.remove('[&_*]:!cursor-grabbing');
+                            document.removeEventListener('pointermove', handleMove)
+                            document.removeEventListener('pointerup', handleExit)
+                          }
+                          document.addEventListener('pointermove', handleMove)
+                          document.addEventListener('pointerup', handleExit)
+                        }"
+                class="absolute top-1/2 -mx-1 -translate-y-1/2 cursor-grab p-1 outline-none transition-transform duration-75 focus:scale-150 focus:text-secondary-outline active:cursor-grabbing hfa:outline-none">
+          <span class="block h-3 w-3 rounded-full border border-white bg-current transition-colors"></span>
+        </button>
+        <button :style="`left: ${(to / max) * 100}%`"
+                @pointerdown.stop.prevent="(e) => {
+                          document.body.classList.add('[&_*]:!cursor-grabbing');
+                          const handleMove = (e) => {
+                            to = Math.max(from + 1, Math.min(max, Math.round(((e.clientX - $refs.slider.getBoundingClientRect().left) / $refs.slider.clientWidth) * max)))
+                          }
+                          const handleExit = (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            document.body.classList.remove('[&_*]:!cursor-grabbing');
+                            document.removeEventListener('pointermove', handleMove)
+                            document.removeEventListener('pointerup', handleExit)
+                          }
+                          document.addEventListener('pointermove', handleMove)
+                          document.addEventListener('pointerup', handleExit)
+                        }"
+                type="button"
+                class="absolute top-1/2 -mx-1 -translate-y-1/2 cursor-grab p-1 outline-none transition-transform duration-75 focus:scale-150 focus:text-secondary-outline active:cursor-grabbing hfa:outline-none">
+          <span class="block h-3 w-3 rounded-full border border-white bg-current"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

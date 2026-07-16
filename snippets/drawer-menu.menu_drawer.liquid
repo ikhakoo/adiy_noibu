@@ -1,0 +1,25 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "menu_drawer"
+  assign section_type = "drawer-menu"
+  assign menu = block.settings.menu
+  assign link_class = block.settings.link_class
+  assign gap_content = block.settings.gap_content
+  assign divider = block.settings.divider
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+<nav
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    class="overflow-hidden flex flex-col{% unless forloop.last %} mb-4{% endunless %}">
+  {% for link in menu.links %}
+    <a href="{{ link.url }}" class="shrink-0 {{ link_class }}"{% unless forloop.last %} style="margin-bottom: {{ gap_content }};"{% endunless %}>
+      {{ link.title }}
+    </a>
+    {% if forloop.last and divider %}
+      <hr class="border-none w-full h-[1px] bg-[#DEDEDE] mt-4" role="separator">
+    {% endif %}
+  {% endfor %}
+</nav>

@@ -1,0 +1,167 @@
+
+
+/* Container Sizing / Wrapper */
+@layer utilities {
+
+  .flex-min {
+    /* Three values: flex-grow | flex-shrink | flex-basis */
+    flex: 1 0 0;
+  }
+
+  .mobile-tablet-only {
+    @apply @lg:hidden;
+  }
+
+  .mobile-tablet-only {
+    @apply lg:hidden;
+  }
+
+  .mobile-only:has(:not(.\@container *)) {
+    @apply md:hidden;
+  }
+
+  .desktop-tablet-only {
+    @apply @max-md:hidden;
+  }
+
+  .desktop-tablet-only:has(:not(.\@container *)) {
+    @apply @max-md:hidden;
+  }
+
+  .desktop-tablet-only:has(:not(.\@container *)) {
+    @apply max-md:hidden;
+  }
+
+  .desktop-only {
+    @apply @max-lg:hidden;
+  }
+
+  .desktop-only {
+    @apply max-lg:hidden;
+  }
+
+  .desktop-only:has(:not(.\@container *)) {
+    @apply max-lg:hidden @max-lg:hidden;
+  }
+
+  .cart-only {
+    @apply hidden @max-lg:block;
+  }
+
+  .container {
+    @apply w-full px-[--layout-container-padding-md];
+  }
+
+  .scroll-justify-center {
+    :first-child {
+      @apply ml-auto
+    }
+
+    :last-child {
+      @apply mr-auto
+    }
+  }
+
+  /*xs*/
+  .pl-container-xs {
+    @apply pl-[--layout-container-padding-xs];
+  }
+
+  .pr-container-xs {
+    @apply pr-[--layout-container-padding-xs];
+  }
+
+  .px-container-xs {
+    @apply px-[--layout-container-padding-xs];
+  }
+
+  /*sm*/
+  .pl-container-sm {
+    @apply pl-[--layout-container-padding-sm];
+  }
+
+  .pr-container-sm {
+    @apply pr-[--layout-container-padding-sm];
+  }
+
+  .px-container-sm {
+    @apply px-[--layout-container-padding-sm];
+  }
+
+  /*md*/
+  .pl-container-md {
+    @apply pl-[--layout-container-padding-md];
+  }
+
+  .pr-container-md {
+    @apply pr-[--layout-container-padding-md];
+  }
+
+  .px-container-md {
+    @apply px-[--layout-container-padding-md];
+  }
+
+  /*lg*/
+  .pl-container-lg {
+    @apply pl-[--layout-container-padding-lg];
+  }
+
+  .pr-container-lg {
+    @apply pr-[--layout-container-padding-lg];
+  }
+
+  .px-container-lg {
+    @apply px-[--layout-container-padding-lg];
+  }
+
+  .px-container-gutter {
+    @apply px-[--layout-container-gutter];
+  }
+
+  /*xs*/
+  .-mx-container-xs {
+    @apply -mx-[--layout-container-padding-xs];
+  }
+
+  /*sm*/
+  .-mx-container-sm {
+    @apply -mx-[--layout-container-padding-sm];
+  }
+
+  /*md*/
+  .-mx-container-md {
+    @apply -mx-[--layout-container-padding-md];
+  }
+
+  /*lg*/
+  .-mx-container-lg {
+    @apply -mx-[--layout-container-padding-lg];
+  }
+  /*magazine*/
+  .-mx-container-gutter {
+    @apply -mx-[--layout-container-gutter];
+  }
+
+
+  /*xs*/
+  .scroll-px-container-xs {
+    @apply scroll-px-[--layout-container-padding-xs];
+  }
+
+  /*sm*/
+  .scroll-px-container-sm {
+    @apply scroll-px-[--layout-container-padding-sm];
+  }
+
+  /*md*/
+  .scroll-px-container-md {
+    @apply scroll-px-[--layout-container-padding-md];
+  }
+
+  /*lg*/
+  .scroll-px-container-lg {
+    @apply scroll-px-[--layout-container-padding-lg];
+  }
+
+
+}

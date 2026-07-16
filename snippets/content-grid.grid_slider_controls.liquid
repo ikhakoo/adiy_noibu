@@ -1,0 +1,74 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "grid_slider_controls"
+  assign section_type = "content-grid"
+  assign scroll_navigation_style = block.settings.scroll_navigation_style
+  assign scrollbar_class = block.settings.scrollbar_class
+  assign size_border_width_radius = block.settings.size_border_width_radius
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign background_color = block.settings.background_color
+  assign border_color = block.settings.border_color
+  assign hover_border_color = block.settings.hover_border_color
+  assign hover_background_color = block.settings.hover_background_color
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture container_content %}
+  {% render '_utils.dynamic-css', block: block, keys: "responsive_visibility,max_w_flex_col_row_order_align, margin_top_bottom_left_right" %}
+
+
+  <div
+      data-style-id="{{ section.id }}--{{ block.id }}"
+      {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+      {{ block.shopify_attributes }}
+      class="flex flex-col relative"
+      x-defer="intersect"
+      x-show="content_slider?.state"
+      x-data="{ content_slider: $el.closest('.shopify-section')?.querySelector('[data-grid-slider]')?._x_dataStack?.[0]?.content_slider }"
+      x-init="$nextTick(() => { content_slider = $el.closest('.shopify-section')?.querySelector('[data-grid-slider]')?._x_dataStack?.[0]?.content_slider; })">
+    {% case scroll_navigation_style %}
+      {% when 'scrollbar' %}
+        {% render '_utils.dynamic-css',
+            block: block,
+            selector: "& [data-style-scroll-navigation]",
+            keys: "padding_top_bottom_left_right"
+        %}
+        <div data-style-scroll-navigation
+             x-cloak
+             x-show="content_slider?.state?.slide_count > 1">
+          {% render "_components.scrollbar",
+              class: scrollbar_class,
+              scroll_container_ref: "$el.closest('.shopify-section')?.querySelector(`[data-grid-slider] [x-ref='container']`)"
+          %}
+        </div>
+
+      {% when 'pagination' %}
+        {% render '_utils.dynamic-css', block: block, selector: '& [data-style-scroll-navigation]', keys: 'flex_direction_align_x_align_y_gap_wrap, padding_top_bottom_left_right' %}
+        {% render '_utils.dynamic-css', block: block, selector: '& [data-style-scroll-navigation] button span', keys: 'size_border_width_radius,background_color,border_color' %}
+        <div data-style-scroll-navigation
+             x-cloak
+             x-show="content_slider?.state?.slide_count > 1">
+          <template x-for="index in [...new Array(content_slider?.state?.slide_count ?? 0)].map((_,i) => i)">
+            <button type="button"
+                    :aria-label="`Scroll to slide ${index + 1}`"
+                    class="-m-1.5 p-1.5 hf:opacity-80"
+                    @click="() => content_slider?.scrollToIndex(index)">
+              <span class="block rounded-full hfaa:bg-[--hover-bg] hfaa:border-[--hover-border]"
+                    style="--hover-bg: {{ hover_background_color }}; --hover-border: {{ hover_border_color }}; "
+                    :class="content_slider?.state?.slide_index === index ? 'active' : ''"></span>
+            </button>
+          </template>
+        </div>
+    {% endcase %}
+  </div>
+{% endcapture %}
+
+{% if container_content contains '<script type="container/break"></script>' %}
+  {% break %}
+{% endif %}
+{{ container_content }}

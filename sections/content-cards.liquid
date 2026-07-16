@@ -1,0 +1,301 @@
+{%- render "content-cards" -%}
+{% schema %}
+{
+  "name": "Content cards",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "title_class",
+      "label": "Title class",
+      "default": "richtext-md"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "subtitle_class",
+      "label": "Subtitle class",
+      "default": "richtext-md"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "text color"
+    },
+    {
+      "type": "header",
+      "content": "Section Globals"
+    },
+    {
+      "type": "text",
+      "id": "vertical_padding_section",
+      "label": "Top padding | Bottom Padding",
+      "default": "0 | 0 "
+    },
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section Id"
+    },
+    {
+      "type": "select",
+      "id": "container_spacing",
+      "default": "px-container-md",
+      "options": [
+        {
+          "value": "px-container-xs",
+          "label": "xs"
+        },
+        {
+          "value": "px-container-sm",
+          "label": "sm"
+        },
+        {
+          "value": "px-container-md",
+          "label": "md"
+        },
+        {
+          "value": "px-container-lg",
+          "label": "lg"
+        },
+        {
+          "value": "px-container-fullwidth",
+          "label": "fullwidth"
+        },
+        {
+          "value": "px-container-gutter",
+          "label": "magazine"
+        }
+      ],
+      "label": "Container Spacing"
+    },
+    {
+      "type": "select",
+      "id": "responsive_visibility",
+      "label": "Responsive Visibility",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile"
+        },
+        {
+          "value": "desktop-tablet-only",
+          "label": "Desktop"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Card",
+      "type": "card",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "richtext",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "title_class",
+          "label": "Title class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "richtext",
+          "id": "paragraph",
+          "label": "Paragraph"
+        },
+        {
+          "type": "text",
+          "id": "paragraph_class",
+          "label": "Paragraph class",
+          "default": "richtext-md h4"
+        },
+        {
+          "type": "header",
+          "content": "Button"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button url"
+        },
+        {
+          "type": "text",
+          "id": "button_class",
+          "label": "Button class",
+          "default": "button-primary"
+        },
+        {
+          "type": "header",
+          "content": "Card"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color"
+        }
+      ]
+    },
+    {
+      "name": "Pagination",
+      "type": "pagination",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Slider Buttons"
+        },
+        {
+          "type": "text",
+          "id": "width_height_border_width_radius",
+          "label": "width | height | border | radius",
+          "default": "12px | 12px | 0 | 999px"
+        },
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "background color",
+          "default": "#CCCCCC"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "border color"
+        },
+        {
+          "type": "color",
+          "id": "hover_border_color",
+          "label": "border color"
+        },
+        {
+          "type": "color",
+          "id": "hover_background_color",
+          "label": "background color",
+          "default": "#000000"
+        }
+      ],
+      "limit": 1
+    }
+  ],
+  "presets": [
+    {
+      "name": "Content cards",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/Image_Ratios_4_149f34e6-9d96-4e48-a244-6d609c651e5d.png",
+            "title": "<h4><strong>PRESSURE TRATED</strong></h4>",
+            "title_class": "richtext-md",
+            "paragraph": "<h6>KDAT (Kiln-Dried After Treatment) for added durability, preventing warping, shrinking, and cracking.</h6>",
+            "paragraph_class": "richtext-md",
+            "button_text": "shop pressure treated",
+            "button_url": "",
+            "button_class": "button-primary-outline",
+            "background_color": "#f6f4f2"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/Image_Ratios_4.png",
+            "title": "<h4><strong>CEDAR WOOD</strong></h4>",
+            "title_class": "richtext-md",
+            "paragraph": "<h6>Naturally resistant to rot and insects, low-maintenance, and stays cool and stable over time.</h6>",
+            "paragraph_class": "richtext-md",
+            "button_text": "Shop cedar",
+            "button_url": "",
+            "button_class": "button-primary-outline",
+            "background_color": "#f6f4f2"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/Image_Ratios_5.png",
+            "title": "<h4><strong>TREX COMPOSITE</strong></h4>",
+            "title_class": "richtext-md",
+            "paragraph": "<h6>Combining the wood look with low-maintenance, fade-resistant, splinter-free, that won’t warp or crack.</h6>",
+            "paragraph_class": "richtext-md",
+            "button_text": "Shop trex composite",
+            "button_url": "",
+            "button_class": "button-primary-outline",
+            "background_color": "#f6f4f2"
+          }
+        },
+        {
+          "type": "pagination",
+          "settings": {
+            "width_height_border_width_radius": "12px | 12px | 0 | 999px",
+            "background_color": "#cccccc",
+            "border_color": "",
+            "hover_border_color": "",
+            "hover_background_color": "#ffffff"
+          }
+        }
+      ],
+      "settings": {
+        "background_image": "shopify://shop_images/26788aca76d5d3e5f4de78f838c18f56.png",
+        "title": "<h2><strong>Which Material Is Right For You?</strong></h2>",
+        "title_class": "richtext-md",
+        "subtitle": "<p></p>",
+        "subtitle_class": "richtext-md",
+        "text_color": "#20221d",
+        "vertical_padding_section": "72px/48px | 0",
+        "section_id": "",
+        "container_spacing": "px-container-md",
+        "responsive_visibility": ""
+      }
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "custom.globals",
+      "custom.header",
+      "custom.modal",
+      "custom.card"
+    ]
+  }
+}
+{% endschema %}

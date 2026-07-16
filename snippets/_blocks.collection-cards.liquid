@@ -1,0 +1,141 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.collection-cards"
+  assign _collections = block.settings.collections
+  assign display_limit = block.settings.display_limit
+  assign collection_card_class = block.settings.collection_card_class
+  assign slider_cols_rows_align_x_align_y_gap = block.settings.slider_cols_rows_align_x_align_y_gap
+  assign slider_scroll_snap = block.settings.slider_scroll_snap
+  assign slider_overflow_container = block.settings.slider_overflow_container
+  assign infinite_scroll = block.settings.infinite_scroll
+  assign scrollbar_class = block.settings.scrollbar_class
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign _collections = _collections | default: collections
+  assign display_limit = display_limit | strip_newlines | replace: ' ', "" | split: '|'
+  assign display_limit = display_limit[0] | split: '/'
+
+  assign desktop_display_limit = display_limit.first | abs
+  assign mobile_display_limit = display_limit.last | abs
+
+  assign max_display_limit = desktop_display_limit | at_least: mobile_display_limit | default: 12
+%}
+
+
+{% liquid
+  if request.design_mode != true
+    if _collections.size <= 0
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility, margin_top_bottom_left_right, max_w_flex_col_row_order_align" %}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-collection-cards]",
+    keys: "slider_cols_rows_align_x_align_y_gap"
+%}
+{% render '_utils.dynamic-css',
+    block: block,
+    selector: "& [data-style-scrollbar]",
+    keys: "padding_top_bottom_left_right",
+    padding_as_margin: true %}
+{% liquid
+
+  assign slider_cols_rows_align_x_align_y_gap = slider_cols_rows_align_x_align_y_gap | strip_newlines | split: '|'
+  assign grid_cols = slider_cols_rows_align_x_align_y_gap[0] | split: '/'
+
+  assign container_spacing = section.settings.container_spacing
+  case slider_overflow_container
+    when 'all'
+      assign slider_overflow = container_spacing | replace: 'px', '-mx' | append: " scroll-" | append: container_spacing | append: " " | append: container_spacing
+    when 'mobile'
+      assign slider_overflow = container_spacing | replace: 'px', 'max-md:-mx' | append: " max-md:scroll-" | append: container_spacing | append: " max-md:" | append: container_spacing
+    when 'desktop'
+      assign slider_overflow = container_spacing | replace: 'px', 'md:-mx' | append: " md:scroll-" | append: container_spacing | append: " md:" | append: container_spacing
+  endcase
+%}
+
+<style>
+  @media screen and (max-width: {{ responsive_breakpoint | default: "768px" }}) {
+    [data-style-id="{{ section.id }}--{{ block.id }}"] [data-style-collection-cards] > :where(*):nth-of-type({{ grid_cols | last | replace: " ", "" | trim }}n+1) {
+      scroll-snap-align: start;
+    }
+  }
+
+  @media screen and (min-width: {{ responsive_breakpoint | default: "768px" }}) {
+    [data-style-id="{{ section.id }}--{{ block.id }}"] [data-style-collection-cards] > :where(*):nth-of-type({{ grid_cols | first | replace: " ", "" | trim }}n+1) {
+      scroll-snap-align: start;
+    }
+  }
+</style>
+
+<div
+    class="flex flex-col"
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    data-grid-slider
+    x-data="{ ..._sections.initContentSlider($refs.container, undefined,`{{ infinite_scroll }}` === 'true') }">
+  <div class="relative grid overflow-x-auto scrollbar-none overflow-y-hidden snap-x {{ slider_scroll_snap }} {{ slider_overflow }}"
+       x-ref="container"
+       @resize.window="content_slider.handleResize"
+       x-init="$nextTick(() => content_slider.handleResize())"
+       @scroll="content_slider.handleScroll"
+       @scrollend="content_slider.handleInfiniteScroll"
+       data-style-collection-cards>
+    {% for collection in _collections limit: max_display_limit %}
+      {% assign collection_visibility = "" %}
+      {% if forloop.index > desktop_display_limit %}
+        {% assign collection_visibility = "mobile-only" %}
+      {% endif %}
+      {% if forloop.index > mobile_display_limit %}
+        {% assign collection_visibility = "desktop-tablet-only" %}
+      {% endif %}
+      <div class="{{ collection_visibility }} shrink-0 max-w-full w-full h-full">
+        <section
+            class="card-loading collection-card--{{ collection_card_class }}"
+            data-collection-handle="{{ collection.handle }}"
+            data-collection-id="{{ collection.id }}"
+            x-data="{}"
+            {% if request.visual_preview_mode %}
+              data-intersected
+            {% endif %}
+            x-init="$nextTick(() => _sections.hydrateCollectionCard($el, '{{ collection_card_class }}', $el.getAttribute('data-collection-handle'), $el.getAttribute('data-collection-id'), ['h-full']))"></section>
+        <script type="application/json"
+                data-collection-data="{{ collection.handle }}">{%- render '_json.collection', collection: collection -%}</script>
+      </div>
+    {% endfor %}
+  </div>
+  {% if scrollbar_class != blank %}
+    {% render "_components.scrollbar",
+        class: scrollbar_class,
+        scroll_container_ref: '$refs.container',
+        html_attributes: 'data-style-scrollbar' %}
+  {% endif %}
+</div>

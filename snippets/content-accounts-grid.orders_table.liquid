@@ -1,0 +1,75 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "orders_table"
+  assign section_type = "content-accounts-grid"
+  assign border_width_radius = block.settings.border_width_radius
+  assign background_color = block.settings.background_color
+  assign border_color = block.settings.border_color
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% render '_utils.dynamic-css', block: block %}
+{% paginate customer.orders by 1000 %}
+  <div
+      data-style-id="{{ section.id }}--{{ block.id }}"
+      {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+      {{ block.shopify_attributes }}>
+    <table class="min-w-full divide-y divide-current/30">
+      <thead class="bg-inherit">
+        <tr>
+          <th scope="col"
+              class="pl-4 pr-3 text-left text-sm font-semibold opacity-90 py-3.5 sm:pl-6">Order ID
+          </th>
+          <th scope="col"
+              class="px-2 text-left text-sm font-semibold opacity-90 py-3.5">Date
+          </th>
+          <th scope="col"
+              class="px-2 text-left text-sm font-semibold opacity-90 py-3.5">Payment status
+          </th>
+          <th scope="col"
+              class="px-2 text-left text-sm font-semibold opacity-90 py-3.5">Fulfillment status
+          </th>
+          <th scope="col"
+              class="relative pl-3 pr-4 text-right py-3.5 sm:pr-6"> Total
+          </th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-current/20">
+        {% for order in customer.orders %}
+          <tr class="cursor-pointer group hf:bg-current/5"
+              data-order-link="{{ order.customer_url }}">
+            <td class="py-2 pl-4 pr-3 text-sm sm:pl-6">
+              <a href="{{ order.customer_url }}"
+                 class="group-hf:underline">
+                {{ order.name }}
+              </a>
+            </td>
+            <td class="whitespace-nowrap px-2 py-2 text-sm opacity-50">
+              <span class="hidden md:block">{{ order.created_at | time_tag: format: 'date' }}</span>
+              <span class="md:hidden">{{ order.created_at | time_tag: format: 'abbreviated_date' }}</span>
+            </td>
+            <td class="whitespace-nowrap px-2 py-2 text-sm opacity-50">
+              {{ order.financial_status_label }}
+            </td>
+            <td class="whitespace-nowrap px-2 py-2 text-sm opacity-50">
+              <a href="{{ order.order_status_url }}"
+                 onclick="(e)=>{e.stopPropagation()}"
+                 class="text-gray-600 hf:underline">
+                {{ order.fulfillment_status_label }}
+              </a>
+            </td>
+            <td class="whitespace-nowrap px-2 py-2 text-right text-sm opacity-50">
+              {{ order.total_price | money_with_currency }}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endpaginate %}

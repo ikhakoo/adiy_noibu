@@ -1,0 +1,221 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "thumbnails"
+  assign section_type = "product"
+  assign thumbnail_filter_images = block.settings.thumbnail_filter_images
+  assign hide_image_alt = block.settings.hide_image_alt
+  assign select_variant_on_click = block.settings.select_variant_on_click
+  assign position = block.settings.position
+  assign width_height_aspect_object_fit = block.settings.width_height_aspect_object_fit
+  assign border_width_radius = block.settings.border_width_radius
+  assign slider_cols_rows_align_x_align_y_gap = block.settings.slider_cols_rows_align_x_align_y_gap
+  assign border_color = block.settings.border_color
+  assign hover_border_color = block.settings.hover_border_color
+  assign hover_background_color = block.settings.hover_background_color
+  assign thumbnail_item_gap_gallery_gap = block.settings.thumbnail_item_gap_gallery_gap
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+
+  assign thumbnail_width_height = thumbnail_width_height | strip_newlines | replace: ' ', "" | split: '|'
+  assign image_width = thumbnail_width_height[0] | split: '/'
+  assign image_height = thumbnail_width_height[1] | split: '/'
+
+  assign width = image_width | first | replace: 'px' | trim
+  assign height = image_height | first | replace: 'px' | trim
+
+  assign thumbnail_item_gap_gallery_gap = thumbnail_item_gap_gallery_gap | strip_newlines | replace: ' ', "" | split: '|'
+  assign item_gap = thumbnail_item_gap_gallery_gap[0] | split: '/'
+  assign gallery_gap = thumbnail_item_gap_gallery_gap[1] | split: '/'
+
+  assign preload = true
+
+  assign empty_array = "" | split: "" | uniq
+  assign hide_media_ids = product.media | where: "alt", hide_image_alt | map: 'id'
+
+  assign media_array = product.media
+  assign variant_media_id = product.selected_or_first_available_variant.featured_media.id | default: 'invalid_placeholder'
+  assign variant_media_ids = product.variants | map: "featured_media" | map: "id" | uniq
+
+  assign filter_images = thumbnail_filter_images
+  if thumbnail_filter_images == 'inherit'
+    assign filter_images = section.blocks | where: "type", "gallery" | map: "settings" | map: "filter_images" | first
+  endif
+
+  case filter_images
+    when "show_all" or "first_or_selected_image"
+      assign show_media_ids = media_array | map: "id"
+    when "show_all_variants"
+      assign show_media_ids = variant_media_ids
+    when "selected_variant"
+      assign show_media_ids = media_array | where: "id", variant_media_id | map: "id"
+    when "variant_images_by_order"
+      assign show_media_ids = media_array | where: "id", variant_media_id | map: "id"
+      assign continue = true
+      for media in media_array
+        if media.id == variant_media_id
+          assign continue = false
+          continue
+        endif
+        if continue
+          continue
+        endif
+
+        if variant_media_ids contains media.id
+          break
+        endif
+
+        assign arr = media_array | where: "id", media.id | map: "id"
+        assign show_media_ids = show_media_ids | concat: arr | uniq
+
+      endfor
+
+    when "variant_images_by_metafield"
+      assign metafield_attribute = ''
+      assign show_media_ids = media_array | where: "id", variant_media_id | map: "id"
+
+      assign metafield_show_media_ids = product.selected_or_first_available_variant.metafields.smart.images.value | map: "id"
+      assign show_media_ids = show_media_ids | concat: metafield_show_media_ids | uniq
+
+      for variant in product.variants
+        assign metafield_media_array = variant.metafields.smart.images.value | where: "id"
+        assign media_array = media_array | concat: metafield_media_array | uniq
+      endfor
+    when "variant_images_and_unassigned"
+
+      assign show_media_ids = media_array | where: "id", variant_media_id | map: "id"
+
+      for media in media_array
+        if variant_media_ids contains media.id
+          continue
+        endif
+
+        assign arr = media_array | where: "id", media.id | map: "id"
+        assign show_media_ids = show_media_ids | concat: arr | uniq
+
+      endfor
+    when "only_unassigned"
+
+      assign show_media_ids = media_array | where: "id", 'not-a-variant-id' | map: "id"
+
+      for media in media_array
+        if variant_media_ids contains media.id
+          continue
+        endif
+
+        assign arr = media_array | where: "id", media.id | map: "id"
+        assign show_media_ids = show_media_ids | concat: arr | uniq
+
+      endfor
+
+    when "only_unassigned"
+
+      assign show_media_ids = media_array | where: "id", 'not-a-variant-id' | map: "id"
+
+      for media in media_array
+        if variant_media_ids contains media.id
+          continue
+        endif
+
+        assign arr = media_array | where: "id", media.id | map: "id"
+        assign show_media_ids = show_media_ids | concat: arr | uniq
+
+      endfor
+
+  endcase
+
+  assign media_id_array = media_array | map: "id" | uniq
+  assign show_index0 = -1
+
+  assign gallery_settings = section.blocks | where: "type", "gallery" | map: "settings" | first
+
+  case gallery_settings.desktop_layout
+    when 'col'
+      assign gallery_classes = "sticky-product-section"
+    when 'grid'
+      assign gallery_classes = "sticky-product-section"
+    when 'hero_grid'
+      assign gallery_classes = "sticky-product-section"
+    when 'slider'
+      if media_id_array.size < 12
+        assign gallery_classes = "sticky-product-section"
+      endif
+  endcase
+%}
+
+
+<style>
+    [data-style-id="{{ section.id }}--{{ block.id }}"] [data-style-thumbnail] {
+      border-color: {{ border_color }};
+    }
+    [data-style-id="{{ section.id }}--{{ block.id }}"] [data-style-thumbnail].active {
+      border-color: {{ hover_border_color }};
+      background-color: {{ hover_background_color }};
+    }
+</style>
+
+{% render '_utils.dynamic-css', block: block, selector: '& [data-style-thumbnail]', keys: 'width_height_aspect_object_fit,border_width_radius' %}
+{% render '_utils.dynamic-css', block: block, keys: "responsive_visibility, slider_cols_rows_align_x_align_y_gap" %}
+
+<section x-ref="thumbnails"
+         data-style-id="{{ section.id }}--{{ block.id }}"
+         class="grid
+                max-lg:-mx-[--layout-container-gutter] max-lg:px-[--layout-container-gutter]
+                overflow-x-auto scrollbar-none
+                gap-[--item-gap] lg:gap-[--item-gap-md] max-lg:mt-[--gallery-gap] {{ gallery_classes }}
+                {% if position == 'sidebar' %} lg:py-dynamic lg:mr-[--gallery-gap-md] lg:order-first {% else %} lg:mt-[--gallery-gap-md] order-1{% endif %}"
+         style="--item-gap-md: {{ item_gap | first }};--item-gap: {{ item_gap | last }};
+             --gallery-gap-md: {{ gallery_gap | first }};--gallery-gap: {{ gallery_gap | last }};
+             --w-md: {{ image_width | first }};--w: {{ image_width | last }};
+             --h-md: {{ image_height | first }};--h: {{ image_height | last }};"
+         data-settings="{{ block.settings | json | escape }}"
+    {{ block.shopify_attributes }}>
+
+  {% for media_id in media_id_array %}
+    {% liquid
+      assign media = media_array | where: "id", media_id | first
+
+      assign hide_class = "hidden"
+
+      if show_media_ids contains media.id
+        assign show_index0 = show_index0 | plus: 1
+        assign hide_class = ""
+      endif
+
+      if hide_media_ids contains media.id and hidden_class == ""
+        assign show_index0 = show_index0 | minus: 1
+      endif
+
+      if hide_media_ids contains media.id
+        assign show_index0 = show_index0 | minus: 1
+        assign hide_class = "!hidden"
+      endif
+
+      if forloop.first
+        assign sizes = "(max-width: 768px) 95vw, (max-width: 1024px) 50vw, 50vw"
+      endif
+      if forloop.index0 >= product.media.size
+        assign metafield_attribute = 'data-metafield-media'
+      endif
+    %}
+
+    <button type="button"
+            @click="() => $data.scrollToMediaById(+$el.getAttribute('data-media-id'))"
+            data-style-thumbnail
+            data-media-id="{{ media.id }}"
+            tabindex="-1"
+        {{ metafield_attribute }}
+            class="relative flex shrink-0 overflow-hidden {{ hide_class }}"
+            :class="$data?.state?.selected_media_id === {{ media.id }} ? 'active' : ''">
+      {% if show_index0 > 5 or section.index0 > 1 %}
+        {% assign preload = false %}
+      {% endif %}
+      {% render '_object.image', image: media.preview_image, preload: preload, sizes: '(max-width: 768px) 25vw, (max-width: 1024px) 20vw, 15vw', class: "w-full h-full object-[inherit]" %}
+    </button>
+  {% endfor %}
+</section>
+
+

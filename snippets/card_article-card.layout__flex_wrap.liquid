@@ -1,0 +1,80 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "layout__flex_wrap"
+  assign section_type = "card_article-card"
+  assign _location = block.settings.location
+  assign flex_row_wrap_align_x_align_y_gap = block.settings.flex_row_wrap_align_x_align_y_gap
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign border_width_radius = block.settings.border_width_radius
+  assign background_color = block.settings.background_color
+  assign background_gradient = block.settings.background_gradient
+  assign border_color = block.settings.border_color
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  assign columnIndex = forloop.index0
+%}
+
+{% render '_utils.dynamic-css', block: block %}
+
+<div class="flex h-auto flex-wrap overflow-hidden min-w-0"
+    {{ block.shopify_attributes }}
+     data-style-id="{{ section.id }}--{{ block.id }}">
+  {% for block in section.blocks %}
+    {% liquid
+      if forloop.index0 <= columnIndex
+        continue
+      endif
+      if block.type == 'layout__flex_wrap'
+        break
+      endif
+      if block.type == 'image'
+        continue
+      endif
+    %}
+
+    {% render '_utils.dynamic-css',
+        block: block,
+        selector: '&[data-style-column]',
+        keys: "max_w_flex_col_row_order_align, margin_top_bottom_left_right" %}
+
+    {% case block.type %}
+      {% when "dynamic-text" %}
+        <div class="{{ block.settings.responsive_visibility }}" {{ block.shopify_attributes }}
+             x-data="{ content: renderDynamicText($el.getAttribute('data-content')), content_check: renderDynamicText($el.getAttribute('data-content-check')) }"
+             data-content="{% render '_input.richtext', content: block.settings.title, class: block.settings.css_class, escape: true, block: block, forloop: forloop %}"
+             data-content-check="{{ block.settings.title | strip_html | escape }}"
+             x-effect="() => { if (card?.selected_variant || card?.hydrated) { content = renderDynamicText($el.getAttribute('data-content')) } }"
+             data-style-id="{{ section.id }}--{{ block.id }}"
+             x-show="!!content_check.trim()"
+             {% if block.settings.link_to_blog %}
+              :title="`${card?.article?.url}`"
+              role="button"
+              tabindex="0"
+              @click.prevent.stop="barba.go(`${card?.article?.url}`);"
+            {% endif %}
+             x-cloak
+             data-style-column>
+          <div x-html="content"></div>
+        </div>
+      {% when "dynamic-button" %}
+        <div class="{{ block.settings.responsive_visibility }}" {{ block.shopify_attributes }}
+             data-content="{% render '_input.inline_richtext', content: block.settings.label, escape: true, block: block, forloop: forloop %}"
+             x-data="{ content: renderDynamicText($el.getAttribute('data-content')), url: renderDynamicText(`{{ block.settings.url }}`) }"
+             x-effect="() => { if (card?.selected_variant || card?.hydrated) { content = renderDynamicText($el.getAttribute('data-content')); url = renderDynamicText(`{{ block.settings.url }}`) } }"
+             data-style-id="{{ section.id }}--{{ block.id }}"
+             x-cloak
+             x-show="!!content"
+             data-style-column>
+          <a :href="url" x-html="content" class="w-full {{ block.settings.button_class }}"></a>
+        </div>
+      {% when "labels" %}
+        {% render 'card_article-card.labels', block: block, forloop: forloop %}
+      {% when "dynamic-image-w-caption" %}
+        {% render 'card_article-card.dynamic-image-w-caption', block: block, forloop: forloop %}
+    {% endcase %}
+  {% endfor %}
+</div>

@@ -1,0 +1,242 @@
+{%- render "image-banner" -%}
+{% schema %}
+{
+  "name": "Image Banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "Media Position",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "background color"
+    },
+    {
+      "type": "header",
+      "content": "Section Globals"
+    },
+    {
+      "type": "text",
+      "id": "vertical_padding_section",
+      "label": "Top padding | Bottom Padding",
+      "default": "0 | 0 "
+    },
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section Id"
+    },
+    {
+      "type": "select",
+      "id": "container_spacing",
+      "default": "px-container-md",
+      "options": [
+        {
+          "value": "px-container-xs",
+          "label": "xs"
+        },
+        {
+          "value": "px-container-sm",
+          "label": "sm"
+        },
+        {
+          "value": "px-container-md",
+          "label": "md"
+        },
+        {
+          "value": "px-container-lg",
+          "label": "lg"
+        },
+        {
+          "value": "px-container-fullwidth",
+          "label": "fullwidth"
+        },
+        {
+          "value": "px-container-gutter",
+          "label": "magazine"
+        }
+      ],
+      "label": "Container Spacing"
+    },
+    {
+      "type": "select",
+      "id": "responsive_visibility",
+      "label": "Responsive Visibility",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile"
+        },
+        {
+          "value": "desktop-tablet-only",
+          "label": "Desktop"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Richtext",
+      "type": "richtext",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "richtext",
+          "id": "preheading",
+          "label": "Preheading"
+        },
+        {
+          "type": "text",
+          "id": "preheading_class",
+          "label": "Preheading class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "richtext",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "heading_class",
+          "label": "Heading class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "richtext",
+          "id": "subheading",
+          "label": "Subheading"
+        },
+        {
+          "type": "text",
+          "id": "subheading_class",
+          "label": "Subheading class",
+          "default": "richtext-md"
+        },
+        {
+          "type": "header",
+          "content": "Content Settings"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text Color"
+        }
+      ]
+    },
+    {
+      "name": "Button",
+      "type": "button",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Button"
+        },
+        {
+          "type": "text",
+          "id": "button_primary_text",
+          "label": "Button text"
+        },
+        {
+          "type": "url",
+          "id": "button_primary_url",
+          "label": "Button Url"
+        },
+        {
+          "type": "text",
+          "id": "button_primary_class",
+          "label": "Button class",
+          "default": "button-primary"
+        }
+      ]
+    },
+    {
+      "name": "Image",
+      "type": "image",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Media Content"
+        },
+        {
+          "type": "header",
+          "content": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "desktop_image",
+          "label": "Desktop image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Banner",
+      "blocks": [
+        {
+          "type": "image",
+          "settings": {
+            "desktop_image": "shopify://shop_images/Image_Ratios_1.png"
+          }
+        },
+        {
+          "type": "richtext",
+          "settings": {
+            "preheading": "<p><strong>BUY NOW, PAY LATER </strong></p>",
+            "preheading_class": "richtext-md",
+            "heading": "<h2><strong>Flexible Payment Plans with Affirm </strong></h2>",
+            "heading_class": "richtext-md",
+            "subheading": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel rhoncus est. Integer iaculis sapien. Dolor sit amet, consectetur adipiscing elit, learn more.</p>",
+            "subheading_class": "richtext-md",
+            "text_color": ""
+          }
+        }
+      ],
+      "settings": {
+        "media_position": "right",
+        "background_color": "#f6f4f2",
+        "vertical_padding_section": "48px | 48px",
+        "section_id": "",
+        "container_spacing": "px-container-md",
+        "responsive_visibility": ""
+      }
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "*"
+    ]
+  }
+}
+{% endschema %}

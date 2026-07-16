@@ -1,0 +1,94 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "_blocks.image-with-content"
+  assign image = block.settings.image
+  assign width_height_aspect_object_fit = block.settings.width_height_aspect_object_fit
+  assign url = block.settings.url
+  assign title = block.settings.title
+  assign content_class = block.settings.content_class
+  assign flex_row_wrap_align_x_align_y_gap = block.settings.flex_row_wrap_align_x_align_y_gap
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign border_width_radius = block.settings.border_width_radius
+  assign background_gradient = block.settings.background_gradient
+  assign border_color = block.settings.border_color
+  assign additional_content = block.settings.additional_content
+  assign additional_content_class = block.settings.additional_content_class
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign margin_top_bottom_left_right_align = block.settings.margin_top_bottom_left_right_align
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign hide_if_empty = block.settings.hide_if_empty
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign color_override = block.settings.color_override
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if request.design_mode != true
+    if image == blank
+      assign is_empty = true
+    endif
+    if hide_if_empty == 'block' and is_empty
+      echo '<script type="block/hide"></script>'
+      break
+    endif
+    if hide_if_empty == 'container' and is_empty
+      echo '<script type="container/break"></script>'
+      break
+    endif
+    if hide_if_empty == 'section' and is_empty
+      echo '<script type="section/break"></script>'
+      break
+    endif
+  endif
+%}
+{% liquid
+  if color_override != blank and color_override.alpha != 0
+    assign color = color_override | default: "inherit"
+  endif
+%}
+
+{% render '_utils.dynamic-css',
+    block: block,
+    keys: "responsive_visibility, width_height_aspect_object_fit, border_width_radius, max_w_flex_col_row_order_align, border_color" %}
+
+
+<figure
+    data-style-id="{{ section.id }}--{{ block.id }}"
+    {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+    {{ block.shopify_attributes }}
+    style="color: {{ color }}"
+    {% if url != blank %}
+      title="{{ url }}"
+      role="button"
+      tabindex="0"
+      @click.prevent.stop="barba.go('{{ url }}'); $modal.setId('')"
+    {% endif %}
+    class="group relative overflow-hidden">
+  {% render '_object.image', image: image, class: "w-full h-full object-[inherit] transition-all scale-100 group-hf:scale-105", sizes: '(max-width: 768px) 95vw, (max-width: 1024px) 50vw, 36vw' %}
+
+  {% if title != blank or background_gradient != blank %}
+
+    {% render '_utils.dynamic-css',
+        block: block,
+        selector: "& [data-primary-content]",
+        keys: "padding_top_bottom_left_right, background_gradient, flex_row_wrap_align_x_align_y_gap" %}
+
+    <figcaption class="absolute inset-0 flex flex-wrap text-theme-overlay-text" data-primary-content>
+      {% render '_input.richtext', content: title, class: content_class, block: block, forloop: forloop %}
+    </figcaption>
+  {% endif %}
+
+  {% if additional_content != blank %}
+    {% render '_utils.dynamic-css',
+        block: block,
+        selector: "& [data-additional-content]",
+        keys: "flex_direction_align_x_align_y_gap_wrap, margin_top_bottom_left_right_align" %}
+
+    <figcaption class="absolute inset-0 flex flex-wrap text-theme-overlay-text" data-additional-content>
+      {% render '_input.richtext', content: additional_content, class: additional_content_class, block: block, forloop: forloop %}
+    </figcaption>
+  {% endif %}
+</figure>

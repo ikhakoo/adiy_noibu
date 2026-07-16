@@ -1,0 +1,147 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "layout__details_card"
+  assign section_type = "bundle"
+  assign flex_direction_align_x_align_y_gap_wrap = block.settings.flex_direction_align_x_align_y_gap_wrap
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign border_width_radius = block.settings.border_width_radius
+  assign background_color = block.settings.background_color
+  assign border_color = block.settings.border_color
+  assign background_blur = block.settings.background_blur
+  assign text_color = block.settings.text_color
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture container_content %}
+  {% render '_utils.dynamic-css', block: block, keys: 'responsive_visibility, max_w_flex_col_row_order_align, margin_top_bottom_left_right' %}
+  {% render '_utils.dynamic-css', block: block, selector: '& [data-style-details-card]', keys: 'padding_top_bottom_left_right,border_width_radius,background_color,border_color,text_color,flex_direction_align_x_align_y_gap_wrap' %}
+
+  <div class="fixed inset-0 bg-[--color-modal-background] {{ background_blur }} transition-all duration-300 ease-in-out lg:hidden"
+       :class="clsx(open ? 'z-[2147483647]' : 'z-50')"
+       x-show="open"
+       x-effect="()  => {
+         open = $editor?.select_block_id === '{{ block.id }}' || $data.bundle?.show_mobile_details;
+         document.body.classList.toggle('!overflow-hidden', open && $data.windowWidth < 1024);
+       }"
+       x-cloak
+       @click="$data.bundle.show_mobile_details = false"
+       x-transition:enter-start="opacity-0"
+       x-transition:enter-end="opacity-100"
+       x-transition:leave-start="opacity-100"
+       x-transition:leave-end="opacity-0"></div>
+  <div
+      data-style-id="{{ section.id }}--{{ block.id }}"
+      {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+      {{ block.shopify_attributes }}
+      class="overflow-hidden scrollbar-none max-lg:fixed max-lg:bottom-0 max-lg:inset-x-0 max-lg:max-h-[calc(var(--vh,1vh)*86)] max-lg:overflow-y-auto"
+      x-cloak
+      x-init="$el.classList.add('max-lg:transition-[height]','max-lg:duration-300')"
+      :class="clsx(open ? 'max-lg:z-[2147483647]' : 'max-lg:z-[100]', $data.windowWidth < 1024 && !inViewport && !open ? 'opacity-0 pointer-events-none' : '')"
+      @keydown.esc.document="if (open) { $data.bundle.show_mobile_details = false }">
+    <div class="relative overflow-hidden" data-style-details-card>
+      {% liquid
+        assign count = 0
+        assign allow_no_cols = true
+        for block in section.blocks
+          if forloop.index0 <= columnIndex
+            continue
+          endif
+          if block.type contains 'layout__'
+            break
+          endif
+
+          if block.type == 'layout_child__end'
+            assign allow_no_cols = true
+          endif
+
+          if allow_no_cols
+            if block.type == 'added_products'
+              render 'bundle.added_products', block: block, forloop: forloop
+            endif
+            if block.type == 'added_product_line_items'
+              render 'bundle.added_product_line_items', block: block, forloop: forloop
+            endif
+            if block.type == 'bundle_selector'
+              render 'bundle.bundle_selector', block: block, forloop: forloop
+            endif
+            if block.type == 'filters'
+              render 'bundle.filters', block: block, forloop: forloop
+            endif
+            if block.type == 'product_group'
+              render 'bundle.product_group', block: block, forloop: forloop
+            endif
+            if block.type == 'progress_bar'
+              render 'bundle.progress_bar', block: block, forloop: forloop
+            endif
+            if block.type == 'subscription_selector'
+              render 'bundle.subscription_selector', block: block, forloop: forloop
+            endif
+            if block.type == 'tab_navigation'
+              render 'bundle.tab_navigation', block: block, forloop: forloop
+            endif
+            if block.type == 'filter_navigation'
+              render 'bundle.filter_navigation', block: block, forloop: forloop
+            endif
+            if block.type == 'filter_reset_button'
+              render 'bundle.filter_reset_button', block: block, forloop: forloop
+            endif
+            if block.type == 'add_button'
+              render 'bundle.add_button', block: block, forloop: forloop
+            endif
+            if block.type == 'richtext'
+              render 'bundle.richtext', block: block, forloop: forloop
+            endif
+            if block.type == 'button'
+              render 'bundle.button', block: block, forloop: forloop
+            endif
+            if block.type == 'image-with-caption'
+              render 'bundle.image-with-caption', block: block, forloop: forloop
+            endif
+            if block.type == 'mobile_trigger_button'
+              render 'bundle.mobile_trigger_button', block: block, forloop: forloop
+            endif
+            if block.type == 'quiz_result_product_group'
+              render 'bundle.quiz_result_product_group', block: block, forloop: forloop
+            endif
+            if block.type == 'subtotal'
+              render 'bundle.subtotal', block: block, forloop: forloop
+            endif
+            if block.type == 'order_summary'
+              render 'bundle.order_summary', block: block, forloop: forloop
+            endif
+            if block.type == 'order_totals'
+              render 'bundle.order_totals', block: block, forloop: forloop
+            endif
+            if block.type == 'image'
+              render 'bundle.image', block: block, forloop: forloop
+            endif
+            if block.type == 'upsell_products'
+              render 'bundle.upsell_products', block: block, forloop: forloop
+            endif
+          endif
+
+          if block.type == 'layout_child__flex_card'
+            render 'bundle.layout_child__flex_card', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+            assign allow_no_cols = false
+          endif
+
+          assign count = count | plus: 1
+        endfor
+
+        if count == 0
+          assign no_dynamic_content = true
+        endif
+      %}
+    </div>
+  </div>
+{% endcapture %}
+
+{% if container_content contains '<script type="container/break"></script>' %}
+  {% break %}
+{% endif %}
+{{ container_content }}

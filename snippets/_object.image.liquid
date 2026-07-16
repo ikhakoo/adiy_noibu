@@ -1,0 +1,130 @@
+{% comment %}
+    Generates CSS for Typset declarations -> `sections/typography.liquid`
+
+    Accepts:
+    - selector: {string} CSS Selector
+    - font_family: {string} CSS Font Family
+    - fallback_fonts: {string} CSS Font Fallback Families
+    - size_weight_height_opacity: {string} Size / Weight/ Height / Opacity declarations (desktop / mobile)
+    - spacing_transform_style: {string} Letterspace / Transform / Style declarations (desktop / mobile)
+
+    Usage:
+    {% render '_utils.typeset-css', font_family: font_family, fallback_fonts: fallback_fonts, size_weight_height_opacity: size_weight_height_opacity, spacing_transform_style: spacing_transform_style_whitespace %}
+
+    Notes:
+    Render needs to be within a html <style></style> tag as the output is plain CSS.
+{% endcomment %}
+
+{% comment %}
+
+Variables:
+ image: Image Drop
+ default_alt: string
+ class: string
+ placeholder:
+    | image
+    | collection-1
+    | collection-2
+    | collection-3
+    | collection-4
+    | collection-5
+    | collection-6
+    | lifestyle-1
+    | lifestyle-2
+    | product-1
+    | product-2
+    | product-3
+    | product-4
+    | product-5
+    | product-6
+
+{% endcomment %}
+
+
+{% assign class = class | append: " select-none" %}
+{% if image != blank %}
+
+  {% liquid
+
+    assign defaultSizes = ''
+    assign sizes = sizes | default: defaultSizes
+
+    assign defaultSrcset = '48,96,256,384,460,640,1200,1920,3840'
+
+    assign desiredSizes = defaultSrcset | split: ',' | uniq | compact
+    if width == blank and height != blank
+      assign checkWidth = height | times: image.aspect_ratio
+    endif
+    assign checkWidth = width | default: checkWidth | default: image.width
+    if maxWidth and image.width > maxWidth
+      assign width = maxWidth | at_most: checkWidth
+      assign height = maxWidth | times: image.aspect_ratio | round
+    endif
+    assign maxWidth = maxWidth | default: image.width | at_most: checkWidth | times: 1
+    assign width = width | default: image.width | at_most: checkWidth
+    assign height = height | default: image.height
+
+    assign defaultSrcset = ''
+    assign break = false
+
+    for size in desiredSizes
+      if break
+        break
+      endif
+      assign currentSize = size | times: 1
+
+      if maxWidth <= currentSize
+        assign break = true
+      endif
+      assign currentWidth = currentSize
+
+      assign imageUrl = image.src | image_url: width: currentWidth | append: " " | append: currentSize | append: 'w' | prepend: ','
+      assign defaultSrcset = defaultSrcset | append: imageUrl
+    endfor
+    assign srcset = srcset | default: defaultSrcset | replace_first: ','
+
+    assign alt = image.alt | default: default_alt
+    if image.presentation.focal_point
+      assign focalPointStyle = 'object-position: ' | append: image.presentation.focal_point | append: ';'
+    endif
+
+    assign style = focalPointStyle | append: style
+
+    if preload
+      assign loading = 'eager'
+    endif
+    unless loading
+      assign loading = 'lazy'
+    endunless
+    unless alt or role
+      assign role = 'presentation'
+    endunless
+    assign imageFile = image.src | image_url
+
+  %}
+
+  {{ image
+  | image_url: height: height, width: width
+  | image_tag: alt: alt, class: class, style: style, sizes: sizes, preload: preload, loading: loading, role: role, srcset: srcset, data-image: loading, data-before-image: data-before-image }}
+{% endif %}
+{% if request.visual_preview_mode and placeholder == blank %}
+  {% assign placeholder = 'product-1' %}
+{% endif %}
+{% if image == blank and placeholder and placeholder != blank %}
+  {% assign svg = placeholder | placeholder_svg_tag %}
+  {% assign svgURI = 'data:image/svg+xml;utf8,' | append: svg %}
+  {% if request.visual_preview_mode %}
+    <img src='https://cdn.shopify.com/s/files/1/0589/1430/8233/files/1__image.jpg'
+         class="{{ class }}"
+         height="{{ height }}"
+         width="{{ width }}" />
+  {% else %}
+    <img src='data:image/svg+xml;utf8,{{ placeholder | placeholder_svg_tag }}'
+         class="rounded-[inherit] border-2 border-gray-300 !w-[calc(100%-4px)] !h-[calc(100%-4px)] m-0.5 {{ class }}"
+         height="{{ height }}"
+         width="{{ width }}"
+         role="presentation" />
+  {% endif %}
+
+{% endif %}
+

@@ -1,0 +1,239 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "layout__grid"
+  assign section_type = "modal_search"
+  assign show_search_conditionally = block.settings.show_search_conditionally
+  assign grid_cols_align_x_align_y_gap = block.settings.grid_cols_align_x_align_y_gap
+  assign padding_top_bottom_left_right = block.settings.padding_top_bottom_left_right
+  assign border_width_radius = block.settings.border_width_radius
+  assign background_color = block.settings.background_color
+  assign border_color = block.settings.border_color
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% capture container_content %}
+  {% render '_utils.dynamic-css', block: block %}
+
+  <div
+      data-style-id="{{ section.id }}--{{ block.id }}"
+      {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
+      {{ block.shopify_attributes }}
+      class="grid"
+      x-show="$store.search?.showSearchConditionally(`{{ show_search_conditionally }}`) || $editor?.select_block_id === `{{ block.id }}`"
+      {{ block.shopify_attributes }}>
+    {% liquid
+      assign count = 0
+      assign allow_no_cols = true
+      for block in section.blocks
+        if forloop.index0 <= columnIndex
+          continue
+        endif
+        if block.type contains "layout__"
+          break
+        endif
+
+        if allow_no_cols
+          if block.type == 'query_results' or block.type == 'product_results' or block.type == 'collection_results' or block.type == 'article_results' or block.type == 'page_results'
+            render 'modal_search.results-block', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+          endif
+
+          if block.type == 'results_heading'
+            render 'modal_search.results_heading', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+          endif
+          
+          if block.type == "article-cards"
+            render "_blocks.article-cards", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "article-content"
+            render "_blocks.article-content", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "article-grid"
+            render "_blocks.article-grid", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "article-grid-collage"
+            render "_blocks.article-grid-collage", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "article-tags"
+            render "_blocks.article-tags", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "background"
+            render "_blocks.background", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "background-video"
+            render "_blocks.background-video", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "background-video-controls"
+            render "_blocks.background-video-controls", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "breadcrumbs"
+            render "_blocks.breadcrumbs", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "button"
+            render "_blocks.button", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "collapsible"
+            render "_blocks.collapsible", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "collection-cards"
+            render "_blocks.collection-cards", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "collection-grid"
+            render "_blocks.collection-grid", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "collections-image-caption"
+            render "_blocks.collections-image-caption", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "custom-liquid"
+            render "_blocks.custom-liquid", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "delivery-range"
+            render "_blocks.delivery-range", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "divider"
+            render "_blocks.divider", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "dynamic-collapsible-items"
+            render "_blocks.dynamic-collapsible-items", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "dynamic-content"
+            render "_blocks.dynamic-content", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "dynamic-faq-items"
+            render "_blocks.dynamic-faq-items", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "dynamic-image-w-caption"
+            render "_blocks.dynamic-image-w-caption", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "dynamic-product-cards"
+            render "_blocks.dynamic-product-cards", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "hide-section"
+            render "_blocks.hide-section", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "image"
+            render "_blocks.image", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "image-with-caption"
+            render "_blocks.image-with-caption", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "image-with-content"
+            render "_blocks.image-with-content", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "inline-richtext"
+            render "_blocks.inline-richtext", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "language-selector"
+            render "_blocks.language-selector", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "list-items"
+            render "_blocks.list-items", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "location-selector"
+            render "_blocks.location-selector", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "menu"
+            render "_blocks.menu", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "newsletter-signup"
+            render "_blocks.newsletter-signup", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "payment-types"
+            render "_blocks.payment-types", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "product-cards"
+            render "_blocks.product-cards", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "product-grid"
+            render "_blocks.product-grid", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "product-rating"
+            render "_blocks.product-rating", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "products-image-caption"
+            render "_blocks.products-image-caption", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "review-card"
+            render "_blocks.review-card", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "review-card-mobile"
+            render "_blocks.review-card-mobile", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "richtext"
+            render "_blocks.richtext", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "search-input"
+            render "_blocks.search-input", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "select-input"
+            render "_blocks.select-input", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "share"
+            render "_blocks.share", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "social-icons"
+            render "_blocks.social-icons", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "spacer"
+            render "_blocks.spacer", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "tab-image-with-caption"
+            render "_blocks.tab-image-with-caption", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "testimonial-card"
+            render "_blocks.testimonial-card", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "text-card"
+            render "_blocks.text-card", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "text-input"
+            render "_blocks.text-input", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "variant-based-button"
+            render "_blocks.variant-based-button", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "variant-based-text"
+            render "_blocks.variant-based-text", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "video"
+            render "_blocks.video", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "video-button"
+            render "_blocks.video-button", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          if block.type == "video-product-card"
+            render "_blocks.video-product-card", block: block, forloop: forloop, section_type: section_type, form: form
+          endif
+          assign count = count | plus: 1
+        endif
+      
+      if block.type == 'layout_child__end'
+          assign allow_no_cols = true
+      endif
+
+      if block.type == 'layout_child__flex_card'
+          render 'modal_search.layout_child__flex_card', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+          assign allow_no_cols = false
+        endif
+        if block.type == 'layout_child__grid_card'
+          render 'modal_search.layout_child__grid_card', block: block, forloop: forloop, section_type: section_type, form: form, columnIndex: forloop.index0
+          assign allow_no_cols = false
+        endif
+
+      endfor
+
+      if count == 0
+        assign no_dynamic_content = true
+      endif
+    %}
+  </div>
+{% endcapture %}
+
+{% if container_content contains '<script type="container/break"></script>' %}
+  {% break %}
+{% endif %}
+{{ container_content }}
