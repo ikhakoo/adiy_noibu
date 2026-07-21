@@ -25,7 +25,7 @@
           name="checkout"
           value="Checkout"
           @click="checkingOut = true; await utils.delay(5000); checkingOut = false"
-          class="{{ button_class }} w-full"
+          class="{{ button_class }} w-full button"
           x-effect="()=> { $el.toggleAttribute('disabled', $cart.loading || $cart.debounce_updates?.length) }"
           :class="$cart.loading || $cart.debounce_updates?.length || checkingOut ? 'button-loading pointer-events-none': '' "
           :disabled="$cart.loading || $cart.debounce_updates?.length"

@@ -17,27 +17,14 @@ document.addEventListener('click', function (e) {
 
 
 
-// remove #tag link which call from anchor 
-
 document.addEventListener("click", function (e) {
-  const link = e.target.closest('a[href^="#"]');
-  if (!link) return;
+  const btn = e.target.closest(".book-btn-call");
+
+  if (!btn) return;
 
   e.preventDefault();
-
-  const target = document.querySelector(link.getAttribute("href"));
-  if (target) {
-    target.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-
-    history.replaceState(null, "", location.pathname + location.search);
-  }
+  window.location.href = btn.href;
 });
-
-// end
-
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -111,3 +98,33 @@ function observePlayer(player, element) {
 
   observer.observe(element);
 }
+
+
+// show start-with-text in cart drawer
+document.addEventListener('DOMContentLoaded', () => {
+  const cartText = document.querySelector('.cart-navigation-text');
+  const target = document.querySelector('.start-img-text');
+
+  if (!cartText || !target) return;
+
+  function toggleClass() {
+    const text = cartText.textContent.trim();
+
+    if (!text.includes('(0)')) {
+      target.classList.add('show');
+    } else {
+      target.classList.remove('show');
+    }
+  }
+
+  // Initial check
+  toggleClass();
+
+  // Observe changes because Alpine updates the text dynamically
+  const observer = new MutationObserver(toggleClass);
+  observer.observe(cartText, {
+    childList: true,
+    subtree: true,
+    characterData: true
+  });
+});

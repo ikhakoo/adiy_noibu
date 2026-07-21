@@ -22,7 +22,7 @@
          x-effect="()=> { if ($modal.id === 'cart-drawer') { $nextTick(() => initMarqueeAnimationBlock($el)) } }"
          data-block-id="{{ block.id }}"
          data-block-index="{{ forloop.index0 }}"
-         class="relative z-0 overflow-hidden snap-center {{ color_scheme }} {{ responsive_visibility_cart }}"
+         class="annoucement-bar-cart-drawer relative z-0 overflow-hidden snap-center {{ color_scheme }} {{ responsive_visibility_cart }}"
     {{ block.shopify_attributes }} {{ marquee_attributes }}>
   <div class="md:opacity-0 @max-md:opacity-100 md:pointer-events-none flex flex-col justify-center absolute inset-0 px-[--layout-container-gutter] {{ align_horizontal__desktop }} {{ align_horizontal__mobile }}"
        {% if marquee_animation_mobile %}data-marquee-animation{% endif %}>

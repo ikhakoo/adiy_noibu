@@ -59,7 +59,7 @@
              x-transition:enter-end="translate-x-0"
              x-transition:leave-start="translate-x-0"
              x-transition:leave-end="translate-x-full">
-      <main class="absolute overflow-hidden {{ color_scheme }} {{ container_classes }}">
+      <main class="absolute overflow-hidden {{ color_scheme }} {{ container_classes }}" id="main-drawer-custom">
         <form @scroll="$refs?.header?.classList?.toggle('shadow', $el.scrollTop)"
               data-cart-drawer-checkout-form
               action="{{ routes.cart_url }}"

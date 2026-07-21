@@ -70,7 +70,8 @@
     {{ block.shopify_attributes }}
      class="flex flex-col gap-2" style="{{ styles | strip_newlines }}">
   <template x-for="(item, index) in $cart.state.items" :key="index">
-    <section class="flex items-start flex-wrap gap-dynamic {{ border_divider }}"
+
+    <section class="cart-drawer-product flex items-start flex-wrap gap-dynamic {{ border_divider }}"
              x-show="!item?.properties?._p_id_link || 
                     !$cart.state?.items?.some(line => {
                       line.quantity && line?.properties?._p_id && 
@@ -107,10 +108,10 @@
              sizes="(max-width: 768px) 20vw, (max-width: 1024px) 33vw, 33vw"
              data-style-image>
       </picture>
-      <main class="flex flex-1 flex-col">
+      <main class="c flex flex-1 flex-col">
         <div class="gap-dynamic flex" style="{{ icon_styles | strip_newlines }}">
-          <div class="flex flex-1 flex-col">
-            <p x-html="item?.product_title" class="flex-1 {{ title_class }}"
+          <div class="flex flex-1 flex-col cart-product-content">
+            <p x-html="item?.product_title" class="title flex-1 {{ title_class }}"
                 role="button"
                 tabindex="0"
                 @click.prevent.stop="barba.go(item?.url); $modal.setId('')"></p>
@@ -135,8 +136,8 @@
                 </template>
               </div>
             {% endif %}
-            <div class="mt-2 grid grid-cols-[auto,auto] gap-2">
-              <div class="flex items-center justify-between gap-2">
+            <div class="mt-2 grid grid-cols-[auto,auto] gap-2 cart-quantity-selector">
+              <div class="flex items-center justify-between gap-2 cart-quantity-selector-inner">
                 <div class="flex w-min">
                   <div class="flex items-center justify-between {{ quantity_class }}"
                       @click.prevent.stop="()=>{}">
@@ -192,9 +193,35 @@
                   Remove
                 </button>
               {% endif %}
+              <div class="flex flex-col justify-between items-end cart-product-price">
+                <div class="flex flex-col gap-2 mt-1.5 items-end cart-product-price-inner">
+                  <div class="{{ price_class }} main-price"
+                    :style="`{{ color_override_price | escape }}` !== 'rgba(0,0,0,0)' ? 'color: {{ color_override_price | escape }}' : ''"
+                    x-html="utils.formatMoney(item?.final_price)"></div>
+                    {% if compare_at_price_class != blank %}
+                      <div class="line-through {{ compare_at_price_class }} compare-price"
+                            :style="`{{ color_override_compare | escape }}` !== 'rgba(0,0,0,0)' ? 'color: {{ color_override_compare | escape }}' : ''"
+                            x-show="Math.max(item?.original_price, variant?.compare_at_price ?? 0) > item?.final_price"
+                            x-html="utils.formatMoney(Math.max(item?.original_price, variant?.compare_at_price ?? 0))"></div>
+                      <div class="save-price"
+                          x-show="Math.max(item?.original_price, variant?.compare_at_price ?? 0) > item?.final_price"
+                          x-html="`Save ${utils.formatMoney(Math.max(item?.original_price, variant?.compare_at_price ?? 0) - item?.final_price).replace('.00', '')}`">
+                      </div>
+                    {% endif %}
+                  </div>
+              </div>
             </div>
+            
           </div>
-          <div class="flex flex-col justify-between items-end">
+          {% if remove_button_type == 'icon' %}
+            <button type="button"
+                    class="h-0 w-4 overflow-visible product-remove-icon"
+                    :disabled="$cart.loading"
+                    @click="_cart.updateLineItemQuantity(0, index);  sub_items?.forEach(item => _cart.updateLineItemQuantity(0, item.index))">
+              {% render "_components.icon", icon: icon, class: "w-dynamic h-dynamic -mt-[var(--h)]" %}
+            </button>
+          {% endif %}
+          {% comment %} <div class="flex flex-col justify-between items-end">
             <div class="flex flex-col gap-2 mt-1.5 items-end">
               <div class="{{ price_class }}"
                 :style="`{{ color_override_price | escape }}` !== 'rgba(0,0,0,0)' ? 'color: {{ color_override_price | escape }}' : ''"
@@ -215,7 +242,7 @@
                 </button>
               {% endif %}
 
-          </div>
+          </div> {% endcomment %}
 
         </div>
 
@@ -242,7 +269,7 @@
                      sizes="(max-width: 768px) 10vw, (max-width: 1024px) 15vw, 20vw"
                      data-style-image>
               </picture>
-              <main class="flex flex-1 flex-col">
+              <main class="d flex flex-1 flex-col">
                 <div class="gap-dynamic flex" style="{{ icon_styles | strip_newlines }}">
                   <p x-html="sub_item?.product_title" class="flex-1 richtext-md h6"
                       role="button"
@@ -297,4 +324,3 @@
     </section>
   </template>
 </div>
-

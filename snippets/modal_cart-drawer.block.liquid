@@ -50,7 +50,7 @@
 
   if block.type == 'dynamic-richtext'
     render 'modal_cart-drawer.dynamic-richtext', block: block, forloop: forloop, section_type: section_type, form: form
-  endif
+  endif 
 
   if block.type == 'cart-note'
     render 'modal_cart-drawer.cart-note', block: block, forloop: forloop, section_type: section_type, form: form
@@ -58,6 +58,10 @@
 
   if block.type == 'cart_total'
     render 'modal_cart-drawer.cart_total', block: block, forloop: forloop, section_type: section_type, form: form
+  endif
+ 
+  if block.type == 'cart_price_chart'
+    render 'modal_cart-drawer.cart_price_chart', block: block, forloop: forloop, section_type: section_type, form: form
   endif
 
   if block.type == 'cart_discount_lines'

@@ -24,7 +24,7 @@
       {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
       {{ block.shopify_attributes }}
       x-show="_cart.showConditionally(`{{ show_conditionally }}`) || $editor?.select_block_id === `{{ block.id }}`"
-      class="relative overflow-hidden">
+      class="relative overflow-hidden {{ block.settings.custom-class-inline-flex }}">
     {% liquid
       assign count = 0
 

@@ -6,7 +6,7 @@
 -%}
 {%- comment -%} Auto Generated Variables end {%- endcomment -%}
 
-<div class="w-full relative @container"
+<div class="w-full relative @container cart-drawer-announcement-bar"
     {{ block.shopify_attributes }}
      x-show="_cart.showConditionally(`{{ show_conditionally }}`) || $editor?.select_block_id === `{{ block.id }}`"
      x-init="()=>{ const node = document.querySelector('[data-announcement-bar]')?.cloneNode(true); if (!node) return; node?.removeAttribute('data-announcement-bar'); node?.classList.add('!px-0'); $el.appendChild(node)}">

@@ -1,0 +1,95 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign block_type = "cart_price_chart"
+  assign section_type = "modal_cart-drawer"
+  assign show_conditionally = block.settings.show_conditionally
+  assign price_class = block.settings.price_class
+  assign compare_at_price_class = block.settings.compare_at_price_class
+  assign margin_top_bottom_left_right = block.settings.margin_top_bottom_left_right
+  assign max_w_flex_col_row_order_align = block.settings.max_w_flex_col_row_order_align
+  assign responsive_visibility = block.settings.responsive_visibility
+  assign responsive_breakpoint = block.settings.responsive_breakpoint
+  assign anchor_id = block.settings.anchor_id
+  assign color_override = block.settings.color_override
+-%}
+
+<div 
+  
+  x-data="{
+    originalSubtotal: '$0',
+    totalDiscount: '$0',
+    finalTotal: '$0',
+    hasDiscount: false,
+
+    calculateTotals() {
+      let totalOriginal = 0;
+      let totalFinal = 0;
+
+      // Cart drawer ke andar har product product-row ko target karein
+      document.querySelectorAll('.cart-drawer-product').forEach(row => {
+        // Quantity select karein
+        const qtyInput = row.querySelector('input[name=\'value\']');
+        const qty = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
+
+        // Prices elements select karein
+        const mainPriceEl = row.querySelector('.main-price');
+        const comparePriceEl = row.querySelector('.compare-price');
+
+        if (mainPriceEl) {
+          // Comma aur dollar sign remove karke float number nikala
+          const finalPrice = parseFloat(mainPriceEl.textContent.replace(/[^0-9.]/g, '')) || 0;
+          
+          let originalPrice = finalPrice;
+          if (comparePriceEl && comparePriceEl.style.display !== 'none') {
+            originalPrice = parseFloat(comparePriceEl.textContent.replace(/[^0-9.]/g, '')) || finalPrice;
+          }
+
+          // Total sum dollars me
+          totalOriginal += (originalPrice * qty);
+          totalFinal += (finalPrice * qty);
+        }
+      });
+
+      const discount = totalOriginal - totalFinal;
+
+      // Cents formatting ke baad .00 decimals ko remove kiya gaya (.replace(/\.00$/, ''))
+      this.originalSubtotal = utils.formatMoney(totalOriginal * 100).replace(/\.00$/, '');
+      this.finalTotal = utils.formatMoney(totalFinal * 100).replace(/\.00$/, '');
+      this.totalDiscount = utils.formatMoney(discount * 100).replace(/\.00$/, '');
+      this.hasDiscount = discount > 0;
+    }
+  }"
+  x-init="
+    $nextTick(() => calculateTotals());
+    // Jab bhi Alpine cart state change ho, calculation dobara run karein
+    $watch('$cart.state', () => {
+      setTimeout(() => calculateTotals(), 100);
+    });
+  "
+  class="custom-cart-totals p-5 bg-[#f7f6f2] rounded-lg mt-4" style="padding:0; margin-top: 0;">
+
+  <!-- 1. Subtotal -->
+  <div class="flex justify-between items-center mb-3">
+    <span class="text-[16px] text-[#555]">Subtotal</span>
+    <span class="text-[18px] font-semibold" x-text="originalSubtotal"></span>
+  </div>
+
+  <!-- 2. Discount -->
+  <div class="flex justify-between items-center mb-3 text-[#3a6958]" x-show="hasDiscount">
+    <span class="text-[16px]">Discount</span>
+    <span class="text-[18px] font-semibold" x-text="`-${totalDiscount}`"></span>
+  </div>
+
+  <!-- 3. Final Total -->
+  <div class="flex justify-between items-center">
+    <span class="text-[22px] font-bold text-[#111]">Total</span>
+    <div class="flex items-center gap-2">
+      <!-- Strikethrough comparison -->
+      <span class="line-through text-[16px] text-[#888]" 
+            x-show="hasDiscount" 
+            x-text="originalSubtotal">
+      </span>
+      <span class="text-[22px] font-bold text-[#111]" x-text="finalTotal"></span>
+    </div>
+  </div>
+</div>

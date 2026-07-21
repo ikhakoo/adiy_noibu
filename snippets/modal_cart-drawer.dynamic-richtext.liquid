@@ -39,5 +39,87 @@
     style="color: {{ color }}"
     x-show="_cart.showConditionally(`{{ show_conditionally }}`) || $editor?.select_block_id === `{{ block.id }}`"
     data-content="{% render '_input.richtext', content: title, class: content_class, escape: true, block: block, forloop: forloop %}"
-    x-html="_cart.renderDynamicTextWithFormattedPrice($el.getAttribute('data-content'))">
+    x-html="_cart.renderDynamicTextWithFormattedPrice($el.getAttribute('data-content'))"
+  class="dynamic-text {{ block.settings.custom-class }}">
+</div>
+
+<div 
+  
+  x-data="{
+    originalSubtotal: '$0',
+    totalDiscount: '$0',
+    finalTotal: '$0',
+    hasDiscount: false,
+
+    calculateTotals() {
+      let totalOriginal = 0;
+      let totalFinal = 0;
+
+      // Cart drawer ke andar har product product-row ko target karein
+      document.querySelectorAll('.cart-drawer-product').forEach(row => {
+        // Quantity select karein
+        const qtyInput = row.querySelector('input[name=\'value\']');
+        const qty = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
+
+        // Prices elements select karein
+        const mainPriceEl = row.querySelector('.main-price');
+        const comparePriceEl = row.querySelector('.compare-price');
+
+        if (mainPriceEl) {
+          // Comma aur dollar sign remove karke float number nikala
+          const finalPrice = parseFloat(mainPriceEl.textContent.replace(/[^0-9.]/g, '')) || 0;
+          
+          let originalPrice = finalPrice;
+          if (comparePriceEl && comparePriceEl.style.display !== 'none') {
+            originalPrice = parseFloat(comparePriceEl.textContent.replace(/[^0-9.]/g, '')) || finalPrice;
+          }
+
+          // Total sum dollars me
+          totalOriginal += (originalPrice * qty);
+          totalFinal += (finalPrice * qty);
+        }
+      });
+
+      const discount = totalOriginal - totalFinal;
+
+      // Cents formatting ke baad .00 decimals ko remove kiya gaya (.replace(/\.00$/, ''))
+      this.originalSubtotal = utils.formatMoney(totalOriginal * 100).replace(/\.00$/, '');
+      this.finalTotal = utils.formatMoney(totalFinal * 100).replace(/\.00$/, '');
+      this.totalDiscount = utils.formatMoney(discount * 100).replace(/\.00$/, '');
+      this.hasDiscount = discount > 0;
+    }
+  }"
+  x-init="
+    $nextTick(() => calculateTotals());
+    // Jab bhi Alpine cart state change ho, calculation dobara run karein
+    $watch('$cart.state', () => {
+      setTimeout(() => calculateTotals(), 100);
+    });
+  "
+  class="custom-cart-totals {{ block.settings.custom-class }} p-5 bg-[#f7f6f2] rounded-lg mt-4" style="padding:0; margin-top: 0;">
+
+  <!-- 1. Subtotal -->
+  <div class="flex justify-between items-center mb-3">
+    <span class="text-[16px] text-[#555]">Subtotal</span>
+    <span class="text-[18px] font-semibold" x-text="originalSubtotal"></span>
+  </div>
+
+  <!-- 2. Discount -->
+  <div class="flex justify-between items-center mb-3 text-[#3a6958]" x-show="hasDiscount">
+    <span class="text-[16px]">Discount</span>
+    <span class="text-[18px] font-semibold" x-text="`-${totalDiscount}`"></span>
+  </div>
+
+  <!-- 3. Final Total -->
+  <div class="flex justify-between items-center">
+    <span class="text-[22px] font-bold text-[#111]">Total</span>
+    <div class="flex items-center gap-2">
+      <!-- Strikethrough comparison -->
+      <span class="line-through text-[16px] text-[#888]" 
+            x-show="hasDiscount" 
+            x-text="originalSubtotal">
+      </span>
+      <span class="text-[22px] font-bold text-[#111]" x-text="finalTotal"></span>
+    </div>
+  </div>
 </div>

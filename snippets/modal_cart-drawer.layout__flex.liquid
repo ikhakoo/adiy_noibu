@@ -23,7 +23,7 @@
       data-style-id="{{ section.id }}--{{ block.id }}"
       {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
       {{ block.shopify_attributes }}
-      class="relative"
+      class="relative {{ block.settings.custom-class }}"
       x-show="_cart.showConditionally(`{{ show_conditionally }}`) || $editor?.select_block_id === `{{ block.id }}`">
     {% liquid
       assign count = 0
