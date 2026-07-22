@@ -355,9 +355,8 @@ export const initCart = () => {
     product_class,
     limit
   ) => {
-    const fallback_products = utils.JSONParse<_Product_hydrated[]>(
-      element.getAttribute("data-fallback-products")
-    );
+    const fallback_products =
+      utils.JSONParse<_Product_hydrated[]>(element.getAttribute("data-fallback-products")) ?? [];
 
     const lineItemProducts = await Promise.all(
       cart.state.items?.map((item) => _product.getHydratedProductData(item.handle, item.product_id))
@@ -547,9 +546,8 @@ export const initCart = () => {
     allow_duplicates: ModalCartDrawerBlocksGift_with_purchase["settings"]["allow_duplicates"],
     product_class: ModalCartDrawerBlocksGift_with_purchase["settings"]["product_card_class"]
   ) => {
-    const products = utils.JSONParse<_Product_hydrated[]>(
-      element.getAttribute("data-gift-products")
-    );
+    const products =
+      utils.JSONParse<_Product_hydrated[]>(element.getAttribute("data-gift-products")) ?? [];
 
     cart.gift_products =
       cart.state[target_type] >= target &&

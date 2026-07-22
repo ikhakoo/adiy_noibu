@@ -94,7 +94,19 @@ export const initQuickView = () => {
         this.dynamic_popups.push(popup);
       });
       const section = div.querySelector(`[data-content-root] [data-section-type="product"]`);
-      const sideContent = section.querySelector<HTMLElement>('[x-ref="content"]');
+      const sideContent = section?.querySelector<HTMLElement>('[x-ref="content"]');
+
+      // If the fetched HTML isn't a normal product template (redirect, soft-404,
+      // password/challenge page, or a template missing [x-ref="content"]), the
+      // quick view can't render — bail out and fall back to a full navigation so
+      // the spinner doesn't hang.
+      if (!section || !sideContent || !productData) {
+        this.loading_container.classList.add("opacity-0", "pointer-events-none");
+        this.open = false;
+        barba.go(cacheKey);
+        return;
+      }
+
       sideContent.classList.add("max-h-full", "overflow-y-auto");
 
       section.setAttribute("data-quick-view", "true");
