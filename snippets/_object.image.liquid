@@ -93,6 +93,9 @@ Variables:
     if preload
       assign loading = 'eager'
     endif
+    if lcp_hero
+      assign loading = 'eager'
+    endif
     unless loading
       assign loading = 'lazy'
     endunless
@@ -103,9 +106,17 @@ Variables:
 
   %}
 
+  {% if lcp_hero %}
+    {%- comment -%} LCP hero: emit eager + fetchpriority high, and swap the leading <img for a placeholder so the layout's blanket "<img -> loading='lazy'" replace can't force-lazy it. theme.liquid / theme.dev.liquid restore the placeholder after that replace. {%- endcomment -%}
+    {%- capture lcp_hero_img_tag -%}{{ image
+    | image_url: height: height, width: width
+    | image_tag: alt: alt, class: class, style: style, sizes: sizes, preload: preload, loading: loading, role: role, srcset: srcset, data-image: loading, data-before-image: data-before-image, fetchpriority: 'high' }}{%- endcapture -%}
+    {{ lcp_hero_img_tag | replace_first: '<img', '%%%LCP_HERO_IMG%%%' }}
+  {% else %}
   {{ image
   | image_url: height: height, width: width
   | image_tag: alt: alt, class: class, style: style, sizes: sizes, preload: preload, loading: loading, role: role, srcset: srcset, data-image: loading, data-before-image: data-before-image }}
+  {% endif %}
 {% endif %}
 {% if request.visual_preview_mode and placeholder == blank %}
   {% assign placeholder = 'product-1' %}

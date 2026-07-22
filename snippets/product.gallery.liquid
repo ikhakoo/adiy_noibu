@@ -194,7 +194,7 @@
         {% if show_index0 > 1 or section.index0 > 1 %}
           {% assign preload = false %}
         {% endif %}
-        {% render '_object.media', media: media, class: "w-full h-full object-cover", sizes: "(max-width: 768px) 95vw, (max-width: 1024px) 50vw, 40vw", preload: preload %}
+        {% render '_object.media', media: media, class: "w-full h-full object-cover", sizes: "(max-width: 768px) 95vw, (max-width: 1024px) 50vw, 40vw", preload: preload, lcp_hero: forloop.first %}
       </picture>
     {% endfor %}
   </main>

@@ -21,7 +21,7 @@
 {% if media %}
   {% case media.media_type %}
     {% when 'image' %}
-      {% render '_object.image', image: media, class: class, id: id, sizes: sizes, preload: preload %}
+      {% render '_object.image', image: media, class: class, id: id, sizes: sizes, preload: preload, lcp_hero: lcp_hero %}
     {% when 'video' %}
       <video
           {% if controls %}

@@ -353,7 +353,7 @@
     {% if request.design_mode == false %}
       {% section 'product-data' %}
     {% endif %}
-  {% endcapture %} {{ layout | replace: "<img","<img loading='lazy' " | replace: "<video","<video loading='lazy' " }}
+  {% endcapture %} {{ layout | replace: "<img","<img loading='lazy' " | replace: "<video","<video loading='lazy' " | replace: "%%%LCP_HERO_IMG%%%","<img" }}
     <div data-content-root-padding></div>
   </main>
   {% if dynamic_prefetch != true %}
