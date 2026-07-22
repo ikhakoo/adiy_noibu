@@ -111,9 +111,14 @@ export const initPageTransitions = () => {
         async () => {
           const url = e.detail.url?.replace(/(\/collections\/[^/]*\/)/gi, "/");
 
-          const fetchResults = await barba.cache
-            .get(url)
-            .request.then((res) => ({ data: res as unknown as { html: string } }));
+          // The entry was cached under the original (pre-rewrite) URL, so this
+          // lookup is frequently a miss — bail instead of dereferencing undefined.
+          const entry = barba.cache?.get(url);
+          if (!entry?.request) return;
+
+          const fetchResults = await entry.request.then((res) => ({
+            data: res as unknown as { html: string },
+          }));
 
           const div = document.createElement("div");
           div.innerHTML = fetchResults?.data?.html;
@@ -204,15 +209,15 @@ export const initPageTransitions = () => {
       {
         name: "opacity-transition",
         leave: (data) => {
-          transitionOverlay.classList.add("active", "out-active");
+          transitionOverlay?.classList.add("active", "out-active");
         },
         enter: (data) => {
           const handleTransitionend = () => {
-            transitionOverlay.classList.remove("out-active");
-            transitionOverlay.removeEventListener("transitionend", handleTransitionend);
+            transitionOverlay?.classList.remove("out-active");
+            transitionOverlay?.removeEventListener("transitionend", handleTransitionend);
           };
-          transitionOverlay.classList.remove("active");
-          transitionOverlay.addEventListener("transitionend", handleTransitionend);
+          transitionOverlay?.classList.remove("active");
+          transitionOverlay?.addEventListener("transitionend", handleTransitionend);
           window.scrollTo({
             top: 0,
             behavior: "instant",
