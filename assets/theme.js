@@ -92,13 +92,15 @@ var onRemoveListener2;
 var initAccessibility = /* @__PURE__ */ __name(() => {
   document.querySelectorAll(`[role="button"], [role="link"], [data-icon-handle]`).forEach((element) => {
     element.onkeydown = (event) => {
-      if (element.role !== "link" && element.role !== "button") {
+      if (element.role !== "link" && element.role !== "button" && !element.hasAttribute("data-icon-handle")) {
         return;
       }
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
         event.stopPropagation();
-        element.dispatchEvent(new Event("click"));
+        element.dispatchEvent(
+          new MouseEvent("click", { bubbles: true, cancelable: true, view: window })
+        );
       }
     };
   });
@@ -204,7 +206,13 @@ var initQuickView = /* @__PURE__ */ __name(() => {
         this.dynamic_popups.push(popup);
       });
       const section = div.querySelector(`[data-content-root] [data-section-type="product"]`);
-      const sideContent = section.querySelector('[x-ref="content"]');
+      const sideContent = section?.querySelector('[x-ref="content"]');
+      if (!section || !sideContent || !productData) {
+        this.loading_container.classList.add("opacity-0", "pointer-events-none");
+        this.open = false;
+        barba.go(cacheKey);
+        return;
+      }
       sideContent.classList.add("max-h-full", "overflow-y-auto");
       section.setAttribute("data-quick-view", "true");
       this.loading_container.classList.add("opacity-0", "pointer-events-none");
@@ -1185,10 +1193,15 @@ var initModals = /* @__PURE__ */ __name(() => {
       document.removeEventListener("keydown", handleKeydown);
     }
   });
+  const boundLinks = /* @__PURE__ */ new WeakSet();
   const initEvents = /* @__PURE__ */ __name((target = document) => {
     target.querySelectorAll(
       `[href*="#modal--"], [href*="#popup--"], [href*="#drawer--"], [href*="#megamenu--"]`
     ).forEach((link) => {
+      if (boundLinks.has(link)) {
+        return;
+      }
+      boundLinks.add(link);
       const handle = link.href?.replace(/.*?#(modal|popup|drawer|megamenu)--/gi, "")?.split("?")?.[0] ?? "";
       link.addEventListener("click", (e) => {
         e.preventDefault();
@@ -1467,9 +1480,7 @@ var initCart = /* @__PURE__ */ __name(() => {
     cart.debounce_updates = cart.state.items.map((item) => item.quantity);
   }, "updateLineItemQuantity");
   const renderUpsellProducts = /* @__PURE__ */ __name(async (element, target_product, primary_source, secondary_source, product_class, limit) => {
-    const fallback_products = utils.JSONParse(
-      element.getAttribute("data-fallback-products")
-    );
+    const fallback_products = utils.JSONParse(element.getAttribute("data-fallback-products")) ?? [];
     const lineItemProducts = await Promise.all(
       cart.state.items?.map((item) => _product.getHydratedProductData(item.handle, item.product_id))
     );
@@ -1622,9 +1633,7 @@ var initCart = /* @__PURE__ */ __name(() => {
     });
   }, "renderUpsellProducts");
   const renderGiftProducts = /* @__PURE__ */ __name(async (element, target_type, target, receives_quantity, allow_duplicates, product_class) => {
-    const products = utils.JSONParse(
-      element.getAttribute("data-gift-products")
-    );
+    const products = utils.JSONParse(element.getAttribute("data-gift-products")) ?? [];
     cart.gift_products = cart.state[target_type] >= target && cart?.state?.items?.reduce(
       (acc, lineItem) => products.some((prod) => prod.id === lineItem.product_id) ? acc += lineItem.quantity : acc,
       0
@@ -2357,6 +2366,9 @@ var initTooltip = /* @__PURE__ */ __name(() => {
         const tooltip = currentTooltip.tooltip;
         currentTooltip.timeout = setTimeout(async () => {
           tooltip.classList.remove("active");
+          currentTooltip.scrollParents?.forEach((parent) => {
+            parent.removeEventListener("scroll", currentTooltip.handleUpdateCoordinates);
+          });
           this.tooltips.delete(element);
           tooltip.ontransitionend = (event) => {
             tooltip.remove();

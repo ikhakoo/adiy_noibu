@@ -38,12 +38,20 @@ export const initModals = () => {
     }
   });
 
+  // initEvents runs on load, from an Alpine.effect, and from a body-wide
+  // MutationObserver. Without a guard, handlers stack on the same triggers
+  // across a session, so track bound links and skip ones already wired up.
+  const boundLinks = new WeakSet<HTMLAnchorElement>();
   const initEvents = (target: Element | Document = document) => {
     target
       .querySelectorAll<HTMLAnchorElement>(
         `[href*="#modal--"], [href*="#popup--"], [href*="#drawer--"], [href*="#megamenu--"]`
       )
       .forEach((link) => {
+        if (boundLinks.has(link)) {
+          return;
+        }
+        boundLinks.add(link);
         const handle =
           link.href?.replace(/.*?#(modal|popup|drawer|megamenu)--/gi, "")?.split("?")?.[0] ?? "";
         link.addEventListener("click", (e) => {

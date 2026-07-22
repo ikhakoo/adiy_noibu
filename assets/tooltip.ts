@@ -3,8 +3,8 @@ export type TooltipStore = {
     HTMLElement,
     {
       tooltip: HTMLElement;
-      timout: NodeJS.Timeout;
-      handleUpdates: () => void;
+      timeout: NodeJS.Timeout;
+      handleUpdateCoordinates: () => void;
       scrollParents: (HTMLElement | Window)[];
     }
   >;
@@ -74,6 +74,11 @@ export const initTooltip = () => {
         const tooltip = currentTooltip.tooltip;
         currentTooltip.timeout = setTimeout(async () => {
           tooltip.classList.remove("active");
+          // addTooltip attaches a scroll listener to every scroll parent (and
+          // window); tear them down here so they don't leak for the session.
+          currentTooltip.scrollParents?.forEach((parent) => {
+            parent.removeEventListener("scroll", currentTooltip.handleUpdateCoordinates);
+          });
           this.tooltips.delete(element);
           tooltip.ontransitionend = (event) => {
             tooltip.remove();
