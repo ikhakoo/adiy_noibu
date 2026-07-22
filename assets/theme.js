@@ -1833,7 +1833,11 @@ var initPageTransitions = /* @__PURE__ */ __name(() => {
       requestIdleCallback(
         async () => {
           const url = e.detail.url?.replace(/(\/collections\/[^/]*\/)/gi, "/");
-          const fetchResults = await barba.cache.get(url).request.then((res) => ({ data: res }));
+          const entry = barba.cache?.get(url);
+          if (!entry?.request) return;
+          const fetchResults = await entry.request.then((res) => ({
+            data: res
+          }));
           const div = document.createElement("div");
           div.innerHTML = fetchResults?.data?.html;
           const productData = div.querySelectorAll(`[data-product-data]`);
@@ -1917,15 +1921,15 @@ var initPageTransitions = /* @__PURE__ */ __name(() => {
       {
         name: "opacity-transition",
         leave: /* @__PURE__ */ __name((data) => {
-          transitionOverlay.classList.add("active", "out-active");
+          transitionOverlay?.classList.add("active", "out-active");
         }, "leave"),
         enter: /* @__PURE__ */ __name((data) => {
           const handleTransitionend = /* @__PURE__ */ __name(() => {
-            transitionOverlay.classList.remove("out-active");
-            transitionOverlay.removeEventListener("transitionend", handleTransitionend);
+            transitionOverlay?.classList.remove("out-active");
+            transitionOverlay?.removeEventListener("transitionend", handleTransitionend);
           }, "handleTransitionend");
-          transitionOverlay.classList.remove("active");
-          transitionOverlay.addEventListener("transitionend", handleTransitionend);
+          transitionOverlay?.classList.remove("active");
+          transitionOverlay?.addEventListener("transitionend", handleTransitionend);
           window.scrollTo({
             top: 0,
             behavior: "instant"
