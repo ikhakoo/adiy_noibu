@@ -1,3 +1,4 @@
+(function () {
 // For any link that has #chat as its href, make it open the chatbox
 
 document.addEventListener('click', function (e) {
@@ -80,6 +81,10 @@ function onYouTubeIframeAPIReady() {
   });
 }
 
+// The YouTube IFrame API invokes this by name on the global scope, so it must
+// stay reachable on window even though the rest of the file is IIFE-scoped.
+window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+
 function observePlayer(player, element) {
   const observer = new IntersectionObserver(
     (entries) => {
@@ -128,3 +133,4 @@ document.addEventListener('DOMContentLoaded', () => {
     characterData: true
   });
 });
+})();
