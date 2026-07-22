@@ -144,6 +144,16 @@
       class="template-{{ template | split: '.' | first | split: '/' | first }} template-{{ template | handleize }} relative flex min-h-screen flex-col overscroll-none {{ settings.color__color_scheme }}"
       data-barba="wrapper">
 
+  {%- comment -%} Accessibility: skip link (WCAG 2.4.1) + keyboard focus indicator (WCAG 2.4.7). {%- endcomment -%}
+  <a class="skip-to-content-link" href="#MainContent">Skip to content</a>
+  <style>
+    .skip-to-content-link{position:absolute;left:-9999px;top:0;z-index:2147483647;padding:12px 20px;background:#20221d;color:#ffffff;font-weight:600;text-decoration:none;border-radius:0 0 6px 0;}
+    .skip-to-content-link:focus{left:0;}
+    /* Restore a visible keyboard focus ring — theme uses outline-none broadly. Only shows for keyboard users (:focus-visible), not mouse clicks. */
+    :focus-visible{outline:3px solid #005fcc !important;outline-offset:2px !important;border-radius:2px;}
+    .skip-to-content-link:focus-visible{outline:3px solid #ffffff !important;}
+  </style>
+
   {%- render "_layout.svg-gradients" -%}
   {% assign hide_chrome_for_page = false %}
   {% assign hide_nav_pages = 'why-customers-choose-adiy,how-to-build-a-deck' | split: ',' %}
@@ -349,6 +359,8 @@
   {% endif %}
 
   <main data-content-root
+        id="MainContent"
+        tabindex="-1"
         data-barba="container"
         data-barba-namespace="tmp"
         data-template="{{ template | escape }}"
