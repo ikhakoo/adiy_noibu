@@ -2,7 +2,7 @@
 {%- liquid
   assign block_type = "_blocks.newsletter-signup"
   assign placeholder = block.settings.placeholder
-  assign label = block.settings.label
+  assign label = block.settings.label | default: 'Email address'
   assign tag = block.settings.tag
   assign style = block.settings.style
   assign button_content = block.settings.button_content
