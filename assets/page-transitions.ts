@@ -100,6 +100,29 @@ export const initPageTransitions = () => {
     limit: 0,
   });
 
+  // Background prefetch is best-effort. On slow / data-saver connections the 4s
+  // fetch cap aborts most prefetches and Barba throws a "Fetch error" for each
+  // one (Noibu issue #12). Wrap prefetch so those rejections never bubble up,
+  // and skip prefetching entirely where it is most likely to fail or waste data.
+  const _barbaPrefetch = barba.prefetch?.bind(barba);
+  barba.prefetch = (href: string) => {
+    if (window.design_mode) return;
+    // @ts-ignore - navigator.connection is not in the TS lib but exists on Chromium.
+    const conn = navigator.connection;
+    if (conn && (conn.saveData || /(^|-)(slow-2g|2g)$/.test(conn.effectiveType || ""))) {
+      return;
+    }
+    try {
+      const res = _barbaPrefetch?.(href);
+      if (res && typeof (res as Promise<unknown>).catch === "function") {
+        (res as Promise<unknown>).catch(() => {});
+      }
+      return res;
+    } catch (_e) {
+      return;
+    }
+  };
+
   /*
    barba.prefetch = (href) => {
     return barba.prefetch(href);
@@ -201,7 +224,7 @@ export const initPageTransitions = () => {
       "/pages/about-us",
       "/products/:any",
     ],
-    debug: true,
+    debug: false,
     /* @ts-ignore */
     cacheFirstPage: true,
     timeout: window.origin.includes("127.0.0.1") ? 30000 : 4000, // default is 2000ms,
