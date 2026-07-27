@@ -2,8 +2,8 @@
 {%- liquid
   assign block_type = "delivery_range"
   assign section_type = "card_product-card"
-  assign min_days = block.settings.min_days | default: 0 | plus: 0
-  assign max_days = block.settings.max_days | default: 0 | plus: 0
+  assign min_days = block.settings.min_days
+  assign max_days = block.settings.max_days
   assign delivery_text = block.settings.delivery_text
   assign delivery_class = block.settings.delivery_class
   assign days_text = block.settings.days_text
@@ -18,7 +18,7 @@
 {%- comment -%} Auto Generated Variables end {%- endcomment -%}
 
 {% liquid
-  assign today_timestamp = 'now' | date: "%s" | plus: 0
+  assign today_timestamp = 'now' | date: "%s" 
 
   assign min_days_in_seconds = min_days | times: 86400 
   assign max_days_in_seconds = max_days | times: 86400
@@ -30,14 +30,8 @@
   assign min_delivery_date = min_timestamp | date: "%d" 
   assign max_delivery_date = max_timestamp | date: "%d" 
 
-  
-  assign min_days_str = min_days | append: ""
-  assign max_days_str = max_days | append: ""
-
-  
-  assign delivery_text = delivery_text | replace: "[month]", month | replace: "%5Bmonth%5D", month | replace: "[min_date]", min_delivery_date | replace: "%5Bmin_date%5D", min_delivery_date | replace: "[max_date]", max_delivery_date | replace: "%5Bmax_date%5D", max_delivery_date
-  
-  assign days_text = days_text | replace: "[month]", month | replace: "%5Bmonth%5D", month | replace: "[min_date]", min_delivery_date | replace: "%5Bmin_date%5D", min_delivery_date | replace: "[max_date]", max_delivery_date | replace: "%5Bmax_date%5D", max_delivery_date | replace: "[min_days]", min_days_str | replace: "%5Bmin_days%5D", min_days_str | replace: "[max_days]", max_days_str | replace: "%5Bmax_days%5D", max_days_str
+  assign delivery_text = delivery_text | replace: "[month]", month | replace: "[min_date]", min_delivery_date | replace: "[max_date]", max_delivery_date
+  assign days_text = days_text | replace: "[min_days]", min_days | replace: "[max_days]", max_days
 %}
 
 {% render '_utils.dynamic-css',
