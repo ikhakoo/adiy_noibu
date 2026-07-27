@@ -435,7 +435,7 @@
             "max_days": 22,
             "delivery_text": "<p><strong>Selling fast — currently in high demand</strong></p>",
             "delivery_class": "text-18/14",
-            "days_text": "<p>Order today to reserve yours. Estimated deliver <strong>[month] [min_date]-[max_date]<br/></strong>([min_days]–[max_days] business days due to current demand).</p>",
+            "days_text": "<p>Order today to reserve yours. Estimated deliver <strong>Aug 16-18<br/></strong>([min_days]–[max_days] business days due to current demand).</p>",
             "days_class": "text-14/12",
             "margin_top_bottom_left_right": "24px | 24px | auto | auto",
             "max_w_flex_col_row_order_align": "fit | unset | 1 | 1 | unset | center",
