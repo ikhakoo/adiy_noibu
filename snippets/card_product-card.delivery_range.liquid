@@ -26,15 +26,18 @@
   assign min_timestamp = today_timestamp | plus: min_days_in_seconds
   assign max_timestamp = today_timestamp | plus: max_days_in_seconds 
 
-  assign min_month = min_timestamp | date: "%B" 
-  assign max_month = max_timestamp | date: "%B"
+  assign month = min_timestamp | date: "%B" 
   assign min_delivery_date = min_timestamp | date: "%d" 
   assign max_delivery_date = max_timestamp | date: "%d" 
 
-  assign month = min_month
+  
+  assign min_days_str = min_days | append: ""
+  assign max_days_str = max_days | append: ""
 
-  assign delivery_text = delivery_text | replace: "[month]", month | replace: "[min_date]", min_delivery_date | replace: "[max_date]", max_delivery_date
-  assign days_text = days_text | replace: "[month]", month | replace: "[min_date]", min_delivery_date | replace: "[max_date]", max_delivery_date | replace: "[min_days]", min_days | replace: "[max_days]", max_days
+  
+  assign delivery_text = delivery_text | replace: "[month]", month | replace: "%5Bmonth%5D", month | replace: "[min_date]", min_delivery_date | replace: "%5Bmin_date%5D", min_delivery_date | replace: "[max_date]", max_delivery_date | replace: "%5Bmax_date%5D", max_delivery_date
+  
+  assign days_text = days_text | replace: "[month]", month | replace: "%5Bmonth%5D", month | replace: "[min_date]", min_delivery_date | replace: "%5Bmin_date%5D", min_delivery_date | replace: "[max_date]", max_delivery_date | replace: "%5Bmax_date%5D", max_delivery_date | replace: "[min_days]", min_days_str | replace: "%5Bmin_days%5D", min_days_str | replace: "[max_days]", max_days_str | replace: "%5Bmax_days%5D", max_days_str
 %}
 
 {% render '_utils.dynamic-css',
