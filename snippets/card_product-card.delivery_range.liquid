@@ -2,8 +2,8 @@
 {%- liquid
   assign block_type = "delivery_range"
   assign section_type = "card_product-card"
-  assign min_days = block.settings.min_days
-  assign max_days = block.settings.max_days
+  assign min_days = block.settings.min_days | default: 0 | plus: 0
+  assign max_days = block.settings.max_days | default: 0 | plus: 0
   assign delivery_text = block.settings.delivery_text
   assign delivery_class = block.settings.delivery_class
   assign days_text = block.settings.days_text
@@ -18,7 +18,7 @@
 {%- comment -%} Auto Generated Variables end {%- endcomment -%}
 
 {% liquid
-  assign today_timestamp = 'now' | date: "%s" 
+  assign today_timestamp = 'now' | date: "%s" | plus: 0
 
   assign min_days_in_seconds = min_days | times: 86400 
   assign max_days_in_seconds = max_days | times: 86400
@@ -26,12 +26,15 @@
   assign min_timestamp = today_timestamp | plus: min_days_in_seconds
   assign max_timestamp = today_timestamp | plus: max_days_in_seconds 
 
-  assign month = min_timestamp | date: "%B" 
+  assign min_month = min_timestamp | date: "%B" 
+  assign max_month = max_timestamp | date: "%B"
   assign min_delivery_date = min_timestamp | date: "%d" 
   assign max_delivery_date = max_timestamp | date: "%d" 
 
+  assign month = min_month
+
   assign delivery_text = delivery_text | replace: "[month]", month | replace: "[min_date]", min_delivery_date | replace: "[max_date]", max_delivery_date
-  assign days_text = days_text | replace: "[month]", month  | replace: "[min_date]", min_delivery_date  | replace: "[max_date]", max_delivery_date  | replace: "[min_days]", min_days  | replace: "[max_days]", max_days
+  assign days_text = days_text | replace: "[month]", month | replace: "[min_date]", min_delivery_date | replace: "[max_date]", max_delivery_date | replace: "[min_days]", min_days | replace: "[max_days]", max_days
 %}
 
 {% render '_utils.dynamic-css',
