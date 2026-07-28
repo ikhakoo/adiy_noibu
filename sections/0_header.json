@@ -1,1 +1,212 @@
-{"type":"custom.header","name":"Header","sections":{"custom_code_mrbjnP":{"type":"custom-code","blocks":{"css_jPgMqA":{"type":"css","settings":{"css":".poppins-thin {\n  font-family: \"Poppins\", serif;\n  font-weight: 100;\n  font-style: normal;\n}\n\n.poppins-extralight {\n  font-family: \"Poppins\", serif;\n  font-weight: 200;\n  font-style: normal;\n}\n\n.poppins-light {\n  font-family: \"Poppins\", serif;\n  font-weight: 300;\n  font-style: normal;\n}\n\n.poppins-regular {\n  font-family: \"Poppins\", serif;\n  font-weight: 400;\n  font-style: normal;\n}\n\n.poppins-medium {\n  font-family: \"Poppins\", serif;\n  font-weight: 500;\n  font-style: normal;\n}\n\n.poppins-semibold {\n  font-family: \"Poppins\", serif;\n  font-weight: 600;\n  font-style: normal;\n}\n\n.poppins-bold {\n  font-family: \"Poppins\", serif;\n  font-weight: 700;\n  font-style: normal;\n}\n\n.poppins-extrabold {\n  font-family: \"Poppins\", serif;\n  font-weight: 800;\n  font-style: normal;\n}\n\n.poppins-black {\n  font-family: \"Poppins\", serif;\n  font-weight: 900;\n  font-style: normal;\n}\n\n.poppins-thin-italic {\n  font-family: \"Poppins\", serif;\n  font-weight: 100;\n  font-style: italic;\n}\n\n.poppins-extralight-italic {\n  font-family: \"Poppins\", serif;\n  font-weight: 200;\n  font-style: italic;\n}\n\n.poppins-light-italic {\n  font-family: \"Poppins\", serif;\n  font-weight: 300;\n  font-style: italic;\n}\n\n.poppins-regular-italic {\n  font-family: \"Poppins\", serif;\n  font-weight: 400;\n  font-style: italic;\n}\n\n.poppins-medium-italic {\n  font-family: \"Poppins\", serif;\n  font-weight: 500;\n  font-style: italic;\n}\n\n.poppins-semibold-italic {\n  font-family: \"Poppins\", serif;\n  font-weight: 600;\n  font-style: italic;\n}\n\n.poppins-bold-italic {\n  font-family: \"Poppins\", serif;\n  font-weight: 700;\n  font-style: italic;\n}\n\n.poppins-extrabold-italic {\n  font-family: \"Poppins\", serif;\n  font-weight: 800;\n  font-style: italic;\n}\n\n.poppins-black-italic {\n  font-family: \"Poppins\", serif;\n  font-weight: 900;\n  font-style: italic;\n}"}}},"block_order":["css_jPgMqA"],"settings":{}},"announcement":{"type":"header_announcement-bar","blocks":{"announcement_rXxrpH":{"type":"announcement","disabled":true,"settings":{"content_mobile":"<p>Curious? Our Deck Specialists [span.underline ||<a href=\"tel:+17863582872\" title=\"tel:+17863582872\">Are Just a Call Away]<\/a>.<\/p>","align_horizontal__mobile":"items-center text-center","marquee_animation_mobile":false,"content_mobile_class":"text-14\/12","content_desktop":"<p>Curious? Our Deck Specialists [span.underline ||<a href=\"tel:+17863582872\" title=\"tel:+17863582872\">Are Just a Call Away]<\/a>.<\/p>","align_horizontal__desktop":"inherit","marquee_animation_desktop":false,"content_desktop_class":"text-14\/12","container_spacing":"px-container-md","color_scheme":"scheme-4f86e4bc-af21-4e8e-a1db-0a126f6278af","responsive_visibility_cart":""}},"announcement_aJkQgX":{"type":"announcement","settings":{"content_mobile":"<p>Question? Our Deck Specialists [span.underline ||<a href=\"tel:+17863582872\" title=\"tel:+17863582872\">Are Just a Call Away]<\/a>.<\/p>","align_horizontal__mobile":"items-center text-center","marquee_animation_mobile":false,"content_mobile_class":"text-14\/12","content_desktop":"<p>Question? Our Deck Specialists [span.underline ||<a href=\"tel:+17863582872\" title=\"tel:+17863582872\">Are Just a Call Away]<\/a>.<\/p>","align_horizontal__desktop":"inherit","marquee_animation_desktop":false,"content_desktop_class":"text-14\/12","container_spacing":"px-container-md","color_scheme":"scheme-4f86e4bc-af21-4e8e-a1db-0a126f6278af","responsive_visibility_cart":""}}},"block_order":["announcement_rXxrpH","announcement_aJkQgX"],"settings":{"display_duration":100,"section_height":"44px \/ 41px","responsive_visibility_cart":""}},"progress_bar":{"type":"header_progress-bar","blocks":{"target_TQKid6":{"type":"target","settings":{"target":10000,"incentive_message":"<p>You are [difference] from <strong>Free Shipping<\/strong><\/p>","success_message":"<p><strong>You've unlocked Free Shipping<\/strong><\/p>","content_class":"text-14\/12"}}},"block_order":["target_TQKid6"],"settings":{"incentive_type":"total_price","success_bg_color":"#000000","success_border_color":"#000000","base_bg_color":"#dedede","base_border_color":"#dedede","bar_height_border_width_radius":"8px \/ 4px | 1px | 100px | 8px","section_height":"65px \/ 61px","container_spacing":"px-container-xs","responsive_visibility_cart":"cart-only","color_scheme":"scheme-b36c3874-62c5-4272-85aa-9cc65a24ce2c"}},"navigation-bar":{"type":"header_navigation-bar","blocks":{"menu_icon_JDkhWw":{"type":"menu-icon","settings":{"icon":"hamburger","url":"","responsive_visibility":"mobile-tablet-only"}},"logo_4gJ639":{"type":"logo","settings":{"logo":"shopify:\/\/shop_images\/Property_1_color_Property_2_positive.png","max_height":32,"responsive_visibility":""}},"desktop_menu_jArA7E":{"type":"desktop-menu","settings":{"menu":"smart-3-0-desktop","link_class":"text-16 poppins-semibold uppercase","padding_x_gap":"0 | 32px","dropdown_icon":"chevron-down","level_1_link_class":"richtext-md","level_2_link_class":"richtext-md","highlight_active_link":true,"rotate_dropdown_icon":true,"responsive_visibility":"desktop-only"}},"search_icon_QYTa7f":{"type":"search-icon","disabled":true,"settings":{"icon":"search","url":"","responsive_visibility":""}},"account_icon_6kKUhq":{"type":"account-icon","settings":{"icon":"user","responsive_visibility":"desktop-only"}},"cart_icon_4YEY7K":{"type":"cart-icon","settings":{"icon":"cart","url":"","width_height":"auto | 24","show_cart_quantity":true,"responsive_visibility":""}}},"block_order":["menu_icon_JDkhWw","logo_4gJ639","desktop_menu_jArA7E","search_icon_QYTa7f","account_icon_6kKUhq","cart_icon_4YEY7K"],"custom_css":["ul {margin-block-start: 0;}"],"settings":{"alignment_desktop":"menu_center","alignment_mobile":"logo_center","open_on_click":true,"section_height":"100px\/78px","color_scheme":"scheme-3774668d-6fb4-4211-94f3-548d80111de5","container_spacing":"px-container-md","transparent_templates":"index,product,collection,cart,page.contact-us,page.faq,page.why-a-diy,page.about-us,page.free-design-consultation,search,product.a-diy-composite-deck-kit","transparent_color_scheme":"scheme-3774668d-6fb4-4211-94f3-548d80111de5","toggle_area":"bar"}}},"order":["custom_code_mrbjnP","announcement","progress_bar","navigation-bar"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "custom.header",
+  "name": "Header",
+  "sections": {
+    "custom_code_mrbjnP": {
+      "type": "custom-code",
+      "blocks": {
+        "css_jPgMqA": {
+          "type": "css",
+          "settings": {
+            "css": ".poppins-thin {\n  font-family: \"Poppins\", serif;\n  font-weight: 100;\n  font-style: normal;\n}\n\n.poppins-extralight {\n  font-family: \"Poppins\", serif;\n  font-weight: 200;\n  font-style: normal;\n}\n\n.poppins-light {\n  font-family: \"Poppins\", serif;\n  font-weight: 300;\n  font-style: normal;\n}\n\n.poppins-regular {\n  font-family: \"Poppins\", serif;\n  font-weight: 400;\n  font-style: normal;\n}\n\n.poppins-medium {\n  font-family: \"Poppins\", serif;\n  font-weight: 500;\n  font-style: normal;\n}\n\n.poppins-semibold {\n  font-family: \"Poppins\", serif;\n  font-weight: 600;\n  font-style: normal;\n}\n\n.poppins-bold {\n  font-family: \"Poppins\", serif;\n  font-weight: 700;\n  font-style: normal;\n}\n\n.poppins-extrabold {\n  font-family: \"Poppins\", serif;\n  font-weight: 800;\n  font-style: normal;\n}\n\n.poppins-black {\n  font-family: \"Poppins\", serif;\n  font-weight: 900;\n  font-style: normal;\n}\n\n.poppins-thin-italic {\n  font-family: \"Poppins\", serif;\n  font-weight: 100;\n  font-style: italic;\n}\n\n.poppins-extralight-italic {\n  font-family: \"Poppins\", serif;\n  font-weight: 200;\n  font-style: italic;\n}\n\n.poppins-light-italic {\n  font-family: \"Poppins\", serif;\n  font-weight: 300;\n  font-style: italic;\n}\n\n.poppins-regular-italic {\n  font-family: \"Poppins\", serif;\n  font-weight: 400;\n  font-style: italic;\n}\n\n.poppins-medium-italic {\n  font-family: \"Poppins\", serif;\n  font-weight: 500;\n  font-style: italic;\n}\n\n.poppins-semibold-italic {\n  font-family: \"Poppins\", serif;\n  font-weight: 600;\n  font-style: italic;\n}\n\n.poppins-bold-italic {\n  font-family: \"Poppins\", serif;\n  font-weight: 700;\n  font-style: italic;\n}\n\n.poppins-extrabold-italic {\n  font-family: \"Poppins\", serif;\n  font-weight: 800;\n  font-style: italic;\n}\n\n.poppins-black-italic {\n  font-family: \"Poppins\", serif;\n  font-weight: 900;\n  font-style: italic;\n}"
+          }
+        }
+      },
+      "block_order": [
+        "css_jPgMqA"
+      ],
+      "settings": {}
+    },
+    "announcement": {
+      "type": "header_announcement-bar",
+      "blocks": {
+        "announcement_6j6Bhw": {
+          "type": "announcement",
+          "settings": {
+            "content_mobile": "<h6><strong>Get $1200 OFF Today  - Use Code: S1200 - </strong><a href=\"https://docs.google.com/document/d/1Vq3oWWFT6rjf1syaTZCWoSulRhmRcw70lAEpWsE5MYU/edit?tab=t.0#heading=h.eon0d9sftlg8\" title=\"https://docs.google.com/document/d/1Vq3oWWFT6rjf1syaTZCWoSulRhmRcw70lAEpWsE5MYU/edit?tab=t.0#heading=h.eon0d9sftlg8\"><strong>Shop Now</strong></a></h6>",
+            "align_horizontal__mobile": "items-center text-center",
+            "marquee_animation_mobile": true,
+            "content_mobile_class": "richtext-md",
+            "content_desktop": "<h6><strong>Get $1200 OFF Today  - Use Code: S1200 - </strong><a href=\"https://docs.google.com/document/d/1Vq3oWWFT6rjf1syaTZCWoSulRhmRcw70lAEpWsE5MYU/edit?tab=t.0#heading=h.eon0d9sftlg8\" title=\"https://docs.google.com/document/d/1Vq3oWWFT6rjf1syaTZCWoSulRhmRcw70lAEpWsE5MYU/edit?tab=t.0#heading=h.eon0d9sftlg8\"><strong>Shop Now</strong></a></h6>",
+            "align_horizontal__desktop": "inherit",
+            "marquee_animation_desktop": false,
+            "content_desktop_class": "richtext-md",
+            "container_spacing": "px-container-md",
+            "color_scheme": "1",
+            "responsive_visibility_cart": ""
+          }
+        },
+        "announcement_rXxrpH": {
+          "type": "announcement",
+          "disabled": true,
+          "settings": {
+            "content_mobile": "<p>Curious? Our Deck Specialists [span.underline ||<a href=\"tel:+17863582872\" title=\"tel:+17863582872\">Are Just a Call Away]</a>.</p>",
+            "align_horizontal__mobile": "items-center text-center",
+            "marquee_animation_mobile": false,
+            "content_mobile_class": "text-14/12",
+            "content_desktop": "<p>Curious? Our Deck Specialists [span.underline ||<a href=\"tel:+17863582872\" title=\"tel:+17863582872\">Are Just a Call Away]</a>.</p>",
+            "align_horizontal__desktop": "inherit",
+            "marquee_animation_desktop": false,
+            "content_desktop_class": "text-14/12",
+            "container_spacing": "px-container-md",
+            "color_scheme": "scheme-4f86e4bc-af21-4e8e-a1db-0a126f6278af",
+            "responsive_visibility_cart": ""
+          }
+        },
+        "announcement_aJkQgX": {
+          "type": "announcement",
+          "settings": {
+            "content_mobile": "<p>Question? Our Deck Specialists [span.underline ||<a href=\"tel:+17863582872\" title=\"tel:+17863582872\">Are Just a Call Away]</a>.</p>",
+            "align_horizontal__mobile": "items-center text-center",
+            "marquee_animation_mobile": false,
+            "content_mobile_class": "text-14/12",
+            "content_desktop": "<p>Question? Our Deck Specialists [span.underline ||<a href=\"tel:+17863582872\" title=\"tel:+17863582872\">Are Just a Call Away]</a>.</p>",
+            "align_horizontal__desktop": "inherit",
+            "marquee_animation_desktop": false,
+            "content_desktop_class": "text-14/12",
+            "container_spacing": "px-container-md",
+            "color_scheme": "scheme-4f86e4bc-af21-4e8e-a1db-0a126f6278af",
+            "responsive_visibility_cart": ""
+          }
+        }
+      },
+      "block_order": [
+        "announcement_6j6Bhw",
+        "announcement_rXxrpH",
+        "announcement_aJkQgX"
+      ],
+      "settings": {
+        "display_duration": 100,
+        "section_height": "44px / 41px",
+        "responsive_visibility_cart": ""
+      }
+    },
+    "progress_bar": {
+      "type": "header_progress-bar",
+      "blocks": {
+        "target_TQKid6": {
+          "type": "target",
+          "settings": {
+            "target": 10000,
+            "incentive_message": "<p>You are [difference] from <strong>Free Shipping</strong></p>",
+            "success_message": "<p><strong>You've unlocked Free Shipping</strong></p>",
+            "content_class": "text-14/12"
+          }
+        }
+      },
+      "block_order": [
+        "target_TQKid6"
+      ],
+      "settings": {
+        "incentive_type": "total_price",
+        "success_bg_color": "#000000",
+        "success_border_color": "#000000",
+        "base_bg_color": "#dedede",
+        "base_border_color": "#dedede",
+        "bar_height_border_width_radius": "8px / 4px | 1px | 100px | 8px",
+        "section_height": "65px / 61px",
+        "container_spacing": "px-container-xs",
+        "responsive_visibility_cart": "cart-only",
+        "color_scheme": "scheme-b36c3874-62c5-4272-85aa-9cc65a24ce2c"
+      }
+    },
+    "navigation-bar": {
+      "type": "header_navigation-bar",
+      "blocks": {
+        "menu_icon_JDkhWw": {
+          "type": "menu-icon",
+          "settings": {
+            "icon": "hamburger",
+            "url": "",
+            "responsive_visibility": "mobile-tablet-only"
+          }
+        },
+        "logo_4gJ639": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/Property_1_color_Property_2_positive.png",
+            "max_height": 32,
+            "responsive_visibility": ""
+          }
+        },
+        "desktop_menu_jArA7E": {
+          "type": "desktop-menu",
+          "settings": {
+            "menu": "smart-3-0-desktop",
+            "link_class": "text-16 poppins-semibold uppercase",
+            "padding_x_gap": "0 | 32px",
+            "dropdown_icon": "chevron-down",
+            "level_1_link_class": "richtext-md",
+            "level_2_link_class": "richtext-md",
+            "highlight_active_link": true,
+            "rotate_dropdown_icon": true,
+            "responsive_visibility": "desktop-only"
+          }
+        },
+        "search_icon_QYTa7f": {
+          "type": "search-icon",
+          "disabled": true,
+          "settings": {
+            "icon": "search",
+            "url": "",
+            "responsive_visibility": ""
+          }
+        },
+        "account_icon_6kKUhq": {
+          "type": "account-icon",
+          "settings": {
+            "icon": "user",
+            "responsive_visibility": "desktop-only"
+          }
+        },
+        "cart_icon_4YEY7K": {
+          "type": "cart-icon",
+          "settings": {
+            "icon": "cart",
+            "url": "",
+            "width_height": "auto | 24",
+            "show_cart_quantity": true,
+            "responsive_visibility": ""
+          }
+        }
+      },
+      "block_order": [
+        "menu_icon_JDkhWw",
+        "logo_4gJ639",
+        "desktop_menu_jArA7E",
+        "search_icon_QYTa7f",
+        "account_icon_6kKUhq",
+        "cart_icon_4YEY7K"
+      ],
+      "custom_css": [
+        "ul {margin-block-start: 0;}"
+      ],
+      "settings": {
+        "alignment_desktop": "menu_center",
+        "alignment_mobile": "logo_center",
+        "open_on_click": true,
+        "section_height": "100px/78px",
+        "color_scheme": "scheme-3774668d-6fb4-4211-94f3-548d80111de5",
+        "container_spacing": "px-container-md",
+        "transparent_templates": "index,product,collection,cart,page.contact-us,page.faq,page.why-a-diy,page.about-us,page.free-design-consultation,search,product.a-diy-composite-deck-kit",
+        "transparent_color_scheme": "scheme-3774668d-6fb4-4211-94f3-548d80111de5",
+        "toggle_area": "bar"
+      }
+    }
+  },
+  "order": [
+    "custom_code_mrbjnP",
+    "announcement",
+    "progress_bar",
+    "navigation-bar"
+  ]
+}
