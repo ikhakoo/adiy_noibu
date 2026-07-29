@@ -30,7 +30,7 @@
   assign max_delivery_date = max_timestamp | date: "%d" 
 
   assign delivery_text = delivery_text | replace: "[month]", month | replace: "[min_date]", min_delivery_date | replace: "[max_date]", max_delivery_date
-  assign days_text = days_text | replace: "[min_days]", min_days | replace: "[max_days]", max_days
+  assign days_text = days_text | replace: "[month]", month | replace: "[min_date]", min_delivery_date | replace: "[max_date]" | replace: "[min_days]", min_days | replace: "[max_days]", max_days, max_delivery_date
 %}
 
 {% render '_utils.dynamic-css',
