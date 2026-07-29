@@ -4,7 +4,8 @@
   assign section_type = "card_product-card"
   assign min_days = block.settings.min_days
   assign max_days = block.settings.max_days
-  assign delivery_text = block.settings.delivery_text
+
+  assign delivery_text = delivery_text | replace: "[month]", month | replace: "[min_date]", min_delivery_date | replace: "[max_date]", max_delivery_date
   assign delivery_class = block.settings.delivery_class
   assign days_text = block.settings.days_text
   assign days_class = block.settings.days_class
