@@ -39,7 +39,7 @@
 
 <div data-style-id="{{ section.id }}--{{ block.id }}"
      {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}
-     class="">
+     class="dilevery-text">
   {% render '_input.richtext', content: delivery_text, class: delivery_class, block: block, forloop: forloop %}
   {% render '_input.richtext', content: days_text, class: days_class, block: block, forloop: forloop %}
 </div>
