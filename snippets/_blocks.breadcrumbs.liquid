@@ -57,7 +57,7 @@
         assign collection_titles = product.collections | map: 'title'
       endif
 
-    when 'collection' and collection.handle
+    when 'collection'
       assign url_1 = collection.url
       assign title_1 = collection.title
 
@@ -137,3 +137,13 @@
     {% endif %}
   {% endif %}
 </nav>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "    when 'collection' and collection.handle"
+  to: "    when 'collection'"
+  position: 2004..2025
+{% endcomment %}

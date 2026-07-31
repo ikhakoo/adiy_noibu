@@ -32,7 +32,7 @@ Variables:
         assign before_content = split[0]
         assign after_content = split_2[1]
         assign properties = split_2[0] | trim | split: '.'
-        assign object = [key]
+        assign object = self[key]
         for property in properties
           if forloop.last
             if property contains 'compare_at_price|no-decimals'
@@ -76,7 +76,7 @@ Variables:
     endfor
 
     if content contains full_matcher
-      assign content = content | replace_first: full_matcher, [key]
+      assign content = content | replace_first: full_matcher, self[key]
       continue
     endif
 
@@ -84,3 +84,16 @@ Variables:
 
 -%}
 {{- content -}}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "        assign object = [key]"
+  to: "        assign object = self[key]"
+  position: 1151..1184
+- from: "      assign content = content | replace_first: full_matcher, [key]"
+  to: "      assign content = content | replace_first: full_matcher, self[key]"
+  position: 2722..2793
+{% endcomment %}

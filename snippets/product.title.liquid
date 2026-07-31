@@ -29,6 +29,18 @@
     data-block-type="{{ block.type }}">
   <div data-content="{% render '_input.richtext', content: title, class: content_class, escape: true, block: block, forloop: forloop %}"
        x-html="$el.getAttribute('data-content').replace('[title]', $data.state?.product?.title)">
-    {% render '_input.richtext', content: render_content, product.title, class: content_class, block: block, forloop: forloop %}
+    {% render '_input.richtext', content: render_content, class: content_class, block: block, forloop: forloop %}
   </div>
 </div>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render '_input.richtext', content: render_content, product.title, class:
+    content_class, block: block, forloop: forloop %}"
+  to: "{% render '_input.richtext', content: render_content, class: content_class,
+    block: block, forloop: forloop %}"
+  position: 1554..1663
+{% endcomment %}
