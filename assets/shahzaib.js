@@ -136,28 +136,34 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 
 
-
 (function () {
-  function checkUrlHashAndOpenChat() {
-    if (window.location.hash === '#chat') {
+  function openGorgiasChat() {
+    if (window.location.hash !== '#chat') return;
+
+    // Check karne ke liye max 10 seconds tak attempt karega
+    let attempts = 0;
+    const maxAttempts = 20; // 20 attempts * 500ms = 10 seconds
+
+    const interval = setInterval(function () {
+      attempts++;
+
+      // Direct Gorgias API check
       if (window.GorgiasChat?.open) {
         window.GorgiasChat.open();
-      } else {
-        // Gorgias widget load hone ka wait karein agar delay ho
-        window.addEventListener('gorgias-widget-loaded', function () {
-          window.GorgiasChat?.open();
-        }, { once: true });
+        clearInterval(interval);
+      } else if (attempts >= maxAttempts) {
+        clearInterval(interval);
       }
-    }
+    }, 500);
   }
 
-  // Page Load check
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', checkUrlHashAndOpenChat);
+  // Page fully load hone par call karein
+  if (document.readyState === 'complete') {
+    openGorgiasChat();
   } else {
-    checkUrlHashAndOpenChat();
+    window.addEventListener('load', openGorgiasChat);
   }
 
-  // URL Hash Change check
-  window.addEventListener('hashchange', checkUrlHashAndOpenChat);
+  // URL Hash change event
+  window.addEventListener('hashchange', openGorgiasChat);
 })();
