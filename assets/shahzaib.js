@@ -134,3 +134,28 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 })();
+
+
+
+// Function to check URL hash and open Gorgias Chat
+function checkHashAndOpenChat() {
+  if (window.location.hash === '#chat') {
+    // Gorgias Chat load hone ka wait karein
+    if (window.GorgiasChat && typeof GorgiasChat.open === 'function') {
+      GorgiasChat.open();
+    } else {
+      // Agar Gorgias delay se load ho raha ho
+      window.addEventListener('gorgias-widget-loaded', function() {
+        if (window.GorgiasChat) {
+          GorgiasChat.open();
+        }
+      });
+    }
+  }
+}
+
+// Page load par execute karein
+document.addEventListener('DOMContentLoaded', checkHashAndOpenChat);
+
+// Agar user same page par rehte hue link hash change kare
+window.addEventListener('hashchange', checkHashAndOpenChat);
