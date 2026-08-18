@@ -137,25 +137,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-// Function to check URL hash and open Gorgias Chat
-function checkHashAndOpenChat() {
-  if (window.location.hash === '#chat') {
-    // Gorgias Chat load hone ka wait karein
-    if (window.GorgiasChat && typeof GorgiasChat.open === 'function') {
-      GorgiasChat.open();
-    } else {
-      // Agar Gorgias delay se load ho raha ho
-      window.addEventListener('gorgias-widget-loaded', function() {
-        if (window.GorgiasChat) {
-          GorgiasChat.open();
-        }
-      });
+(function () {
+  function checkUrlHashAndOpenChat() {
+    if (window.location.hash === '#chat') {
+      if (window.GorgiasChat?.open) {
+        window.GorgiasChat.open();
+      } else {
+        // Gorgias widget load hone ka wait karein agar delay ho
+        window.addEventListener('gorgias-widget-loaded', function () {
+          window.GorgiasChat?.open();
+        }, { once: true });
+      }
     }
   }
-}
 
-// Page load par execute karein
-document.addEventListener('DOMContentLoaded', checkHashAndOpenChat);
+  // Page Load check
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', checkUrlHashAndOpenChat);
+  } else {
+    checkUrlHashAndOpenChat();
+  }
 
-// Agar user same page par rehte hue link hash change kare
-window.addEventListener('hashchange', checkHashAndOpenChat);
+  // URL Hash Change check
+  window.addEventListener('hashchange', checkUrlHashAndOpenChat);
+})();
